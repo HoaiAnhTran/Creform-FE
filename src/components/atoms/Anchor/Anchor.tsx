@@ -1,9 +1,9 @@
-import * as React from 'react'
+import * as React from 'react';
 
 interface AnchorProps {
-  text: string
+  text: string;
 }
 
-const Anchor: React.FC<AnchorProps> = ({ text }) => <a>{text}</a>
+const Anchor: React.FC<AnchorProps> = ({ text }) => <a>{text}</a>;
 
-export default Anchor
+export default Anchor;

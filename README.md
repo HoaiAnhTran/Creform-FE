@@ -20,4 +20,4 @@ Node.js and npm installed
 
 3. Start the app in development environment: **npm run dev**
 
-4. Open your browser and visit http://localhost:3000 to use the app.
+4. Open your browser and visit http://localhost:5000 to use the app.

@@ -1,3 +1,9 @@
+@import '@mantine/core/styles.css';
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
@@ -5,4 +11,5 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
