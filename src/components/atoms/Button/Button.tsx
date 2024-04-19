@@ -32,19 +32,20 @@ export const Button = ({
       case color === 'primary':
         switch (true) {
           case variant === 'filled':
-            buttonStyles = 'bg-malachite-500 text-white hover:bg-malachite-600';
+            buttonStyles =
+              'bg-malachite-500 text-white hover:bg-malachite-600 hover:text-white';
             break;
           case variant === 'light':
             buttonStyles =
-              'bg-malachite-50 text-malachite-500 hover:bg-malachite-100';
+              'bg-malachite-50 text-malachite-500 hover:bg-malachite-100 hover:text-malachite-500';
             break;
           case variant === 'outline':
             buttonStyles =
-              'border-malachite-500 bg-white text-malachite-500 hover:bg-malachite-50';
+              'border-malachite-500 bg-white text-malachite-500 hover:bg-malachite-50 hover:text-malachite-500';
             break;
           case variant === 'subtle':
             buttonStyles =
-              'bg-transparent text-malachite-500 hover:bg-malachite-100';
+              'bg-transparent text-malachite-500 hover:bg-malachite-100 hover:text-malachite-500';
             break;
           default:
             break;

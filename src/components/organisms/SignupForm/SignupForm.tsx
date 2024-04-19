@@ -4,7 +4,7 @@ import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Button } from '@/atoms/Button';
-import { PATH } from '@/constants/route';
+import { PATH } from '@/constants/routes';
 import { TextInput } from '@/molecules/TextInput';
 import { accountSchema } from '@/utils/schemas/rules';
 

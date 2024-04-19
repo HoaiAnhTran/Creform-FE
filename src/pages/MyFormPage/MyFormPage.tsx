@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { PATH } from '@/constants/route';
+import { PATH } from '@/constants/routes';
 import { httpClient } from '@/utils';
 
 export const MyFormPage = () => {

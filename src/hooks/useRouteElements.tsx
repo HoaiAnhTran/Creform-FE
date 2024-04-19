@@ -1,8 +1,9 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
-import { PATH } from '@/constants/route';
+import { PATH } from '@/constants/routes';
 import { LoginPage } from '@/pages/LoginPage';
 import { MyFormPage } from '@/pages/MyFormPage';
+import { OverviewPage } from '@/pages/OverviewPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
@@ -51,6 +52,10 @@ export function useRouteElements() {
         {
           path: PATH.MY_FORM_PAGE,
           element: <MyFormPage />,
+        },
+        {
+          path: PATH.OVERVIEW_PAGE,
+          element: <OverviewPage />,
         },
       ],
     },

@@ -1,14 +1,15 @@
-import { API_URL } from '@/constants/api';
+import { API_URL } from '@/constants/apiURL';
 import { LoginSchema } from '@/organisms/LoginForm';
 import { SignupSchema } from '@/organisms/SignupForm';
-import { emptySplitApi } from '@/redux/slices/emptySplitApi';
-import { AuthResponse } from '@/types/user';
+import { AuthResponse } from '@/types/auth';
 
-export const authenticationApi = emptySplitApi.injectEndpoints({
+import { rootApi } from './rootApi';
+
+export const authenticationApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
     loginUser: build.mutation<AuthResponse, LoginSchema>({
       query: (data: LoginSchema) => ({
-        url: API_URL.URL_LOGIN,
+        url: API_URL.LOGIN,
         method: 'POST',
         data,
       }),
@@ -18,7 +19,7 @@ export const authenticationApi = emptySplitApi.injectEndpoints({
       Omit<SignupSchema, 'confirmPassword'>
     >({
       query: (data: Omit<SignupSchema, 'confirmPassword'>) => ({
-        url: API_URL.URL_SIGNUP,
+        url: API_URL.SIGN_UP,
         method: 'POST',
         data,
       }),

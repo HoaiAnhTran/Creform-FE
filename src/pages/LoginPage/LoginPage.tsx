@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { Image } from '@mantine/core';
 
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
-import { PATH } from '@/constants/route';
+import { PATH } from '@/constants/routes';
 import { LoginForm, LoginSchema } from '@/organisms/LoginForm';
-import { useLoginUserMutation } from '@/redux/slices/authenticationApi';
-import { AuthErrorResponse } from '@/types/user';
+import { useLoginUserMutation } from '@/redux/api/authenticationApi';
+import { ErrorResponse } from '@/types';
 import { httpClient, saveAccessTokenToLS, toastify } from '@/utils';
 
 export const LoginPage = () => {
@@ -20,10 +20,8 @@ export const LoginPage = () => {
         navigate(PATH.ROOT_PAGE);
         return;
       }
-      if ((res.error as AuthErrorResponse).data)
-        toastify.displayError(
-          (res.error as AuthErrorResponse).data?.message as string,
-        );
+      if (res.error as ErrorResponse)
+        toastify.displayError((res.error as ErrorResponse).message as string);
     });
   };
 

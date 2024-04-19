@@ -1,6 +1,6 @@
 import { ToastContainer, Zoom } from 'react-toastify';
 
-import { TOAST_DURATION } from '@/configs';
+import { TOAST_DURATION } from '@/constants/toast';
 
 import 'react-toastify/dist/ReactToastify.css';
 

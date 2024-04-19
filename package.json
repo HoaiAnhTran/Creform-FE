@@ -29,6 +29,8 @@
     "clsx": "^2.1.0",
     "formik": "^2.4.5",
     "postcss": "^8.4.33",
+    "dayjs": "^1.11.10",
+    "mantine-datatable": "^7.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-grid-layout": "^1.4.4",

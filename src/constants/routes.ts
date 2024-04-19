@@ -3,4 +3,5 @@ export const PATH = {
   SIGNUP_PAGE: 'signup',
   ROOT_PAGE: '',
   MY_FORM_PAGE: 'my-form-page',
+  OVERVIEW_PAGE: 'overview',
 };
