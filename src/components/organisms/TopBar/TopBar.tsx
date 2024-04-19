@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { TextInput as TextInputMantine } from '@mantine/core';
 
+import { useParams } from '@/contexts';
 import { Menu } from '@/organisms/Menu';
 import { cn } from '@/utils';
 
@@ -19,35 +20,47 @@ export interface FilterAction {
 
 export const TopBar = (props: TopBarProps) => {
   const { selectedFormIds } = props;
+  const { setParams } = useParams();
   const menuItemList: FilterAction[] = [
     {
       field: 'title',
       sortDirection: 'asc',
-      title: 'Title [a-z]',
+      title: 'Title [A-Z]',
     },
     {
       field: 'title',
       sortDirection: 'desc',
-      title: 'Title [z-a]',
+      title: 'Title [Z-A]',
     },
     {
-      field: 'date',
+      field: 'createdAt',
       sortDirection: 'asc',
-      title: 'Date created [asc]',
+      title: 'Date created [ASC]',
     },
     {
-      field: 'date',
+      field: 'createdAt',
       sortDirection: 'desc',
-      title: 'Date created [desc]',
+      title: 'Date created [DESC]',
     },
   ];
 
   const [sortFieldIndex, setSortFieldIndex] = useState(0);
 
-  const handleOnClick = (index: number) => {
+  const handleOnClick = (item: FilterAction, index: number) => {
     setSortFieldIndex(index);
+    setParams((preState) => ({
+      ...preState,
+      sortField: item.field,
+      sortDirection: item.sortDirection,
+    }));
   };
-  const handleOnChange = () => {};
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setParams((preState) => ({
+      ...preState,
+      search: e.target.value,
+    }));
+  };
 
   return (
     <div

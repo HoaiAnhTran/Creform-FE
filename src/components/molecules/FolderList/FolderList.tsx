@@ -5,20 +5,26 @@ import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiAddBoxFill } from 'react-icons/ri';
 import { Box, Group, Menu, NavLink, Stack } from '@mantine/core';
 
-import { Folder, type ModalType, ModalTypes } from '@/types';
+import { useParams } from '@/contexts';
+import { FolderResponse, type ModalType, ModalTypes } from '@/types';
 import { cn } from '@/utils';
 
+import { LoadingDots } from '../LoadingDots';
+
 interface FolderListProps {
-  folderList: Folder[];
+  folderList?: FolderResponse[];
+  isLoading: boolean;
   openModal: (type: ModalType) => void;
   setFolderName: (arg0: string) => void;
 }
 
 export const FolderList = ({
-  folderList,
+  folderList = [],
+  isLoading,
   openModal,
   setFolderName,
 }: FolderListProps) => {
+  const { setParams } = useParams();
   const [activeFolder, setActiveFolder] = useState<number>(0);
   const [activeAllForms, setActiveAllForms] = useState<boolean>(true);
   return (
@@ -35,82 +41,89 @@ export const FolderList = ({
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(!activeAllForms);
+          setParams({});
         }}
       ></NavLink>
-      {folderList.map((folder, index) => (
-        <Group
-          className={cn(
-            'gap-0 hover:rounded-md hover:bg-slate-300',
-            index === activeFolder && !activeAllForms
-              ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
-              : 'hover:rounded-md hover:bg-slate-300',
-          )}
-        >
-          <NavLink
-            key={folder.id}
+      {isLoading ? (
+        <LoadingDots />
+      ) : (
+        folderList.map((folder) => (
+          <Group
             className={cn(
-              'w-[85%] font-bold',
-              index === activeFolder && !activeAllForms
+              'gap-0 hover:rounded-md hover:bg-slate-300',
+              folder.id === activeFolder && !activeAllForms
                 ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
                 : 'hover:rounded-md hover:bg-slate-300',
             )}
-            onClick={() => {
-              setActiveFolder(index);
-              setActiveAllForms(false);
-            }}
-            label={folder.name}
-            active={index === activeFolder && !activeAllForms}
-            leftSection={
-              <FaFolder
-                className={
-                  index === activeFolder && !activeAllForms ? 'text-white' : ''
-                }
-              />
-            }
-          />
-          <Menu
-            position='bottom-start'
-            withArrow
-            classNames={{
-              arrow: 'border-malachite-400',
-            }}
           >
-            <Menu.Target>
-              <Box className='flex'>
-                <PiDotsThreeOutlineVerticalFill
-                  size='1.5rem'
-                  className='rounded-md text-slate-100 hover:bg-slate-200 hover:text-slate-600'
+            <NavLink
+              key={folder.id}
+              className={cn(
+                'w-[85%] font-bold',
+                folder.id === activeFolder && !activeAllForms
+                  ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
+                  : 'hover:rounded-md hover:bg-slate-300',
+              )}
+              onClick={() => {
+                setActiveFolder(folder.id);
+                setActiveAllForms(false);
+              }}
+              label={folder.name}
+              active={folder.id === activeFolder && !activeAllForms}
+              leftSection={
+                <FaFolder
+                  className={
+                    folder.id === activeFolder && !activeAllForms
+                      ? 'text-white'
+                      : ''
+                  }
                 />
-              </Box>
-            </Menu.Target>
-            <Menu.Dropdown className='!border-malachite-400 !bg-malachite-400'>
-              <Menu.Item
-                className='font-bold text-white hover:bg-malachite-500'
-                leftSection={<RiAddBoxFill />}
-              >
-                Add new form
-              </Menu.Item>
-              <Menu.Item
-                onClick={() => {
-                  openModal(ModalTypes.UPDATE_FOLDER);
-                  setFolderName(folder.name);
-                }}
-                className='font-bold text-white hover:bg-malachite-500'
-                leftSection={<MdEdit />}
-              >
-                Change name
-              </Menu.Item>
-              <Menu.Item
-                className='font-bold text-white hover:bg-malachite-500'
-                leftSection={<MdDelete />}
-                onClick={() => openModal(ModalTypes.DELETE_FOLDER)}
-              >
-                Delete
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </Group>
-      ))}
+              }
+            />
+            <Menu
+              position='bottom-start'
+              withArrow
+              classNames={{
+                arrow: 'border-malachite-400',
+              }}
+            >
+              <Menu.Target>
+                <Box className='flex'>
+                  <PiDotsThreeOutlineVerticalFill
+                    size='1.5rem'
+                    className='rounded-md text-slate-100 hover:bg-slate-200 hover:text-slate-600'
+                  />
+                </Box>
+              </Menu.Target>
+              <Menu.Dropdown className='border-malachite-400 bg-malachite-400'>
+                <Menu.Item
+                  className='font-bold text-white hover:bg-malachite-500'
+                  leftSection={<RiAddBoxFill />}
+                >
+                  Add new form
+                </Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    openModal(ModalTypes.UPDATE_FOLDER);
+                    setFolderName(folder.name);
+                  }}
+                  className='font-bold text-white hover:bg-malachite-500'
+                  leftSection={<MdEdit />}
+                >
+                  Change name
+                </Menu.Item>
+                <Menu.Item
+                  className='font-bold text-white hover:bg-malachite-500'
+                  leftSection={<MdDelete />}
+                  onClick={() => openModal(ModalTypes.DELETE_FOLDER)}
+                >
+                  Delete
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Group>
+        ))
+      )}
     </Stack>
   );
 };

@@ -14,3 +14,8 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* style for the scrollbar of sidebar in overview page*/
+::-webkit-scrollbar {
+  width: 0px;
+}

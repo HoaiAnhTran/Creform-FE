@@ -27,6 +27,7 @@ export default defineConfig({
       '@/redux': pathResolve('src/providers/redux'),
       '@/types': pathResolve('src/types'),
       '@/apis': pathResolve('src/apis'),
+      '@/contexts': pathResolve('src/contexts'),
     },
   },
   base: '/',

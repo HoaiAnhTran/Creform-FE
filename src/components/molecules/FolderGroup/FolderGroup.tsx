@@ -6,15 +6,16 @@ import { Box, Text } from '@mantine/core';
 import { Button } from '@/atoms/Button';
 import { ConfirmationModal } from '@/molecules/ComfirmationModal';
 import { ManageFolderModal } from '@/molecules/ManageFolderModal';
-import { Folder, type ModalType, ModalTypes } from '@/types';
+import { FolderResponse, type ModalType, ModalTypes } from '@/types';
 
 import { FolderList } from '../FolderList';
 
 interface FolderListProps {
-  folderList: Folder[];
+  folderList?: FolderResponse[];
+  isLoading: boolean;
 }
 
-export const FolderGroup = ({ folderList }: FolderListProps) => {
+export const FolderGroup = ({ folderList, isLoading }: FolderListProps) => {
   const [folderName, setFolderName] = useState<string>('');
   const [modalType, setModalType] = useState<ModalType | ''>('');
   const openModal = (type: ModalType) => setModalType(type);
@@ -27,6 +28,7 @@ export const FolderGroup = ({ folderList }: FolderListProps) => {
       <Text className='font-bold'>MY FORMS</Text>
       <FolderList
         folderList={folderList}
+        isLoading={isLoading}
         openModal={openModal}
         setFolderName={setFolderName}
       />

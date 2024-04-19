@@ -3,7 +3,7 @@ import { FaPlusCircle } from 'react-icons/fa';
 import { Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
-import { type ModalType, ModalTypes, Team } from '@/types';
+import { type ModalType, ModalTypes, TeamResponse } from '@/types';
 
 import { CreateTeamModal } from '../CreateTeamModal';
 import { ManageFolderModal } from '../ManageFolderModal';
@@ -11,10 +11,11 @@ import { ManageMemberModal } from '../ManageMemberModal';
 import { TeamList } from '../TeamList';
 
 interface TeamListProps {
-  teamList: Team[];
+  teamList?: TeamResponse[];
+  isLoading: boolean;
 }
 
-export const TeamGroup = ({ teamList }: TeamListProps) => {
+export const TeamGroup = ({ teamList, isLoading }: TeamListProps) => {
   const [modalType, setModalType] = useState<ModalType | ''>('');
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
@@ -26,7 +27,11 @@ export const TeamGroup = ({ teamList }: TeamListProps) => {
   return (
     <>
       <Text className='font-bold'>MY TEAMS</Text>
-      <TeamList teamList={teamList} openModal={openModal} />
+      <TeamList
+        teamList={teamList}
+        isLoading={isLoading}
+        openModal={openModal}
+      />
       <Button
         className='font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
         onClick={() => openModal(ModalTypes.CREATE_TEAM)}

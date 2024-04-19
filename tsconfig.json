@@ -43,6 +43,8 @@
       "@/redux/*": ["providers/redux/*"],
       "@/apis": ["apis"],
       "@/apis/*": ["apis/*"],
+      "@/contexts": ["contexts"],
+      "@/contexts/*": ["contexts/*"],
     },
   },
   "include": ["src"],

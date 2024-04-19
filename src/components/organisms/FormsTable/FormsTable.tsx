@@ -10,7 +10,6 @@ import {
   Anchor,
   Button as MantineButton,
   Group,
-  Loader,
   Menu,
   Stack,
   Text,
@@ -18,18 +17,28 @@ import {
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
+import { useParams } from '@/contexts';
+import { LoadingDots } from '@/molecules/LoadingDots';
 import {
   useAddToFavouritesMutation,
   useGetMyFormsQuery,
 } from '@/redux/api/formApi';
-import { FormResponse, GetFormsParams } from '@/types';
+import { FormResponse } from '@/types';
 import { formatDate } from '@/utils';
 
+interface FormsTableProps {
+  selectedRecords: FormResponse[];
+  setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
+}
+
 const DEFAULT_PAGE_SIZE = 10;
-export const FormsTable = () => {
+
+export const FormsTable = ({
+  selectedRecords,
+  setSelectedRecords,
+}: FormsTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRecords, setSelectedRecords] = useState<FormResponse[]>([]);
-  const [params, setParams] = useState<GetFormsParams>({});
+  const { params, setParams } = useParams();
 
   const { data, isLoading } = useGetMyFormsQuery(params);
   const [addToFavouritesMutation] = useAddToFavouritesMutation();
@@ -92,7 +101,7 @@ export const FormsTable = () => {
         <Button
           title='Edit Form'
           variant='subtle'
-          className='hover:bg-transparent'
+          className='font-bold hover:bg-transparent'
         />
       ),
       cellsClassName: 'cursor-pointer text-center hover:!bg-malachite-100',
@@ -129,14 +138,11 @@ export const FormsTable = () => {
 
   useEffect(() => {
     setParams({ page: currentPage, pageSize: DEFAULT_PAGE_SIZE });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   if (isLoading) {
-    return (
-      <Stack className='items-center justify-center'>
-        <Loader color='green' type='dots' />
-      </Stack>
-    );
+    return <LoadingDots />;
   }
 
   return (

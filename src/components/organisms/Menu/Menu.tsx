@@ -14,7 +14,7 @@ interface MenuProps {
   shadow?: MantineShadow;
   itemList: FilterAction[];
   sortFieldIndex: number;
-  handleOnClick: (index: number) => void;
+  handleOnClick: (item: FilterAction, index: number) => void;
 }
 
 export const Menu = (props: MenuProps) => {
@@ -47,7 +47,7 @@ export const Menu = (props: MenuProps) => {
           <MenuMantine.Item
             key={index}
             onClick={() => {
-              handleOnClick(index);
+              handleOnClick(item, index);
             }}
             rightSection={
               itemList[sortFieldIndex].field === item.field &&
