@@ -16,7 +16,7 @@ export const Tabs = () => {
 
   return (
     <MantineTabs
-      color='#b4e8b1'
+      color='#8ad56c'
       variant='pills'
       defaultValue='/'
       classNames={{ tabLabel: 'uppercase' }}
@@ -29,21 +29,18 @@ export const Tabs = () => {
           <MantineTabs.Tab
             key={index}
             value={tab.value}
-            className='h-full rounded-[0] px-8 text-lg text-white duration-150 hover:bg-activeTabBackground'
+            className='h-full min-w-40 rounded-[0] px-8 text-lg text-white duration-150 hover:bg-activeTabBackground'
           >
             {tab.title}
           </MantineTabs.Tab>
         ))}
       </MantineTabs.List>
       <ToggleButton
-        label='Preview Forms'
-        className='absolute right-5 top-3 text-sm text-white'
+        label='Preview form'
+        className='absolute right-10 top-3 text-sm text-white'
         isEnable={showPreviewForm}
         handleToggleButton={() => setShowPreviewForm(!showPreviewForm)}
       />
-      {
-        // TODO: Implement routing for tab content
-      }
     </MantineTabs>
   );
 };

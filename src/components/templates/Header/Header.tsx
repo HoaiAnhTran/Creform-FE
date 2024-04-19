@@ -9,7 +9,7 @@ interface HeaderProps {
 const LOGO_HEIGHT = 45;
 const AVATAR_SIZE = 38;
 export const Header = ({ avatarSrc }: HeaderProps) => (
-  <header className='flex h-16 flex-row items-center justify-between bg-malachite-500 px-6'>
+  <header className='flex flex-row items-center justify-between bg-malachite-500 px-10 py-3'>
     <Anchor href='/'>
       <Image src={WhiteLogo} h={LOGO_HEIGHT} />
     </Anchor>

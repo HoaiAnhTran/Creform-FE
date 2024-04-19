@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
+import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MyFormPage } from '@/pages/MyFormPage';
 import { OverviewPage } from '@/pages/OverviewPage';
@@ -60,6 +61,10 @@ export function useRouteElements() {
         {
           path: PATH.OVERVIEW_PAGE,
           element: <OverviewPage />,
+        },
+        {
+          path: PATH.BUILD_FORM_PAGE,
+          element: <BuildFormPage />,
         },
       ],
     },

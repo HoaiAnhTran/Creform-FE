@@ -28,7 +28,7 @@ export default {
         },
         toggleOn: '#a4e01f',
         toggleOff: '#e8edee',
-        activeTabBackground: '#b4e8b1',
+        activeTabBackground: '#8ad56c',
       },
       height: {
         headerHeight: '90px',
