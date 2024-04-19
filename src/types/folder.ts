@@ -11,3 +11,8 @@ export interface FolderResponse {
   deletedAt: string;
   creatorId: number;
 }
+
+export interface FolderRequest {
+  name: string;
+  color?: string;
+}

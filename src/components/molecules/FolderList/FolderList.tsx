@@ -16,7 +16,8 @@ interface FolderListProps {
   folderList?: FolderResponse[];
   isLoading: boolean;
   openModal: (type: ModalType) => void;
-  setFolderName: (arg0: string) => void;
+  setFolderName: (folderName: string) => void;
+  setFolderId: (folderId: number) => void;
 }
 
 export const FolderList = ({
@@ -24,6 +25,7 @@ export const FolderList = ({
   isLoading,
   openModal,
   setFolderName,
+  setFolderId,
 }: FolderListProps) => {
   const { setParams } = useParams();
   const {
@@ -121,6 +123,7 @@ export const FolderList = ({
                   onClick={() => {
                     openModal(ModalTypes.UPDATE_FOLDER);
                     setFolderName(folder.name);
+                    setFolderId(folder.id);
                   }}
                   className='font-bold text-white hover:bg-malachite-500'
                   leftSection={<MdEdit />}
@@ -130,7 +133,10 @@ export const FolderList = ({
                 <Menu.Item
                   className='font-bold text-white hover:bg-malachite-500'
                   leftSection={<MdDelete />}
-                  onClick={() => openModal(ModalTypes.DELETE_FOLDER)}
+                  onClick={() => {
+                    openModal(ModalTypes.DELETE_FOLDER);
+                    setFolderId(folder.id);
+                  }}
                 >
                   Delete
                 </Menu.Item>

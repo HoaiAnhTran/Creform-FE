@@ -11,6 +11,8 @@ import { Modal } from '../Modal';
 
 interface ManageFolderModalProps extends MantineModalProps {
   folderName?: string;
+  folderId?: number;
+  setFolderName: (arg0: string) => void;
   inputTitle?: string;
   onClickCancel: () => void;
   onClickSubmit: () => void;
@@ -18,29 +20,33 @@ interface ManageFolderModalProps extends MantineModalProps {
 
 export const ManageFolderModal = ({
   folderName,
+  folderId,
+  setFolderName,
   onClickCancel,
   onClickSubmit,
   ...props
 }: ManageFolderModalProps) => (
   <Modal
     {...props}
+    canSubmit={folderName !== ''}
     headerIcon={
       <>
-        {folderName ? (
+        {folderId ? (
           <MdEditSquare className='text-white' />
         ) : (
           <FaFolderPlus className='text-white' />
         )}
       </>
     }
-    headerTitle={folderName ? 'Change folder name' : 'Add new folder'}
+    headerTitle={folderId ? 'Change Folder Name' : 'Add folder name'}
     body={
       <>
         <Stack className='pb-16 pt-7'>
           <Text className='font-bold'>Folder name</Text>
           <TextInput
-            defaultValue={folderName}
+            value={folderName}
             placeholder='Add folder name here'
+            onChange={(e) => setFolderName(e.target.value)}
           />
         </Stack>
       </>

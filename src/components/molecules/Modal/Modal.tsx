@@ -16,6 +16,7 @@ interface ModalProps extends MantineModalProps {
   onClickCancel: () => void;
   onClickSubmit: () => void;
   hasFooter?: true;
+  canSubmit?: boolean;
 }
 
 interface NoFooterModalProps
@@ -27,6 +28,7 @@ export const Modal = ({
   headerTitle,
   headerIcon,
   body,
+  canSubmit = true,
   ...props
 }: ModalProps | NoFooterModalProps) => (
   <MantineModal
@@ -60,6 +62,7 @@ export const Modal = ({
           onClick={props.onClickSubmit}
           className='font-bold'
           title='Submit'
+          disabled={!canSubmit}
         />
       </Group>
     )}

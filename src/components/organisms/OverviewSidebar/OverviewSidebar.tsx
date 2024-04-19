@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaStar, FaTrashAlt } from 'react-icons/fa';
 import { Box, Divider, NavLink } from '@mantine/core';
 
@@ -5,18 +6,34 @@ import { Button } from '@/atoms/Button';
 import { useOverviewSidebars, useParams } from '@/contexts';
 import { FolderGroup } from '@/molecules/FolderGroup';
 import { TeamGroup } from '@/molecules/TeamGroup';
-import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
-import { useGetMyTeamsQuery } from '@/redux/api/teamApi';
+import {
+  useCreateFolderMutation,
+  useDeleteFolderMutation,
+  useGetMyFoldersQuery,
+  useUpdateFolderMutation,
+} from '@/redux/api/folderApi';
+import {
+  useCreateTeamMutation,
+  useGetMyTeamsQuery,
+  useUpdateTeamMutation,
+} from '@/redux/api/teamApi';
 import { cn } from '@/utils';
 
 export const OverviewSidebar = () => {
   const { setParams, params } = useParams();
+  const [folderName, setFolderName] = useState<string>('');
   const { setActiveFolder, setActiveAllForms, setActiveTeam } =
     useOverviewSidebars();
 
   const { data: folderList, isLoading: isFolderLoading } =
     useGetMyFoldersQuery();
+  const [createFolder] = useCreateFolderMutation();
+  const [updateFolder] = useUpdateFolderMutation();
+  const [deleteFolder] = useDeleteFolderMutation();
+
   const { data: teamList, isLoading: isTeamLoading } = useGetMyTeamsQuery();
+  const [createTeam] = useCreateTeamMutation();
+  const [updateTeam] = useUpdateTeamMutation();
 
   return (
     <nav className='relative h-full w-full overflow-y-scroll border-r border-slate-300 bg-slate-100 text-slate-600'>
@@ -24,9 +41,23 @@ export const OverviewSidebar = () => {
         <Button size='md' title='CREATE FORM' className='w-full font-bold' />
       </Box>
       <Box className='flex-col gap-5 p-3 md:flex lg:p-5 '>
-        <FolderGroup folderList={folderList} isLoading={isFolderLoading} />
+        <FolderGroup
+          folderList={folderList}
+          isLoading={isFolderLoading}
+          createFolder={createFolder}
+          updateFolder={updateFolder}
+          deleteFolder={deleteFolder}
+          folderName={folderName}
+          setFolderName={setFolderName}
+        />
         <Divider />
-        <TeamGroup teamList={teamList} isLoading={isTeamLoading} />
+        <TeamGroup
+          teamList={teamList}
+          isLoading={isTeamLoading}
+          createTeam={createTeam}
+          updateTeam={updateTeam}
+          setFolderName={setFolderName}
+        />
         <Divider />
         <NavLink
           className={cn('rounded-md  font-bold hover:bg-slate-200', {

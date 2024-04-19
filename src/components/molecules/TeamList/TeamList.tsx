@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { Avatar, Box, Group, Menu, NavLink } from '@mantine/core';
@@ -14,11 +15,15 @@ interface TeamListProps {
   teamList?: TeamResponse[];
   isLoading: boolean;
   openModal: (type: ModalType) => void;
+  setTeamName: (teamName: string) => void;
+  setTeamId: (teamId: number) => void;
 }
 export const TeamList = ({
   teamList = [],
   isLoading,
   openModal,
+  setTeamName,
+  setTeamId,
 }: TeamListProps) => {
   const { activeTeam, setActiveTeam, setActiveAllForms, setActiveFolder } =
     useOverviewSidebars();
@@ -88,6 +93,7 @@ export const TeamList = ({
                   leftSection={<RiTeamFill />}
                   onClick={() => {
                     openModal(ModalTypes.MANAGE_TEAM);
+                    setTeamId(team.id);
                   }}
                 >
                   Manage member
@@ -98,6 +104,17 @@ export const TeamList = ({
                   onClick={() => openModal(ModalTypes.CREATE_FOLDER_IN_TEAM)}
                 >
                   Add new folder
+                </Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    openModal(ModalTypes.UPDATE_TEAM);
+                    setTeamName(team.name);
+                    setTeamId(team.id);
+                  }}
+                  className='font-bold text-white hover:bg-malachite-500'
+                  leftSection={<MdEdit />}
+                >
+                  Change name
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
