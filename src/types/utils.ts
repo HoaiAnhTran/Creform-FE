@@ -6,5 +6,5 @@ export interface SuccessResponse<T> {
 
 export interface ErrorResponse<T> {
   message: string;
-  data: T;
+  data?: T;
 }

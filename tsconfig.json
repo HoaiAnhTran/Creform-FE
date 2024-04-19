@@ -20,8 +20,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    /* Configure paths */
     "baseUrl": "./src",
     "paths": {
       "@/configs": ["configs"],
@@ -37,6 +35,14 @@
       "@/pages/*": ["pages/*"],
       "@/types": ["types"],
       "@/types/*": ["types/*"],
+      "@/constants": ["constants"],
+      "@/constants/*": ["constants/*"],
+      "@/hooks": ["hooks"],
+      "@/hooks/*": ["hooks/*"],
+      "@/redux": ["providers/redux"],
+      "@/redux/*": ["providers/redux/*"],
+      "@/apis": ["apis"],
+      "@/apis/*": ["apis/*"],
     },
   },
   "include": ["src"],

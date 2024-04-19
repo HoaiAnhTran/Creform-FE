@@ -3,8 +3,6 @@ import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 
-// https://vitejs.dev/config/
-
 const env = loadEnv('', process.cwd());
 
 const pathResolve = (dir: string) => resolve(__dirname, '.', dir);
@@ -24,7 +22,11 @@ export default defineConfig({
       '@/organisms': pathResolve('src/components/organisms'),
       '@/templates': pathResolve('src/components/templates'),
       '@/pages': pathResolve('src/pages'),
+      '@/constants': pathResolve('src/constants'),
+      '@/hooks': pathResolve('src/hooks'),
+      '@/redux': pathResolve('src/providers/redux'),
       '@/types': pathResolve('src/types'),
+      '@/apis': pathResolve('src/apis'),
     },
   },
   base: '/',

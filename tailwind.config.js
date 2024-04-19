@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   corePlugins: { preflight: false },
@@ -27,6 +26,10 @@ export default {
           900: '#1c4c1b',
           950: '#0a290a',
         },
+      },
+      height: {
+        headerHeight: '90px',
+        contentHeight: `calc( 100vh - 90px)`,
       },
     },
   },

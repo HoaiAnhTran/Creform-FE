@@ -1,5 +1,8 @@
+import { useRouteElements } from '@/hooks/useRouteElements';
+
 function App() {
-  return <></>;
+  const routeElements = useRouteElements();
+  return <>{routeElements}</>;
 }
 
 export default App;

@@ -1,1 +1,1 @@
-export * from './uploadImageType';
+export * from './UploadImageType';
