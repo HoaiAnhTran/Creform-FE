@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
 import { IoIosLogOut } from 'react-icons/io';
 import { IoPerson, IoPersonOutline } from 'react-icons/io5';
+import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, Image, Menu } from '@mantine/core';
 
@@ -8,16 +10,27 @@ import { Button } from '@/atoms/Button';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
-import { httpClient } from '@/utils';
+import { FormResponse } from '@/types';
+import { formatDate, httpClient } from '@/utils';
 
 interface HeaderProps {
+  form: FormResponse;
   onButtonClick?: () => void;
 }
 
 const LOGO_HEIGHT = 45;
+const DEFAULT_FORM_TITLE = 'Form';
 
-export const WhiteHeader = ({ onButtonClick }: HeaderProps) => {
+export const BuildFormHeader = ({ form, onButtonClick }: HeaderProps) => {
   const { data: myProfile } = useGetMyProfileQuery();
+
+  const [currentTitle, setCurrentTitle] = useState<string>(
+    form.title || DEFAULT_FORM_TITLE,
+  );
+  const [inputWidth, setInputWidth] = useState<string>('');
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const titleInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
 
@@ -26,18 +39,43 @@ export const WhiteHeader = ({ onButtonClick }: HeaderProps) => {
     navigate(PATH.ROOT_PAGE);
   };
 
-  return (
-    <header className='flex h-16 flex-row items-center justify-between gap-1 px-10'>
-      <div className='flex flex-row gap-2'>
-        <Anchor href='/'>
-          <Image src={GreenLogo} h={LOGO_HEIGHT} />
-        </Anchor>
-      </div>
+  useEffect(() => {
+    setInputWidth(`${currentTitle.length * 11}px`);
+  }, [currentTitle]);
 
-      <div className='flex flex-col'>
-        <div className='flex justify-center font-bold'>Form</div>
-        <div className='flex justify-center text-malachite-500'>
-          last edited at
+  return (
+    <header className='relative flex flex-row items-center justify-between px-10 py-3'>
+      <Anchor href='/'>
+        <Image src={GreenLogo} h={LOGO_HEIGHT} />
+      </Anchor>
+
+      <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center'>
+        <div className='flex max-w-[50%] items-center justify-between gap-0.5 text-xl font-bold'>
+          <input
+            ref={titleInputRef}
+            value={currentTitle}
+            onChange={(event) => {
+              setCurrentTitle(event.target.value);
+            }}
+            onBlur={() => setIsEditing(false)}
+            className='min-w-14 max-w-full overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
+            style={{ width: inputWidth }}
+          />
+          {isEditing || (
+            <MdOutlineModeEditOutline
+              size={18}
+              onClick={() => {
+                titleInputRef.current?.focus();
+                setIsEditing(true);
+              }}
+              className='min-w-[5%]'
+            />
+          )}
+        </div>
+        <div className='text-[13px] text-malachite-500'>
+          {form.updatedAt
+            ? `Last updated at ${formatDate(form.updatedAt, 'MMM D, YYYY h:mm A')}`
+            : `Created at ${formatDate(form.createdAt, 'MMM D, YYYY h:mm A')}`}
         </div>
       </div>
 

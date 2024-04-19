@@ -1,2 +1,2 @@
+export * from './BuildFormHeader';
 export * from './Header';
-export * from './WhiteHeader';
