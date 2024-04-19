@@ -24,7 +24,7 @@ export const Tabs = () => {
       value={tabValue}
       onChange={(value: string | null) => navigate(`${value}`)}
     >
-      <MantineTabs.List className='justify-center gap-0 bg-gradient-to-r from-malachite-400 to-malachite-600'>
+      <MantineTabs.List className='sticky top-0 z-10 justify-center gap-0 bg-gradient-to-r from-malachite-400 to-malachite-600'>
         {tabList.map((tab, index) => (
           <MantineTabs.Tab
             key={index}

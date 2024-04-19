@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import { PiArrowLineUp } from 'react-icons/pi';
 import { UnstyledButton } from '@mantine/core';
 
+import { useScroll } from '@/hooks';
 import { cn } from '@/utils';
 
 interface ScrollButtonProps {
@@ -11,19 +11,7 @@ interface ScrollButtonProps {
 const SCROLL_THRESHOLD = 200;
 
 export const ScrollToTopButton = ({ className }: ScrollButtonProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.pageYOffset >= SCROLL_THRESHOLD);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const isVisible = useScroll(SCROLL_THRESHOLD);
 
   const handleClick = () => {
     window.scrollTo({

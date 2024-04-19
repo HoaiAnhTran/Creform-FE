@@ -19,7 +19,7 @@ export const BuildFormLeftbar = () => {
           setShowLeftbar(true);
         }}
         className={cn(
-          'ease-linea mt-10 h-14 w-[0] rounded-l-none rounded-r-full pr-0 transition-all duration-1000',
+          'mt-10 h-14 w-[0] rounded-l-none rounded-r-full pr-0 transition-all duration-1000 ease-linear',
           { 'w-[170px]': !showLeftbar },
         )}
         size='sm'
@@ -37,7 +37,7 @@ export const BuildFormLeftbar = () => {
       />
       <Box
         className={cn(
-          'ease-linea absolute top-0 h-screen w-[0] overflow-auto bg-slate-500 transition-all duration-1000',
+          'absolute top-0 h-screen w-[0] overflow-auto bg-slate-500 transition-all duration-1000 ease-linear',
           { 'w-[350px]': showLeftbar },
         )}
       >
