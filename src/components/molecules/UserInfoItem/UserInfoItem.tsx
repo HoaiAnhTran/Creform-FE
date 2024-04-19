@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { CloseButton, Divider, Flex, Text } from '@mantine/core';
+import _startCase from 'lodash.startcase';
 
 import { Button } from '@/atoms/Button';
 
@@ -24,8 +25,8 @@ export const UserInfoItem = ({
 }: UserInfoItemProps) => (
   <>
     <Flex align='start' justify='space-between' gap='xl'>
-      <Text className='font-bold' flex={1}>
-        {fieldName}
+      <Text className='font-bold' flex={1.5}>
+        {_startCase(fieldName)}
       </Text>
       <Flex
         align={editingFieldName === fieldName ? 'start' : 'center'}

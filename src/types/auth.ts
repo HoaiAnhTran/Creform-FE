@@ -1,6 +1,3 @@
-import { SuccessResponse } from './apiResponse';
-
-export interface AuthResponse
-  extends SuccessResponse<{
-    token: string;
-  }> {}
+export interface AuthResponse {
+  token: string;
+}

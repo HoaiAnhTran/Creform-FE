@@ -109,7 +109,7 @@ export const Button = forwardRef(
       <MantineButton
         ref={forwardedRef || ref}
         className={cn(
-          'px-3 py-1 font-medium capitalize',
+          'px-3 py-1 font-medium capitalize disabled:opacity-50',
           checkButtonType(),
           className,
         )}

@@ -1,44 +1,97 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Avatar,
-  Container,
+  Box,
   Group,
   Input,
   PasswordInput,
   Stack,
   Text,
 } from '@mantine/core';
+import { useFormik } from 'formik';
 
 import { Button } from '@/atoms/Button';
+import { MESSAGES } from '@/constants/messages';
 import { UserInfoItem } from '@/molecules/UserInfoItem';
-import { type ImageType, UploadImage } from '@/types';
+import { useUploadImageMutation } from '@/redux/api/imageApi';
+import {
+  useChangePasswordMutation,
+  useGetMyProfileQuery,
+  useUpdateProfileMutation,
+} from '@/redux/api/userApi';
+import { Header } from '@/templates/Header';
+import { ErrorResponse, type ImageType, UploadImage } from '@/types';
+import {
+  emailValidationSchema,
+  organizationNameValidationSchema,
+  passwordValidationSchema,
+  toastify,
+  usernameValidationSchema,
+} from '@/utils';
 
-// TODO: remove this data later when have API
-const userData = {
-  username: 'Jane',
-  avatar: '',
-  email: 'jane@gmail.com',
-  organizationName: '',
-  organizationLogo: '',
-};
+enum UserProfileFields {
+  USERNAME = 'username',
+  AVATAR = 'avatar',
+  PASSWORD = 'password',
+  NEW_PASSWORD = 'newPassword',
+  CONFIRM_PASSWORD = 'confirmPassword',
+  EMAIL = 'email',
+  ORGANIZATION_NAME = 'organizationName',
+  ORGANIZATION_LOGO = 'organizationLogo',
+}
 
-interface CurrentUser {
-  username: string;
-  avatar: string;
-  email: string;
-  organizationName: string;
+interface CurrentImages {
+  avatarUrl: string;
   organizationLogo: string;
 }
 
+const emptyInitialValues = {
+  username: '',
+  email: '',
+  password: '',
+  newPassword: '',
+  confirmPassword: '',
+  organizationName: '',
+};
+
 export const AccountPage = () => {
+  const { data: myProfile } = useGetMyProfileQuery();
+
+  const [
+    updateProfile,
+    { isSuccess: isUpdateProfileSuccess, error: updateProfileError },
+  ] = useUpdateProfileMutation();
+
+  const [
+    changePassword,
+    { isSuccess: isChangePwSuccess, error: changePwError },
+  ] = useChangePasswordMutation();
+
+  const [uploadImage, { isLoading: isUploadingImage }] =
+    useUploadImageMutation();
+
   const [editingFieldName, setEditingFieldName] = useState<string>('');
-  const [currentUser, setCurrentUser] = useState<CurrentUser>({
-    username: userData.username ?? '',
-    avatar: userData.avatar ?? '',
-    email: userData.email ?? '',
-    organizationName: userData.organizationName ?? '',
-    organizationLogo: userData.organizationLogo ?? '',
+
+  const [selectedFile, setSelectedFile] = useState<File>();
+
+  const [currentImages, setCurrentImages] = useState<CurrentImages>({
+    avatarUrl: '',
+    organizationLogo: '',
   });
+
+  useEffect(() => {
+    if (!myProfile) {
+      setCurrentImages(() => ({
+        avatarUrl: '',
+        organizationLogo: '',
+      }));
+    } else {
+      setCurrentImages(() => ({
+        avatarUrl: myProfile.avatarUrl,
+        organizationLogo: myProfile.organizationLogo,
+      }));
+    }
+  }, [myProfile]);
 
   const handleEdit = (fieldName: string) => {
     setEditingFieldName(fieldName);
@@ -52,7 +105,7 @@ export const AccountPage = () => {
 
   const logoInputRef = useRef<HTMLInputElement>(null);
 
-  const handleUploadImage = (type: ImageType) =>
+  const handleChooseImage = (type: ImageType) =>
     type === UploadImage.AVATAR
       ? avatarInputRef.current?.click()
       : logoInputRef.current?.click();
@@ -62,61 +115,193 @@ export const AccountPage = () => {
     type: ImageType,
   ) => {
     if (!event.target.files) return;
-    const selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+
+    if (!file.type.startsWith('image/')) {
+      toastify.displayError(MESSAGES.ONLY_SUPPORT_IMAGE_FILE_TYPES);
+      return;
+    }
+
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64Encoded = reader?.result?.toString() ?? '';
       if (type === UploadImage.AVATAR) {
-        setCurrentUser((prev) => ({ ...prev, avatar: base64Encoded }));
-        handleEdit('Avatar');
+        setCurrentImages((prev) => ({
+          ...prev,
+          avatarUrl: base64Encoded,
+        }));
+        handleEdit(UserProfileFields.AVATAR);
       } else {
-        setCurrentUser((prev) => ({
+        setCurrentImages((prev) => ({
           ...prev,
           organizationLogo: base64Encoded,
         }));
-        handleEdit('Organization Logo');
+        handleEdit(UserProfileFields.ORGANIZATION_LOGO);
       }
     };
-    if (selectedFile) {
-      reader.readAsDataURL(selectedFile);
+    if (file) {
+      reader.readAsDataURL(file);
+      setSelectedFile(file);
     }
   };
 
+  const handleUpdateImage = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    type: ImageType,
+  ) => {
+    event.preventDefault();
+    if (selectedFile) {
+      uploadImage(selectedFile).then((res) => {
+        if ('data' in res) {
+          type === UploadImage.AVATAR
+            ? updateProfile({ avatarUrl: res.data.data.url })
+            : updateProfile({ organizationLogo: res.data.data.url });
+          handleCancelEdit();
+          return;
+        }
+        if (res.error as ErrorResponse)
+          toastify.displayError((res.error as ErrorResponse).message);
+      });
+    }
+  };
+
+  const handleRemoveImage = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    type: ImageType,
+  ) => {
+    event.preventDefault();
+    type === UploadImage.AVATAR
+      ? updateProfile({ avatarUrl: '' })
+      : updateProfile({ organizationLogo: '' });
+    handleCancelEdit();
+  };
+
+  const getInitialValues = useMemo(() => {
+    switch (editingFieldName) {
+      case UserProfileFields.USERNAME:
+        return {
+          username: myProfile?.username ?? '',
+        };
+      case UserProfileFields.EMAIL:
+        return {
+          email: myProfile?.email ?? '',
+        };
+      case UserProfileFields.PASSWORD:
+        return {
+          password: '',
+          newPassword: '',
+          confirmPassword: '',
+        };
+      case UserProfileFields.ORGANIZATION_NAME:
+        return {
+          organizationName: myProfile?.organizationName ?? '',
+        };
+      default:
+        return emptyInitialValues;
+    }
+  }, [myProfile, editingFieldName]);
+
+  const getValidationSchema = useMemo(() => {
+    switch (editingFieldName) {
+      case UserProfileFields.USERNAME:
+        return usernameValidationSchema;
+      case UserProfileFields.EMAIL:
+        return emailValidationSchema;
+      case UserProfileFields.PASSWORD:
+        return passwordValidationSchema;
+      case UserProfileFields.ORGANIZATION_NAME:
+        return organizationNameValidationSchema;
+      default:
+        break;
+    }
+  }, [editingFieldName]);
+
+  const { values, errors, touched, getFieldProps, handleSubmit } = useFormik({
+    initialValues: getInitialValues,
+    validationSchema: getValidationSchema,
+    onSubmit: () => {
+      switch (editingFieldName) {
+        case UserProfileFields.USERNAME:
+          updateProfile({
+            username: values.username ?? undefined,
+          });
+          break;
+        case UserProfileFields.EMAIL:
+          updateProfile({
+            email: values.email ?? undefined,
+          });
+          break;
+        case UserProfileFields.PASSWORD:
+          changePassword({
+            currentPassword: values.password || '',
+            newPassword: values.newPassword || '',
+          });
+          break;
+        case UserProfileFields.ORGANIZATION_NAME:
+          updateProfile({
+            organizationName: values.organizationName ?? undefined,
+          });
+          break;
+        default:
+          break;
+      }
+    },
+    enableReinitialize: true,
+  });
+
   const userInfoItems = [
     {
-      fieldName: 'Username',
+      fieldName: UserProfileFields.USERNAME,
       content:
-        editingFieldName === 'Username' ? (
-          <Stack className='w-1/2'>
+        editingFieldName === UserProfileFields.USERNAME ? (
+          <form onSubmit={handleSubmit} className='flex w-1/2 flex-col gap-3'>
             <Input
               placeholder='Username'
-              value={currentUser.username}
-              onChange={(event) =>
-                setCurrentUser((prev) => ({
-                  ...prev,
-                  username: event.target.value,
-                }))
-              }
+              {...getFieldProps(UserProfileFields.USERNAME)}
               autoFocus
             />
-            <Button title='Save' />
-          </Stack>
+            {errors.username && touched.username && (
+              <Text className='text-xs text-red-500'>{errors.username}</Text>
+            )}
+            <Button title='Save' type='submit' />
+          </form>
         ) : (
-          <Text>{userData.username}</Text>
+          <Text>{myProfile?.username}</Text>
         ),
       hasEditButton: true,
       isLastItem: false,
     },
     {
-      fieldName: 'Password',
+      fieldName: UserProfileFields.PASSWORD,
       content:
-        editingFieldName === 'Password' ? (
-          <Stack className='w-1/2'>
-            <PasswordInput placeholder='Current password' autoFocus />
-            <PasswordInput placeholder='New password' />
-            <PasswordInput placeholder='Confirm password' />
+        editingFieldName === UserProfileFields.PASSWORD ? (
+          <form onSubmit={handleSubmit} className='flex w-1/2 flex-col gap-3'>
+            <PasswordInput
+              placeholder='Current password'
+              {...getFieldProps(UserProfileFields.PASSWORD)}
+              autoFocus
+            />
+            {errors.password && touched.password && (
+              <Text className='text-xs text-red-500'>{errors.password}</Text>
+            )}
+            <PasswordInput
+              placeholder='New password'
+              {...getFieldProps(UserProfileFields.NEW_PASSWORD)}
+            />
+            {errors.newPassword && touched.newPassword && (
+              <Text className='text-xs text-red-500'>{errors.newPassword}</Text>
+            )}
+            <PasswordInput
+              placeholder='Confirm password'
+              {...getFieldProps(UserProfileFields.CONFIRM_PASSWORD)}
+            />
+            {errors.confirmPassword && touched.confirmPassword && (
+              <Text className='text-xs text-red-500'>
+                {errors.confirmPassword}
+              </Text>
+            )}
             <Group>
-              <Button title='Save' className='flex-1' />
+              <Button title='Save' className='flex-1' type='submit' />
               <Button
                 title='Cancel'
                 color='gray'
@@ -124,22 +309,29 @@ export const AccountPage = () => {
                 onClick={handleCancelEdit}
               />
             </Group>
-          </Stack>
+          </form>
         ) : (
           <Button
             title='Change password'
-            onClick={() => handleEdit('Password')}
+            onClick={() => handleEdit(UserProfileFields.PASSWORD)}
           />
         ),
       hasEditButton: false,
       isLastItem: false,
     },
     {
-      fieldName: 'Avatar',
+      fieldName: UserProfileFields.AVATAR,
       content:
-        editingFieldName === 'Avatar' ? (
+        editingFieldName === UserProfileFields.AVATAR ? (
           <Group align='center'>
-            <Avatar variant='filled' radius='sm' src={currentUser.avatar} />
+            <Box className='rounded-md bg-gray-100 p-1.5'>
+              <Avatar
+                size='md'
+                variant='filled'
+                radius='sm'
+                src={currentImages.avatarUrl}
+              />
+            </Box>
             <input
               type='file'
               ref={avatarInputRef}
@@ -147,23 +339,37 @@ export const AccountPage = () => {
               className='hidden'
               accept='image/*'
             />
-            <Button title='Save' />
+            <Button
+              title='Save'
+              onClick={(
+                event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+              ) => handleUpdateImage(event, UploadImage.AVATAR)}
+              disabled={isUploadingImage}
+            />
             <Button
               title='Cancel'
               color='gray'
               onClick={() => {
-                setCurrentUser((prev) => ({
+                setCurrentImages((prev) => ({
                   ...prev,
-                  avatar: userData.avatar ?? '',
+                  avatarUrl: myProfile?.avatarUrl ?? '',
                 }));
                 handleCancelEdit();
               }}
+              disabled={isUploadingImage}
             />
           </Group>
         ) : (
           <Group>
-            {userData.avatar ? (
-              <Avatar variant='filled' radius='sm' src={currentUser.avatar} />
+            {myProfile?.avatarUrl ? (
+              <Box className='rounded-md bg-gray-100 p-1.5'>
+                <Avatar
+                  size='md'
+                  variant='filled'
+                  radius='sm'
+                  src={currentImages.avatarUrl}
+                />
+              </Box>
             ) : null}
             <input
               type='file'
@@ -172,73 +378,91 @@ export const AccountPage = () => {
               className='hidden'
               accept='image/*'
             />
-            <Button
-              title={userData.avatar ? 'Change avatar' : 'Upload avatar'}
-              onClick={() => handleUploadImage(UploadImage.AVATAR)}
-            />
+            {myProfile?.avatarUrl ? (
+              <>
+                <Button
+                  title='Change avatar'
+                  onClick={() => handleChooseImage(UploadImage.AVATAR)}
+                />
+                <Button
+                  title='Remove'
+                  variant='outline'
+                  onClick={(event) => {
+                    handleRemoveImage(event, UploadImage.AVATAR);
+                  }}
+                />
+              </>
+            ) : (
+              <Button
+                title='Upload avatar'
+                onClick={() => handleChooseImage(UploadImage.AVATAR)}
+              />
+            )}
           </Group>
         ),
       hasEditButton: false,
       isLastItem: false,
     },
     {
-      fieldName: 'Email',
+      fieldName: UserProfileFields.EMAIL,
       content:
-        editingFieldName === 'Email' ? (
-          <Stack className='w-1/2'>
+        editingFieldName === UserProfileFields.EMAIL ? (
+          <form
+            onSubmit={handleSubmit}
+            className='flex w-1/2 flex-col justify-between gap-3'
+          >
             <Input
               placeholder='Email'
-              value={currentUser.email}
-              onChange={(event) =>
-                setCurrentUser((prev) => ({
-                  ...prev,
-                  email: event.target.value,
-                }))
-              }
+              {...getFieldProps(UserProfileFields.EMAIL)}
               autoFocus
             />
-            <Button title='Save' />
-          </Stack>
+            {errors.email && touched.email && (
+              <Text className='text-xs text-red-500'>{errors.email}</Text>
+            )}
+            <Button title='Save' type='submit' />
+          </form>
         ) : (
-          <Text>{userData.email}</Text>
+          <Text>{myProfile?.email}</Text>
         ),
       hasEditButton: true,
       isLastItem: false,
     },
     {
-      fieldName: 'Organization Name',
+      fieldName: UserProfileFields.ORGANIZATION_NAME,
       content:
-        editingFieldName === 'Organization Name' ? (
-          <Stack className='w-1/2'>
+        editingFieldName === UserProfileFields.ORGANIZATION_NAME ? (
+          <form onSubmit={handleSubmit} className='flex w-1/2 flex-col gap-3'>
             <Input
-              placeholder='Organization Name'
-              value={currentUser.organizationName}
-              onChange={(event) =>
-                setCurrentUser((prev) => ({
-                  ...prev,
-                  organizationName: event.target.value,
-                }))
-              }
+              placeholder='Organization name'
+              {...getFieldProps(UserProfileFields.ORGANIZATION_NAME)}
               autoFocus
             />
-            <Button title='Save' />
-          </Stack>
+            {errors.organizationName && touched.organizationName && (
+              <Text className='text-xs text-red-500'>
+                {errors.organizationName}
+              </Text>
+            )}
+            <Button title='Save' type='submit' />
+          </form>
         ) : (
-          <Text>{userData.organizationName}</Text>
+          <Text>{myProfile?.organizationName}</Text>
         ),
       hasEditButton: true,
       isLastItem: false,
     },
     {
-      fieldName: 'Organization Logo',
+      fieldName: UserProfileFields.ORGANIZATION_LOGO,
       content:
-        editingFieldName === 'Organization Logo' ? (
+        editingFieldName === UserProfileFields.ORGANIZATION_LOGO ? (
           <Group align='center'>
-            <Avatar
-              variant='filled'
-              radius='sm'
-              src={currentUser.organizationLogo}
-            />
+            <Box className='rounded-md bg-gray-100 p-1.5'>
+              <Avatar
+                size='md'
+                variant='filled'
+                radius='sm'
+                src={currentImages.organizationLogo}
+              />
+            </Box>
             <input
               type='file'
               ref={logoInputRef}
@@ -246,27 +470,37 @@ export const AccountPage = () => {
               className='hidden'
               accept='image/*'
             />
-            <Button title='Save' />
+            <Button
+              title='Save'
+              onClick={(
+                event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+              ) => handleUpdateImage(event, UploadImage.LOGO)}
+              disabled={isUploadingImage}
+            />
             <Button
               title='Cancel'
               color='gray'
               onClick={() => {
-                setCurrentUser((prev) => ({
+                setCurrentImages((prev) => ({
                   ...prev,
-                  organizationLogo: userData.organizationLogo ?? '',
+                  organizationLogo: myProfile?.organizationLogo ?? '',
                 }));
                 handleCancelEdit();
               }}
+              disabled={isUploadingImage}
             />
           </Group>
         ) : (
           <Group>
-            {userData.organizationLogo ? (
-              <Avatar
-                variant='filled'
-                radius='sm'
-                src={currentUser.organizationLogo}
-              />
+            {myProfile?.organizationLogo ? (
+              <Box className='rounded-md bg-gray-100 p-1.5'>
+                <Avatar
+                  size='md'
+                  variant='filled'
+                  radius='sm'
+                  src={currentImages.organizationLogo}
+                />
+              </Box>
             ) : null}
             <input
               type='file'
@@ -275,18 +509,24 @@ export const AccountPage = () => {
               className='hidden'
               accept='image/*'
             />
-            {userData.organizationLogo ? (
+            {myProfile?.organizationLogo ? (
               <>
                 <Button
                   title='Change logo'
-                  onClick={() => handleUploadImage(UploadImage.LOGO)}
+                  onClick={() => handleChooseImage(UploadImage.LOGO)}
                 />
-                <Button title='Remove' variant='outline' />
+                <Button
+                  title='Remove'
+                  variant='outline'
+                  onClick={(event) => {
+                    handleRemoveImage(event, UploadImage.LOGO);
+                  }}
+                />
               </>
             ) : (
               <Button
                 title='Add organization logo'
-                onClick={() => handleUploadImage(UploadImage.LOGO)}
+                onClick={() => handleChooseImage(UploadImage.LOGO)}
               />
             )}
           </Group>
@@ -296,16 +536,44 @@ export const AccountPage = () => {
     },
   ];
 
+  useEffect(() => {
+    if (isUpdateProfileSuccess) {
+      toastify.displaySuccess(MESSAGES.UPDATE_PROFILE_SUCCESS);
+      handleCancelEdit();
+    }
+  }, [isUpdateProfileSuccess]);
+
+  useEffect(() => {
+    if (isChangePwSuccess) {
+      toastify.displaySuccess(MESSAGES.CHANGE_PASSWORD_SUCCESS);
+      handleCancelEdit();
+    }
+  }, [isChangePwSuccess]);
+
+  useEffect(() => {
+    if (updateProfileError) {
+      toastify.displayError((updateProfileError as ErrorResponse).message);
+    }
+  }, [updateProfileError]);
+
+  useEffect(() => {
+    if (changePwError) {
+      toastify.displayError((changePwError as ErrorResponse).message);
+    }
+  }, [changePwError]);
+
   return (
-    <Container size='xl' className='m-0 p-0'>
-      <Stack className='h-full w-screen bg-malachite-600 px-60'>
-        <Stack className='items-center justify-start gap-12 rounded-md bg-white px-14 py-7'>
-          <Text className='text-center text-3xl font-medium'>
+    <Stack className='h-full w-full gap-0'>
+      <Header />
+      <Stack className='bg-malachite-500 px-40'>
+        <Stack className='items-center justify-center gap-12 rounded-xl bg-white px-14 py-7'>
+          <Text className='text-center text-[26px] font-medium'>
             Update Account and General Information
           </Text>
           <Stack className='w-full gap-5'>
-            {userInfoItems.map((item) => (
+            {userInfoItems.map((item, index) => (
               <UserInfoItem
+                key={index}
                 editingFieldName={editingFieldName}
                 handleEdit={handleEdit}
                 handleCancelEdit={handleCancelEdit}
@@ -318,6 +586,6 @@ export const AccountPage = () => {
           </Stack>
         </Stack>
       </Stack>
-    </Container>
+    </Stack>
   );
 };

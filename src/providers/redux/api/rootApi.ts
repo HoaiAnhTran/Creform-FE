@@ -5,5 +5,5 @@ import { axiosBaseQuery } from '@/redux/axiosBaseQuery';
 export const rootApi = createApi({
   baseQuery: axiosBaseQuery(),
   endpoints: () => ({}),
-  tagTypes: ['Forms', 'Folders', 'Teams'],
+  tagTypes: ['Profile', 'Forms', 'Folders', 'Teams'],
 });

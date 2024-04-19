@@ -34,6 +34,9 @@ export default {
         headerHeight: '90px',
         contentHeight: `calc( 100vh - 90px)`,
       },
+      boxShadow: {
+        whiteShadow: '0 0 1px 2px rgba(225,225,225,0.5)',
+      },
     },
   },
   plugins: [],

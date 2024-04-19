@@ -5,15 +5,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { MdModeEditOutline } from 'react-icons/md';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
-import {
-  ActionIcon,
-  Anchor,
-  Button as MantineButton,
-  Group,
-  Menu,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { ActionIcon, Anchor, Group, Menu, Stack, Text } from '@mantine/core';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
@@ -104,19 +96,19 @@ export const FormsTable = ({
           className='font-bold hover:bg-transparent'
         />
       ),
-      cellsClassName: 'cursor-pointer text-center hover:!bg-malachite-100',
+      cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
     },
     {
       accessor: 'more',
       render: () => (
         <Menu shadow='sm' offset={10} position='bottom-end' withArrow>
           <Menu.Target>
-            <MantineButton
-              className='bg-transparent text-malachite-500 hover:bg-malachite-100 hover:text-malachite-500 aria-expanded:font-bold'
+            <Button
+              title='More'
+              variant='subtle'
               rightSection={<IoIosArrowDown />}
-            >
-              More
-            </MantineButton>
+              className='aria-expanded:font-bold'
+            />
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -132,7 +124,7 @@ export const FormsTable = ({
           </Menu.Dropdown>
         </Menu>
       ),
-      cellsClassName: 'cursor-pointer text-center hover:!bg-malachite-100',
+      cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
     },
   ];
 

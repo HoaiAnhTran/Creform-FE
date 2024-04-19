@@ -1,28 +1,28 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
+import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoginPage } from '@/pages/LoginPage';
-import { MyFormPage } from '@/pages/MyFormPage';
 import { OverviewPage } from '@/pages/OverviewPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
-// route required authentication to navigate to
+// route required authentication to navigate
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
 
   return isAuthenticated ? <Outlet /> : <Navigate to={`/${PATH.LOGIN_PAGE}`} />;
 }
 
-// route for page like login and register when not authenticated to navigate
+// when not authenticated, it will navigate to this route
 export function RejectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
 
   return !isAuthenticated ? (
     <Outlet />
   ) : (
-    <Navigate to={`/${PATH.MY_FORM_PAGE}`} replace={true} />
+    <Navigate to={PATH.OVERVIEW_PAGE} replace={true} />
   );
 }
 
@@ -51,16 +51,16 @@ export function useRouteElements() {
       element: <ProtectedRoute />,
       children: [
         {
-          path: PATH.MY_FORM_PAGE,
-          element: <MyFormPage />,
-        },
-        {
           path: PATH.OVERVIEW_PAGE,
           element: <OverviewPage />,
         },
         {
           path: PATH.BUILD_FORM_PAGE,
           element: <BuildFormPage />,
+        },
+        {
+          path: PATH.MY_ACCOUNT_PAGE,
+          element: <AccountPage />,
         },
       ],
     },

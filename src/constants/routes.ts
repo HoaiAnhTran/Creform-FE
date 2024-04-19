@@ -1,8 +1,8 @@
 export const PATH = {
-  LOGIN_PAGE: 'login',
-  SIGNUP_PAGE: 'signup',
-  ROOT_PAGE: '',
-  MY_FORM_PAGE: 'my-form-page',
-  OVERVIEW_PAGE: 'overview',
-  BUILD_FORM_PAGE: 'build',
+  ROOT_PAGE: '/',
+  LOGIN_PAGE: '/login',
+  SIGNUP_PAGE: '/signup',
+  OVERVIEW_PAGE: '/overview',
+  BUILD_FORM_PAGE: '/build',
+  MY_ACCOUNT_PAGE: '/my-account',
 };

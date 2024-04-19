@@ -9,17 +9,17 @@ import { ErrorResponse } from '@/types';
 import { httpClient, saveAccessTokenToLS, toastify } from '@/utils';
 
 export const SignupPage = () => {
-  const [singUpUser, { isLoading }] = useSignUpUserMutation();
+  const [signUpUser, { isLoading }] = useSignUpUserMutation();
   const navigate = useNavigate();
   const onSubmit = (values: SignupSchema) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...body } = values;
-    singUpUser(body).then((res) => {
+    signUpUser(body).then((res) => {
       if (isLoading) return;
       if ('data' in res) {
         httpClient.setToken(res.data.data.token);
         saveAccessTokenToLS(res.data.data.token);
-        navigate(`/${PATH.ROOT_PAGE}`);
+        navigate(PATH.ROOT_PAGE);
         return;
       }
       if (res.error as ErrorResponse)

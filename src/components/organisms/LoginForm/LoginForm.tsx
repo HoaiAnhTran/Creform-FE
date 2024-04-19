@@ -6,9 +6,9 @@ import * as yup from 'yup';
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
 import { TextInput } from '@/molecules/TextInput';
-import { accountSchema } from '@/utils/schemas/rules';
+import { signUpSchema } from '@/utils/schemas/signUpSchema';
 
-const loginSchema = accountSchema.pick(['email', 'password']);
+const loginSchema = signUpSchema.pick(['email', 'password']);
 
 export type LoginSchema = yup.InferType<typeof loginSchema>;
 
@@ -47,7 +47,7 @@ export const LoginForm = (props: LoginFormProps) => {
         <div className='mt-3 flex items-center justify-center text-xs'>
           <span>Don't have an account?</span>
           <Link
-            to={`/${PATH.SIGNUP_PAGE}`}
+            to={PATH.SIGNUP_PAGE}
             className='ml-1 text-malachite-500 no-underline hover:font-medium hover:text-malachite-600'
           >
             Sign Up

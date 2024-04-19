@@ -5,5 +5,6 @@ import * as toastify from './toastify';
 
 export * from './date';
 export * from './http';
-export * from './schemas/rules';
+export * from './schemas/signUpSchema';
+export * from './schemas/updateProfileSchema';
 export { toastify };
