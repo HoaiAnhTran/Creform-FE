@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { FaFolder } from 'react-icons/fa';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiAddBoxFill } from 'react-icons/ri';
 import { Box, Group, Menu, NavLink, Stack } from '@mantine/core';
+import { v4 as uuidv4 } from 'uuid';
 
-import { useParams } from '@/contexts';
+import { useOverviewSidebars, useParams } from '@/contexts';
 import { FolderResponse, type ModalType, ModalTypes } from '@/types';
 import { cn } from '@/utils';
 
@@ -25,8 +26,21 @@ export const FolderList = ({
   setFolderName,
 }: FolderListProps) => {
   const { setParams } = useParams();
-  const [activeFolder, setActiveFolder] = useState<number>(0);
-  const [activeAllForms, setActiveAllForms] = useState<boolean>(true);
+  const {
+    activeFolder,
+    setActiveFolder,
+    activeAllForms,
+    setActiveAllForms,
+    setActiveTeam,
+  } = useOverviewSidebars();
+
+  useEffect(() => {
+    if (activeFolder > -1 || activeAllForms) {
+      setActiveTeam(-1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFolder, activeAllForms]);
+
   return (
     <Stack className='flex flex-col justify-between gap-3'>
       <NavLink
@@ -49,6 +63,7 @@ export const FolderList = ({
       ) : (
         folderList.map((folder) => (
           <Group
+            key={uuidv4()}
             className={cn(
               'gap-0 hover:rounded-md hover:bg-slate-300',
               folder.id === activeFolder && !activeAllForms

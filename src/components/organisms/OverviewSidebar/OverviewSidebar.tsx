@@ -2,14 +2,17 @@ import { FaStar, FaTrashAlt } from 'react-icons/fa';
 import { Box, Divider, NavLink } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
-import { useParams } from '@/contexts';
+import { useOverviewSidebars, useParams } from '@/contexts';
 import { FolderGroup } from '@/molecules/FolderGroup';
 import { TeamGroup } from '@/molecules/TeamGroup';
 import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
 import { useGetMyTeamsQuery } from '@/redux/api/teamApi';
+import { cn } from '@/utils';
 
 export const OverviewSidebar = () => {
-  const { setParams } = useParams();
+  const { setParams, params } = useParams();
+  const { setActiveFolder, setActiveAllForms, setActiveTeam } =
+    useOverviewSidebars();
 
   const { data: folderList, isLoading: isFolderLoading } =
     useGetMyFoldersQuery();
@@ -26,16 +29,36 @@ export const OverviewSidebar = () => {
         <TeamGroup teamList={teamList} isLoading={isTeamLoading} />
         <Divider />
         <NavLink
-          className='font-bold'
+          className={cn('rounded-md  font-bold hover:bg-slate-200', {
+            'bg-slate-400 text-white': params.isFavourite,
+          })}
           label='Favorites'
           leftSection={<FaStar className='text-amber-500' />}
-          onClick={() => setParams({ isFavourite: 1 })}
+          onClick={() => {
+            setParams({ isFavourite: 1 });
+            setActiveFolder(-1);
+            setActiveTeam(-1);
+            setActiveAllForms(false);
+          }}
         />
         <NavLink
-          className='font-bold'
+          className={cn('rounded-md  font-bold hover:bg-slate-200', {
+            'bg-slate-400 text-white': params.isDeleted,
+          })}
           label='Trash'
-          leftSection={<FaTrashAlt className='text-gray-400' />}
-          onClick={() => setParams({ isDeleted: 1 })}
+          leftSection={
+            <FaTrashAlt
+              className={cn('text-gray-400', {
+                'text-white': params.isDeleted,
+              })}
+            />
+          }
+          onClick={() => {
+            setParams({ isDeleted: 1 });
+            setActiveAllForms(false);
+            setActiveFolder(-1);
+            setActiveTeam(-1);
+          }}
         />
       </Box>
     </nav>

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { Avatar, Box, Group, Menu, NavLink } from '@mantine/core';
+import { v4 as uuidv4 } from 'uuid';
 
+import { useOverviewSidebars } from '@/contexts';
 import { type ModalType, ModalTypes, TeamResponse } from '@/types';
 import { cn } from '@/utils';
 
@@ -18,7 +20,15 @@ export const TeamList = ({
   isLoading,
   openModal,
 }: TeamListProps) => {
-  const [activeTeam, setActiveTeam] = useState<number>(0);
+  const { activeTeam, setActiveTeam, setActiveAllForms, setActiveFolder } =
+    useOverviewSidebars();
+  useEffect(() => {
+    if (activeTeam > -1) {
+      setActiveAllForms(false);
+      setActiveFolder(-1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTeam]);
   return (
     <Box className='flex flex-col justify-between gap-3'>
       {isLoading ? (
@@ -26,6 +36,7 @@ export const TeamList = ({
       ) : (
         teamList.map((team) => (
           <Group
+            key={uuidv4()}
             className={cn(
               'gap-0 hover:rounded-md hover:bg-slate-300',
               team.id === activeTeam

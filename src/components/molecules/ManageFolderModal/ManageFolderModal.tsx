@@ -33,12 +33,15 @@ export const ManageFolderModal = ({
         )}
       </>
     }
-    headerTitle={folderName ? 'Change Folder Name' : 'Add folder name'}
+    headerTitle={folderName ? 'Change folder name' : 'Add new folder'}
     body={
       <>
         <Stack className='pb-16 pt-7'>
           <Text className='font-bold'>Folder name</Text>
-          <TextInput defaultValue={folderName} />
+          <TextInput
+            defaultValue={folderName}
+            placeholder='Add folder name here'
+          />
         </Stack>
       </>
     }

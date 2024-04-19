@@ -20,7 +20,7 @@ export const CreateTeamModal = ({
 }: CreateTeamModalProps) => (
   <Modal
     headerIcon={<FaFolderPlus className='text-white' />}
-    headerTitle={'Add team name'}
+    headerTitle={'Add new team'}
     {...props}
     body={
       <>

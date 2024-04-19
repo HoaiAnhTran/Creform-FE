@@ -10,7 +10,7 @@ import {
 import { Button } from '@/atoms/Button';
 
 interface ModalProps extends MantineModalProps {
-  headerTitle?: string;
+  headerTitle: string;
   headerIcon?: ReactNode;
   body: ReactNode;
   onClickCancel: () => void;
@@ -34,22 +34,20 @@ export const Modal = ({
     size='xl'
     title={
       <>
-        {headerTitle && (
-          <Group className='flex items-center gap-2'>
-            {headerIcon && (
-              <Box className='rounded-md bg-malachite-500 p-1.5'>
-                {headerIcon}
-              </Box>
-            )}
-            <Text className='font-bold'>{headerTitle}</Text>
-          </Group>
-        )}
+        <Group className='flex items-center gap-2'>
+          {headerIcon && (
+            <Box className='rounded-md bg-malachite-500 p-1.5'>
+              {headerIcon}
+            </Box>
+          )}
+          <Text className='font-bold'>{headerTitle}</Text>
+        </Group>
       </>
     }
     {...props}
   >
     {body}
-    {typeof props.hasFooter === 'boolean' && props.hasFooter && (
+    {(props.hasFooter === undefined || props.hasFooter) && (
       <Group className='justify-between'>
         <Button
           onClick={props.onClickCancel}
