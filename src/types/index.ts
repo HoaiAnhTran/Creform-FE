@@ -1,5 +1,6 @@
 export * from './actions';
 export * from './apiResponse';
+export * from './appointment';
 export * from './auth';
 export * from './folder';
 export * from './forms';
