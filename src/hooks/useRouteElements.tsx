@@ -11,7 +11,7 @@ import { getAccessTokenFromLS } from '@/utils';
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={PATH.LOGIN_PAGE} />;
+  return isAuthenticated ? <Outlet /> : <Navigate to={`/${PATH.LOGIN_PAGE}`} />;
 }
 
 // route for page like login and register when not authenticated to navigate
@@ -21,7 +21,7 @@ export function RejectedRoute() {
   return !isAuthenticated ? (
     <Outlet />
   ) : (
-    <Navigate to={PATH.MY_FORM_PAGE} replace={true} />
+    <Navigate to={`/${PATH.MY_FORM_PAGE}`} replace={true} />
   );
 }
 
@@ -44,6 +44,10 @@ export function useRouteElements() {
     {
       path: PATH.SIGNUP_PAGE,
       element: <SignupPage />,
+    },
+    {
+      path: PATH.MY_FORM_PAGE,
+      element: <MyFormPage />,
     },
     {
       path: PATH.ROOT_PAGE,
