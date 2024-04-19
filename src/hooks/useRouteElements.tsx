@@ -40,15 +40,11 @@ export function useRouteElements() {
           path: PATH.LOGIN_PAGE,
           element: <LoginPage />,
         },
+        {
+          path: PATH.SIGNUP_PAGE,
+          element: <SignupPage />,
+        },
       ],
-    },
-    {
-      path: PATH.SIGNUP_PAGE,
-      element: <SignupPage />,
-    },
-    {
-      path: PATH.MY_FORM_PAGE,
-      element: <MyFormPage />,
     },
     {
       path: PATH.ROOT_PAGE,
