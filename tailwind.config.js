@@ -26,6 +26,9 @@ export default {
           900: '#1c4c1b',
           950: '#0a290a',
         },
+        toggleOn: '#a4e01f',
+        toggleOff: '#e8edee',
+        activeTabBackground: '#b4e8b1',
       },
       height: {
         headerHeight: '90px',
