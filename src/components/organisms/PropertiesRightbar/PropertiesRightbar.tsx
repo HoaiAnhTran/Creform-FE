@@ -1,7 +1,8 @@
 import { IoMdClose } from 'react-icons/io';
 import { Box, Divider, Stack, Text } from '@mantine/core';
+import { useWindowScroll } from '@mantine/hooks';
 
-import { useElementLayouts } from '@/contexts';
+import { useBuildFormContext } from '@/contexts';
 import { isEmailElement, isHeadingElement } from '@/molecules/FactoryElement';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { ElementItem } from '@/types';
@@ -14,19 +15,24 @@ export interface BasePropertiesProps<T extends ElementItem = ElementItem> {
 }
 
 export const PropertiesRightbar = (props: BasePropertiesProps) => {
-  const { showRightbar, setShowRightbar } = useElementLayouts();
   const { edittingItem, ...rest } = props;
+
+  const { toggledRightbar, setToggledRightbar } = useBuildFormContext();
+
+  const [scroll] = useWindowScroll();
+
   return (
     <Box
       className={cn(
-        'ease-linea absolute right-0 top-0 z-10 h-screen w-[0] overflow-auto bg-slate-500 transition-all duration-1000',
-        { 'w-[350px]': showRightbar },
+        'fixed bottom-0 right-0 top-[120px] z-20 w-[0] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
+        { 'w-[320px]': toggledRightbar },
+        { 'top-[50px]': scroll.y > 0 },
       )}
     >
       <IoMdClose
-        className='absolute right-2 top-2 size-6 cursor-pointer text-white'
+        className='absolute right-2 top-2 size-6 cursor-pointer text-white transition-all duration-150 ease-linear hover:bg-slate-600'
         onClick={() => {
-          setShowRightbar(false);
+          setToggledRightbar(false);
         }}
       />
       <Box>

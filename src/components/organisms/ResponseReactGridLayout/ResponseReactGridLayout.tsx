@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { defaultEmailConfig, defaultHeadingConfig } from '@/configs';
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
-import { InteractiveIcon } from '@/molecules/InteractiveIcons';
+import { InteractiveIcons } from '@/molecules/InteractiveIcons';
 import { ElementItem, ElementType } from '@/types';
 import { cn } from '@/utils';
 
@@ -16,7 +16,7 @@ import 'react-resizable/css/styles.css';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 interface ResponseReactGridLayoutProps {
-  currentElementType: ElementType;
+  currentElementType: string;
   updateItem: (config: ElementItem) => void;
   handleConfig: (config: ElementItem['config']) => void;
 }
@@ -59,7 +59,7 @@ export const ResponseReactGridLayout = ({
   };
 
   const createItem = (
-    type: ElementType,
+    type: string,
     currentItem: Layout,
   ): ElementItem | undefined => {
     const getGridSize = (currentItem: Layout) => ({
@@ -128,7 +128,7 @@ export const ResponseReactGridLayout = ({
         isDroppable={true}
         onDragStart={handleDragStart}
         onDragStop={handleDragStop}
-        droppingItem={{ i: uuidv4(), h: 3, w: 6 }}
+        droppingItem={{ i: uuidv4(), h: 3, w: 4 }}
       >
         {elements.map((element) => (
           <Box
@@ -151,7 +151,7 @@ export const ResponseReactGridLayout = ({
               handleConfig={handleConfig}
             />
             {element.id === edittingItem?.id && (
-              <InteractiveIcon item={element} removeItem={removeItem} />
+              <InteractiveIcons item={element} removeItem={removeItem} />
             )}
           </Box>
         ))}

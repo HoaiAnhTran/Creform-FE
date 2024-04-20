@@ -6,21 +6,22 @@ import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
-import { ElementType } from '@/types';
 import { cn } from '@/utils';
 
 const elementList = ElementList;
 interface BuildFormLeftbarProps {
-  setCurrentElementType: (element: ElementType) => void;
+  setCurrentElementType: (element: string) => void;
 }
+
 export const BuildFormLeftbar = ({
   setCurrentElementType,
 }: BuildFormLeftbarProps) => {
   const [toggledLeftbar, setToggledLeftbar] = useState(false);
 
   const [scroll] = useWindowScroll();
-  const handleDrop = (element: ElementType) => {
-    setCurrentElementType(element);
+
+  const handleDrop = (elementType: string) => {
+    setCurrentElementType(elementType);
   };
 
   return (
@@ -49,7 +50,7 @@ export const BuildFormLeftbar = ({
       />
       <Box
         className={cn(
-          'fixed bottom-0 top-[120px] w-[0] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
+          'fixed bottom-0 left-0 top-[120px] w-[0] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
           { 'w-[320px]': toggledLeftbar },
           { 'top-[50px]': scroll.y > 0 },
         )}

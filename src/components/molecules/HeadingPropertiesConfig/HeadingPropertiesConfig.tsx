@@ -33,7 +33,7 @@ export const HeadingProptertiesConfig = (
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
           value={(edittingItem?.config as HeadingConfig).headingText}
           onChange={handleChange('headingText')}
-        ></TextInput>
+        />
       </Stack>
       <Stack className='p-3'>
         <Text className='font-bold text-white'>Subheading text</Text>
@@ -42,7 +42,7 @@ export const HeadingProptertiesConfig = (
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
           value={(edittingItem?.config as HeadingConfig).subheadingText}
           onChange={handleChange('subheadingText')}
-        ></TextInput>
+        />
       </Stack>
     </>
   );

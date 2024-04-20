@@ -15,6 +15,8 @@ interface BuildFormContextType {
   setForm: React.Dispatch<React.SetStateAction<FormResponse>>;
   toggledLeftbar: boolean;
   setToggledLeftbar: React.Dispatch<React.SetStateAction<boolean>>;
+  toggledRightbar: boolean;
+  setToggledRightbar: React.Dispatch<React.SetStateAction<boolean>>;
   isEditForm: boolean;
 }
 
@@ -38,6 +40,8 @@ const BuildFormContext = createContext<BuildFormContextType>({
   setForm: () => {},
   toggledLeftbar: false,
   setToggledLeftbar: () => {},
+  toggledRightbar: false,
+  setToggledRightbar: () => {},
   isEditForm: false,
 });
 
@@ -52,7 +56,9 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const [toggledLeftbar, setToggledLeftbar] = useState<boolean>(false);
 
-  const { data } = useGetFormDetailsQuery({ id: formId });
+  const [toggledRightbar, setToggledRightbar] = useState<boolean>(false);
+
+  const { data } = useGetFormDetailsQuery({ id: Number(formId) });
 
   useEffect(() => {
     if (!data) return;
@@ -62,7 +68,15 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <BuildFormContext.Provider
-      value={{ form, setForm, toggledLeftbar, setToggledLeftbar, isEditForm }}
+      value={{
+        form,
+        setForm,
+        toggledLeftbar,
+        setToggledLeftbar,
+        toggledRightbar,
+        setToggledRightbar,
+        isEditForm,
+      }}
     >
       {children}
     </BuildFormContext.Provider>

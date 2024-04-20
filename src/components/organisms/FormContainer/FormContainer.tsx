@@ -6,14 +6,14 @@ import { CloseButton, Divider, Group, Image, Stack } from '@mantine/core';
 import { Button } from '@/atoms/Button';
 import { MESSAGES } from '@/constants/messages';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
-import { ElementItem, ElementType } from '@/types';
+import { ElementItem } from '@/types';
 import { toastify } from '@/utils';
 
 import { PropertiesRightbar } from '../PropertiesRightbar';
 import { ResponseReactGridLayout } from '../ResponseReactGridLayout';
 
 interface FormContainerProps {
-  currentElementType?: ElementType;
+  currentElementType?: string;
 }
 
 export const FormContainer = ({ currentElementType }: FormContainerProps) => {
