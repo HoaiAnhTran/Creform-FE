@@ -23,9 +23,17 @@ import { TeamList } from '../TeamList';
 
 interface TeamListProps {
   setFolderName: (folderName: string) => void;
+  setFolderId: (folderId: number) => void;
+  folderId: number;
+  folderName: string;
 }
 
-export const TeamGroup = ({ setFolderName }: TeamListProps) => {
+export const TeamGroup = ({
+  setFolderName,
+  setFolderId,
+  folderId,
+  folderName,
+}: TeamListProps) => {
   const [teamName, setTeamName] = useState<string>('');
   const [teamId, setTeamId] = useState<number>(0);
   const [modalType, setModalType] = useState<ModalType | ''>('');
@@ -107,14 +115,19 @@ export const TeamGroup = ({ setFolderName }: TeamListProps) => {
 
   //TODO: handle continue button when create new folder
   return (
-    <>
+    <div className='flex flex-col gap-2'>
       <Text className='font-bold'>MY TEAMS</Text>
       <TeamList
+        modalType={modalType}
+        setModalType={setModalType}
         teamList={teamList}
         isLoading={isTeamLoading}
-        openModal={openModal}
         setTeamName={setTeamName}
         setTeamId={setTeamId}
+        setFolderName={setFolderName}
+        setFolderId={setFolderId}
+        folderId={folderId}
+        folderName={folderName}
       />
       <Button
         className='font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
@@ -180,6 +193,6 @@ export const TeamGroup = ({ setFolderName }: TeamListProps) => {
         onClickConfirm={handleDeleteTeam}
         isLoading={isTeamDeleting}
       />
-    </>
+    </div>
   );
 };

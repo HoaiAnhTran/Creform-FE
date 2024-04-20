@@ -10,6 +10,7 @@ export interface FolderResponse {
   updatedAt: string;
   deletedAt: string;
   creatorId: number;
+  teamId: number;
 }
 
 export interface FolderRequest {

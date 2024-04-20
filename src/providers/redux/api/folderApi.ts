@@ -7,7 +7,7 @@ const folderApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
     getMyFolders: build.query<FolderResponse[], void>({
       query: () => ({
-        url: API_URL.FOLDERS,
+        url: API_URL.INDEPENDENT_FOLDER,
         method: 'GET',
       }),
       transformResponse: (response: SuccessResponse<FolderResponse[]>) =>

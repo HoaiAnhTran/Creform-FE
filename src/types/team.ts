@@ -4,10 +4,13 @@ export interface Member {
   email: string;
   avatarUrl: string;
 }
-
 export interface TeamResponse {
   id: number;
   name: string;
+  folders: {
+    id: number;
+    name: string;
+  }[];
   logoUrl: string;
   permissions: object;
   createdAt: string;

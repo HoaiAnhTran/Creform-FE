@@ -5,7 +5,6 @@ import {
   ActionIcon,
   Avatar,
   Box,
-  Divider,
   Group,
   ModalProps as MantineModalProps,
   Stack,
@@ -61,14 +60,13 @@ export const ManageMemberModal = ({
       headerTitle='Manage member of team'
       body={
         <>
-          <Stack className='gap-4 pb-8'>
-            <Divider />
+          <Stack className='gap-4 pb-8 pt-8'>
             <Text className='font-bold' size='lg'>
               TEAM MEMBERS
             </Text>
             <Stack>
               {membersInTeam.map((member) => (
-                <Group className='justify-between'>
+                <Group key={member.id} className='justify-between'>
                   <Group>
                     <Avatar />
                     <Stack gap='2'>
@@ -86,12 +84,14 @@ export const ManageMemberModal = ({
                         {member.isOwner ? 'Owner' : 'Member'}
                       </Text>
                     </Box>
-                    <ActionIcon
-                      className='bg-red-500 text-white hover:bg-red-600 hover:text-white'
-                      onClick={() => handleRemoveMember(member.id)}
-                    >
-                      <MdDelete size={18} />
-                    </ActionIcon>
+                    {!member.isOwner && (
+                      <ActionIcon
+                        className='h-10 w-10 bg-red-500 text-white hover:bg-red-600 hover:text-white'
+                        onClick={() => handleRemoveMember(member.id)}
+                      >
+                        <MdDelete size={22} />
+                      </ActionIcon>
+                    )}
                   </Group>
                 </Group>
               ))}

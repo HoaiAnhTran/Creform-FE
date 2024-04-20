@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import {
   Box,
+  Divider,
   Group,
   LoadingOverlay,
   Modal as MantineModal,
@@ -59,23 +60,27 @@ export const Modal = ({
         overlayProps={{ radius: 'sm', blur: 2 }}
         loaderProps={{ color: 'green' }}
       />
+      <Divider />
       {body}
       {(props.hasFooter === undefined || props.hasFooter) && (
-        <Group className='justify-between'>
-          <Button
-            onClick={props.onClickCancel}
-            className='font-bold'
-            title='Cancel'
-            color='gray'
-            variant='outline'
-          />
-          <Button
-            onClick={props.onClickSubmit}
-            className='font-bold'
-            title='Submit'
-            disabled={!canSubmit}
-          />
-        </Group>
+        <>
+          <Divider className='mb-3' />
+          <Group className='justify-between'>
+            <Button
+              onClick={props.onClickCancel}
+              className='font-bold'
+              title='Cancel'
+              color='gray'
+              variant='outline'
+            />
+            <Button
+              onClick={props.onClickSubmit}
+              className='font-bold'
+              title='Submit'
+              disabled={!canSubmit}
+            />
+          </Group>
+        </>
       )}
     </Box>
   </MantineModal>

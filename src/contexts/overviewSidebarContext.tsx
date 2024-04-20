@@ -21,7 +21,7 @@ const OverviewSidebarContext = createContext<OverviewSidebarContextType>({
 export const OverviewSidebarProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [activeFolder, setActiveFolder] = useState<number>(0);
+  const [activeFolder, setActiveFolder] = useState<number>(-1);
   const [activeAllForms, setActiveAllForms] = useState<boolean>(true);
   const [activeTeam, setActiveTeam] = useState<number>(-1);
 
