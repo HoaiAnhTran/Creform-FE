@@ -145,7 +145,7 @@ export const FolderList = ({
                     <Box className='flex'>
                       <PiDotsThreeOutlineVerticalFill
                         size='1.5rem'
-                        className='rounded-md text-slate-100 hover:bg-slate-200 hover:text-slate-600'
+                        className='rounded-md text-slate-100  hover:text-slate-600'
                       />
                     </Box>
                   </Menu.Target>

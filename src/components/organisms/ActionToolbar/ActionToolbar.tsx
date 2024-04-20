@@ -65,13 +65,13 @@ export const ActionToolbar = (props: ActionToolbarProps) => {
       ) : (
         <div className='flex items-center justify-between gap-2'>
           <Menu
-            width={200}
             shadow='md'
             hasArrow={false}
             arrowOffset={1}
             buttonProps={{
               size: 'md',
               title: sortOptionList[sortOptionIndex].title,
+              rightSection: sortOptionList[sortOptionIndex].icon,
             }}
             itemList={sortOptionList}
             sortOptionIndex={sortOptionIndex}

@@ -29,7 +29,7 @@ export const OverviewSidebar = () => {
 
   return (
     <Box className='relative h-full w-full border-r border-slate-300 bg-slate-100 text-slate-600'>
-      <Box className='sticky top-0 z-10 w-full border border-solid border-slate-300 bg-slate-100 p-4 text-center'>
+      <Box className='sticky top-0 z-10 w-full border border-solid border-slate-300 bg-slate-100 py-4 pl-[19px] pr-[28px] text-center'>
         <Button
           size='md'
           title='CREATE FORM'

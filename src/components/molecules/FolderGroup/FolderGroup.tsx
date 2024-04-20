@@ -72,7 +72,7 @@ export const FolderGroup = ({
           setActiveAllForms(!activeAllForms);
           setParams({ ...defaultFormsParams });
         }}
-      ></NavLink>
+      />
       <FolderList
         openModal={openModal}
         setFolderName={setFolderName}
@@ -85,7 +85,7 @@ export const FolderGroup = ({
         isLoading={isLoading}
       />
       <Button
-        className='font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
+        className='h-10 font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
         justify='flex-start'
         variant='subtle'
         leftSection={<FaPlusCircle className='size-4' />}
