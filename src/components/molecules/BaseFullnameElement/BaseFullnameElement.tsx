@@ -1,5 +1,6 @@
 import { Box, Group, Stack, Text, TextInput } from '@mantine/core';
 
+import { useElementLayouts } from '@/contexts';
 import { FullnameElement } from '@/types';
 import { cn } from '@/utils';
 
@@ -9,6 +10,7 @@ export const BaseFullnameElement = (
   props: BaseElementProps<FullnameElement>,
 ) => {
   const { item } = props;
+  const { isReadOnly } = useElementLayouts();
 
   return (
     <Stack className='w-full justify-between gap-2.5'>
@@ -24,11 +26,11 @@ export const BaseFullnameElement = (
       />
       <Group className='w-full flex-nowrap items-center justify-between'>
         <Box className='flex w-1/2 flex-col justify-between gap-2'>
-          <TextInput readOnly />
+          <TextInput readOnly={isReadOnly} />
           <Text className='text-[13px]'>{item.config.sublabels.firstName}</Text>
         </Box>
         <Box className='flex w-1/2 flex-col justify-between gap-2'>
-          <TextInput readOnly />
+          <TextInput readOnly={isReadOnly} />
           <Text className='text-[13px]'>{item.config.sublabels.lastName}</Text>
         </Box>
       </Group>

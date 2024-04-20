@@ -19,7 +19,7 @@ import { cn } from '@/utils';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+export const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 interface ResponsiveGridLayoutProps {
   currentElementType: string;
@@ -156,7 +156,7 @@ export const ResponsiveGridLayout = ({
   return (
     <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7'>
       <ResponsiveReactGridLayout
-        className={cn('min-h-screen', {
+        className={cn('min-h-[200px]', {
           'rounded-md border-2 border-dashed border-slate-300 bg-slate-100':
             elements.length < 1,
         })}

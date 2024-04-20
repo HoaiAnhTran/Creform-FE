@@ -114,7 +114,7 @@ export const BuildSection = () => {
   };
 
   return (
-    <Box className='relative flex h-full w-full bg-malachite-50'>
+    <Box className='relative flex min-h-screen w-full bg-malachite-50'>
       <Box
         flex={toggledLeftbar ? 3 : 0}
         className='transition-all duration-200 ease-linear'

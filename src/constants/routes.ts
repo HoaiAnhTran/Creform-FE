@@ -6,4 +6,5 @@ export const PATH = {
   BUILD_FORM_PAGE: '/build',
   EDIT_FORM_PAGE: '/build/:id',
   MY_ACCOUNT_PAGE: '/my-account',
+  PUBLIC_PAGE: '/form/:id',
 };

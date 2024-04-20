@@ -9,6 +9,7 @@ import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
+import { PublicPage } from '@/pages/PublicPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
@@ -97,6 +98,10 @@ export function useRouteElements() {
         {
           path: PATH.MY_ACCOUNT_PAGE,
           element: <AccountPage />,
+        },
+        {
+          path: PATH.PUBLIC_PAGE,
+          element: <PublicPage />,
         },
       ],
     },

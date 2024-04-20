@@ -1,5 +1,6 @@
 import { Box, Group, TextInput } from '@mantine/core';
 
+import { useElementLayouts } from '@/contexts';
 import { EmailElement } from '@/types';
 import { cn } from '@/utils';
 
@@ -7,6 +8,7 @@ import { BaseElementProps } from '../FactoryElement';
 
 export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
   const { item } = props;
+  const { isReadOnly } = useElementLayouts();
 
   return (
     <Group>
@@ -21,7 +23,12 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
             }),
           }}
         />
-        <TextInput name='fieldLabel' required={item.config.required} readOnly />
+        <TextInput
+          name='fieldLabel'
+          required={item.config.required}
+          readOnly={isReadOnly}
+        />
+
         <TextInput
           autoComplete='off'
           name='sublabel'

@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { CloseButton, Divider, Group, Image, Stack } from '@mantine/core';
+import { Form, Formik } from 'formik';
 
 import { Button } from '@/atoms/Button';
 import { MESSAGES } from '@/constants/messages';
@@ -137,11 +138,16 @@ export const FormContainer = ({
             variant='dashed'
           />
         )}
-        <ResponsiveGridLayout
-          currentElementType={currentElementType!}
-          updateItem={updateItem}
-          handleConfig={handleConfig}
-        />
+        <Formik initialValues={{}} onSubmit={() => {}}>
+          <Form className='h-full w-full'>
+            <ResponsiveGridLayout
+              currentElementType={currentElementType!}
+              updateItem={updateItem}
+              handleConfig={handleConfig}
+            />
+          </Form>
+        </Formik>
+
         <PropertiesRightbar
           edittingItem={edittingItem!}
           updateItem={updateItem}
