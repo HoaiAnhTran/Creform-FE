@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
+import { PasswordInput } from '@/molecules/PasswordInput';
 import { TextInput } from '@/molecules/TextInput';
 import { signUpSchema } from '@/utils/schemas/signUpSchema';
 
@@ -32,22 +33,38 @@ export const SignupForm = (props: SignupFormProps) => {
       onSubmit={onSubmit}
     >
       <Form className='h-full w-full'>
-        <Field name='username' label='Username' component={TextInput} />
-        <Field name='email' label='Email' component={TextInput} />
         <Field
+          classNameWrapper='mb-2'
+          name='username'
+          label='Username'
+          size='xs'
+          component={TextInput}
+        />
+        <Field
+          classNameWrapper='mb-2'
+          name='email'
+          label='Email'
+          size='xs'
+          component={TextInput}
+        />
+        <Field
+          classNameWrapper='mb-2'
           name='password'
           label='Password'
           type='password'
-          component={TextInput}
+          size='xs'
+          component={PasswordInput}
         />
         <Field
+          classNameWrapper='mb-2'
           name='confirmPassword'
           label='Confirm Password'
           type='password'
-          component={TextInput}
+          size='xs'
+          component={PasswordInput}
         />
 
-        <Center>
+        <Center className='py-2'>
           <Button title='Sign Up' type='submit' className='w-full' />
         </Center>
         <div className='mt-3 flex items-center justify-center text-xs'>

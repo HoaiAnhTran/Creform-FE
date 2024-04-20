@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Image } from '@mantine/core';
+import { Image, Text } from '@mantine/core';
 
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
 import { PATH } from '@/constants/routes';
@@ -32,21 +32,31 @@ export const LoginPage = () => {
       <div className='h-headerHeight bg-malachite-500 px-4 pt-4'>
         <UnSignedHeader />
       </div>
-      <div className='flex h-contentHeight items-center justify-evenly'>
-        <div className='mt-3'>
-          <Image
-            className='h-64 w-80 object-contain'
-            src='./images/girl.jpeg'
-          />
+      <div className='flex h-contentHeight flex-col justify-center gap-10'>
+        <div className='flex flex-col justify-between gap-5 text-center'>
+          <Text className='text-xl font-semibold text-malachite-400'>
+            EASIEST ONLINE FORM BUILDER
+          </Text>
+          <Text className='text-5xl font-bold'>
+            Powerful forms get it done.
+          </Text>
         </div>
-        <div className='h-[300px] w-[400px] rounded border bg-white px-6 py-2 shadow-md'>
-          <LoginForm onSubmit={onSubmit} />
-        </div>
-        <div>
-          <Image
-            className='h-72 w-80 object-contain'
-            src='./images/girl2.jpeg'
-          />
+        <div className='flex items-center justify-evenly'>
+          <div className='mt-3'>
+            <Image
+              className='h-64 w-80 object-contain'
+              src='./images/girl.jpeg'
+            />
+          </div>
+          <div className='border-3 w-[400px] rounded bg-white p-6 shadow-[0px_0px_10px_rgba(0,0,0,0.12)]'>
+            <LoginForm onSubmit={onSubmit} />
+          </div>
+          <div>
+            <Image
+              className='h-72 w-80 object-contain'
+              src='./images/girl2.jpeg'
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
+import { PasswordInput } from '@/molecules/PasswordInput';
 import { TextInput } from '@/molecules/TextInput';
 import { signUpSchema } from '@/utils/schemas/signUpSchema';
 
@@ -32,16 +33,23 @@ export const LoginForm = (props: LoginFormProps) => {
       onSubmit={onSubmit}
     >
       <Form className='h-full w-full'>
-        <Field name='email' label='Email' component={TextInput} />
-
         <Field
-          name='password'
-          type='password'
-          label='Password'
+          classNameWrapper='mb-3'
+          name='email'
+          label='Email'
+          classNameError='min-h-0'
           component={TextInput}
         />
 
-        <Center>
+        <Field
+          classNameWrapper='mb-3'
+          name='password'
+          label='Password'
+          classNameError='min-h-0'
+          component={PasswordInput}
+        />
+
+        <Center className='py-2'>
           <Button title='Login' type='submit' className='w-full' />
         </Center>
         <div className='mt-3 flex items-center justify-center text-xs'>
