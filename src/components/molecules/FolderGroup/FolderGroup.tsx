@@ -11,12 +11,7 @@ import {
   useDeleteFolderMutation,
   useUpdateFolderMutation,
 } from '@/redux/api/folderApi';
-import {
-  ErrorResponse,
-  FolderResponse,
-  type ModalType,
-  ModalTypes,
-} from '@/types';
+import { ErrorResponse, type ModalType, ModalTypes } from '@/types';
 import { toastify } from '@/utils';
 
 import { FolderList } from '../FolderList';
@@ -24,27 +19,21 @@ import { FolderList } from '../FolderList';
 interface FolderListProps {
   folderName: string;
   setFolderName: (folderName: string) => void;
-  folderList?: FolderResponse[];
-  isLoading: boolean;
-  createFolder: ReturnType<typeof useCreateFolderMutation>[0];
-  updateFolder: ReturnType<typeof useUpdateFolderMutation>[0];
-  deleteFolder: ReturnType<typeof useDeleteFolderMutation>[0];
 }
 
-export const FolderGroup = ({
-  folderName,
-  setFolderName,
-  folderList,
-  isLoading,
-  createFolder,
-  updateFolder,
-  deleteFolder,
-}: FolderListProps) => {
+export const FolderGroup = ({ folderName, setFolderName }: FolderListProps) => {
   const [folderId, setFolderId] = useState<number>(0);
   const [modalType, setModalType] = useState<ModalType | ''>('');
 
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
+
+  const [createFolder, { isLoading: isFolderCreating }] =
+    useCreateFolderMutation();
+  const [updateFolder, { isLoading: isFolderUpdating }] =
+    useUpdateFolderMutation();
+  const [deleteFolder, { isLoading: isFolderDeleting }] =
+    useDeleteFolderMutation();
 
   const handleCreateFolder = () => {
     createFolder({ name: folderName }).then((res) => {
@@ -86,8 +75,6 @@ export const FolderGroup = ({
     <>
       <Text className='font-bold'>MY FORMS</Text>
       <FolderList
-        folderList={folderList}
-        isLoading={isLoading}
         openModal={openModal}
         setFolderName={setFolderName}
         setFolderId={setFolderId}
@@ -118,6 +105,7 @@ export const FolderGroup = ({
             ? handleCreateFolder
             : handleUpdateFolder
         }
+        isLoading={isFolderCreating || isFolderUpdating}
       />
       <ConfirmationModal
         body={
@@ -136,6 +124,7 @@ export const FolderGroup = ({
         onClose={closeModal}
         onClickBack={closeModal}
         onClickConfirm={handleDeleteFolder}
+        isLoading={isFolderDeleting}
       />
     </>
   );

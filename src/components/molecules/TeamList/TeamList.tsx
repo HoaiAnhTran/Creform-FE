@@ -37,7 +37,7 @@ export const TeamList = ({
   return (
     <Box className='flex flex-col justify-between gap-3'>
       {isLoading ? (
-        <LoadingDots />
+        <LoadingDots color='green' />
       ) : (
         teamList.map((team) => (
           <Group

@@ -8,22 +8,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useOverviewSidebars } from '@/contexts';
 import { useFormParams } from '@/contexts';
-import { FolderResponse, type ModalType, ModalTypes } from '@/types';
+import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
+import { type ModalType, ModalTypes } from '@/types';
 import { cn } from '@/utils';
 
 import { LoadingDots } from '../LoadingDots';
 
 interface FolderListProps {
-  folderList?: FolderResponse[];
-  isLoading: boolean;
   openModal: (type: ModalType) => void;
   setFolderName: (folderName: string) => void;
   setFolderId: (folderId: number) => void;
 }
 
 export const FolderList = ({
-  folderList = [],
-  isLoading,
   openModal,
   setFolderName,
   setFolderId,
@@ -35,6 +32,8 @@ export const FolderList = ({
     setActiveAllForms,
     setActiveTeam,
   } = useOverviewSidebars();
+
+  const { data: folderList, isLoading } = useGetMyFoldersQuery();
 
   useEffect(() => {
     if (activeFolder > -1 || activeAllForms) {
@@ -61,8 +60,8 @@ export const FolderList = ({
           setParams({});
         }}
       ></NavLink>
-      {isLoading ? (
-        <LoadingDots />
+      {!folderList || isLoading ? (
+        <LoadingDots color='green' />
       ) : (
         folderList.map((folder) => (
           <Group

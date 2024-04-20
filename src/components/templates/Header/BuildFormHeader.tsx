@@ -9,6 +9,7 @@ import GreenLogo from '@/assets/images/greenlogo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { useBuildFormContext } from '@/contexts';
+import { LoadingDots } from '@/molecules/LoadingDots';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { formatDate, httpClient } from '@/utils';
 
@@ -16,7 +17,7 @@ const LOGO_HEIGHT = 45;
 const DEFAULT_FORM_TITLE = 'Form';
 
 export const BuildFormHeader = () => {
-  const { data: myProfile } = useGetMyProfileQuery();
+  const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
   const { form, isEditForm } = useBuildFormContext();
 
@@ -88,7 +89,9 @@ export const BuildFormHeader = () => {
         </div>
       </div>
 
-      {myProfile && (
+      {!myProfile || isLoading ? (
+        <LoadingDots color='green' />
+      ) : (
         <div className='flex flex-row gap-6'>
           <Menu shadow='sm' offset={5} position='bottom-end' withArrow>
             <Menu.Target>

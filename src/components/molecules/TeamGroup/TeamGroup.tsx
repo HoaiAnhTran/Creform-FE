@@ -8,15 +8,11 @@ import {
   useAddMemberMutation,
   useCreateTeamMutation,
   useDeleteTeamMutation,
+  useGetMyTeamsQuery,
   useRemoveMemberMutation,
   useUpdateTeamMutation,
 } from '@/redux/api/teamApi';
-import {
-  ErrorResponse,
-  type ModalType,
-  ModalTypes,
-  TeamResponse,
-} from '@/types';
+import { ErrorResponse, type ModalType, ModalTypes } from '@/types';
 import { toastify } from '@/utils';
 
 import { ConfirmationModal } from '../ComfirmationModal';
@@ -26,28 +22,23 @@ import { ManageTeamModal } from '../ManageTeamModal';
 import { TeamList } from '../TeamList';
 
 interface TeamListProps {
-  teamList?: TeamResponse[];
   setFolderName: (folderName: string) => void;
-  isLoading: boolean;
-  createTeam: ReturnType<typeof useCreateTeamMutation>[0];
-  updateTeam: ReturnType<typeof useUpdateTeamMutation>[0];
-  deleteTeam: ReturnType<typeof useDeleteTeamMutation>[0];
 }
 
-export const TeamGroup = ({
-  teamList,
-  setFolderName,
-  isLoading,
-  createTeam,
-  updateTeam,
-  deleteTeam,
-}: TeamListProps) => {
+export const TeamGroup = ({ setFolderName }: TeamListProps) => {
   const [teamName, setTeamName] = useState<string>('');
   const [teamId, setTeamId] = useState<number>(0);
   const [modalType, setModalType] = useState<ModalType | ''>('');
 
-  const [addMember] = useAddMemberMutation();
-  const [removeMember] = useRemoveMemberMutation();
+  const [addMember, { isLoading: isAddMemberLoading }] = useAddMemberMutation();
+  const [removeMember, { isLoading: isRemoveMemberLoading }] =
+    useRemoveMemberMutation();
+
+  const { data: teamList, isLoading: isTeamLoading } = useGetMyTeamsQuery();
+
+  const [createTeam, { isLoading: isTeamCreating }] = useCreateTeamMutation();
+  const [updateTeam, { isLoading: isTeamUpdating }] = useUpdateTeamMutation();
+  const [deleteTeam, { isLoading: isTeamDeleting }] = useDeleteTeamMutation();
 
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
@@ -120,7 +111,7 @@ export const TeamGroup = ({
       <Text className='font-bold'>MY TEAMS</Text>
       <TeamList
         teamList={teamList}
-        isLoading={isLoading}
+        isLoading={isTeamLoading}
         openModal={openModal}
         setTeamName={setTeamName}
         setTeamId={setTeamId}
@@ -143,6 +134,7 @@ export const TeamGroup = ({
         onClose={closeModal}
         handleInviteMember={handleInviteMember}
         handleRemoveMember={handleRemoveMember}
+        isLoading={isAddMemberLoading || isRemoveMemberLoading}
       />
       <ManageFolderModal
         opened={modalType === ModalTypes.CREATE_FOLDER_IN_TEAM}
@@ -150,6 +142,7 @@ export const TeamGroup = ({
         onClickCancel={closeModal}
         onClickSubmit={onClickContinue}
         setFolderName={setFolderName}
+        isLoading={false}
       />
       <ManageTeamModal
         opened={
@@ -166,6 +159,7 @@ export const TeamGroup = ({
             : handleUpdateTeam
         }
         setTeamName={setTeamName}
+        isLoading={isTeamCreating || isTeamUpdating}
       />
       <ConfirmationModal
         body={
@@ -184,6 +178,7 @@ export const TeamGroup = ({
         onClose={closeModal}
         onClickBack={closeModal}
         onClickConfirm={handleDeleteTeam}
+        isLoading={isTeamDeleting}
       />
     </>
   );

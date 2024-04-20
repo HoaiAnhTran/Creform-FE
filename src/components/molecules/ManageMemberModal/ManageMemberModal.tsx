@@ -25,6 +25,7 @@ interface ManageMemberModalProps extends MantineModalProps {
   teamId: number;
   handleInviteMember: (value: { email: string }) => void;
   handleRemoveMember: (id: number) => void;
+  isLoading: boolean;
 }
 const emailSchema = signUpSchema.pick(['email']);
 
@@ -49,6 +50,7 @@ export const ManageMemberModal = ({
   teamId,
   handleInviteMember,
   handleRemoveMember,
+  isLoading,
   ...props
 }: ManageMemberModalProps) => {
   const membersInTeam = getMembersInTeamWithOwnership(teamList, teamId) || [];
@@ -122,6 +124,7 @@ export const ManageMemberModal = ({
         </>
       }
       hasFooter={false}
+      isLoading={isLoading}
     />
   );
 };

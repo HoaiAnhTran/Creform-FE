@@ -16,6 +16,7 @@ interface ManageFolderModalProps extends MantineModalProps {
   inputTitle?: string;
   onClickCancel: () => void;
   onClickSubmit: () => void;
+  isLoading: boolean;
 }
 
 export const ManageFolderModal = ({
@@ -24,6 +25,7 @@ export const ManageFolderModal = ({
   setFolderName,
   onClickCancel,
   onClickSubmit,
+  isLoading,
   ...props
 }: ManageFolderModalProps) => (
   <Modal
@@ -53,5 +55,6 @@ export const ManageFolderModal = ({
     }
     onClickCancel={onClickCancel}
     onClickSubmit={onClickSubmit}
+    isLoading={isLoading}
   />
 );

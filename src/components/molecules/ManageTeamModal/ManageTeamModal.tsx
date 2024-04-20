@@ -15,6 +15,7 @@ interface ManageTeamModalProps extends MantineModalProps {
   setTeamName: (arg0: string) => void;
   onClickBack: () => void;
   onClickSubmit: () => void;
+  isLoading: boolean;
 }
 
 export const ManageTeamModal = ({
@@ -23,6 +24,7 @@ export const ManageTeamModal = ({
   setTeamName,
   onClickSubmit,
   onClickBack,
+  isLoading,
   ...props
 }: ManageTeamModalProps) => (
   <Modal
@@ -51,5 +53,6 @@ export const ManageTeamModal = ({
     }
     onClickCancel={onClickBack}
     onClickSubmit={onClickSubmit}
+    isLoading={isLoading}
   />
 );

@@ -1,7 +1,11 @@
 import { Loader, Stack } from '@mantine/core';
 
-export const LoadingDots = () => (
+interface LoadingDotsProps {
+  color: string;
+}
+
+export const LoadingDots = ({ color }: LoadingDotsProps) => (
   <Stack className='items-center justify-center'>
-    <Loader color='green' type='dots' />
+    <Loader color={color} type='dots' />
   </Stack>
 );

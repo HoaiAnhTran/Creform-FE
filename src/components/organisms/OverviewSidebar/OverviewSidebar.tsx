@@ -8,18 +8,6 @@ import { PATH } from '@/constants/routes';
 import { useFormParams, useOverviewSidebars } from '@/contexts';
 import { FolderGroup } from '@/molecules/FolderGroup';
 import { TeamGroup } from '@/molecules/TeamGroup';
-import {
-  useCreateFolderMutation,
-  useDeleteFolderMutation,
-  useGetMyFoldersQuery,
-  useUpdateFolderMutation,
-} from '@/redux/api/folderApi';
-import {
-  useCreateTeamMutation,
-  useDeleteTeamMutation,
-  useGetMyTeamsQuery,
-  useUpdateTeamMutation,
-} from '@/redux/api/teamApi';
 import { cn } from '@/utils';
 
 export const OverviewSidebar = () => {
@@ -29,17 +17,6 @@ export const OverviewSidebar = () => {
   const { setParams, params } = useFormParams();
 
   const navigate = useNavigate();
-
-  const { data: folderList, isLoading: isFolderLoading } =
-    useGetMyFoldersQuery();
-  const [createFolder] = useCreateFolderMutation();
-  const [updateFolder] = useUpdateFolderMutation();
-  const [deleteFolder] = useDeleteFolderMutation();
-
-  const { data: teamList, isLoading: isTeamLoading } = useGetMyTeamsQuery();
-  const [createTeam] = useCreateTeamMutation();
-  const [updateTeam] = useUpdateTeamMutation();
-  const [deleteTeam] = useDeleteTeamMutation();
 
   return (
     <Box className='relative h-full w-full border-r border-slate-300 bg-slate-100 text-slate-600'>
@@ -52,24 +29,9 @@ export const OverviewSidebar = () => {
         />
       </Box>
       <Box className='flex-col gap-5 overflow-y-scroll bg-slate-100 p-3 md:flex lg:p-5'>
-        <FolderGroup
-          folderList={folderList}
-          isLoading={isFolderLoading}
-          createFolder={createFolder}
-          updateFolder={updateFolder}
-          deleteFolder={deleteFolder}
-          folderName={folderName}
-          setFolderName={setFolderName}
-        />
+        <FolderGroup folderName={folderName} setFolderName={setFolderName} />
         <Divider />
-        <TeamGroup
-          teamList={teamList}
-          isLoading={isTeamLoading}
-          createTeam={createTeam}
-          updateTeam={updateTeam}
-          deleteTeam={deleteTeam}
-          setFolderName={setFolderName}
-        />
+        <TeamGroup setFolderName={setFolderName} />
         <Divider />
         <NavLink
           className={cn('rounded-md  font-bold hover:bg-slate-200', {
