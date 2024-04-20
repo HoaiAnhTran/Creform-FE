@@ -20,17 +20,19 @@ export interface FullnameConfig {
   };
 }
 
-export interface ShortTextConfig {
-  id: string;
+export interface FullnameConfig {
   fieldLabel: string;
   required: boolean;
-  sublabel: string;
+  sublabels: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
-export interface LongTextConfig {
-  id: string;
+export interface TextConfig {
   fieldLabel: string;
   required: boolean;
+  placeholder: string;
   sublabel: string;
 }
 
@@ -44,8 +46,7 @@ export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
   | EmailConfig
-  | ShortTextConfig
-  | LongTextConfig
+  | TextConfig
   | SubmitConfig;
 
 export enum ElementType {
@@ -91,15 +92,9 @@ export type EmailElement = BaseElement<ElementType.EMAIL, EmailConfig>;
 
 export type FullnameElement = BaseElement<ElementType.FULLNAME, FullnameConfig>;
 
-export type ShortTextElement = BaseElement<
-  ElementType.SHORT_TEXT,
-  ShortTextConfig
->;
+export type ShortTextElement = BaseElement<ElementType.SHORT_TEXT, TextConfig>;
 
-export type LongTextElement = BaseElement<
-  ElementType.LONG_TEXT,
-  LongTextConfig
->;
+export type LongTextElement = BaseElement<ElementType.LONG_TEXT, TextConfig>;
 
 export type SubmitElement = BaseElement<ElementType.SUBMIT, SubmitConfig>;
 

@@ -4,6 +4,7 @@ import {
   FullnameConfig,
   HeadingConfig,
   SubmitConfig,
+  TextConfig,
 } from '@/types';
 
 export const defaultHeadingConfig: HeadingConfig = {
@@ -30,4 +31,21 @@ export const defaultSubmitConfig: SubmitConfig = {
   buttonText: 'Submit',
   buttonColor: DEFAULT_BUTTON_COLOR,
   buttonAlignment: 'center',
+};
+
+export const defaultTextConfig: TextConfig = {
+  fieldLabel: 'Type a question',
+  required: false,
+  placeholder: 'Type a sublabel',
+  sublabel: '',
+};
+
+export const defaultShortTextHeightWidth = {
+  h: 4,
+  w: 12,
+};
+
+export const defaultLongTextHeightWidth = {
+  h: 6,
+  w: 12,
 };

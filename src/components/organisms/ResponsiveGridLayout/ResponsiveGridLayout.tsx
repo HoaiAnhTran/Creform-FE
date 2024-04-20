@@ -9,6 +9,7 @@ import {
   defaultFullnameConfig,
   defaultHeadingConfig,
   defaultSubmitConfig,
+  defaultTextConfig,
 } from '@/configs';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
@@ -16,6 +17,7 @@ import { InteractiveIcons } from '@/molecules/InteractiveIcons';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { ElementItem, ElementType } from '@/types';
 import { cn } from '@/utils';
+import { getDefaultWidthHeight } from '@/utils/elements';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
@@ -23,10 +25,13 @@ import 'react-resizable/css/styles.css';
 export const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 interface ResponsiveGridLayoutProps {
-  currentElementType: string;
+  currentElementType: ElementType;
   updateItem: (item: ElementItem) => void;
   handleConfig: (config: ElementItem['config']) => void;
 }
+
+const FLEETING_INDEX = 'fleeting';
+
 export const ResponsiveGridLayout = ({
   currentElementType,
   updateItem,
@@ -75,6 +80,7 @@ export const ResponsiveGridLayout = ({
     type: string,
     currentItem: Layout,
   ): ElementItem | undefined => {
+    const uid = uuidv4();
     const getGridSize = (currentItem: Layout) => ({
       x: currentItem.x,
       y: currentItem.y,
@@ -84,7 +90,7 @@ export const ResponsiveGridLayout = ({
     switch (type) {
       case ElementType.HEADING:
         return {
-          id: currentItem.i,
+          id: uid,
           type: ElementType.HEADING,
           gridSize: getGridSize(currentItem),
           config: defaultHeadingConfig,
@@ -92,7 +98,7 @@ export const ResponsiveGridLayout = ({
         };
       case ElementType.EMAIL:
         return {
-          id: currentItem.i,
+          id: uid,
           type: ElementType.EMAIL,
           gridSize: getGridSize(currentItem),
           config: defaultEmailConfig,
@@ -105,7 +111,7 @@ export const ResponsiveGridLayout = ({
         };
       case ElementType.FULLNAME:
         return {
-          id: currentItem.i,
+          id: uid,
           type: ElementType.FULLNAME,
           gridSize: getGridSize(currentItem),
           config: defaultFullnameConfig,
@@ -122,11 +128,37 @@ export const ResponsiveGridLayout = ({
         };
       case ElementType.SUBMIT:
         return {
-          id: currentItem.i,
+          id: uid,
           type: ElementType.SUBMIT,
           gridSize: getGridSize(currentItem),
           config: defaultSubmitConfig,
           fields: [],
+        };
+      case ElementType.SHORT_TEXT:
+        return {
+          id: uid,
+          type: ElementType.SHORT_TEXT,
+          gridSize: getGridSize(currentItem),
+          config: defaultTextConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'shortText',
+            },
+          ],
+        };
+      case ElementType.LONG_TEXT:
+        return {
+          id: uid,
+          type: ElementType.LONG_TEXT,
+          gridSize: getGridSize(currentItem),
+          config: defaultTextConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'longText',
+            },
+          ],
         };
       default:
         return undefined;
@@ -134,7 +166,14 @@ export const ResponsiveGridLayout = ({
   };
 
   const onDrop = (layout: Layout[]) => {
-    const currentItem = [...layout].pop();
+    let currentItem = [...layout].pop();
+    const defaultWidthHeight = getDefaultWidthHeight(currentElementType);
+    if (!currentItem) return;
+    currentItem = {
+      ...currentItem,
+      i: uuidv4(),
+      ...defaultWidthHeight,
+    };
     const updatedLayouts = { ...layouts, md: layout };
     setLayouts(updatedLayouts);
     const updatedElements = getElement(elements, layout);
@@ -180,7 +219,10 @@ export const ResponsiveGridLayout = ({
         isDroppable={true}
         onDragStart={handleDragStart}
         onDragStop={handleDragStop}
-        droppingItem={{ i: uuidv4(), h: 4, w: 12 }}
+        droppingItem={{
+          i: FLEETING_INDEX,
+          ...getDefaultWidthHeight(currentElementType),
+        }}
       >
         {elements.map((element) => (
           <Box

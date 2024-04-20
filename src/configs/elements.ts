@@ -28,83 +28,83 @@ export const ELEMENTS = {
   },
   FULLNAME: {
     icon: FaUser,
-    type: 'Fullname',
+    type: ElementType.FULLNAME,
   },
   ADDRESS: {
     icon: FaLocationDot,
-    type: 'Address',
+    type: ElementType.ADDRESS,
   },
   PHONE: {
     icon: FaPhoneAlt,
-    type: 'Phone',
+    type: ElementType.PHONE,
   },
   DATEPICKER: {
     icon: FaCalendarAlt,
-    type: 'Datepicker',
+    type: ElementType.DATEPICKER,
   },
   APPOINTMENT: {
     icon: FaCalendarCheck,
-    type: 'Appointment',
+    type: ElementType.APPOINTMENT,
   },
   SHORT_TEXT: {
     icon: PiTextbox,
-    type: 'Short Text',
+    type: ElementType.SHORT_TEXT,
   },
   LONG_TEXT: {
     icon: PiTextboxBold,
-    type: 'Long Text',
+    type: ElementType.LONG_TEXT,
   },
   DROPDOWN: {
     icon: RxDropdownMenu,
-    type: 'Dropdown',
+    type: ElementType.DROPDOWN,
   },
   SINGLE_CHOICE: {
     icon: IoMdRadioButtonOn,
-    type: 'Single Choice',
+    type: ElementType.SINGLE_CHOICE,
   },
   MULTIPLE_CHOICE: {
     icon: IoMdCheckbox,
-    type: 'Multiple Choice',
+    type: ElementType.MULTIPLE_CHOICE,
   },
   NUMBER: {
     icon: RiNumber7,
-    type: 'Number',
+    type: ElementType.NUMBER,
   },
   IMAGE: {
     icon: FaImage,
-    type: 'Image',
+    type: ElementType.IMAGE,
   },
   FILE_UPLOAD: {
     icon: FaFileUpload,
-    type: 'File Upload',
+    type: ElementType.FILE_UPLOAD,
   },
   TIME: {
     icon: MdWatchLater,
-    type: 'Time',
+    type: ElementType.TIME,
   },
   SUBMIT: {
     icon: BsSendFill,
-    type: 'Submit',
+    type: ElementType.SUBMIT,
   },
   INPUT_TABLE: {
     icon: FaTable,
-    type: 'Input Table',
+    type: ElementType.INPUT_TABLE,
   },
   STAR_RATING: {
     icon: FaStar,
-    type: 'Star Rating',
+    type: ElementType.STAR_RATING,
   },
   SCALE_RATING: {
     icon: FaChartSimple,
-    type: 'Scale Rating',
+    type: ElementType.STAR_RATING,
   },
   DIVIDER: {
     icon: RxDividerHorizontal,
-    type: 'Divider',
+    type: ElementType.DIVIDER,
   },
   PAGE_BREAK: {
     icon: MdInsertPageBreak,
-    type: 'Page Break',
+    type: ElementType.PAGE_BREAK,
   },
 };
 

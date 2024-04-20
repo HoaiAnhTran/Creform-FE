@@ -12,6 +12,8 @@ import {
 import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
+import { BaseLongTextElement } from '../BaseLongTextElement';
+import { BaseShortTextElement } from '../BaseShortTextElement';
 import { BaseSubmitElement } from '../BaseSubmitElement';
 
 export interface BaseElementProps<T extends ElementItem = ElementItem> {
@@ -33,6 +35,10 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseFullnameElement item={item} {...rest} />;
     case isSubmitElement(item):
       return <BaseSubmitElement item={item} {...rest} />;
+    case isShortTextElement(item):
+      return <BaseShortTextElement item={item} {...rest} />;
+    case isLongTextElement(item):
+      return <BaseLongTextElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -45,11 +51,9 @@ export function isHeadingElement(item: ElementItem): item is HeadingElement {
 export function isEmailElement(item: ElementItem): item is EmailElement {
   return item?.type === ElementType.EMAIL;
 }
-
 export function isFullnameElement(item: ElementItem): item is FullnameElement {
   return item?.type === ElementType.FULLNAME;
 }
-
 export function isShortTextElement(
   item: ElementItem,
 ): item is ShortTextElement {
