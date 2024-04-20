@@ -12,18 +12,21 @@ const folderApi = rootApi.injectEndpoints({
       }),
       transformResponse: (response: SuccessResponse<FolderResponse[]>) =>
         response.data,
-      providesTags: ['Folders'],
+      providesTags: ['Folders', 'Teams'],
     }),
     createFolder: build.mutation<
       SuccessResponse<FolderResponse>,
-      FolderRequest
+      {
+        teamId?: number;
+        payload: FolderRequest;
+      }
     >({
-      query: (data) => ({
-        url: API_URL.FOLDERS,
+      query: ({ teamId = undefined, payload }) => ({
+        url: teamId ? `${API_URL.FOLDERS}/team/${teamId}` : API_URL.FOLDERS,
         method: 'POST',
-        data,
+        data: payload,
       }),
-      invalidatesTags: ['Folders'],
+      invalidatesTags: ['Folders', 'Teams'],
     }),
     updateFolder: build.mutation<
       SuccessResponse<FolderResponse>,
@@ -34,14 +37,14 @@ const folderApi = rootApi.injectEndpoints({
         method: 'PATCH',
         data,
       }),
-      invalidatesTags: ['Folders'],
+      invalidatesTags: ['Folders', 'Teams'],
     }),
     deleteFolder: build.mutation<SuccessResponse<FolderResponse>, number>({
       query: (id) => ({
         url: `${API_URL.FOLDERS}/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Folders'],
+      invalidatesTags: ['Folders', 'Teams'],
     }),
   }),
   overrideExisting: false,

@@ -8,6 +8,8 @@ export interface GetFormsParams {
   isFavourite?: number;
   sortField?: string;
   sortDirection?: string;
+  folderId?: number;
+  teamId?: number;
 }
 
 export interface FormResponse extends FormRequest {

@@ -9,6 +9,10 @@ import { ActionIcon, Anchor, Group, Menu, Stack, Text } from '@mantine/core';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
+import {
+  DEFAULT_PAGE_SIZE,
+  defaultFormsParams,
+} from '@/constants/defaultFormsParams';
 import { PATH } from '@/constants/routes';
 import { sortOptionList } from '@/constants/sortOptions';
 import { useFormParams } from '@/contexts';
@@ -25,8 +29,6 @@ interface FormsTableProps {
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
 }
-
-const DEFAULT_PAGE_SIZE = 10;
 
 export const FormsTable = ({
   selectedRecords,
@@ -197,8 +199,8 @@ export const FormsTable = ({
 
   useEffect(() => {
     setParams({
+      ...defaultFormsParams,
       page: currentPage,
-      pageSize: DEFAULT_PAGE_SIZE,
       sortField: sortOptionList[sortOptionIndex].field,
       sortDirection: sortOptionList[sortOptionIndex].sortDirection,
     });

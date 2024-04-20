@@ -4,6 +4,7 @@ import { MdOutlineWarning } from 'react-icons/md';
 import { Box, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
+import { useCreateFolderMutation } from '@/redux/api/folderApi';
 import {
   useAddMemberMutation,
   useCreateTeamMutation,
@@ -47,9 +48,27 @@ export const TeamGroup = ({
   const [createTeam, { isLoading: isTeamCreating }] = useCreateTeamMutation();
   const [updateTeam, { isLoading: isTeamUpdating }] = useUpdateTeamMutation();
   const [deleteTeam, { isLoading: isTeamDeleting }] = useDeleteTeamMutation();
+  const [createFolder, { isLoading: isFolderInTeamCreating }] =
+    useCreateFolderMutation();
 
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
+
+  const handleCreateFolderInTeam = () => {
+    console.log({ teamId: teamId });
+
+    createFolder({ teamId: teamId, payload: { name: folderName } }).then(
+      (res) => {
+        if ('data' in res) {
+          toastify.displaySuccess(res.data.message as string);
+          closeModal();
+          return;
+        }
+        if (res.error as ErrorResponse)
+          toastify.displayError((res.error as ErrorResponse).message as string);
+      },
+    );
+  };
 
   const handleInviteMember = (value: { email: string }) => {
     addMember({ id: teamId, email: value.email }).then((res) => {
@@ -111,8 +130,6 @@ export const TeamGroup = ({
     });
   };
 
-  const onClickContinue = () => {};
-
   //TODO: handle continue button when create new folder
   return (
     <div className='flex flex-col gap-2'>
@@ -150,12 +167,12 @@ export const TeamGroup = ({
         isLoading={isAddMemberLoading || isRemoveMemberLoading}
       />
       <ManageFolderModal
-        opened={modalType === ModalTypes.CREATE_FOLDER_IN_TEAM}
+        opened={modalType === ModalTypes.CREATE_FOLDER}
         onClose={closeModal}
         onClickCancel={closeModal}
-        onClickSubmit={onClickContinue}
+        onClickSubmit={handleCreateFolderInTeam}
         setFolderName={setFolderName}
-        isLoading={false}
+        isLoading={isFolderInTeamCreating}
       />
       <ManageTeamModal
         opened={

@@ -3,6 +3,7 @@ import { FaFolder, FaPlusCircle } from 'react-icons/fa';
 import { Box, NavLink, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
+import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { useFormParams, useOverviewSidebars } from '@/contexts';
 import { ManageFolderModal } from '@/molecules/ManageFolderModal';
 import { useCreateFolderMutation } from '@/redux/api/folderApi';
@@ -43,7 +44,7 @@ export const FolderGroup = ({
     useCreateFolderMutation();
 
   const handleCreateFolder = () => {
-    createFolder({ name: folderName }).then((res) => {
+    createFolder({ payload: { name: folderName } }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
         closeModal();
@@ -69,7 +70,7 @@ export const FolderGroup = ({
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(!activeAllForms);
-          setParams({});
+          setParams({ ...defaultFormsParams });
         }}
       ></NavLink>
       <FolderList

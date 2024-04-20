@@ -15,5 +15,4 @@ export interface FolderResponse {
 
 export interface FolderRequest {
   name: string;
-  color?: string;
 }

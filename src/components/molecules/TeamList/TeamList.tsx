@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
+import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { useFormParams, useOverviewSidebars } from '@/contexts';
 import { type ModalType, ModalTypes, TeamResponse } from '@/types';
 import { cn } from '@/utils';
@@ -97,12 +98,12 @@ export const TeamList = ({
                   )}
                   onClick={() => {
                     setActiveTeam(team.id);
-                    setParams({});
+                    setParams({ ...defaultFormsParams, teamId: team.id });
                   }}
                   label={
                     <Group className='items-center'>
                       <Text className='font-bold'>{team.name}</Text>
-                      {isActiveteam &&
+                      {team.folders.length > 0 &&
                         (activeColappse.includes(team.id) ? (
                           <TiArrowSortedUp
                             onClick={() => {
@@ -160,9 +161,10 @@ export const TeamList = ({
                     <Menu.Item
                       className='font-bold text-white hover:bg-malachite-500'
                       leftSection={<RiFolderAddFill />}
-                      onClick={() =>
-                        openModal(ModalTypes.CREATE_FOLDER_IN_TEAM)
-                      }
+                      onClick={() => {
+                        openModal(ModalTypes.CREATE_FOLDER);
+                        setTeamId(team.id);
+                      }}
                     >
                       Add new folder
                     </Menu.Item>

@@ -6,6 +6,7 @@ import { RiAddBoxFill } from 'react-icons/ri';
 import { Box, Group, Menu, NavLink, Stack, Text } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
+import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { useOverviewSidebars } from '@/contexts';
 import { useFormParams } from '@/contexts';
 import {
@@ -121,7 +122,7 @@ export const FolderList = ({
                   onClick={() => {
                     setActiveFolder(folder.id);
                     setActiveAllForms(false);
-                    setParams({});
+                    setParams({ ...defaultFormsParams, folderId: folder.id });
                   }}
                   label={folder.name}
                   active={isActiveFolder && !activeAllForms}

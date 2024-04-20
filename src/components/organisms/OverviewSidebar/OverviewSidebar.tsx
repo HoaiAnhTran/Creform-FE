@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Divider, NavLink } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
+import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { PATH } from '@/constants/routes';
 import { useFormParams, useOverviewSidebars } from '@/contexts';
 import { FolderGroup } from '@/molecules/FolderGroup';
@@ -65,7 +66,10 @@ export const OverviewSidebar = () => {
             label='Favorites'
             leftSection={<FaStar className='text-amber-500' />}
             onClick={() => {
-              setParams({ isFavourite: 1 });
+              setParams({
+                ...defaultFormsParams,
+                isFavourite: 1,
+              });
               setActiveFolder(-1);
               setActiveTeam(-1);
               setActiveAllForms(false);
@@ -84,7 +88,10 @@ export const OverviewSidebar = () => {
               />
             }
             onClick={() => {
-              setParams({ isDeleted: 1 });
+              setParams({
+                ...defaultFormsParams,
+                isDeleted: 1,
+              });
               setActiveAllForms(false);
               setActiveFolder(-1);
               setActiveTeam(-1);
