@@ -22,7 +22,7 @@ export const Header = () => {
   };
 
   return (
-    <header className='flex flex-row items-center justify-between bg-malachite-500 px-10 py-3'>
+    <header className='flex h-[70px] flex-row items-center justify-between bg-malachite-500 px-10 py-3'>
       <Anchor href={PATH.ROOT_PAGE}>
         <Image src={WhiteLogo} h={LOGO_HEIGHT} />
       </Anchor>

@@ -51,7 +51,7 @@ export const FormContainer = () => {
   }, [form]);
 
   return (
-    <Stack className='items-center py-5'>
+    <Stack className='items-center py-7'>
       <Stack className='w-[55%] justify-between gap-7'>
         {currentLogo ? (
           <Group className='relative mx-auto'>

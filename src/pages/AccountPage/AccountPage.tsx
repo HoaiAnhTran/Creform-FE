@@ -566,7 +566,7 @@ export const AccountPage = () => {
   return (
     <Stack className='h-full w-full gap-0'>
       <Header />
-      <Stack className='bg-malachite-500 px-40'>
+      <Stack className='bg-malachite-500 px-40 pb-8 pt-5'>
         <Stack className='items-center justify-center gap-12 rounded-xl bg-white px-14 py-7'>
           <Text className='text-center text-[26px] font-semibold'>
             Update Account and General Information

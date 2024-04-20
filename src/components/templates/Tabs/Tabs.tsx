@@ -33,7 +33,7 @@ export const Tabs = () => {
       className='relative'
       onChange={(value) => handleChangeTab(value)}
     >
-      <MantineTabs.List className='justify-center gap-0 bg-gradient-to-r from-malachite-400 to-malachite-600'>
+      <MantineTabs.List className='h-[50px] justify-center gap-0 bg-gradient-to-r from-malachite-400 to-malachite-600'>
         {tabList.map((tab, index) => (
           <MantineTabs.Tab
             key={index}
@@ -46,7 +46,7 @@ export const Tabs = () => {
       </MantineTabs.List>
       <ToggleButton
         label='Preview form'
-        className='absolute right-10 top-3 text-sm text-white'
+        className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-white'
         isEnable={showPreviewForm}
         handleToggleButton={() => setShowPreviewForm(!showPreviewForm)}
       />

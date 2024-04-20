@@ -11,7 +11,7 @@ export const BuildSection = () => {
   const { toggledLeftbar } = useBuildFormContext();
 
   return (
-    <Box className='relative flex h-full w-full bg-malachite-50 py-2'>
+    <Box className='relative flex h-full w-full bg-malachite-50'>
       <Box
         flex={toggledLeftbar ? 1 : 0}
         className='transition-all duration-200 ease-linear'
@@ -20,7 +20,7 @@ export const BuildSection = () => {
       </Box>
       <Box
         flex={toggledLeftbar ? 8 : 1}
-        className='overflow-y-scroll transition-all duration-200 ease-linear'
+        className='transition-all duration-200 ease-linear'
       >
         <FormContainer />
       </Box>

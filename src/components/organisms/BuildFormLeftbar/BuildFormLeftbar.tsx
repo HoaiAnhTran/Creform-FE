@@ -1,6 +1,7 @@
 import { FaPlus } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 import { Box, Divider, Group, Stack, Text } from '@mantine/core';
+import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
@@ -12,6 +13,8 @@ const elementList = ElementList;
 export const BuildFormLeftbar = () => {
   const { toggledLeftbar, setToggledLeftbar } = useBuildFormContext();
 
+  const [scroll] = useWindowScroll();
+
   return (
     <Box>
       <Button
@@ -22,8 +25,9 @@ export const BuildFormLeftbar = () => {
           setToggledLeftbar(true);
         }}
         className={cn(
-          'absolute top-10 h-12 w-[0] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-[600ms] ease-linear',
+          'fixed left-0 top-[160px] h-12 w-[0] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-[600ms] ease-linear',
           { 'w-[170px]': !toggledLeftbar },
+          { 'top-[90px]': scroll.y > 0 },
         )}
         rightSection={
           <Box className='relative flex h-12 w-12'>
@@ -37,8 +41,9 @@ export const BuildFormLeftbar = () => {
       />
       <Box
         className={cn(
-          'absolute top-0 h-full w-[0] overflow-auto bg-slate-500 transition-all duration-[600ms] ease-linear',
+          'fixed bottom-0 top-[120px] w-[0] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
           { 'w-[320px]': toggledLeftbar },
+          { 'top-[50px]': scroll.y > 0 },
         )}
       >
         <IoMdClose

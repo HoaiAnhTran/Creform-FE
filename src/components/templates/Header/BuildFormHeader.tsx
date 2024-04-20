@@ -57,7 +57,7 @@ export const BuildFormHeader = ({ onButtonClick }: HeaderProps) => {
   }, [form, isEditForm]);
 
   return (
-    <header className='relative flex flex-row items-center justify-between px-10 py-3'>
+    <header className='relative flex h-[70px] flex-row items-center justify-between px-10 py-3'>
       <Anchor href={PATH.ROOT_PAGE} className='z-10'>
         <Image src={GreenLogo} h={LOGO_HEIGHT} />
       </Anchor>
