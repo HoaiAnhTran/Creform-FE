@@ -4,6 +4,8 @@ import {
   EmailElement,
   FullnameElement,
   HeadingElement,
+  LongTextElement,
+  ShortTextElement,
 } from '@/types';
 
 import { BaseEmailElement } from '../BaseEmailElement';
@@ -42,4 +44,14 @@ export function isEmailElement(item: ElementItem): item is EmailElement {
 
 export function isFullnameElement(item: ElementItem): item is FullnameElement {
   return item?.type === ElementType.FULLNAME;
+}
+
+export function isShortTextElement(
+  item: ElementItem,
+): item is ShortTextElement {
+  return item?.type === ElementType.SHORT_TEXT;
+}
+
+export function isLongTextElement(item: ElementItem): item is LongTextElement {
+  return item?.type === ElementType.LONG_TEXT;
 }

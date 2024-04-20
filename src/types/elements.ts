@@ -20,7 +20,26 @@ export interface FullnameConfig {
   };
 }
 
-export type ElementConfig = HeadingConfig | EmailConfig | FullnameConfig;
+export interface ShortTextConfig {
+  id: string;
+  fieldLabel: string;
+  required: boolean;
+  sublabel: string;
+}
+
+export interface LongTextConfig {
+  id: string;
+  fieldLabel: string;
+  required: boolean;
+  sublabel: string;
+}
+
+export type ElementConfig =
+  | HeadingConfig
+  | FullnameConfig
+  | EmailConfig
+  | ShortTextConfig
+  | LongTextConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -65,4 +84,19 @@ export type EmailElement = BaseElement<ElementType.EMAIL, EmailConfig>;
 
 export type FullnameElement = BaseElement<ElementType.FULLNAME, FullnameConfig>;
 
-export type ElementItem = HeadingElement | EmailElement | FullnameElement;
+export type ShortTextElement = BaseElement<
+  ElementType.SHORT_TEXT,
+  ShortTextConfig
+>;
+
+export type LongTextElement = BaseElement<
+  ElementType.LONG_TEXT,
+  LongTextConfig
+>;
+
+export type ElementItem =
+  | HeadingElement
+  | FullnameElement
+  | EmailElement
+  | ShortTextElement
+  | LongTextElement;
