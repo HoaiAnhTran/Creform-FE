@@ -19,7 +19,7 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
     <Text className='text-sm' onClick={handleToggleButton}>
       {label}
     </Text>
-    <label className='relative inline-block h-5 w-12'>
+    <label className='relative inline-block h-5 w-12 cursor-pointer'>
       <Checkbox
         className='absolute left-0 top-0 h-full w-full opacity-0'
         checked={isEnable}

@@ -4,7 +4,12 @@ import { useWindowScroll } from '@mantine/hooks';
 
 import { useBuildFormContext } from '@/contexts';
 import { EmailProptertiesConfig } from '@/molecules/EmailPropertiesConfig';
-import { isEmailElement, isHeadingElement } from '@/molecules/FactoryElement';
+import {
+  isEmailElement,
+  isFullnameElement,
+  isHeadingElement,
+} from '@/molecules/FactoryElement';
+import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { ElementItem } from '@/types';
 import { cn } from '@/utils';
@@ -54,6 +59,14 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isEmailElement(edittingItem):
                 return (
                   <EmailProptertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+
+              case isFullnameElement(edittingItem):
+                return (
+                  <FullnamePropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

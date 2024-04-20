@@ -11,7 +11,16 @@ export interface EmailConfig {
   sublabel: string;
 }
 
-export type ElementConfig = HeadingConfig | EmailConfig;
+export interface FullnameConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabels: {
+    firstName: string;
+    lastName: string;
+  };
+}
+
+export type ElementConfig = HeadingConfig | EmailConfig | FullnameConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -54,4 +63,6 @@ export type HeadingElement = BaseElement<ElementType.HEADING, HeadingConfig>;
 
 export type EmailElement = BaseElement<ElementType.EMAIL, EmailConfig>;
 
-export type ElementItem = HeadingElement | EmailElement;
+export type FullnameElement = BaseElement<ElementType.FULLNAME, FullnameConfig>;
+
+export type ElementItem = HeadingElement | EmailElement | FullnameElement;

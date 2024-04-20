@@ -16,7 +16,7 @@ import { getAccessTokenFromLS } from '@/utils';
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={`/${PATH.LOGIN_PAGE}`} />;
+  return isAuthenticated ? <Outlet /> : <Navigate to={PATH.LOGIN_PAGE} />;
 }
 
 // when not authenticated, it will navigate to this route

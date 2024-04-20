@@ -53,7 +53,7 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
   const [toggledRightbar, setToggledRightbar] = useState<boolean>(false);
 
   const { data } = useGetFormDetailsQuery(
-    { id: Number(formId) || '' },
+    { id: formId || '' },
     { skip: !formId },
   );
 

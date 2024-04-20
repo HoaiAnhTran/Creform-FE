@@ -10,7 +10,7 @@ import { ElementItem } from '@/types';
 import { toastify } from '@/utils';
 
 import { PropertiesRightbar } from '../PropertiesRightbar';
-import { ResponseReactGridLayout } from '../ResponseReactGridLayout';
+import { ResponsiveGridLayout } from '../ResponsiveGridLayout';
 
 interface FormContainerProps {
   currentElementType?: string;
@@ -137,7 +137,7 @@ export const FormContainer = ({
             variant='dashed'
           />
         )}
-        <ResponseReactGridLayout
+        <ResponsiveGridLayout
           currentElementType={currentElementType!}
           updateItem={updateItem}
           handleConfig={handleConfig}

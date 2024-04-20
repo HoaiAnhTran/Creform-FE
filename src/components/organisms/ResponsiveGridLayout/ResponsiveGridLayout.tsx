@@ -4,7 +4,11 @@ import { useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
-import { defaultEmailConfig, defaultHeadingConfig } from '@/configs';
+import {
+  defaultEmailConfig,
+  defaultFullnameConfig,
+  defaultHeadingConfig,
+} from '@/configs';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { InteractiveIcons } from '@/molecules/InteractiveIcons';
@@ -17,16 +21,16 @@ import 'react-resizable/css/styles.css';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-interface ResponseReactGridLayoutProps {
+interface ResponsiveGridLayoutProps {
   currentElementType: string;
-  updateItem: (config: ElementItem) => void;
+  updateItem: (item: ElementItem) => void;
   handleConfig: (config: ElementItem['config']) => void;
 }
-export const ResponseReactGridLayout = ({
+export const ResponsiveGridLayout = ({
   currentElementType,
   updateItem,
   handleConfig,
-}: ResponseReactGridLayoutProps) => {
+}: ResponsiveGridLayoutProps) => {
   const { elements, setElements, edittingItem, setEdittingItem } =
     useElementLayouts();
   const [mounted, setMounted] = useState(false);
@@ -98,6 +102,23 @@ export const ResponseReactGridLayout = ({
             },
           ],
         };
+      case ElementType.FULLNAME:
+        return {
+          id: currentItem.i,
+          type: ElementType.FULLNAME,
+          gridSize: getGridSize(currentItem),
+          config: defaultFullnameConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'firstName',
+            },
+            {
+              id: uuidv4(),
+              name: 'lastName',
+            },
+          ],
+        };
       default:
         return undefined;
     }
@@ -113,7 +134,7 @@ export const ResponseReactGridLayout = ({
     setEdittingItem(createdItem);
   };
 
-  const handleDragStart = (layout: Layout[], currentItem: Layout) => {
+  const handleDragStart = (_layout: Layout[], currentItem: Layout) => {
     setIsDragging(true);
     setEdittingItem(elements.find((element) => element.id === currentItem.i));
   };
@@ -139,6 +160,8 @@ export const ResponseReactGridLayout = ({
           'rounded-md border-2 border-dashed border-slate-300 bg-slate-100':
             elements.length < 1,
         })}
+        width={120}
+        cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
         rowHeight={30}
         layouts={layouts}
         onDrop={onDrop}
@@ -148,7 +171,7 @@ export const ResponseReactGridLayout = ({
         isDroppable={true}
         onDragStart={handleDragStart}
         onDragStop={handleDragStop}
-        droppingItem={{ i: uuidv4(), h: 4, w: 4 }}
+        droppingItem={{ i: uuidv4(), h: 4, w: 12 }}
       >
         {elements.map((element) => (
           <Box

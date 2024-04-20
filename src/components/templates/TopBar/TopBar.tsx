@@ -4,7 +4,7 @@ import { Tabs as MantineTabs } from '@mantine/core';
 
 import { ToggleButton } from '@/atoms/Button/ToggleButton';
 
-export const Tabs = () => {
+export const TopBar = () => {
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
@@ -24,6 +24,9 @@ export const Tabs = () => {
     }
   };
 
+  const handleClickPreviewForm = () => {
+    setShowPreviewForm(!showPreviewForm);
+  };
   return (
     <MantineTabs
       color='#8ad56c'
@@ -48,7 +51,7 @@ export const Tabs = () => {
         label='Preview form'
         className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-white'
         isEnable={showPreviewForm}
-        handleToggleButton={() => setShowPreviewForm(!showPreviewForm)}
+        handleToggleButton={handleClickPreviewForm}
       />
     </MantineTabs>
   );

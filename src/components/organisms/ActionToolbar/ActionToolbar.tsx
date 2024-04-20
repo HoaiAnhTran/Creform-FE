@@ -11,11 +11,11 @@ import { cn } from '@/utils';
 
 import { ActionList } from '../ActionList';
 
-interface TopBarProps {
+interface ActionToolbarProps {
   selectedFormIds: number[];
 }
 
-export const TopBar = (props: TopBarProps) => {
+export const ActionToolbar = (props: ActionToolbarProps) => {
   const { selectedFormIds } = props;
 
   const { setParams, sortOptionIndex, setSortOptionIndex } = useFormParams();
