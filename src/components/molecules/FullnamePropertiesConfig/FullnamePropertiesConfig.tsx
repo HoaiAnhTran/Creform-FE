@@ -82,6 +82,7 @@ export const FullnamePropertiesConfig = (
           size='lg'
           onLabel='ON'
           offLabel='OFF'
+          checked={edittingItem.config.required}
           onChange={(event) => {
             handleChangeRequired(event);
           }}

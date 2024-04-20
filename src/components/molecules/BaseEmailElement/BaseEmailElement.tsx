@@ -1,19 +1,28 @@
-import { Box, Group, TextInput } from '@mantine/core';
+import { Box, Group, TextInput as TextInputMantine } from '@mantine/core';
+import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { EmailElement } from '@/types';
 import { cn } from '@/utils';
+import { emailFormat, emailRequired } from '@/utils/schemas/validation';
 
 import { BaseElementProps } from '../FactoryElement';
+import { TextInput } from '../TextInput';
 
 export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
   const { item } = props;
   const { isReadOnly } = useElementLayouts();
 
+  const validate = async (value: string) =>
+    (item.config.required ? emailRequired : emailFormat)
+      .validate(value)
+      .then(() => {})
+      .catch((err) => err.errors[0]);
+
   return (
     <Group>
       <Box className='w-full'>
-        <TextInput
+        <TextInputMantine
           label={item.config.fieldLabel || 'Type a question'}
           withAsterisk={item.config.required}
           classNames={{
@@ -23,13 +32,16 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
             }),
           }}
         />
-        <TextInput
-          name='fieldLabel'
+        <Field
+          name={`${item.id}.fieldValue`}
           required={item.config.required}
           readOnly={isReadOnly}
+          validate={!isReadOnly ? validate : null}
+          handleChange={() => {}}
+          component={TextInput}
         />
 
-        <TextInput
+        <TextInputMantine
           autoComplete='off'
           name='sublabel'
           variant='unstyled'
