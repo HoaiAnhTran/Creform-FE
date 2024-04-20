@@ -34,8 +34,8 @@ export const BuildFormLeftbar = ({
           setToggledLeftbar(true);
         }}
         className={cn(
-          'fixed left-0 top-[160px] h-12 w-[0] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-[600ms] ease-linear',
-          { 'w-[170px]': !toggledLeftbar },
+          'fixed left-0 top-[160px] h-12 w-[170px] -translate-x-[170px] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-[600ms] ease-linear',
+          { 'translate-x-[0]': !toggledLeftbar },
           { 'top-[90px]': scroll.y > 0 },
         )}
         rightSection={
@@ -50,8 +50,8 @@ export const BuildFormLeftbar = ({
       />
       <Box
         className={cn(
-          'fixed bottom-0 left-0 top-[120px] w-[0] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
-          { 'w-[320px]': toggledLeftbar },
+          'fixed bottom-0 left-0 top-[120px] w-[320px] -translate-x-[320px] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
+          { 'translate-x-[0]': toggledLeftbar },
           { 'top-[50px]': scroll.y > 0 },
         )}
       >
