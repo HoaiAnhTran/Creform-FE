@@ -1,0 +1,160 @@
+import { useEffect, useState } from 'react';
+import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
+import { Box } from '@mantine/core';
+import { v4 as uuidv4 } from 'uuid';
+
+import { defaultEmailConfig, defaultHeadingConfig } from '@/configs';
+import { useElementLayouts } from '@/contexts';
+import { FactoryElement } from '@/molecules/FactoryElement';
+import { InteractiveIcon } from '@/molecules/InteractiveIcons';
+import { ElementItem, ElementType } from '@/types';
+import { cn } from '@/utils';
+
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
+interface ResponseReactGridLayoutProps {
+  currentElementType: ElementType;
+  updateItem: (config: ElementItem) => void;
+  handleConfig: (config: ElementItem['config']) => void;
+}
+export const ResponseReactGridLayout = ({
+  currentElementType,
+  updateItem,
+  handleConfig,
+}: ResponseReactGridLayoutProps) => {
+  const { elements, setElements, edittingItem, setEdittingItem } =
+    useElementLayouts();
+  const [mounted, setMounted] = useState(false);
+  const [layouts, setLayouts] = useState<{
+    lg: Layout[];
+    md: Layout[];
+    sm: Layout[];
+    xs: Layout[];
+    xxs: Layout[];
+  }>({ lg: [], md: [], sm: [], xs: [], xxs: [] });
+  const [isDragging, setIsDragging] = useState(false);
+
+  function getLayout(element: ElementItem, layouts: Layout[]) {
+    const foundlayout = layouts.find((layout) => element.id === layout.i);
+    return {
+      x: foundlayout!.x,
+      y: foundlayout!.y,
+      w: foundlayout!.w,
+      h: foundlayout!.h,
+    };
+  }
+
+  function getElement(elementItems: ElementItem[], layouts: Layout[]) {
+    return elementItems.map((elementItem) => {
+      const gridSize = getLayout(elementItem, layouts);
+      return { ...elementItem, gridSize: gridSize };
+    });
+  }
+
+  const removeItem = (id: string) => {
+    setElements(elements.filter((element) => element.id !== id));
+  };
+
+  const createItem = (
+    type: ElementType,
+    currentItem: Layout,
+  ): ElementItem | undefined => {
+    const getGridSize = (currentItem: Layout) => ({
+      x: currentItem.x,
+      y: currentItem.y,
+      w: currentItem.w,
+      h: currentItem.h,
+    });
+    switch (type) {
+      case ElementType.HEADING:
+        return {
+          id: currentItem.i,
+          type: ElementType.HEADING,
+          gridSize: getGridSize(currentItem),
+          config: defaultHeadingConfig,
+        };
+      case ElementType.EMAIL:
+        return {
+          id: currentItem.i,
+          type: ElementType.EMAIL,
+          gridSize: getGridSize(currentItem),
+          config: defaultEmailConfig,
+        };
+      default:
+        return undefined;
+    }
+  };
+
+  const onDrop = (layout: Layout[]) => {
+    const currentItem = [...layout].pop();
+    const updatedLayouts = { ...layouts, md: layout };
+    setLayouts(updatedLayouts);
+    const updatedElements = getElement(elements, layout);
+    const createdItem = createItem(currentElementType, currentItem!)!;
+    setElements([...updatedElements, createdItem]);
+    setEdittingItem(createdItem);
+  };
+
+  const handleDragStart = (layout: Layout[], currentItem: Layout) => {
+    setIsDragging(true);
+    setEdittingItem(elements.find((element) => element.id === currentItem.i));
+  };
+
+  const handleDragStop = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7'>
+      <ResponsiveReactGridLayout
+        className={cn('min-h-screen', {
+          'rounded-md border-2 border-dashed border-slate-300 bg-slate-100':
+            elements.length < 1,
+        })}
+        rowHeight={30}
+        layouts={layouts}
+        onDrop={onDrop}
+        measureBeforeMount={false}
+        useCSSTransforms={mounted}
+        isResizable={false}
+        isDroppable={true}
+        onDragStart={handleDragStart}
+        onDragStop={handleDragStop}
+        droppingItem={{ i: uuidv4(), h: 3, w: 6 }}
+      >
+        {elements.map((element) => (
+          <Box
+            key={element.id}
+            data-grid={element.gridSize}
+            className={cn(
+              'flex w-full cursor-move flex-col justify-center px-2',
+              {
+                'rounded-md  border-[3px] border-solid border-blue-500':
+                  element.id === edittingItem?.id,
+                'bg-white': isDragging,
+              },
+            )}
+          >
+            <FactoryElement
+              item={element}
+              removeItem={() => removeItem(element.id)}
+              isActive={element.id === edittingItem?.id}
+              updateItem={updateItem}
+              handleConfig={handleConfig}
+            />
+            {element.id === edittingItem?.id && (
+              <InteractiveIcon item={element} removeItem={removeItem} />
+            )}
+          </Box>
+        ))}
+      </ResponsiveReactGridLayout>
+    </div>
+  );
+};

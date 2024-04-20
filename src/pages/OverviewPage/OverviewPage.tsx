@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { ElementLayoutProvider, FormParamsProvider } from '@/contexts';
+import { FormParamsProvider, OverviewSidebarProvider } from '@/contexts';
 import { FormsTable } from '@/organisms/FormsTable';
 import { OverviewSidebar } from '@/organisms/OverviewSidebar';
 import { TopBar } from '@/organisms/TopBar';
@@ -17,9 +17,9 @@ export const OverviewPage = () => {
         <Header />
         <Group className='h-full items-start justify-between gap-0'>
           <Stack flex={1} className='h-full'>
-            <ElementLayoutProvider>
+            <OverviewSidebarProvider>
               <OverviewSidebar />
-            </ElementLayoutProvider>
+            </OverviewSidebarProvider>
           </Stack>
           <Stack className='h-full justify-between gap-0 px-2' flex={4.5}>
             <TopBar selectedFormIds={selectedRecords.map(({ id }) => id)} />

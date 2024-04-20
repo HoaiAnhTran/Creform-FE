@@ -15,94 +15,96 @@ import { PiTextbox, PiTextboxBold } from 'react-icons/pi';
 import { RiNumber7 } from 'react-icons/ri';
 import { RxDividerHorizontal, RxDropdownMenu } from 'react-icons/rx';
 
+import { ElementType } from '@/types';
+
 export const ELEMENTS = {
   HEADING: {
-    type: 'Heading',
     icon: BiHeading,
-  },
-  FULLNAME: {
-    type: 'Fullname',
-    icon: FaUser,
+    type: ElementType.HEADING,
   },
   EMAIL: {
-    type: 'Email',
     icon: MdEmail,
+    type: ElementType.EMAIL,
+  },
+  FULLNAME: {
+    icon: FaUser,
+    type: 'Fullname',
   },
   ADDRESS: {
-    type: 'Address',
     icon: FaLocationDot,
+    type: 'Address',
   },
   PHONE: {
-    type: 'Phone',
     icon: FaPhoneAlt,
+    type: 'Phone',
   },
   DATEPICKER: {
-    type: 'Datepicker',
     icon: FaCalendarAlt,
+    type: 'Datepicker',
   },
   APPOINTMENT: {
-    type: 'Appointment',
     icon: FaCalendarCheck,
+    type: 'Appointment',
   },
   SHORT_TEXT: {
-    type: 'Short Text',
     icon: PiTextbox,
+    type: 'Short Text',
   },
   LONG_TEXT: {
-    type: 'Long Text',
     icon: PiTextboxBold,
+    type: 'Long Text',
   },
   DROPDOWN: {
-    type: 'Dropdown',
     icon: RxDropdownMenu,
+    type: 'Dropdown',
   },
   SINGLE_CHOICE: {
-    type: 'Single Choice',
     icon: IoMdRadioButtonOn,
+    type: 'Single Choice',
   },
   MULTIPLE_CHOICE: {
-    type: 'Multiple Choice',
     icon: IoMdCheckbox,
+    type: 'Multiple Choice',
   },
   NUMBER: {
-    type: 'Number',
     icon: RiNumber7,
+    type: 'Number',
   },
   IMAGE: {
-    type: 'Image',
     icon: FaImage,
+    type: 'Image',
   },
   FILE_UPLOAD: {
-    type: 'File Upload',
     icon: FaFileUpload,
+    type: 'File Upload',
   },
   TIME: {
-    type: 'Time',
     icon: MdWatchLater,
+    type: 'Time',
   },
   SUBMIT: {
-    type: 'Submit',
     icon: BsSendFill,
+    type: 'Submit',
   },
   INPUT_TABLE: {
-    type: 'Input Table',
     icon: FaTable,
+    type: 'Input Table',
   },
   STAR_RATING: {
-    type: 'Star Rating',
     icon: FaStar,
+    type: 'Star Rating',
   },
   SCALE_RATING: {
-    type: 'Scale Rating',
     icon: FaChartSimple,
+    type: 'Scale Rating',
   },
   DIVIDER: {
-    type: 'Divider',
     icon: RxDividerHorizontal,
+    type: 'Divider',
   },
   PAGE_BREAK: {
-    type: 'Page Break',
     icon: MdInsertPageBreak,
+    type: 'Page Break',
   },
 };
 
@@ -110,42 +112,39 @@ export const ElementList = [
   {
     title: 'Necessary elements',
     elements: [
-      { id: 1, element: ELEMENTS.HEADING },
-      { id: 2, element: ELEMENTS.FULLNAME },
-      { id: 3, element: ELEMENTS.EMAIL },
-      { id: 4, element: ELEMENTS.ADDRESS },
-      { id: 5, element: ELEMENTS.PHONE },
-      { id: 6, element: ELEMENTS.DATEPICKER },
-      { id: 7, element: ELEMENTS.APPOINTMENT },
+      { element: ELEMENTS.HEADING },
+      { element: ELEMENTS.EMAIL },
+      { element: ELEMENTS.FULLNAME },
+      { element: ELEMENTS.ADDRESS },
+      { element: ELEMENTS.PHONE },
+      { element: ELEMENTS.DATEPICKER },
+      { element: ELEMENTS.APPOINTMENT },
     ],
   },
   {
     title: 'Basic elements',
     elements: [
-      { id: 8, element: ELEMENTS.SHORT_TEXT },
-      { id: 9, element: ELEMENTS.LONG_TEXT },
-      { id: 10, element: ELEMENTS.DROPDOWN },
-      { id: 11, element: ELEMENTS.SINGLE_CHOICE },
-      { id: 12, element: ELEMENTS.MULTIPLE_CHOICE },
-      { id: 13, element: ELEMENTS.NUMBER },
-      { id: 14, element: ELEMENTS.IMAGE },
-      { id: 15, element: ELEMENTS.FILE_UPLOAD },
-      { id: 16, element: ELEMENTS.TIME },
+      { element: ELEMENTS.SHORT_TEXT },
+      { element: ELEMENTS.LONG_TEXT },
+      { element: ELEMENTS.DROPDOWN },
+      { element: ELEMENTS.SINGLE_CHOICE },
+      { element: ELEMENTS.MULTIPLE_CHOICE },
+      { element: ELEMENTS.NUMBER },
+      { element: ELEMENTS.IMAGE },
+      { element: ELEMENTS.FILE_UPLOAD },
+      { element: ELEMENTS.TIME },
     ],
   },
   {
     title: 'Survey elements',
     elements: [
-      { id: 17, element: ELEMENTS.INPUT_TABLE },
-      { id: 18, element: ELEMENTS.STAR_RATING },
-      { id: 29, element: ELEMENTS.SCALE_RATING },
+      { element: ELEMENTS.INPUT_TABLE },
+      { element: ELEMENTS.STAR_RATING },
+      { element: ELEMENTS.SCALE_RATING },
     ],
   },
   {
     title: 'Page elements',
-    elements: [
-      { id: 20, element: ELEMENTS.DIVIDER },
-      { id: 21, element: ELEMENTS.PAGE_BREAK },
-    ],
+    elements: [{ element: ELEMENTS.DIVIDER }, { element: ELEMENTS.PAGE_BREAK }],
   },
 ];

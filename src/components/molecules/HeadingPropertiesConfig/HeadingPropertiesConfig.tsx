@@ -1,0 +1,49 @@
+import { Stack, Text, TextInput } from '@mantine/core';
+
+import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
+import { HeadingConfig, HeadingElement } from '@/types';
+
+export const HeadingProptertiesConfig = (
+  props: BasePropertiesProps<HeadingElement>,
+) => {
+  const { edittingItem, updateItem, handleConfig } = props;
+
+  const handleChange =
+    (key: keyof HeadingConfig) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleConfig({
+        ...edittingItem?.config,
+        [key]: event.currentTarget.value,
+      });
+      updateItem({
+        ...edittingItem,
+        config: {
+          ...edittingItem.config,
+          [key]: event.currentTarget.value,
+        },
+      });
+    };
+
+  return (
+    <>
+      <Stack className='p-3'>
+        <Text className='font-bold text-white'>Heading text</Text>
+        <TextInput
+          autoComplete='off'
+          className='rounded-md border border-solid border-slate-600 bg-slate-100'
+          value={(edittingItem?.config as HeadingConfig).headingText}
+          onChange={handleChange('headingText')}
+        ></TextInput>
+      </Stack>
+      <Stack className='p-3'>
+        <Text className='font-bold text-white'>Subheading text</Text>
+        <TextInput
+          autoComplete='off'
+          className='rounded-md border border-solid border-slate-600 bg-slate-100'
+          value={(edittingItem?.config as HeadingConfig).subheadingText}
+          onChange={handleChange('subheadingText')}
+        ></TextInput>
+      </Stack>
+    </>
+  );
+};

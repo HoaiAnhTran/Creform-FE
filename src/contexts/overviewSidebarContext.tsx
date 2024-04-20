@@ -18,7 +18,7 @@ const OverviewSidebarContext = createContext<OverviewSidebarContextType>({
   setActiveTeam: () => {},
 });
 
-export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
+export const OverviewSidebarProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [activeFolder, setActiveFolder] = useState<number>(0);

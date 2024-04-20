@@ -1,26 +1,30 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
-import {
-  CloseButton,
-  Divider,
-  Group,
-  Image,
-  Paper,
-  Stack,
-} from '@mantine/core';
+import { CloseButton, Divider, Group, Image, Stack } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { MESSAGES } from '@/constants/messages';
-import { useBuildFormContext } from '@/contexts';
+import { useBuildFormContext, useElementLayouts } from '@/contexts';
+import { ElementItem, ElementType } from '@/types';
 import { toastify } from '@/utils';
 
-export const FormContainer = () => {
+import { PropertiesRightbar } from '../PropertiesRightbar';
+import { ResponseReactGridLayout } from '../ResponseReactGridLayout';
+
+interface FormContainerProps {
+  currentElementType?: ElementType;
+}
+
+export const FormContainer = ({ currentElementType }: FormContainerProps) => {
   const { form } = useBuildFormContext();
 
   const [currentLogo, setCurrentLogo] = useState<string>('');
 
   const logoInputRef = useRef<HTMLInputElement>(null);
+
+  const { elements, setElements, edittingItem, setEdittingItem } =
+    useElementLayouts();
 
   const handleClickAddLogo = () => {
     logoInputRef.current?.click();
@@ -50,9 +54,22 @@ export const FormContainer = () => {
     setCurrentLogo(form.logoUrl);
   }, [form]);
 
+  const updateItem = (item: ElementItem) => {
+    setElements(
+      elements.map((element) => {
+        if (element.id !== edittingItem!.id) return element;
+        return item;
+      }),
+    );
+  };
+
+  const handleConfig = (config: ElementItem['config']) => {
+    setEdittingItem({ ...edittingItem, config: config } as ElementItem);
+  };
+
   return (
     <Stack className='items-center py-7'>
-      <Stack className='w-[55%] justify-between gap-7'>
+      <Stack className='w-[45%] justify-between gap-7'>
         {currentLogo ? (
           <Group className='relative mx-auto'>
             <input
@@ -105,9 +122,16 @@ export const FormContainer = () => {
             variant='dashed'
           />
         )}
-        <Paper withBorder className='min-h-screen rounded-md bg-white p-7'>
-          Form container
-        </Paper>
+        <ResponseReactGridLayout
+          currentElementType={currentElementType!}
+          updateItem={updateItem}
+          handleConfig={handleConfig}
+        />
+        <PropertiesRightbar
+          edittingItem={edittingItem!}
+          updateItem={updateItem}
+          handleConfig={handleConfig}
+        />
       </Stack>
     </Stack>
   );

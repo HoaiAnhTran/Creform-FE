@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 import { Box, Divider, Group, Stack, Text } from '@mantine/core';
@@ -5,15 +6,22 @@ import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
-import { useBuildFormContext } from '@/contexts';
+import { ElementType } from '@/types';
 import { cn } from '@/utils';
 
 const elementList = ElementList;
-
-export const BuildFormLeftbar = () => {
-  const { toggledLeftbar, setToggledLeftbar } = useBuildFormContext();
+interface BuildFormLeftbarProps {
+  setCurrentElementType: (element: ElementType) => void;
+}
+export const BuildFormLeftbar = ({
+  setCurrentElementType,
+}: BuildFormLeftbarProps) => {
+  const [toggledLeftbar, setToggledLeftbar] = useState(false);
 
   const [scroll] = useWindowScroll();
+  const handleDrop = (element: ElementType) => {
+    setCurrentElementType(element);
+  };
 
   return (
     <Box>
@@ -59,15 +67,23 @@ export const BuildFormLeftbar = () => {
             </Box>
             <Divider color='gray' />
             {elementList.map((elementType, index) => (
-              <Stack key={index} className='gap-0'>
+              <Stack key={`category-${index}`} className='gap-0'>
                 <Box className='flex justify-center bg-slate-600 p-2 uppercase text-slate-300'>
                   <Text className='text-[13px]'>{elementType.title}</Text>
                 </Box>
                 <Divider color='gray' />
                 <Box>
-                  {elementType.elements.map(({ element, id }) => (
-                    <Box key={id}>
-                      <Group className='group cursor-move hover:bg-malachite-500'>
+                  {elementType.elements.map(({ element }, index) => (
+                    <Box key={`element-${index}`}>
+                      <Group
+                        className='group cursor-move hover:bg-malachite-500'
+                        draggable={true}
+                        unselectable='on'
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData('text/plain', '');
+                          handleDrop(element.type);
+                        }}
+                      >
                         <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-malachite-400'>
                           <element.icon size={25} />
                         </Box>
