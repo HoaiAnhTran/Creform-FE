@@ -1,26 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IoIosLogOut } from 'react-icons/io';
-import { IoPerson, IoPersonOutline } from 'react-icons/io5';
+import { IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, Image, Menu } from '@mantine/core';
 
 import GreenLogo from '@/assets/images/greenlogo.png';
-import { Button } from '@/atoms/Button';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { useBuildFormContext } from '@/contexts';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { formatDate, httpClient } from '@/utils';
 
-interface HeaderProps {
-  onButtonClick?: () => void;
-}
-
 const LOGO_HEIGHT = 45;
 const DEFAULT_FORM_TITLE = 'Form';
 
-export const BuildFormHeader = ({ onButtonClick }: HeaderProps) => {
+export const BuildFormHeader = () => {
   const { data: myProfile } = useGetMyProfileQuery();
 
   const { form, isEditForm } = useBuildFormContext();
@@ -93,27 +88,20 @@ export const BuildFormHeader = ({ onButtonClick }: HeaderProps) => {
         </div>
       </div>
 
-      <div className='flex flex-row gap-6'>
-        <Button
-          title='Add collaborators'
-          variant='outline'
-          className='rounded-3xl'
-          leftSection={<IoPerson />}
-          onClick={onButtonClick}
-        />
-        <div>
+      {myProfile && (
+        <div className='flex flex-row gap-6'>
           <Menu shadow='sm' offset={5} position='bottom-end' withArrow>
             <Menu.Target>
-              <UserAvatar avatarUrl={myProfile?.avatarUrl ?? ''} />
+              <UserAvatar avatarUrl={myProfile.avatarUrl} />
             </Menu.Target>
-            <Menu.Dropdown className='!min-w-[230px]'>
+            <Menu.Dropdown className='min-w-[230px]'>
               <Menu.Item className='p-3 font-medium text-gray-600 delay-100 ease-linear hover:bg-transparent'>
                 <Group>
-                  <UserAvatar avatarUrl={myProfile?.avatarUrl ?? ''} />
+                  <UserAvatar avatarUrl={myProfile.avatarUrl} />
                   <div className='flex gap-1'>
                     <span className='text-[14px] font-normal'>Hello,</span>
                     <span className='text-[14px] font-medium'>
-                      {myProfile?.username}
+                      {myProfile.username}
                     </span>
                   </div>
                 </Group>
@@ -135,7 +123,7 @@ export const BuildFormHeader = ({ onButtonClick }: HeaderProps) => {
             </Menu.Dropdown>
           </Menu>
         </div>
-      </div>
+      )}
     </header>
   );
 };

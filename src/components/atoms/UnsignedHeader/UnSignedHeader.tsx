@@ -1,17 +1,16 @@
-import { Image } from '@mantine/core';
+import { Anchor, Image } from '@mantine/core';
+
+import WhiteLogo from '@/assets/images/whitelogo.png';
+import { PATH } from '@/constants/routes';
 
 const HEIGHT_IMAGE = 50;
 
 export const UnSignedHeader = () => (
   <header>
-    <div className='container'>
-      <nav className='flex items-center'>
-        <Image
-          h={HEIGHT_IMAGE}
-          src='./images/whitelogo.png'
-          className='mb-10 w-auto object-contain'
-        />
-      </nav>
+    <div className='flex items-center'>
+      <Anchor href={PATH.ROOT_PAGE}>
+        <Image src={WhiteLogo} h={HEIGHT_IMAGE} />
+      </Anchor>
     </div>
   </header>
 );

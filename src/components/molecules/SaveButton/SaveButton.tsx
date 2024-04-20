@@ -23,7 +23,7 @@ export const SaveButton = ({ className, handleSave }: SaveButtonProps) => {
     >
       <UnstyledButton
         className={cn(
-          'flex flex-col items-center gap-2 text-malachite-500',
+          'flex flex-col items-center text-malachite-500 transition-all duration-[600ms] ease-linear',
           className,
           { 'fixed top-20': isFixed },
         )}

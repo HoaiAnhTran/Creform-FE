@@ -7,6 +7,7 @@ import { PublishSection } from '@/organisms/PublishSection';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoginPage } from '@/pages/LoginPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
@@ -98,6 +99,10 @@ export function useRouteElements() {
           element: <AccountPage />,
         },
       ],
+    },
+    {
+      path: '*',
+      element: <NotFoundPage />,
     },
   ]);
   return routeElements;
