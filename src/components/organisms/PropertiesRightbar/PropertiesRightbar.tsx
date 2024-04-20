@@ -3,6 +3,7 @@ import { Box, Divider, Stack, Text } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 
 import { useBuildFormContext } from '@/contexts';
+import { EmailProptertiesConfig } from '@/molecules/EmailPropertiesConfig';
 import { isEmailElement, isHeadingElement } from '@/molecules/FactoryElement';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { ElementItem } from '@/types';
@@ -51,7 +52,12 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
                   />
                 );
               case isEmailElement(edittingItem):
-                return;
+                return (
+                  <EmailProptertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
               default:
                 return <></>;
             }

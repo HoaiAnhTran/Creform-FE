@@ -83,6 +83,7 @@ export const ResponseReactGridLayout = ({
           type: ElementType.HEADING,
           gridSize: getGridSize(currentItem),
           config: defaultHeadingConfig,
+          fields: [],
         };
       case ElementType.EMAIL:
         return {
@@ -90,6 +91,12 @@ export const ResponseReactGridLayout = ({
           type: ElementType.EMAIL,
           gridSize: getGridSize(currentItem),
           config: defaultEmailConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'email',
+            },
+          ],
         };
       default:
         return undefined;
@@ -141,7 +148,7 @@ export const ResponseReactGridLayout = ({
         isDroppable={true}
         onDragStart={handleDragStart}
         onDragStop={handleDragStop}
-        droppingItem={{ i: uuidv4(), h: 3, w: 4 }}
+        droppingItem={{ i: uuidv4(), h: 4, w: 4 }}
       >
         {elements.map((element) => (
           <Box

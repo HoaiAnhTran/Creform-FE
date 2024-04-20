@@ -8,7 +8,7 @@ export interface HeadingConfig {
 export interface EmailConfig {
   fieldLabel: string;
   required: boolean;
-  subLabel: string[];
+  sublabel: string;
 }
 
 export type ElementConfig = HeadingConfig | EmailConfig;
@@ -44,6 +44,10 @@ export interface BaseElement<T extends ElementType, U extends ElementConfig> {
   type: T;
   gridSize: GridSize;
   config: U;
+  fields: {
+    id: string;
+    name: string;
+  }[];
 }
 
 export type HeadingElement = BaseElement<ElementType.HEADING, HeadingConfig>;

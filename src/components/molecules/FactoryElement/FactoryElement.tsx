@@ -22,8 +22,7 @@ export const FactoryElement = (props: BaseElementProps) => {
     case isHeadingElement(item):
       return <BaseHeadingElement item={item} {...rest} />;
     case isEmailElement(item):
-      //TODO: refactor BaseEmailElement
-      return <BaseEmailElement />;
+      return <BaseEmailElement item={item} {...rest} />;
     default:
       return <></>;
   }

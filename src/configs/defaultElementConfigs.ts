@@ -4,9 +4,9 @@ export const defaultHeadingConfig: HeadingConfig = {
   headingText: 'Heading',
   subheadingText: 'Subheader',
 };
-//TODO: update defaultEmailConfig
+
 export const defaultEmailConfig: EmailConfig = {
-  fieldLabel: '',
-  required: true,
-  subLabel: [],
+  fieldLabel: 'Email',
+  required: false,
+  sublabel: 'example@example.com',
 };
