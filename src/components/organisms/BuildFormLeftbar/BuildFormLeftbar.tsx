@@ -91,7 +91,7 @@ export const BuildFormLeftbar = ({
                       <Box key={`element-${index}`}>
                         {!isSubmitElement ? (
                           <Group
-                            className='group cursor-move hover:bg-malachite-500'
+                            className='group cursor-move hover:bg-ocean-green-500'
                             draggable={true}
                             unselectable='on'
                             onDragStart={(e) => {
@@ -99,7 +99,7 @@ export const BuildFormLeftbar = ({
                               handleDrop(element.type);
                             }}
                           >
-                            <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-malachite-400'>
+                            <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-ocean-green-400'>
                               <element.icon size={ELEMENT_ICON_SIZE} />
                             </Box>
                             <Box className='text-white'>{element.type}</Box>
@@ -116,7 +116,7 @@ export const BuildFormLeftbar = ({
                             <Group
                               className={cn('group', {
                                 'cursor-pointer': hasSubmitButton,
-                                'cursor-move hover:bg-malachite-500':
+                                'cursor-move hover:bg-ocean-green-500':
                                   !hasSubmitButton,
                               })}
                               draggable={!hasSubmitButton}
@@ -134,7 +134,7 @@ export const BuildFormLeftbar = ({
                                 className={cn(
                                   'flex bg-slate-600 p-3 text-white',
                                   {
-                                    'group-hover:bg-malachite-400':
+                                    'group-hover:bg-ocean-green-400':
                                       !hasSubmitButton,
                                   },
                                 )}

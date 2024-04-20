@@ -207,7 +207,7 @@ export const FormsTable = () => {
         accessor: 'title',
         render: (record: FormResponse) => (
           <Group>
-            <BsFileText size={36} className='text-malachite-500' />
+            <BsFileText size={36} className='text-ocean-green-500' />
             <Stack className='gap-2'>
               <Group>
                 <Text className='text-lg font-semibold text-gray-900'>
@@ -240,7 +240,7 @@ export const FormsTable = () => {
                       ),
                     );
                   }}
-                  className='text-sm font-medium text-gray-500 hover:text-malachite-500 hover:underline'
+                  className='text-sm font-medium text-gray-500 hover:text-ocean-green-500 hover:underline'
                 >
                   {record.totalSubmissions} submissions.
                 </UnstyledButton>
@@ -283,7 +283,7 @@ export const FormsTable = () => {
               }}
             />
           ),
-        cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
+        cellsClassName: 'cursor-pointer hover:bg-ocean-green-100 w-30 h-20 p-0',
       },
       {
         accessor: 'more',
@@ -306,12 +306,12 @@ export const FormsTable = () => {
                 />
               </Menu.Target>
 
-              <Menu.Dropdown className='min-w-[200px] !bg-malachite-100'>
+              <Menu.Dropdown className='min-w-[200px] !bg-ocean-green-100'>
                 {moreOptions.map((option, index) => (
                   <Menu.Item
                     key={index}
                     leftSection={option.icon}
-                    className='mb-1 mt-0.5 gap-4 px-4 py-3 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    className='mb-1 mt-0.5 gap-4 px-4 py-3 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
                     onClick={() => option.handleClick(record)}
                   >
                     {option.text}
@@ -331,7 +331,7 @@ export const FormsTable = () => {
               onClick={() => handleRestoreForm(record)}
             />
           ),
-        cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
+        cellsClassName: 'cursor-pointer hover:bg-ocean-green-100 w-30 h-20 p-0',
       },
     ],
     [moreOptions],
