@@ -5,11 +5,13 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { MdModeEditOutline } from 'react-icons/md';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 import { ActionIcon, Anchor, Group, Menu, Stack, Text } from '@mantine/core';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
-import { useParams } from '@/contexts';
+import { PATH } from '@/constants/routes';
+import { useFormParams } from '@/contexts';
 import { LoadingDots } from '@/molecules/LoadingDots';
 import {
   useAddToFavouritesMutation,
@@ -30,7 +32,9 @@ export const FormsTable = ({
   setSelectedRecords,
 }: FormsTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { params, setParams } = useParams();
+  const { params, setParams } = useFormParams();
+
+  const navigate = useNavigate();
 
   const { data, isLoading } = useGetMyFormsQuery(params);
   const [addToFavouritesMutation] = useAddToFavouritesMutation();
@@ -89,11 +93,14 @@ export const FormsTable = ({
     },
     {
       accessor: 'edit',
-      render: () => (
+      render: (record) => (
         <Button
           title='Edit Form'
           variant='subtle'
-          className='font-bold hover:bg-transparent'
+          className='font-medium'
+          onClick={() => {
+            navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`);
+          }}
         />
       ),
       cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
@@ -107,16 +114,16 @@ export const FormsTable = ({
               title='More'
               variant='subtle'
               rightSection={<IoIosArrowDown />}
-              className='aria-expanded:font-bold'
+              className='font-medium aria-expanded:font-bold'
             />
           </Menu.Target>
 
-          <Menu.Dropdown>
+          <Menu.Dropdown className='min-w-[200px]'>
             {moreOptions.map((option, index) => (
               <Menu.Item
                 key={index}
                 leftSection={option.icon}
-                className='font-medium text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='gap-4 px-4 py-3 font-medium text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
               >
                 {option.text}
               </Menu.Item>

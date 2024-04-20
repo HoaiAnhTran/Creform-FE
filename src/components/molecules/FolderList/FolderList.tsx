@@ -6,7 +6,8 @@ import { RiAddBoxFill } from 'react-icons/ri';
 import { Box, Group, Menu, NavLink, Stack } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useOverviewSidebars, useParams } from '@/contexts';
+import { useOverviewSidebars } from '@/contexts';
+import { useFormParams } from '@/contexts';
 import { FolderResponse, type ModalType, ModalTypes } from '@/types';
 import { cn } from '@/utils';
 
@@ -27,7 +28,6 @@ export const FolderList = ({
   setFolderName,
   setFolderId,
 }: FolderListProps) => {
-  const { setParams } = useParams();
   const {
     activeFolder,
     setActiveFolder,
@@ -43,6 +43,7 @@ export const FolderList = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFolder, activeAllForms]);
 
+  const { setParams } = useFormParams();
   return (
     <Stack className='flex flex-col justify-between gap-3'>
       <NavLink

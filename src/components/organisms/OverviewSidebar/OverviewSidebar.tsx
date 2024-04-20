@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { FaStar, FaTrashAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { Box, Divider, NavLink } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
-import { useOverviewSidebars, useParams } from '@/contexts';
+import { PATH } from '@/constants/routes';
+import { useFormParams, useOverviewSidebars } from '@/contexts';
 import { FolderGroup } from '@/molecules/FolderGroup';
 import { TeamGroup } from '@/molecules/TeamGroup';
 import {
@@ -20,10 +22,12 @@ import {
 import { cn } from '@/utils';
 
 export const OverviewSidebar = () => {
-  const { setParams, params } = useParams();
   const [folderName, setFolderName] = useState<string>('');
   const { setActiveFolder, setActiveAllForms, setActiveTeam } =
     useOverviewSidebars();
+  const { setParams, params } = useFormParams();
+
+  const navigate = useNavigate();
 
   const { data: folderList, isLoading: isFolderLoading } =
     useGetMyFoldersQuery();
@@ -36,11 +40,16 @@ export const OverviewSidebar = () => {
   const [updateTeam] = useUpdateTeamMutation();
 
   return (
-    <nav className='relative h-full w-full overflow-y-scroll border-r border-slate-300 bg-slate-100 text-slate-600'>
-      <Box className='sticky top-0 z-10 w-full border border-solid border-slate-300 bg-slate-100 p-3 text-center lg:p-5 lg:pt-3'>
-        <Button size='md' title='CREATE FORM' className='w-full font-bold' />
+    <Box className='relative h-full w-full border-r border-slate-300 bg-slate-100 text-slate-600'>
+      <Box className='sticky top-0 z-10 w-full border border-solid border-slate-300 bg-slate-100 p-4 text-center'>
+        <Button
+          size='md'
+          title='CREATE FORM'
+          className='w-full font-bold'
+          onClick={() => navigate(PATH.BUILD_FORM_PAGE)}
+        />
       </Box>
-      <Box className='flex-col gap-5 p-3 md:flex lg:p-5 '>
+      <Box className='flex-col gap-5 overflow-y-scroll bg-slate-100 p-3 md:flex lg:p-5'>
         <FolderGroup
           folderList={folderList}
           isLoading={isFolderLoading}
@@ -92,6 +101,6 @@ export const OverviewSidebar = () => {
           }}
         />
       </Box>
-    </nav>
+    </Box>
   );
 };

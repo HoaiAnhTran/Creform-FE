@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { IoIosLogOut } from 'react-icons/io';
 import { IoPerson, IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
@@ -9,30 +9,39 @@ import GreenLogo from '@/assets/images/greenlogo.png';
 import { Button } from '@/atoms/Button';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
+import { useBuildFormContext } from '@/contexts';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
-import { FormResponse } from '@/types';
 import { formatDate, httpClient } from '@/utils';
 
 interface HeaderProps {
-  form: FormResponse;
   onButtonClick?: () => void;
 }
 
 const LOGO_HEIGHT = 45;
 const DEFAULT_FORM_TITLE = 'Form';
 
-export const BuildFormHeader = ({ form, onButtonClick }: HeaderProps) => {
+export const BuildFormHeader = ({ onButtonClick }: HeaderProps) => {
   const { data: myProfile } = useGetMyProfileQuery();
 
-  const [currentTitle, setCurrentTitle] = useState<string>(
-    form.title || DEFAULT_FORM_TITLE,
-  );
-  const [inputWidth, setInputWidth] = useState<string>('');
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { form, isEditForm } = useBuildFormContext();
+
+  const [currentTitle, setCurrentTitle] = useState<string>('');
+
+  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
+
+  const createdDate = useMemo(
+    () => formatDate(form.createdAt, 'MMM D, YYYY h:mm A'),
+    [form.createdAt],
+  );
+
+  const updatedDate = useMemo(
+    () => formatDate(form.updatedAt, 'MMM D, YYYY h:mm A'),
+    [form.updatedAt],
+  );
 
   const handleLogout = () => {
     httpClient.logout();
@@ -40,12 +49,16 @@ export const BuildFormHeader = ({ form, onButtonClick }: HeaderProps) => {
   };
 
   useEffect(() => {
-    setInputWidth(`${currentTitle.length * 11}px`);
-  }, [currentTitle]);
+    if (isEditForm) {
+      setCurrentTitle(form.title);
+    } else {
+      setCurrentTitle(DEFAULT_FORM_TITLE);
+    }
+  }, [form, isEditForm]);
 
   return (
     <header className='relative flex flex-row items-center justify-between px-10 py-3'>
-      <Anchor href='/'>
+      <Anchor href={PATH.ROOT_PAGE} className='z-10'>
         <Image src={GreenLogo} h={LOGO_HEIGHT} />
       </Anchor>
 
@@ -57,25 +70,26 @@ export const BuildFormHeader = ({ form, onButtonClick }: HeaderProps) => {
             onChange={(event) => {
               setCurrentTitle(event.target.value);
             }}
-            onBlur={() => setIsEditing(false)}
+            onBlur={() => setIsEditingTitle(false)}
             className='min-w-14 max-w-full overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
-            style={{ width: inputWidth }}
+            style={{ width: `${currentTitle.length * 11}px` }}
           />
-          {isEditing || (
+          {isEditingTitle || (
             <MdOutlineModeEditOutline
               size={18}
               onClick={() => {
                 titleInputRef.current?.focus();
-                setIsEditing(true);
+                setIsEditingTitle(true);
               }}
               className='min-w-[5%]'
             />
           )}
         </div>
         <div className='text-[13px] text-malachite-500'>
-          {form.updatedAt
-            ? `Last updated at ${formatDate(form.updatedAt, 'MMM D, YYYY h:mm A')}`
-            : `Created at ${formatDate(form.createdAt, 'MMM D, YYYY h:mm A')}`}
+          {isEditForm &&
+            (form.updatedAt
+              ? `Last updated at ${updatedDate}`
+              : `Created at ${createdDate}`)}
         </div>
       </div>
 

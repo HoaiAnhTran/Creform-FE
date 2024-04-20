@@ -2,26 +2,26 @@ import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 import { GetFormsParams } from '@/types';
 
-interface ParamsContextType {
+interface FormParamsContextType {
   params: GetFormsParams;
   setParams: React.Dispatch<React.SetStateAction<GetFormsParams>>;
 }
 
-const ParamsContext = createContext<ParamsContextType>({
+const FormParamsContext = createContext<FormParamsContextType>({
   params: {},
   setParams: () => {},
 });
 
-export const ParamsProvider: React.FC<{ children: ReactNode }> = ({
+export const FormParamsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [params, setParams] = useState<GetFormsParams>({});
 
   return (
-    <ParamsContext.Provider value={{ params, setParams }}>
+    <FormParamsContext.Provider value={{ params, setParams }}>
       {children}
-    </ParamsContext.Provider>
+    </FormParamsContext.Provider>
   );
 };
 
-export const useParams = () => useContext(ParamsContext);
+export const useFormParams = () => useContext(FormParamsContext);

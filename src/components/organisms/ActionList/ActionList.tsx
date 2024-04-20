@@ -32,7 +32,7 @@ export const ActionList = (props: ActionListFormProps) => {
     },
     {
       icon: <AiOutlineTeam size='25' />,
-      title: 'Move To Team',
+      title: 'Move to team',
       onClick: handleAddToTeam,
     },
     {
@@ -49,7 +49,7 @@ export const ActionList = (props: ActionListFormProps) => {
     },
     {
       icon: <AiOutlineTeam size='25' />,
-      title: 'Move To Team',
+      title: 'Move to team',
       onClick: handleAddToTeam,
     },
     {

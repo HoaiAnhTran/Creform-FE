@@ -143,6 +143,7 @@ export const AccountPage = () => {
       reader.readAsDataURL(file);
       setSelectedFile(file);
     }
+    event.target.value = '';
   };
 
   const handleUpdateImage = async (
@@ -567,7 +568,7 @@ export const AccountPage = () => {
       <Header />
       <Stack className='bg-malachite-500 px-40'>
         <Stack className='items-center justify-center gap-12 rounded-xl bg-white px-14 py-7'>
-          <Text className='text-center text-[26px] font-medium'>
+          <Text className='text-center text-[26px] font-semibold'>
             Update Account and General Information
           </Text>
           <Stack className='w-full gap-5'>

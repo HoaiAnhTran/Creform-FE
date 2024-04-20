@@ -53,7 +53,7 @@ export const ELEMENTS = {
     icon: PiTextboxBold,
   },
   DROPDOWN: {
-    type: 'dropdown',
+    type: 'Dropdown',
     icon: RxDropdownMenu,
   },
   SINGLE_CHOICE: {
@@ -105,6 +105,7 @@ export const ELEMENTS = {
     icon: MdInsertPageBreak,
   },
 };
+
 export const ElementList = [
   {
     title: 'Necessary elements',

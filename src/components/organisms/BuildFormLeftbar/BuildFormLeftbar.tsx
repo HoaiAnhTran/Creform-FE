@@ -1,35 +1,35 @@
-import { useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 import { Box, Divider, Group, Stack, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
+import { useBuildFormContext } from '@/contexts';
 import { cn } from '@/utils';
 
 const elementList = ElementList;
 
 export const BuildFormLeftbar = () => {
-  const [showLeftbar, setShowLeftbar] = useState(false);
+  const { toggledLeftbar, setToggledLeftbar } = useBuildFormContext();
 
   return (
     <Box>
       <Button
+        size='sm'
+        title='Add form element'
+        color='gray'
         onClick={() => {
-          setShowLeftbar(true);
+          setToggledLeftbar(true);
         }}
         className={cn(
-          'mt-10 h-14 w-[0] rounded-l-none rounded-r-full pr-0 transition-all duration-1000 ease-linear',
-          { 'w-[170px]': !showLeftbar },
+          'absolute top-10 h-12 w-[0] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-[600ms] ease-linear',
+          { 'w-[170px]': !toggledLeftbar },
         )}
-        size='sm'
-        title='Add form elements'
-        color='gray'
         rightSection={
           <Box className='relative flex h-12 w-12'>
-            <Box className='absolute inline-flex h-full w-full animate-ping rounded-full bg-slate-600 opacity-75'></Box>
-            <Box className='relative inline-flex h-12 w-12 items-center justify-center rounded-full bg-slate-400'>
-              <FaPlus className='flex' />
+            <Box className='absolute inline-flex h-full w-full animate-ping rounded-full bg-slate-600 opacity-80'></Box>
+            <Box className='relative inline-flex h-12 w-12 items-center justify-center rounded-full bg-slate-600'>
+              <FaPlus size={20} />
             </Box>
           </Box>
         }
@@ -37,14 +37,14 @@ export const BuildFormLeftbar = () => {
       />
       <Box
         className={cn(
-          'absolute top-0 h-screen w-[0] overflow-auto bg-slate-500 transition-all duration-1000 ease-linear',
-          { 'w-[350px]': showLeftbar },
+          'absolute top-0 h-full w-[0] overflow-auto bg-slate-500 transition-all duration-[600ms] ease-linear',
+          { 'w-[320px]': toggledLeftbar },
         )}
       >
         <IoMdClose
-          className='absolute right-2 top-2 size-6 cursor-pointer text-white'
+          className='absolute right-2 top-2 size-6 cursor-pointer text-white transition-all duration-150 ease-linear hover:bg-slate-600'
           onClick={() => {
-            setShowLeftbar(false);
+            setToggledLeftbar(false);
           }}
         />
         <Box>

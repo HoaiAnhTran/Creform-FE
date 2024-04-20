@@ -1,6 +1,9 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
+import { BuildFormContextProvider } from '@/contexts';
+import { BuildSection } from '@/organisms/BuildSection';
+import { PublishSection } from '@/organisms/PublishSection';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -56,7 +59,39 @@ export function useRouteElements() {
         },
         {
           path: PATH.BUILD_FORM_PAGE,
-          element: <BuildFormPage />,
+          element: (
+            <BuildFormContextProvider>
+              <BuildFormPage />
+            </BuildFormContextProvider>
+          ),
+          children: [
+            {
+              path: '',
+              element: <BuildSection />,
+            },
+            {
+              path: 'publish',
+              element: <PublishSection />,
+            },
+          ],
+        },
+        {
+          path: PATH.EDIT_FORM_PAGE,
+          element: (
+            <BuildFormContextProvider>
+              <BuildFormPage />
+            </BuildFormContextProvider>
+          ),
+          children: [
+            {
+              path: '',
+              element: <BuildSection />,
+            },
+            {
+              path: 'publish',
+              element: <PublishSection />,
+            },
+          ],
         },
         {
           path: PATH.MY_ACCOUNT_PAGE,

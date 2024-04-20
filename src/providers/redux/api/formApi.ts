@@ -1,5 +1,10 @@
 import { API_URL } from '@/constants/apiURL';
-import { GetFormsParams, GetFormsResponse, SuccessResponse } from '@/types';
+import {
+  FormResponse,
+  GetFormsParams,
+  GetFormsResponse,
+  SuccessResponse,
+} from '@/types';
 
 import { rootApi } from './rootApi';
 
@@ -15,6 +20,15 @@ const formApi = rootApi.injectEndpoints({
         response.data,
       providesTags: ['Forms'],
     }),
+    getFormDetails: build.query({
+      query: ({ id }) => ({
+        url: `${API_URL.FORMS}/${id}`,
+        method: 'GET',
+      }),
+      transformResponse: (response: SuccessResponse<FormResponse>) =>
+        response.data,
+      providesTags: (_result, _error, arg) => [{ type: 'Forms', id: arg.id }],
+    }),
     addToFavourites: build.mutation({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}/favourites`,
@@ -26,4 +40,8 @@ const formApi = rootApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetMyFormsQuery, useAddToFavouritesMutation } = formApi;
+export const {
+  useGetMyFormsQuery,
+  useGetFormDetailsQuery,
+  useAddToFavouritesMutation,
+} = formApi;

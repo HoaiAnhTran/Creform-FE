@@ -1,18 +1,28 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Tabs as MantineTabs } from '@mantine/core';
 
 import { ToggleButton } from '@/atoms/Button/ToggleButton';
 
 export const Tabs = () => {
   const navigate = useNavigate();
-  const { tabValue } = useParams();
+
+  const { pathname } = useLocation();
+
   const [showPreviewForm, setShowPreviewForm] = useState<boolean>(false);
 
   const tabList = [
     { title: 'Build', value: '/' },
-    { title: 'Publish', value: '/publish' },
+    { title: 'Publish', value: 'publish' },
   ];
+
+  const handleChangeTab = (value: string | null) => {
+    if (value === 'publish' && !pathname.includes('publish')) {
+      navigate(pathname.concat(`/${value}`));
+    } else if (value !== 'publish' && pathname.includes('publish')) {
+      navigate(pathname.replace('/publish', ''));
+    }
+  };
 
   return (
     <MantineTabs
@@ -21,10 +31,9 @@ export const Tabs = () => {
       defaultValue='/'
       classNames={{ tabLabel: 'uppercase' }}
       className='relative'
-      value={tabValue}
-      onChange={(value: string | null) => navigate(`${value}`)}
+      onChange={(value) => handleChangeTab(value)}
     >
-      <MantineTabs.List className='sticky top-0 z-10 justify-center gap-0 bg-gradient-to-r from-malachite-400 to-malachite-600'>
+      <MantineTabs.List className='justify-center gap-0 bg-gradient-to-r from-malachite-400 to-malachite-600'>
         {tabList.map((tab, index) => (
           <MantineTabs.Tab
             key={index}
