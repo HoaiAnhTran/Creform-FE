@@ -1,19 +1,23 @@
 import { Field, FieldArray } from 'formik';
 
+import { LongTextElement, TextConfig } from '@/types';
 import { stringRequired } from '@/utils/schemas/validation';
 
+import { Text } from '../Text';
 import { TextInput } from '../TextInput';
 
 import { Textarea } from '.';
 
-//TODO: add id to identify between longText
 interface LongTextProps {
-  label?: string;
-  width?: string;
+  isDisabledValue?: boolean;
+  handleChange?: (
+    key: keyof TextConfig,
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  item: LongTextElement;
 }
 
 export const LongText = (props: LongTextProps) => {
-  const { label = 'Type a question', width = '100%' } = props;
+  const { isDisabledValue = false, handleChange, item } = props;
 
   const validate = async (value: string) =>
     stringRequired
@@ -26,21 +30,33 @@ export const LongText = (props: LongTextProps) => {
       name='longText'
       render={() => (
         <div className='flex flex-col'>
-          //TODO : add id to name to identify this field
           <Field
+            required={item.config.required}
             validate={validate}
-            variant='unstyled'
-            defaultValue={label}
-            size='lg'
-            classNameError='min-h-[0rem]'
-            name='longText_value'
-            component={TextInput}
+            text={item.config.fieldLabel}
+            name={`${item.id}.fieldLabel`}
+            nameElementField='fieldLabel'
+            component={Text}
           />
           <Field
-            name='longText_label'
-            style={{ width }}
-            classNameError='min-h-[0rem]'
+            disabled={isDisabledValue}
+            name={`${item.id}.fieldValue`}
+            classNameWrapper='w-full'
+            size='xl'
+            validate={item.config.required ? validate : null}
+            handleChange={handleChange}
             component={Textarea}
+          />
+          <Field
+            validate={validate}
+            name={`${item.id}.subLabel`}
+            size='xs'
+            variant='unstyled'
+            placeholder={item.config.placeholder}
+            nameElementField='sublabel'
+            valueConfig={item.config.sublabel}
+            handleChange={handleChange}
+            component={TextInput}
           />
         </div>
       )}

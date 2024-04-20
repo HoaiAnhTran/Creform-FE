@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import {
-  Textarea as TextareaMantine,
-  TextareaProps as TextareaMantineProps,
+  Text as TextMantine,
+  TextProps as TextMantineProps,
 } from '@mantine/core';
 import {
   ErrorMessage,
@@ -12,13 +12,10 @@ import {
 
 import { cn } from '@/utils/cn';
 
-interface TextareaProps extends Omit<TextareaMantineProps, 'form'> {
-  handleChange?: (
-    key: string,
-  ) => (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+interface TextProps extends Omit<TextMantineProps, 'form'> {
   classNameError?: string;
   classNameWrapper?: string;
-  nameElementField?: string;
+  required?: boolean;
   field: FieldInputProps<string>;
   form: {
     touched: Record<string, boolean>;
@@ -30,39 +27,31 @@ interface TextareaProps extends Omit<TextareaMantineProps, 'form'> {
     ) => Promise<void | FormikErrors<unknown>>;
   };
   meta: FieldMetaProps<string>;
-  valueConfig: string;
+  text: string;
 }
-
-export const Textarea = (props: TextareaProps) => {
+export const Text = (props: TextProps) => {
   const {
-    nameElementField,
-    handleChange,
     field,
+    classNameWrapper,
     form: { setFieldValue },
     classNameError,
-    classNameWrapper,
-    resize = 'vertical',
+    required = false,
     ...rest
   } = props;
-
   useEffect(() => {
-    if (rest.valueConfig) {
-      setFieldValue(field.name, rest.valueConfig);
+    if (rest.text) {
+      setFieldValue(field.name, rest.text);
       return;
     }
     setFieldValue(field.name, '');
-  }, [field.name, rest.valueConfig]);
+  }, [field.name, rest.text]);
 
   return (
-    <div className={cn('flex flex-col', classNameWrapper)}>
-      <TextareaMantine
-        {...field}
-        resize={resize}
-        {...rest}
-        onChange={(e) => {
-          if (nameElementField) handleChange?.(nameElementField)(e);
-        }}
-      />
+    <div className={cn('flex w-full flex-col', classNameWrapper)}>
+      <TextMantine className='mb-2 text-base font-[500]'>
+        {rest.text}
+        {required && <span className='text-lg text-red-500'>*</span>}
+      </TextMantine>
       <ErrorMessage
         name={field.name}
         render={(msg) => (
