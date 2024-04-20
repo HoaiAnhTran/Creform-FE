@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
-import { TextInput as TextInputMantine } from '@mantine/core';
+import { IoCloseOutline } from 'react-icons/io5';
+import { ActionIcon, TextInput as TextInputMantine } from '@mantine/core';
+import _debounce from 'lodash.debounce';
 
+import { SortOption, sortOptionList } from '@/constants/sortOptions';
 import { useFormParams } from '@/contexts';
 import { Menu } from '@/organisms/Menu';
 import { cn } from '@/utils';
@@ -12,53 +15,42 @@ interface TopBarProps {
   selectedFormIds: number[];
 }
 
-export interface FilterAction {
-  field: string;
-  sortDirection: string;
-  title: string;
-}
-
 export const TopBar = (props: TopBarProps) => {
   const { selectedFormIds } = props;
-  const { setParams } = useFormParams();
-  const menuItemList: FilterAction[] = [
-    {
-      field: 'title',
-      sortDirection: 'asc',
-      title: 'Title [A-Z]',
-    },
-    {
-      field: 'title',
-      sortDirection: 'desc',
-      title: 'Title [Z-A]',
-    },
-    {
-      field: 'createdAt',
-      sortDirection: 'asc',
-      title: 'Date created [ASC]',
-    },
-    {
-      field: 'createdAt',
-      sortDirection: 'desc',
-      title: 'Date created [DESC]',
-    },
-  ];
 
-  const [sortFieldIndex, setSortFieldIndex] = useState(0);
+  const { setParams, sortOptionIndex, setSortOptionIndex } = useFormParams();
 
-  const handleOnClick = (item: FilterAction, index: number) => {
-    setSortFieldIndex(index);
-    setParams((preState) => ({
-      ...preState,
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const handleOnClick = (item: SortOption, index: number) => {
+    setSortOptionIndex(index);
+    setParams((prevState) => ({
+      ...prevState,
       sortField: item.field,
       sortDirection: item.sortDirection,
     }));
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setParams((preState) => ({
-      ...preState,
-      search: e.target.value,
+  const debounceSetSearchParam = _debounce((value: string) => {
+    setParams((prevState) => ({
+      ...prevState,
+      search: value,
+    }));
+  }, 500);
+
+  const handleOnChangeSearchInput = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { value } = event.target;
+    setSearchValue(value);
+    debounceSetSearchParam(value);
+  };
+
+  const handleClearSearchInput = () => {
+    setSearchValue('');
+    setParams((prevState) => ({
+      ...prevState,
+      search: '',
     }));
   };
 
@@ -79,17 +71,30 @@ export const TopBar = (props: TopBarProps) => {
             arrowOffset={1}
             buttonProps={{
               size: 'md',
-              title: menuItemList[sortFieldIndex].title,
+              title: sortOptionList[sortOptionIndex].title,
             }}
-            itemList={menuItemList}
-            sortFieldIndex={sortFieldIndex}
+            itemList={sortOptionList}
+            sortOptionIndex={sortOptionIndex}
             handleOnClick={handleOnClick}
           />
           <TextInputMantine
             placeholder='Search my forms...'
             size='md'
-            leftSection={<CiSearch />}
-            onChange={handleOnChange}
+            value={searchValue}
+            onChange={(event) => handleOnChangeSearchInput(event)}
+            leftSection={<CiSearch size={16} />}
+            rightSection={
+              searchValue && (
+                <ActionIcon
+                  variant='transparent'
+                  size='lg'
+                  className='text-gray-400 hover:text-gray-500'
+                  onClick={handleClearSearchInput}
+                >
+                  <IoCloseOutline size={18} />
+                </ActionIcon>
+              )
+            }
           />
         </div>
       )}

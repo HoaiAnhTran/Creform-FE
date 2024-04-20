@@ -2,7 +2,7 @@ import { TiTick } from 'react-icons/ti';
 import { MantineShadow, Menu as MenuMantine } from '@mantine/core';
 
 import { Button, ButtonProps } from '@/atoms/Button';
-import { FilterAction } from '@/organisms/TopBar';
+import { SortOption } from '@/constants/sortOptions';
 
 interface MenuProps {
   positionArrow?: string;
@@ -12,9 +12,9 @@ interface MenuProps {
   buttonProps: ButtonProps;
   width?: number;
   shadow?: MantineShadow;
-  itemList: FilterAction[];
-  sortFieldIndex: number;
-  handleOnClick: (item: FilterAction, index: number) => void;
+  itemList: SortOption[];
+  sortOptionIndex: number;
+  handleOnClick: (item: SortOption, index: number) => void;
 }
 
 export const Menu = (props: MenuProps) => {
@@ -27,7 +27,7 @@ export const Menu = (props: MenuProps) => {
     width = 200,
     shadow = 'md',
     handleOnClick,
-    sortFieldIndex,
+    sortOptionIndex,
   } = props;
 
   return (
@@ -42,7 +42,7 @@ export const Menu = (props: MenuProps) => {
       <MenuMantine.Target>
         <Button {...buttonProps} />
       </MenuMantine.Target>
-      <MenuMantine.Dropdown style={{ backgroundColor: '#c5f0c2' }}>
+      <MenuMantine.Dropdown className='bg-malachite-100'>
         {itemList.map((item, index) => (
           <MenuMantine.Item
             key={index}
@@ -50,11 +50,12 @@ export const Menu = (props: MenuProps) => {
               handleOnClick(item, index);
             }}
             rightSection={
-              itemList[sortFieldIndex].field === item.field &&
-              itemList[sortFieldIndex].sortDirection === item.sortDirection ? (
+              itemList[sortOptionIndex].field === item.field &&
+              itemList[sortOptionIndex].sortDirection === item.sortDirection ? (
                 <TiTick />
               ) : null
             }
+            className='hover:bg-malachite-200'
           >
             {item.title}
           </MenuMantine.Item>

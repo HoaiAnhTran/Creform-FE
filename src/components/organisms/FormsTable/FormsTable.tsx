@@ -11,8 +11,8 @@ import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
+import { sortOptionList } from '@/constants/sortOptions';
 import { useFormParams } from '@/contexts';
-import { LoadingDots } from '@/molecules/LoadingDots';
 import {
   useAddToFavouritesMutation,
   useGetMyFormsQuery,
@@ -32,12 +32,15 @@ export const FormsTable = ({
   setSelectedRecords,
 }: FormsTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { params, setParams } = useFormParams();
+
+  const { params, setParams, sortOptionIndex } = useFormParams();
 
   const navigate = useNavigate();
 
   const { data, isLoading } = useGetMyFormsQuery(params);
-  const [addToFavouritesMutation] = useAddToFavouritesMutation();
+
+  const [addToFavouritesMutation, { isLoading: isAddingToFavourites }] =
+    useAddToFavouritesMutation();
 
   const moreOptions = [
     { text: 'View', icon: <IoEye size={18} /> },
@@ -136,13 +139,14 @@ export const FormsTable = ({
   ];
 
   useEffect(() => {
-    setParams({ page: currentPage, pageSize: DEFAULT_PAGE_SIZE });
+    setParams({
+      page: currentPage,
+      pageSize: DEFAULT_PAGE_SIZE,
+      sortField: sortOptionList[sortOptionIndex].field,
+      sortDirection: sortOptionList[sortOptionIndex].sortDirection,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
-
-  if (isLoading) {
-    return <LoadingDots />;
-  }
 
   return (
     <DataTable
@@ -165,6 +169,10 @@ export const FormsTable = ({
         `Showing ${from} - ${to} of ${totalRecords}`
       }
       paginationActiveBackgroundColor='green'
+      fetching={isLoading || isAddingToFavourites}
+      loaderType='oval'
+      loaderSize='md'
+      loaderColor='green'
     />
   );
 };
