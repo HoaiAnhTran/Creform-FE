@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
-import { Text } from '@mantine/core';
+import { MdOutlineWarning } from 'react-icons/md';
+import { Box, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import {
   useAddMemberMutation,
   useCreateTeamMutation,
+  useDeleteTeamMutation,
   useRemoveMemberMutation,
   useUpdateTeamMutation,
 } from '@/redux/api/teamApi';
@@ -17,6 +19,7 @@ import {
 } from '@/types';
 import { toastify } from '@/utils';
 
+import { ConfirmationModal } from '../ComfirmationModal';
 import { ManageFolderModal } from '../ManageFolderModal';
 import { ManageMemberModal } from '../ManageMemberModal';
 import { ManageTeamModal } from '../ManageTeamModal';
@@ -28,6 +31,7 @@ interface TeamListProps {
   isLoading: boolean;
   createTeam: ReturnType<typeof useCreateTeamMutation>[0];
   updateTeam: ReturnType<typeof useUpdateTeamMutation>[0];
+  deleteTeam: ReturnType<typeof useDeleteTeamMutation>[0];
 }
 
 export const TeamGroup = ({
@@ -36,6 +40,7 @@ export const TeamGroup = ({
   isLoading,
   createTeam,
   updateTeam,
+  deleteTeam,
 }: TeamListProps) => {
   const [teamName, setTeamName] = useState<string>('');
   const [teamId, setTeamId] = useState<number>(0);
@@ -85,6 +90,18 @@ export const TeamGroup = ({
 
   const handleUpdateTeam = () => {
     updateTeam({ id: teamId, data: { name: teamName } }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message as string);
+        closeModal();
+        return;
+      }
+      if (res.error as ErrorResponse)
+        toastify.displayError((res.error as ErrorResponse).message as string);
+    });
+  };
+
+  const handleDeleteTeam = () => {
+    deleteTeam({ id: teamId }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
         closeModal();
@@ -149,6 +166,24 @@ export const TeamGroup = ({
             : handleUpdateTeam
         }
         setTeamName={setTeamName}
+      />
+      <ConfirmationModal
+        body={
+          <Box className='flex flex-col items-center px-10'>
+            <MdOutlineWarning className='size-28 text-error' />
+            <Text size='lg' className='font-bold'>
+              Delete teams
+            </Text>
+            <Text className='text-center'>
+              Are you sure you want to delete selected team? <br /> This team
+              and all folders will be removed.
+            </Text>
+          </Box>
+        }
+        opened={modalType === ModalTypes.DELETE_TEAM}
+        onClose={closeModal}
+        onClickBack={closeModal}
+        onClickConfirm={handleDeleteTeam}
       />
     </>
   );

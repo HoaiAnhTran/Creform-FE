@@ -16,6 +16,7 @@ import {
 } from '@/redux/api/folderApi';
 import {
   useCreateTeamMutation,
+  useDeleteTeamMutation,
   useGetMyTeamsQuery,
   useUpdateTeamMutation,
 } from '@/redux/api/teamApi';
@@ -38,6 +39,7 @@ export const OverviewSidebar = () => {
   const { data: teamList, isLoading: isTeamLoading } = useGetMyTeamsQuery();
   const [createTeam] = useCreateTeamMutation();
   const [updateTeam] = useUpdateTeamMutation();
+  const [deleteTeam] = useDeleteTeamMutation();
 
   return (
     <Box className='relative h-full w-full border-r border-slate-300 bg-slate-100 text-slate-600'>
@@ -65,6 +67,7 @@ export const OverviewSidebar = () => {
           isLoading={isTeamLoading}
           createTeam={createTeam}
           updateTeam={updateTeam}
+          deleteTeam={deleteTeam}
           setFolderName={setFolderName}
         />
         <Divider />

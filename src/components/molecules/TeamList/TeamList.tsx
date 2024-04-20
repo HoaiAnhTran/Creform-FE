@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { MdEdit } from 'react-icons/md';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { Avatar, Box, Group, Menu, NavLink } from '@mantine/core';
@@ -115,6 +115,16 @@ export const TeamList = ({
                   leftSection={<MdEdit />}
                 >
                   Change name
+                </Menu.Item>
+                <Menu.Item
+                  className='font-bold text-white hover:bg-malachite-500'
+                  leftSection={<MdDelete />}
+                  onClick={() => {
+                    openModal(ModalTypes.DELETE_TEAM);
+                    setTeamId(team.id);
+                  }}
+                >
+                  Delete
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
