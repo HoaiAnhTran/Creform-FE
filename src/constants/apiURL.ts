@@ -8,4 +8,5 @@ export const API_URL = {
   USER_PROFILE: '/users/my-profile',
   CHANGE_PASSWORD: '/users/change-password',
   UPLOAD_IMAGE: '/images/upload',
+  ADD_TO_FOLDER: '/:formId/folder/:folderId/add',
 };
