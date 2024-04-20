@@ -8,6 +8,7 @@ import {
   defaultEmailConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
+  defaultSubmitConfig,
 } from '@/configs';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
@@ -118,6 +119,14 @@ export const ResponsiveGridLayout = ({
               name: 'lastName',
             },
           ],
+        };
+      case ElementType.SUBMIT:
+        return {
+          id: currentItem.i,
+          type: ElementType.SUBMIT,
+          gridSize: getGridSize(currentItem),
+          config: defaultSubmitConfig,
+          fields: [],
         };
       default:
         return undefined;

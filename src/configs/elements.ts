@@ -133,6 +133,7 @@ export const ElementList = [
       { element: ELEMENTS.IMAGE },
       { element: ELEMENTS.FILE_UPLOAD },
       { element: ELEMENTS.TIME },
+      { element: ELEMENTS.SUBMIT },
     ],
   },
   {

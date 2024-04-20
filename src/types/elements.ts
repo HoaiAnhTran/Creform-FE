@@ -34,12 +34,19 @@ export interface LongTextConfig {
   sublabel: string;
 }
 
+export interface SubmitConfig {
+  buttonText: string;
+  buttonColor: string;
+  buttonAlignment: string;
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
   | EmailConfig
   | ShortTextConfig
-  | LongTextConfig;
+  | LongTextConfig
+  | SubmitConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -94,9 +101,12 @@ export type LongTextElement = BaseElement<
   LongTextConfig
 >;
 
+export type SubmitElement = BaseElement<ElementType.SUBMIT, SubmitConfig>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
   | EmailElement
   | ShortTextElement
-  | LongTextElement;
+  | LongTextElement
+  | SubmitElement;

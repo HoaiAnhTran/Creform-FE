@@ -1,4 +1,10 @@
-import { EmailConfig, FullnameConfig, HeadingConfig } from '@/types';
+import { DEFAULT_BUTTON_COLOR } from '@/constants/buttonStyles';
+import {
+  EmailConfig,
+  FullnameConfig,
+  HeadingConfig,
+  SubmitConfig,
+} from '@/types';
 
 export const defaultHeadingConfig: HeadingConfig = {
   headingText: 'Heading',
@@ -18,4 +24,10 @@ export const defaultFullnameConfig: FullnameConfig = {
     firstName: 'First Name',
     lastName: 'Last Name',
   },
+};
+
+export const defaultSubmitConfig: SubmitConfig = {
+  buttonText: 'Submit',
+  buttonColor: DEFAULT_BUTTON_COLOR,
+  buttonAlignment: 'center',
 };

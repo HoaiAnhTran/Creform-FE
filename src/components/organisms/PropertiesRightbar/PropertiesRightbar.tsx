@@ -8,9 +8,11 @@ import {
   isEmailElement,
   isFullnameElement,
   isHeadingElement,
+  isSubmitElement,
 } from '@/molecules/FactoryElement';
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
+import { SubmitProptertiesConfig } from '@/molecules/SubmitPropertiesConfig';
 import { ElementItem } from '@/types';
 import { cn } from '@/utils';
 
@@ -67,6 +69,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isFullnameElement(edittingItem):
                 return (
                   <FullnamePropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isSubmitElement(edittingItem):
+                return (
+                  <SubmitProptertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />
