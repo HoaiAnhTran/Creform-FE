@@ -3,7 +3,6 @@ import { BsFileText } from 'react-icons/bs';
 import { FaStar } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
-import { MdModeEditOutline } from 'react-icons/md';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { ActionIcon, Anchor, Group, Menu, Stack, Text } from '@mantine/core';
@@ -15,10 +14,12 @@ import { sortOptionList } from '@/constants/sortOptions';
 import { useFormParams } from '@/contexts';
 import {
   useAddToFavouritesMutation,
+  useDeleteFormMutation,
   useGetMyFormsQuery,
+  useRestoreFormMutation,
 } from '@/redux/api/formApi';
-import { FormResponse } from '@/types';
-import { formatDate } from '@/utils';
+import { ErrorResponse, FormResponse } from '@/types';
+import { formatDate, toastify } from '@/utils';
 
 interface FormsTableProps {
   selectedRecords: FormResponse[];
@@ -42,18 +43,57 @@ export const FormsTable = ({
   const [addToFavouritesMutation, { isLoading: isAddingToFavourites }] =
     useAddToFavouritesMutation();
 
+  const [deleteForm, { isLoading: isDeletingForm }] = useDeleteFormMutation();
+  const [restoreForm, { isLoading: isRestoringForm }] =
+    useRestoreFormMutation();
+
+  const handleDeleteForm = (record: FormResponse) => {
+    deleteForm({ id: record.id }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message);
+        return;
+      }
+      if (res.error as ErrorResponse) {
+        toastify.displayError((res.error as ErrorResponse).message);
+      }
+    });
+  };
+
+  const handleRestoreForm = (record: FormResponse) => {
+    restoreForm({ id: record.id }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message);
+        return;
+      }
+      if (res.error as ErrorResponse) {
+        toastify.displayError((res.error as ErrorResponse).message);
+      }
+    });
+  };
+
   const moreOptions = [
-    { text: 'View', icon: <IoEye size={18} /> },
-    { text: 'Edit', icon: <MdModeEditOutline size={18} /> },
-    { text: 'Add to Folder', icon: <RiFolderAddFill size={18} /> },
-    { text: 'Move to Team', icon: <RiTeamFill size={18} /> },
-    { text: 'Delete', icon: <IoTrash size={18} /> },
+    { text: 'View', icon: <IoEye size={18} />, handleClick: () => {} },
+    {
+      text: 'Add to Folder',
+      icon: <RiFolderAddFill size={18} />,
+      handleClick: () => {},
+    },
+    {
+      text: 'Move to Team',
+      icon: <RiTeamFill size={18} />,
+      handleClick: () => {},
+    },
+    {
+      text: 'Delete',
+      icon: <IoTrash size={18} />,
+      handleClick: (record: FormResponse) => handleDeleteForm(record),
+    },
   ];
 
   const columns: DataTableColumn<FormResponse>[] = [
     {
       accessor: 'isFavourite',
-      render: (record) => (
+      render: (record: FormResponse) => (
         <ActionIcon
           variant='transparent'
           className={
@@ -70,7 +110,7 @@ export const FormsTable = ({
     },
     {
       accessor: 'title',
-      render: (record) => (
+      render: (record: FormResponse) => (
         <Group>
           <BsFileText size={36} className='text-malachite-500' />
           <Stack className='gap-2'>
@@ -96,44 +136,61 @@ export const FormsTable = ({
     },
     {
       accessor: 'edit',
-      render: (record) => (
-        <Button
-          title='Edit Form'
-          variant='subtle'
-          className='font-medium'
-          onClick={() => {
-            navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`);
-          }}
-        />
-      ),
+      render: (record: FormResponse) =>
+        record.deletedAt === null ? (
+          <Button
+            title='Edit Form'
+            variant='subtle'
+            className='font-medium'
+            onClick={() => {
+              navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`);
+            }}
+          />
+        ) : (
+          <Button
+            title='Purge'
+            variant='subtle'
+            className='font-medium'
+            onClick={() => handleDeleteForm(record)}
+          />
+        ),
       cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
     },
     {
       accessor: 'more',
-      render: () => (
-        <Menu shadow='sm' offset={10} position='bottom-end' withArrow>
-          <Menu.Target>
-            <Button
-              title='More'
-              variant='subtle'
-              rightSection={<IoIosArrowDown />}
-              className='font-medium aria-expanded:font-bold'
-            />
-          </Menu.Target>
+      render: (record: FormResponse) =>
+        record.deletedAt === null ? (
+          <Menu shadow='sm' offset={10} position='bottom-end' withArrow>
+            <Menu.Target>
+              <Button
+                title='More'
+                variant='subtle'
+                rightSection={<IoIosArrowDown />}
+                className='font-medium aria-expanded:font-bold'
+              />
+            </Menu.Target>
 
-          <Menu.Dropdown className='min-w-[200px]'>
-            {moreOptions.map((option, index) => (
-              <Menu.Item
-                key={index}
-                leftSection={option.icon}
-                className='gap-4 px-4 py-3 font-medium text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
-              >
-                {option.text}
-              </Menu.Item>
-            ))}
-          </Menu.Dropdown>
-        </Menu>
-      ),
+            <Menu.Dropdown className='min-w-[200px]'>
+              {moreOptions.map((option, index) => (
+                <Menu.Item
+                  key={index}
+                  leftSection={option.icon}
+                  className='gap-4 px-4 py-3 font-medium text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                  onClick={() => option.handleClick(record)}
+                >
+                  {option.text}
+                </Menu.Item>
+              ))}
+            </Menu.Dropdown>
+          </Menu>
+        ) : (
+          <Button
+            title='Restore'
+            variant='subtle'
+            className='font-medium'
+            onClick={() => handleRestoreForm(record)}
+          />
+        ),
       cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
     },
   ];
@@ -169,7 +226,9 @@ export const FormsTable = ({
         `Showing ${from} - ${to} of ${totalRecords}`
       }
       paginationActiveBackgroundColor='green'
-      fetching={isLoading || isAddingToFavourites}
+      fetching={
+        isLoading || isAddingToFavourites || isDeletingForm || isRestoringForm
+      }
       loaderType='oval'
       loaderSize='md'
       loaderColor='green'

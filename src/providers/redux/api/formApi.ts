@@ -10,7 +10,7 @@ import { rootApi } from './rootApi';
 
 const formApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    getMyForms: build.query({
+    getMyForms: build.query<GetFormsResponse, GetFormsParams>({
       query: (params: GetFormsParams) => ({
         url: API_URL.FORMS,
         method: 'GET',
@@ -20,7 +20,7 @@ const formApi = rootApi.injectEndpoints({
         response.data,
       providesTags: ['Forms'],
     }),
-    getFormDetails: build.query({
+    getFormDetails: build.query<FormResponse, { id: number }>({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}`,
         method: 'GET',
@@ -29,9 +29,23 @@ const formApi = rootApi.injectEndpoints({
         response.data,
       providesTags: (_result, _error, arg) => [{ type: 'Forms', id: arg.id }],
     }),
-    addToFavourites: build.mutation({
+    addToFavourites: build.mutation<SuccessResponse<unknown>, { id: number }>({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}/favourites`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
+    deleteForm: build.mutation<SuccessResponse<unknown>, { id: number }>({
+      query: ({ id }) => ({
+        url: `${API_URL.FORMS}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
+    restoreForm: build.mutation<SuccessResponse<unknown>, { id: number }>({
+      query: ({ id }) => ({
+        url: `${API_URL.FORMS}/${id}/restore`,
         method: 'PATCH',
       }),
       invalidatesTags: ['Forms'],
@@ -44,4 +58,6 @@ export const {
   useGetMyFormsQuery,
   useGetFormDetailsQuery,
   useAddToFavouritesMutation,
+  useDeleteFormMutation,
+  useRestoreFormMutation,
 } = formApi;
