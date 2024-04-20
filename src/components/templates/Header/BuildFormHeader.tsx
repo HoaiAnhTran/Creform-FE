@@ -19,9 +19,9 @@ const DEFAULT_FORM_TITLE = 'Form';
 export const BuildFormHeader = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
-  const { form, isEditForm } = useBuildFormContext();
+  const { form, isEditForm, setForm } = useBuildFormContext();
 
-  const [currentTitle, setCurrentTitle] = useState<string>('');
+  const [currentTitle, setCurrentTitle] = useState<string>(DEFAULT_FORM_TITLE);
 
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 
@@ -48,9 +48,17 @@ export const BuildFormHeader = () => {
     if (isEditForm) {
       setCurrentTitle(form.title);
     } else {
-      setCurrentTitle(DEFAULT_FORM_TITLE);
+      setCurrentTitle(currentTitle);
     }
   }, [form, isEditForm]);
+
+  useEffect(() => {
+    if (isEditForm) return;
+    setForm((prevState) => ({
+      ...prevState,
+      title: currentTitle,
+    }));
+  }, [isEditForm]);
 
   return (
     <header className='relative flex h-[70px] flex-row items-center justify-between px-10 py-3'>
@@ -65,6 +73,10 @@ export const BuildFormHeader = () => {
             value={currentTitle}
             onChange={(event) => {
               setCurrentTitle(event.target.value);
+              setForm((prevState) => ({
+                ...prevState,
+                title: event.target.value,
+              }));
             }}
             onBlur={() => setIsEditingTitle(false)}
             className='min-w-14 max-w-full overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'

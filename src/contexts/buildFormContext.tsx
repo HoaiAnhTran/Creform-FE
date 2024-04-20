@@ -8,11 +8,11 @@ import React, {
 import { useParams } from 'react-router-dom';
 
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
-import { FormResponse } from '@/types';
+import { FormRequest } from '@/types';
 
 interface BuildFormContextType {
-  form: FormResponse;
-  setForm: React.Dispatch<React.SetStateAction<FormResponse>>;
+  form: FormRequest;
+  setForm: React.Dispatch<React.SetStateAction<FormRequest>>;
   toggledLeftbar: boolean;
   setToggledLeftbar: React.Dispatch<React.SetStateAction<boolean>>;
   toggledRightbar: boolean;
@@ -20,23 +20,17 @@ interface BuildFormContextType {
   isEditForm: boolean;
 }
 
-const initialFormState = {
-  id: 0,
+const initFormRequestState: FormRequest = {
   title: '',
   logoUrl: '',
   settings: {},
-  totalSubmissions: 0,
-  elements: {},
-  permissions: {},
-  createdAt: '',
+  elements: [],
   updatedAt: '',
-  deletedAt: '',
-  creatorId: 0,
-  teamId: 0,
+  createdAt: '',
 };
 
 const BuildFormContext = createContext<BuildFormContextType>({
-  form: initialFormState,
+  form: initFormRequestState,
   setForm: () => {},
   toggledLeftbar: false,
   setToggledLeftbar: () => {},
@@ -52,17 +46,20 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const isEditForm = Boolean(formId);
 
-  const [form, setForm] = useState<FormResponse>(initialFormState);
+  const [form, setForm] = useState<FormRequest>(initFormRequestState);
 
   const [toggledLeftbar, setToggledLeftbar] = useState<boolean>(false);
 
   const [toggledRightbar, setToggledRightbar] = useState<boolean>(false);
 
-  const { data } = useGetFormDetailsQuery({ id: Number(formId) });
+  const { data } = useGetFormDetailsQuery(
+    { id: Number(formId) || '' },
+    { skip: !formId },
+  );
 
   useEffect(() => {
     if (!data) return;
-    setForm(data);
+    setForm((prev) => ({ ...prev, ...data }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 

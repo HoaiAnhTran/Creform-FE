@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
+import { useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import { defaultEmailConfig, defaultHeadingConfig } from '@/configs';
-import { useElementLayouts } from '@/contexts';
+import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { InteractiveIcons } from '@/molecules/InteractiveIcons';
+import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { ElementItem, ElementType } from '@/types';
 import { cn } from '@/utils';
 
@@ -36,6 +38,12 @@ export const ResponseReactGridLayout = ({
     xxs: Layout[];
   }>({ lg: [], md: [], sm: [], xs: [], xxs: [] });
   const [isDragging, setIsDragging] = useState(false);
+  const { isEditForm } = useBuildFormContext();
+  const { id: formId } = useParams();
+  const { data: form } = useGetFormDetailsQuery(
+    { id: formId || '' },
+    { skip: !formId },
+  );
 
   function getLayout(element: ElementItem, layouts: Layout[]) {
     const foundlayout = layouts.find((layout) => element.id === layout.i);
@@ -107,6 +115,11 @@ export const ResponseReactGridLayout = ({
     setElements(getElement(elements, layout));
     setIsDragging(false);
   };
+  useEffect(() => {
+    if (form) {
+      setElements(form.elements as ElementItem[]);
+    }
+  }, [isEditForm, form, setElements]);
 
   useEffect(() => {
     setMounted(true);

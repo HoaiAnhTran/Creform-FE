@@ -14,10 +14,14 @@ import { ResponseReactGridLayout } from '../ResponseReactGridLayout';
 
 interface FormContainerProps {
   currentElementType?: string;
+  setCurrentLogoFile: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
-export const FormContainer = ({ currentElementType }: FormContainerProps) => {
-  const { form } = useBuildFormContext();
+export const FormContainer = ({
+  currentElementType,
+  setCurrentLogoFile,
+}: FormContainerProps) => {
+  const { form, setForm } = useBuildFormContext();
 
   const [currentLogo, setCurrentLogo] = useState<string>('');
 
@@ -43,9 +47,14 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
     reader.onloadend = () => {
       const base64Encoded = reader?.result?.toString() ?? '';
       setCurrentLogo(base64Encoded);
+      setForm((prevState) => ({
+        ...prevState,
+        logoUrl: base64Encoded,
+      }));
     };
     if (file) {
       reader.readAsDataURL(file);
+      setCurrentLogoFile(file);
     }
     event.target.value = '';
   };
@@ -62,6 +71,12 @@ export const FormContainer = ({ currentElementType }: FormContainerProps) => {
       }),
     );
   };
+  useEffect(() => {
+    setForm((prevState) => ({
+      ...prevState,
+      elements: elements,
+    }));
+  }, [elements]);
 
   const handleConfig = (config: ElementItem['config']) => {
     setEdittingItem({ ...edittingItem, config: config } as ElementItem);

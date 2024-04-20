@@ -1,3 +1,5 @@
+import { ElementItem } from '.';
+
 export interface GetFormsParams {
   page?: number;
   pageSize?: number;
@@ -8,16 +10,11 @@ export interface GetFormsParams {
   sortDirection?: string;
 }
 
-export interface FormResponse {
+export interface FormResponse extends FormRequest {
   id: number;
-  title: string;
-  logoUrl: string;
-  settings: object;
   totalSubmissions: number;
-  elements: object;
   permissions: object;
-  createdAt: string;
-  updatedAt: string;
+
   deletedAt: string;
   creatorId: number;
   teamId: number;
@@ -30,4 +27,15 @@ export interface GetFormsResponse {
   pageSize: number;
   totalForms: number;
   totalPages: number;
+}
+
+export interface FormRequest {
+  id?: number;
+  title: string;
+  logoUrl: string;
+  settings: object;
+  elements: ElementItem[];
+  teamId?: number;
+  createdAt: string;
+  updatedAt: string;
 }

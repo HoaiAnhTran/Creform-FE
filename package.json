@@ -32,6 +32,7 @@
     "formik": "^2.4.5",
     "framer-motion": "^11.0.8",
     "lodash.debounce": "^4.0.8",
+    "lodash.isequal": "^4.5.0",
     "lodash.startcase": "^4.4.0",
     "mantine-datatable": "^7.5.1",
     "postcss": "^8.4.33",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",
+    "@types/lodash.isequal": "^4.5.8",
     "@types/lodash.startcase": "^4.4.9",
     "@types/node": "^20.11.10",
     "@types/react": "^18.2.43",
