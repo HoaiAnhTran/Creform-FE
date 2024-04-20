@@ -82,7 +82,7 @@ export const SubmitProptertiesConfig = (
                   label: cn(
                     'bg-slate-700 px-4 py-3 cursor-pointer text-base text-white',
                     {
-                      'bg-malachite-400':
+                      'bg-ocean-green-400':
                         edittingItem.config.buttonAlignment === alignment,
                     },
                   ),
@@ -102,7 +102,7 @@ export const SubmitProptertiesConfig = (
                 edittingItem.config.buttonColor === DEFAULT_BUTTON_COLOR,
             },
             {
-              'bg-malachite-400 text-white hover:bg-malachite-500 hover:text-white':
+              'bg-ocean-green-400 text-white hover:bg-ocean-green-500 hover:text-white':
                 edittingItem.config.buttonColor !== DEFAULT_BUTTON_COLOR,
             },
           )}

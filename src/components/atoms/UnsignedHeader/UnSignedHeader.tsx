@@ -1,16 +1,17 @@
-import { Anchor, Image } from '@mantine/core';
+import { Anchor, Group, Image } from '@mantine/core';
 
-import WhiteLogo from '@/assets/images/whitelogo.png';
+import BeigeLogo from '@/assets/images/beige-logo.png';
 import { PATH } from '@/constants/routes';
 
-const HEIGHT_IMAGE = 50;
-
 export const UnSignedHeader = () => (
-  <header>
-    <div className='flex items-center'>
-      <Anchor href={PATH.ROOT_PAGE}>
-        <Image src={WhiteLogo} h={HEIGHT_IMAGE} />
-      </Anchor>
-    </div>
+  <header className='flex h-headerHeight flex-row items-center justify-between bg-ocean-green-500 px-10 py-3'>
+    <Anchor href={PATH.ROOT_PAGE} className='no-underline hover:no-underline'>
+      <Group className='justify-center items-end gap-0'>
+        <Image src={BeigeLogo} className='h-logoHeight' />
+        <span className='text-quarter-pearl-lusta-50 font-bold text-[24px] tracking-[4px]'>
+          REFORM
+        </span>
+      </Group>
+    </Anchor>
   </header>
 );

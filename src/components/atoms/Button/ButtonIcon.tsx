@@ -29,7 +29,7 @@ export const ButtonIcon = (props: ButtonIconProps) => {
       onClick={() => onClick(elementId)}
       layout
       className={cn(
-        `w-10 rounded-lg border-none bg-malachite-100 p-3`,
+        `w-10 rounded-lg border-none bg-ocean-green-100 p-3`,
         className,
         {
           'w-24 rounded-full': isHovered,
