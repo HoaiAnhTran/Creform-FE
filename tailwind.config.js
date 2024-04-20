@@ -26,6 +26,12 @@ export default {
           900: '#1c4c1b',
           950: '#0a290a',
         },
+        blue: {
+          50: '#c8ceed',
+          100: '#6F76A7',
+          200: '#0A1551',
+        },
+        blueButton: '#4170E2',
         toggleOn: '#92df2e',
         toggleOff: '#e8edee',
         activeTabBackground: '#8ad56c',
