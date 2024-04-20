@@ -103,7 +103,8 @@ export const ResponseReactGridLayout = ({
     setEdittingItem(elements.find((element) => element.id === currentItem.i));
   };
 
-  const handleDragStop = () => {
+  const handleDragStop = (layout: Layout[]) => {
+    setElements(getElement(elements, layout));
     setIsDragging(false);
   };
 
