@@ -84,7 +84,7 @@ export const FormContainer = ({
   };
 
   return (
-    <Stack className='items-center py-7'>
+    <Stack className='min-h-screen items-center py-7'>
       <Stack className='w-[45%] justify-between gap-7'>
         {currentLogo ? (
           <Group className='relative mx-auto'>
