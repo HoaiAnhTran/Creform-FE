@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { Image, Text } from '@mantine/core';
+import { Image, LoadingOverlay, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
+import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
 import { LoginForm, LoginSchema } from '@/organisms/LoginForm';
 import { useLoginUserMutation } from '@/redux/api/authenticationApi';
@@ -9,26 +11,34 @@ import { ErrorResponse } from '@/types';
 import { httpClient, saveAccessTokenToLS, toastify } from '@/utils';
 
 export const LoginPage = () => {
-  const [loginUser, { isLoading }] = useLoginUserMutation();
-
+  const [loginUser] = useLoginUserMutation();
+  const [visible, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
 
   const onSubmit = (values: LoginSchema) => {
+    open();
     loginUser(values).then((res) => {
-      if (isLoading) return;
       if ('data' in res) {
         httpClient.setToken(res.data.data.token);
         saveAccessTokenToLS(res.data.data.token);
+        close();
         navigate(PATH.ROOT_PAGE);
         return;
       }
-      if (res.error as ErrorResponse)
+      if (res.error as ErrorResponse) {
         toastify.displayError((res.error as ErrorResponse).message);
+        close();
+      }
     });
   };
 
   return (
     <div className='h-screen w-screen'>
+      <LoadingOverlay
+        visible={visible}
+        zIndex={BIG_Z_INDEX}
+        overlayProps={{ radius: 'sm', blur: 2 }}
+      />
       <div className='h-headerHeight bg-malachite-500 px-4 pt-4'>
         <UnSignedHeader />
       </div>

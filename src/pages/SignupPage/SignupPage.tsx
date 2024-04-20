@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { Image, Text } from '@mantine/core';
+import { Image, LoadingOverlay, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
+import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
 import { SignupForm, SignupSchema } from '@/organisms/SignupForm';
 import { useSignUpUserMutation } from '@/redux/api/authenticationApi';
@@ -9,26 +11,34 @@ import { ErrorResponse } from '@/types';
 import { httpClient, saveAccessTokenToLS, toastify } from '@/utils';
 
 export const SignupPage = () => {
-  const [signUpUser, { isLoading }] = useSignUpUserMutation();
+  const [signUpUser] = useSignUpUserMutation();
+  const [visible, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
   const onSubmit = (values: SignupSchema) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { confirmPassword, ...body } = values;
-    signUpUser(body).then((res) => {
-      if (isLoading) return;
+    const { username, email, password } = values;
+    open();
+    signUpUser({ username, email, password }).then((res) => {
       if ('data' in res) {
         httpClient.setToken(res.data.data.token);
         saveAccessTokenToLS(res.data.data.token);
+        close();
         navigate(PATH.ROOT_PAGE);
         return;
       }
-      if (res.error as ErrorResponse)
-        toastify.displayError((res.error as ErrorResponse).message as string);
+      if (res.error as ErrorResponse) {
+        toastify.displayError((res.error as ErrorResponse).message);
+        close();
+      }
     });
   };
 
   return (
     <div className='h-screen w-screen'>
+      <LoadingOverlay
+        visible={visible}
+        zIndex={BIG_Z_INDEX}
+        overlayProps={{ radius: 'sm', blur: 2 }}
+      />
       <div className='h-headerHeight bg-malachite-500 px-4 pt-4'>
         <UnSignedHeader />
       </div>
