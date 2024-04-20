@@ -31,7 +31,7 @@ export const ActionElement = (props: ActionElementProps) => {
   return (
     <div
       className={cn('relative px-2 py-1', {
-        'rounded-md border border-solid border-malachite-200':
+        'rounded-md border border-solid border-ocean-green-200':
           hoveredActionKey !== null,
       })}
     >

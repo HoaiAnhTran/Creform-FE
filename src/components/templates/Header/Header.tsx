@@ -3,14 +3,12 @@ import { IoPersonOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, Image, Menu } from '@mantine/core';
 
-import WhiteLogo from '@/assets/images/whitelogo.png';
+import BeigeLogo from '@/assets/images/beige-logo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { LoadingDots } from '@/molecules/LoadingDots';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { httpClient } from '@/utils';
-
-const LOGO_HEIGHT = 45;
 
 export const Header = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
@@ -23,9 +21,14 @@ export const Header = () => {
   };
 
   return (
-    <header className='flex h-[70px] flex-row items-center justify-between bg-malachite-500 px-10 py-3'>
-      <Anchor href={PATH.ROOT_PAGE}>
-        <Image src={WhiteLogo} h={LOGO_HEIGHT} />
+    <header className='flex h-headerHeight flex-row items-center justify-between bg-ocean-green-500 px-10 py-3'>
+      <Anchor href={PATH.ROOT_PAGE} className='no-underline hover:no-underline'>
+        <Group className='justify-center items-end gap-0'>
+          <Image src={BeigeLogo} className='h-logoHeight' />
+          <span className='text-quarter-pearl-lusta-50 font-bold text-[24px] tracking-[4px]'>
+            REFORM
+          </span>
+        </Group>
       </Anchor>
       {!myProfile || isLoading ? (
         <LoadingDots color='white' />
@@ -49,14 +52,14 @@ export const Header = () => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoPersonOutline size={16} />}
-                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-ocean-green-50 hover:text-ocean-green-500'
                 onClick={() => navigate(PATH.MY_ACCOUNT_PAGE)}
               >
                 Account
               </Menu.Item>
               <Menu.Item
                 leftSection={<IoIosLogOut size={16} />}
-                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                className='gap-4 px-6 py-3 text-[15px] font-normal text-gray-600 delay-100 ease-linear hover:bg-ocean-green-50 hover:text-ocean-green-500'
                 onClick={handleLogout}
               >
                 Logout

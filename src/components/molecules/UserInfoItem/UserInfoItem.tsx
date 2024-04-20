@@ -37,7 +37,7 @@ export const UserInfoItem = ({
         {hasEditButton &&
           (editingFieldName === fieldName ? (
             <CloseButton
-              className='text-malachite-700 [&>svg]:!h-4 [&>svg]:!w-4'
+              className='text-burnt-sienna-600 hover:!bg-burnt-sienna-50 [&>svg]:!h-4 [&>svg]:!w-4'
               onClick={handleCancelEdit}
             />
           ) : (

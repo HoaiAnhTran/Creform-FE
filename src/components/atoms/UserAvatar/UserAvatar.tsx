@@ -25,9 +25,9 @@ export const UserAvatar = forwardRef<HTMLDivElement, UserAvatarProps>(
         size={AVATAR_SIZE}
         radius='xl'
         {...props}
-        className='cursor-pointer bg-malachite-50 shadow-whiteShadow'
+        className='cursor-pointer bg-ocean-green-50 shadow-whiteShadow'
       >
-        <FaUser size={20} className='text-malachite-500' />
+        <FaUser size={20} className='text-ocean-green-500' />
       </Avatar>
     ),
 );

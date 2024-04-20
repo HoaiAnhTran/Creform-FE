@@ -80,7 +80,7 @@ export const BuildFormLeftbar = ({
                   {elementType.elements.map(({ element }, index) => (
                     <Box key={`element-${index}`}>
                       <Group
-                        className='group cursor-move hover:bg-malachite-500'
+                        className='group cursor-move hover:bg-ocean-green-500'
                         draggable={true}
                         unselectable='on'
                         onDragStart={(e) => {
@@ -88,7 +88,7 @@ export const BuildFormLeftbar = ({
                           handleDrop(element.type);
                         }}
                       >
-                        <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-malachite-400'>
+                        <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-ocean-green-400'>
                           <element.icon size={ELEMENT_ICON_SIZE} />
                         </Box>
                         <Box className='text-white'>{element.type}</Box>

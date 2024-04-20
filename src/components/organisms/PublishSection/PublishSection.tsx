@@ -11,10 +11,10 @@ export const PublishSection = () => {
   const link = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
 
   return (
-    <Box className='flex h-screen w-full items-center justify-center bg-malachite-50'>
+    <Box className='flex h-screen w-full items-center justify-center bg-ocean-green-50'>
       <Stack className='w-[660px] -translate-y-[30%]'>
         <Group>
-          <Box className='flex h-10 w-10 items-center justify-center rounded bg-malachite-400'>
+          <Box className='flex h-10 w-10 items-center justify-center rounded bg-ocean-green-400'>
             <FaLink size={20} className='text-white' />
           </Box>
           <Stack className='gap-0'>
