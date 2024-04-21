@@ -11,25 +11,23 @@ export const PublishSection = () => {
   const link = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
 
   return (
-    <Box className='flex h-screen w-full items-center justify-center bg-ocean-green-50'>
+    <Box className='flex h-screen w-full items-center justify-center bg-quarter-pearl-lusta-50'>
       <Stack className='w-[660px] -translate-y-[30%]'>
-        <Group>
-          <Box className='flex h-10 w-10 items-center justify-center rounded bg-ocean-green-400'>
-            <FaLink size={20} className='text-white' />
-          </Box>
-          <Stack className='gap-0'>
-            <span className='text-base font-semibold text-blue-200'>
-              DIRECT LINK OF YOUR FORM
-            </span>
-            <span className='text-sm text-blue-100'>
-              Your form is securely published and ready to use at this address.
-            </span>
-          </Stack>
-        </Group>
         <Stack className='mt-4 gap-8 rounded border border-solid border-blue-50 bg-white px-6 py-8'>
-          <span className='text-base font-semibold text-blue-200'>
-            SHARE WITH LINK
-          </span>
+          <Group>
+            <Box className='flex h-10 w-10 items-center justify-center rounded bg-ocean-green-400'>
+              <FaLink size={20} className='text-white' />
+            </Box>
+            <Stack className='gap-0'>
+              <span className='text-base font-semibold'>
+                SHARE FORM WITH LINK
+              </span>
+              <span className='text-sm text-blue-100'>
+                Your form is securely published and ready to use at this
+                address.
+              </span>
+            </Stack>
+          </Group>
           <TextInput
             leftSection={<FiLink size={16} />}
             value={link}
@@ -44,14 +42,14 @@ export const PublishSection = () => {
             <CopyButton value={link}>
               {({ copied, copy }) => (
                 <Button
+                  className='bg-ocean-green-500 hover:bg-ocean-green-500'
                   onClick={copy}
-                  title={copied ? 'Copied to clipboard!' : 'COPY LINK'}
+                  title={copied ? 'Copied!' : 'COPY LINK'}
                   disabled={!isEditForm}
                 />
               )}
             </CopyButton>
             <Button
-              className='bg-blueButton hover:bg-blueButton'
               title='OPEN IN NEW TAB'
               onClick={() => {
                 window.open(link, '_blank');

@@ -18,7 +18,7 @@ export const PreviewSection = () => {
   );
 
   return (
-    <Stack className='relative flex h-screen w-full items-center justify-center overflow-y-scroll bg-malachite-50'>
+    <Stack className='relative flex h-screen w-full items-center justify-center overflow-y-scroll bg-quarter-pearl-lusta-50'>
       {clickedSubmit ? (
         <Box className='scale-90'>
           <SubmissionConfirmation />

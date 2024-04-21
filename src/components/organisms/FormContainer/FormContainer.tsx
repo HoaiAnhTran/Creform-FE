@@ -143,7 +143,7 @@ export const FormContainer = ({
                 <Button
                   title='Add your logo'
                   variant='subtle'
-                  color='gray'
+                  color='primary'
                   leftSection={<IoIosAdd size={16} />}
                   onClick={handleClickAddLogo}
                   className='my-2 text-xs font-medium uppercase'

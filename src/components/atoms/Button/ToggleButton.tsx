@@ -28,7 +28,7 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
       <span
         className={cn(
           'absolute bottom-0 left-0 right-0 top-0 inline-block rounded-full transition duration-300',
-          isEnable ? 'bg-toggleOn' : 'bg-toggleOff',
+          isEnable ? 'bg-ocean-green-400' : 'bg-quarter-pearl-lusta-50',
         )}
       ></span>
       <span
