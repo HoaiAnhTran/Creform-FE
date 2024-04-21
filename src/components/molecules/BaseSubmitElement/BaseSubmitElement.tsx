@@ -8,7 +8,8 @@ import { cn } from '@/utils';
 import { BaseElementProps } from '../FactoryElement';
 
 export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
-  const { item } = props;
+  const { item, handleCreateFormResponse } = props;
+
   const { isReadOnly } = useElementLayouts();
   const getAlignmentClass = (buttonAlignment: string) => {
     if (!ALIGNMENT_OPTIONS.includes(buttonAlignment)) {
@@ -27,15 +28,13 @@ export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
 
   const alignment = getAlignmentClass(item.config.buttonAlignment);
 
-  const handleSubmit = () => {};
-
   return (
     <Stack className={`py-2 ${alignment}`}>
       <Button
         type='submit'
         className={cn('h-[48px] w-[190px]', { 'cursor-text': isReadOnly })}
         color={item.config.buttonColor}
-        onClick={handleSubmit}
+        onClick={handleCreateFormResponse}
       >
         {item.config.buttonText}
       </Button>

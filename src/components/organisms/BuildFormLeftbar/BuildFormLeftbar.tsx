@@ -20,8 +20,9 @@ export const BuildFormLeftbar = ({
   const [toggledLeftbar, setToggledLeftbar] = useState(false);
 
   const [scroll] = useWindowScroll();
-  const handleDrop = (element: ElementType) => {
-    setCurrentElementType(element);
+
+  const handleDrop = (elementType: ElementType) => {
+    setCurrentElementType(elementType);
   };
 
   return (

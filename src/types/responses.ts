@@ -7,6 +7,18 @@ export interface FieldAnswer {
   fieldId: string;
   text: string;
 }
+export interface FormAnswerRessquest {
+  formAnswers: FormAnswer[];
+}
+
+export interface FormAnswerResponse {
+  id: number;
+  formAnswers: FormAnswer[];
+  createdAt: string;
+  deletedAt: string;
+  formId: number;
+}
+
 export interface GetResponsesParams {
   page?: number;
   pageSize?: number;

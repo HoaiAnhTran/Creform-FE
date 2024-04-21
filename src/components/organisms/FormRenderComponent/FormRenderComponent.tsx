@@ -1,19 +1,35 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Image, Stack } from '@mantine/core';
 
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
-import { ElementItem, FormResponse } from '@/types';
+import { useCreateResponseMutation } from '@/redux/api/responseApi';
+import {
+  ElementItem,
+  ErrorResponse,
+  FormAnswerRessquest,
+  FormResponse,
+} from '@/types';
+import { toastify } from '@/utils';
+import { getFormAnswerFields } from '@/utils/seperates';
 
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
   form?: FormResponse;
+  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
+export const FormRenderComponent = ({
+  form,
+  setIsSuccess,
+}: FormRenderComponentProps) => {
   const { elements, setElements, edittingItem, setEdittingItem } =
     useElementLayouts();
+
+  const [createFormResponse] = useCreateResponseMutation();
+
+  const [formResponse, setFormResponse] = useState<FormAnswerRessquest>();
 
   const handleFields = (fields: ElementItem['fields']) => {
     setEdittingItem({ ...edittingItem, fields: fields } as ElementItem);
@@ -46,6 +62,28 @@ export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
     };
 
   useEffect(() => {
+    setFormResponse(getFormAnswerFields(elements));
+  }, [elements]);
+
+  const handleCreateFormResponse = () => {
+    if (formResponse) {
+      createFormResponse({ formId: form?.id, payload: formResponse }).then(
+        (res) => {
+          if ('data' in res) {
+            toastify.displaySuccess(res.data.message as string);
+            setIsSuccess(true);
+            return;
+          }
+          setIsSuccess(false);
+          return toastify.displayError(
+            (res.error as ErrorResponse).message as string,
+          );
+        },
+      );
+    }
+  };
+
+  useEffect(() => {
     if (form) {
       const elementsForm = form.elements as ElementItem[];
       setElements(
@@ -63,7 +101,7 @@ export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
   }, [form, setElements]);
 
   return (
-    <div className='flex min-h-screen w-full flex-col items-center bg-malachite-50 pt-8'>
+    <div className='flex w-full flex-col items-center'>
       {form?.logoUrl && (
         <Image
           src={form?.logoUrl}
@@ -92,6 +130,7 @@ export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
                   updateItem={() => {}}
                   handleConfig={() => {}}
                   handleOnChangeAnswer={handleOnChangeAnswer}
+                  handleCreateFormResponse={handleCreateFormResponse}
                 />
               </Box>
             ))}

@@ -25,6 +25,7 @@ export interface BaseElementProps<T extends ElementItem = ElementItem> {
   handleOnChangeAnswer: (
     fieldId: string,
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCreateFormResponse: () => void;
 }
 
 export const FactoryElement = (props: BaseElementProps) => {

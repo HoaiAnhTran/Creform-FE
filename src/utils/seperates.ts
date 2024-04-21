@@ -30,5 +30,5 @@ export function getFormAnswerFields(elements: ElementItem[]) {
 
     formAnswers.push(FieldAnswers);
   }
-  return formAnswers;
+  return { formAnswers: formAnswers };
 }

@@ -1,6 +1,11 @@
 import { API_URL } from '@/constants';
 import { SuccessResponse } from '@/types';
-import { GetResponsesParams, ReturnGetResponses } from '@/types/responses';
+import {
+  FormAnswerResponse,
+  FormAnswerRessquest,
+  GetResponsesParams,
+  ReturnGetResponses,
+} from '@/types/responses';
 
 import { rootApi } from './rootApi';
 
@@ -19,6 +24,20 @@ export const responseApi = rootApi.injectEndpoints({
       transformResponse: (response: SuccessResponse<ReturnGetResponses>) =>
         response.data,
       providesTags: ['Responses'],
+    }),
+    createResponse: build.mutation<
+      SuccessResponse<FormAnswerResponse>,
+      {
+        formId?: number;
+        payload: FormAnswerRessquest;
+      }
+    >({
+      query: ({ formId = undefined, payload }) => ({
+        url: `${API_URL.RESPONSES}/${formId}`,
+        method: 'POST',
+        data: payload,
+      }),
+      invalidatesTags: ['Responses'],
     }),
     deleteOneResponse: build.mutation({
       query: ({
@@ -53,6 +72,7 @@ export const responseApi = rootApi.injectEndpoints({
 
 export const {
   useGetResponsesByFormIdQuery,
+  useCreateResponseMutation,
   useDeleteMultipleResponsesMutation,
   useDeleteOneResponseMutation,
 } = responseApi;
