@@ -3,6 +3,7 @@ import { Group, MantineShadow, Menu as MenuMantine } from '@mantine/core';
 
 import { Button, ButtonProps } from '@/atoms/Button';
 import { SortOption } from '@/constants/sortOptions';
+import { cn } from '@/utils';
 
 interface MenuProps {
   positionArrow?: string;
@@ -52,14 +53,22 @@ export const Menu = (props: MenuProps) => {
             rightSection={
               itemList[sortOptionIndex].field === item.field &&
               itemList[sortOptionIndex].sortDirection === item.sortDirection ? (
-                <TiTick className='text-malachite-500' />
+                <TiTick className='text-white' />
               ) : null
             }
-            className='hover:bg-malachite-200'
+            className={cn(
+              'mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white',
+              {
+                'bg-malachite-400 text-white':
+                  itemList[sortOptionIndex].field === item.field &&
+                  itemList[sortOptionIndex].sortDirection ===
+                    item.sortDirection,
+              },
+            )}
           >
             <Group className='gap-2'>
-              {item.title}
               {item.icon}
+              {item.title}
             </Group>
           </MenuMantine.Item>
         ))}

@@ -74,19 +74,19 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     () => [
       {
         accessor: 'id',
-        cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
+        cellsClassName: 'h-10 cursor-pointer text-center',
         title: 'id',
         ...columnProps,
       },
       {
         accessor: 'createdAt',
-        cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
+        cellsClassName: 'h-10 cursor-pointer text-center',
         title: 'Created At',
         ...columnProps,
       },
       ...elementIdAndNameList.map((elementIdAndName) => ({
         accessor: `ValueElement${elementIdAndName.elementId}`,
-        cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
+        cellsClassName: 'h-10 cursor-pointer text-center',
         title: elementIdAndName.elementName,
         ...columnProps,
       })),
@@ -100,13 +100,22 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       highlightOnHover
       borderRadius='sm'
       withColumnBorders
-      striped
-      verticalAlign='top'
+      verticalAlign='center'
       pinLastColumn
       records={records}
       columns={columns}
       selectedRecords={selectedRecords}
       onSelectedRecordsChange={setSelectedRecords}
+      onRowClick={({ record }) => {
+        setSelectedRecords((prev) =>
+          prev
+            .reduce((acc: ResponseRow[], selectedRecord: ResponseRow) => {
+              if (selectedRecord.id !== record.id) acc.push(selectedRecord);
+              return acc;
+            }, [])
+            .concat(prev.some((rec) => rec.id === record.id) ? [] : [record]),
+        );
+      }}
       page={currentPage}
       noRecordsText='No records found'
       onPageChange={setCurrentPage}
@@ -116,12 +125,18 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       paginationText={({ from, to, totalRecords }) =>
         `Showing ${from} - ${to} of ${totalRecords}`
       }
+      paginationActiveBackgroundColor='green'
       fetching={isLoading}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
       loaderType='oval'
       loaderSize='md'
       loaderColor='green'
+      height={records && records.length > 0 ? 'auto' : '100%'}
+      classNames={{
+        root: 'overflow-visible',
+        pagination: 'fixed w-full h-[50px] bottom-0 z-40',
+      }}
     />
   );
 };

@@ -1,9 +1,10 @@
 import { FaFolder } from 'react-icons/fa';
-import { MdDelete, MdEdit, MdOutlineWarning } from 'react-icons/md';
+import { IoIosWarning } from 'react-icons/io';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiAddBoxFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { Box, Group, Menu, NavLink, Stack, Text } from '@mantine/core';
+import { Box, Group, Menu, NavLink, Text } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import { PATH } from '@/constants';
@@ -85,6 +86,10 @@ export const FolderList = ({
     deleteFolder(folderId).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
+        setActiveAllForms(true);
+        setActiveFolder(-1);
+        setParams({ ...defaultFormsParams });
+
         closeModal();
         return;
       }
@@ -95,106 +100,95 @@ export const FolderList = ({
 
   return (
     <>
-      <Stack className='flex flex-col justify-between gap-2'>
-        {isLoading ? (
-          <LoadingDots color='green' />
-        ) : (
-          folderList?.map((folder) => {
-            const isActiveFolder = folder.id === activeFolder;
-            return (
-              <Group
-                key={uuidv4()}
+      {isLoading ? (
+        <LoadingDots color='green' />
+      ) : (
+        folderList?.map((folder) => {
+          const isActiveFolder = folder.id === activeFolder;
+          return (
+            <Group
+              key={uuidv4()}
+              className={cn(
+                'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-300',
+                {
+                  'bg-slate-300': isActiveFolder && !activeAllForms,
+                },
+              )}
+            >
+              <NavLink
+                key={folder.id}
                 className={cn(
-                  'gap-0 hover:rounded-md hover:bg-slate-300',
-                  isActiveFolder && !activeAllForms
-                    ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
-                    : 'hover:rounded-md hover:bg-slate-300',
+                  'w-[85%] rounded-md text-slate-600 hover:bg-slate-300',
+                  {
+                    'bg-slate-300': isActiveFolder && !activeAllForms,
+                  },
                 )}
-              >
-                <NavLink
-                  key={folder.id}
-                  className={cn(
-                    'w-[85%] font-bold',
-                    isActiveFolder && !activeAllForms
-                      ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
-                      : 'hover:rounded-md hover:bg-slate-300',
-                  )}
-                  onClick={() => {
-                    setActiveFolder(folder.id);
-                    setActiveTeam(teamId || -1);
-                    setActiveAllForms(false);
-                    setSelectedRecords([]);
-                    setParams({
-                      ...defaultFormsParams,
-                      teamId,
-                      folderId: folder.id,
-                    });
-                  }}
-                  label={folder.name}
-                  active={isActiveFolder && !activeAllForms}
-                  leftSection={
-                    <FaFolder
-                      className={
-                        isActiveFolder && !activeAllForms ? 'text-white' : ''
-                      }
+                onClick={() => {
+                  setActiveFolder(folder.id);
+                  setActiveTeam(teamId || -1);
+                  setActiveAllForms(false);
+                  setSelectedRecords([]);
+                  setParams({
+                    ...defaultFormsParams,
+                    teamId,
+                    folderId: folder.id,
+                  });
+                }}
+                classNames={{
+                  label: 'text-sm font-semibold',
+                }}
+                label={folder.name}
+                active={isActiveFolder && !activeAllForms}
+                leftSection={<FaFolder size={16} />}
+              />
+              <Menu position='bottom-start' withArrow trigger='click'>
+                <Menu.Target>
+                  <Box className='flex'>
+                    <PiDotsThreeOutlineVerticalFill
+                      size={18}
+                      className='cursor-pointer rounded-md text-slate-600 transition-all duration-[50ms] ease-linear'
                     />
-                  }
-                />
-                <Menu
-                  position='bottom-start'
-                  withArrow
-                  classNames={{
-                    arrow: 'border-malachite-400',
-                  }}
-                >
-                  <Menu.Target>
-                    <Box className='flex'>
-                      <PiDotsThreeOutlineVerticalFill
-                        size='1.4rem'
-                        className='cursor-pointer rounded-md text-slate-100 hover:text-slate-600'
-                      />
-                    </Box>
-                  </Menu.Target>
-                  <Menu.Dropdown className='border-malachite-400 !bg-malachite-400'>
-                    <Menu.Item
-                      className='font-bold text-white hover:bg-malachite-500'
-                      leftSection={<RiAddBoxFill />}
-                      onClick={() =>
-                        navigate(PATH.BUILD_FORM_PAGE, {
-                          state: { folderId: folder.id, teamId },
-                        })
-                      }
-                    >
-                      Add new form
-                    </Menu.Item>
-                    <Menu.Item
-                      onClick={() => {
-                        openModal(ModalTypes.UPDATE_FOLDER);
-                        setFolderName(folder.name);
-                        setFolderId(folder.id);
-                      }}
-                      className='font-bold text-white hover:bg-malachite-500'
-                      leftSection={<MdEdit />}
-                    >
-                      Change name
-                    </Menu.Item>
-                    <Menu.Item
-                      className='font-bold text-white hover:bg-malachite-500'
-                      leftSection={<MdDelete />}
-                      onClick={() => {
-                        openModal(ModalTypes.DELETE_FOLDER);
-                        setFolderId(folder.id);
-                      }}
-                    >
-                      Delete
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </Group>
-            );
-          })
-        )}
-      </Stack>
+                  </Box>
+                </Menu.Target>
+                <Menu.Dropdown className='min-w-[180px] !bg-malachite-100'>
+                  <Menu.Item
+                    className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    leftSection={<RiAddBoxFill />}
+                    onClick={() =>
+                      navigate(PATH.BUILD_FORM_PAGE, {
+                        state: { folderId: folder.id, teamId },
+                      })
+                    }
+                  >
+                    Add new form
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => {
+                      openModal(ModalTypes.UPDATE_FOLDER);
+                      setFolderName(folder.name);
+                      setFolderId(folder.id);
+                    }}
+                    className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    leftSection={<MdEdit />}
+                  >
+                    Change name
+                  </Menu.Item>
+                  <Menu.Item
+                    className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                    leftSection={<MdDelete />}
+                    onClick={() => {
+                      openModal(ModalTypes.DELETE_FOLDER);
+                      setFolderId(folder.id);
+                    }}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
+          );
+        })
+      )}
       <ManageFolderModal
         opened={modalType === ModalTypes.UPDATE_FOLDER}
         onClose={closeModal}
@@ -206,15 +200,17 @@ export const FolderList = ({
         isLoading={isFolderUpdating}
       />
       <ConfirmationModal
+        size='lg'
         body={
-          <Box className='flex flex-col items-center px-10'>
-            <MdOutlineWarning className='size-28 text-error' />
+          <Box className='flex flex-col items-center gap-3 px-10 py-5 text-center'>
+            <IoIosWarning className='size-28 text-error' />
             <Text size='lg' className='font-bold'>
-              Delete folders
+              Delete folder
             </Text>
-            <Text className='text-center'>
-              Are you sure you want to delete selected folder? This folder and
-              all sub-folders will be removed.
+            <Text className='text-sm leading-6'>
+              Are you sure you want to delete this folder? <br />
+              This folder and all forms in the folder will be deleted
+              permanently.
             </Text>
           </Box>
         }

@@ -27,7 +27,6 @@ export const BaseFullnameElement = (
       <Box className='w-full'>
         <Field
           name={`${item.id}.fieldLabel`}
-          nameElementField='fieldLabel'
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
@@ -52,7 +51,6 @@ export const BaseFullnameElement = (
             />
             <Field
               name={`${item.id}.sublabels.firstName`}
-              nameElementField='sublabels.firstName'
               text={item.config.sublabels.firstName}
               placeholder='Type a sublabel'
               validate={validate}
@@ -74,7 +72,6 @@ export const BaseFullnameElement = (
             />
             <Field
               name={`${item.id}.sublabels.lastName`}
-              nameElementField='sublabels.lastName'
               text={item.config.sublabels.lastName}
               placeholder='Type a sublabel'
               validate={validate}

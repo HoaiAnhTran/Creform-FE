@@ -65,18 +65,14 @@ export const FolderGroup = ({
     <Box className='flex flex-col gap-2'>
       <Text className='font-bold'>MY FORMS</Text>
       <NavLink
-        className={cn(
-          'mt-3 font-bold',
-          activeAllForms
-            ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
-            : 'hover:rounded-md hover:bg-slate-300',
-        )}
+        className={cn('mt-3 rounded-md text-slate-600 hover:bg-slate-300', {
+          'bg-slate-300': activeAllForms,
+        })}
+        classNames={{
+          label: 'text-sm font-semibold',
+        }}
         label='All forms'
-        leftSection={
-          <FaFolder
-            className={activeAllForms ? 'text-white' : 'text-malachite-500'}
-          />
-        }
+        leftSection={<FaFolder className='text-malachite-500' />}
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(true);

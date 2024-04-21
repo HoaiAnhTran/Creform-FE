@@ -47,7 +47,7 @@ export const ManageFolderModal = ({
           <Text className='font-bold'>Folder name</Text>
           <TextInput
             value={folderName}
-            placeholder='Add folder name here'
+            placeholder='Type folder name here'
             onChange={(e) => setFolderName(e.target.value)}
           />
         </Stack>

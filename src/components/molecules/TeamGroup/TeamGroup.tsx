@@ -130,7 +130,7 @@ export const TeamGroup = ({
 
   return (
     <div className='flex flex-col gap-2'>
-      <Text className='font-bold'>MY TEAMS</Text>
+      <Text className='mb-3 font-bold'>MY TEAMS</Text>
       <TeamList
         modalType={modalType}
         setModalType={setModalType}
@@ -189,15 +189,16 @@ export const TeamGroup = ({
         isLoading={isTeamCreating || isTeamUpdating}
       />
       <ConfirmationModal
+        size='lg'
         body={
-          <Box className='flex flex-col items-center px-10'>
+          <Box className='flex flex-col items-center gap-3 px-10 py-5 text-center'>
             <IoIosWarning className='size-28 text-error' />
             <Text size='lg' className='font-bold'>
-              Delete teams
+              Delete team
             </Text>
-            <Text className='text-center'>
-              Are you sure you want to delete selected team? <br /> This team
-              and all folders will be removed.
+            <Text className='text-sm leading-6'>
+              Are you sure you want to delete this team? <br /> This team and
+              all assets in the team will be deleted permanently.
             </Text>
           </Box>
         }

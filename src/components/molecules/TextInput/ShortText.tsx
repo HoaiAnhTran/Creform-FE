@@ -1,6 +1,7 @@
 import { Field, FieldArray } from 'formik';
 
 import { ShortTextElement } from '@/types';
+import { cn } from '@/utils';
 import { stringRequired } from '@/utils/schemas/validation';
 
 import { Text } from '../Text';
@@ -33,9 +34,13 @@ export const ShortText = (props: ShortTextProps) => {
             required={item.config.required}
             validate={validate}
             text={item.config.fieldLabel}
+            placeholder='Type a question'
             name={`${item.id}.fieldLabel`}
-            nameElementField='fieldLabel'
             component={Text}
+            classNameWrapper='min-h-[45px]'
+            className={cn('flex min-h-[20px] items-start gap-1', {
+              'text-slate-500': !item.config.fieldLabel,
+            })}
           />
           <Field
             readOnly={isReadOnly}
@@ -48,12 +53,13 @@ export const ShortText = (props: ShortTextProps) => {
           />
           <Field
             validate={validate}
-            name={`${item.id}.subLabel`}
+            name={`${item.id}.sublabel`}
             size='xs'
             placeholder={item.config.placeholder}
-            nameElementField={isReadOnly ? 'sublabel' : undefined}
             text={item.config.sublabel}
             component={Text}
+            classNameWrapper='min-h-[40px]'
+            className='text-xs font-thin text-slate-500'
           />
         </div>
       )}

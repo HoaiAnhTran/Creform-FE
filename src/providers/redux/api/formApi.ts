@@ -19,7 +19,7 @@ const formApi = rootApi.injectEndpoints({
       }),
       transformResponse: (response: SuccessResponse<GetFormsResponse>) =>
         response.data,
-      providesTags: ['Forms'],
+      providesTags: ['Forms', 'Responses'],
     }),
     getFormDetails: build.query<FormResponse, { id: string }>({
       query: ({ id }) => ({
@@ -68,7 +68,7 @@ const formApi = rootApi.injectEndpoints({
         method: 'PATCH',
         data,
       }),
-      invalidatesTags: ['Forms'],
+      invalidatesTags: ['Forms', 'Responses'],
     }),
     addToFolder: build.mutation<
       SuccessResponse<unknown>,

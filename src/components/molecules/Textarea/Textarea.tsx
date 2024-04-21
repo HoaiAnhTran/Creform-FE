@@ -56,6 +56,7 @@ export const Textarea = (props: TextareaProps) => {
           if (nameElementField) handleChange?.(nameElementField)(e);
           field.onChange(e);
         }}
+        classNames={rest.classNames}
       />
       {rest.readOnly || (
         <ErrorMessage

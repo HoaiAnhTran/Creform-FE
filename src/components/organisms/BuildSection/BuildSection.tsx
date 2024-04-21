@@ -256,10 +256,8 @@ export const BuildSection = () => {
     <Formik
       initialValues={{}}
       validateOnBlur={true}
-      validateOnChange={false}
-      onSubmit={() => {
-        isEditForm ? handleUpdateForm(+formId!) : handleCreateForm();
-      }}
+      validateOnChange={true}
+      onSubmit={() => {}}
     >
       <Form className='h-full w-full'>
         <Box className='relative flex h-full w-full bg-malachite-50'>
@@ -279,34 +277,32 @@ export const BuildSection = () => {
             }
             className='transition-all duration-200 ease-linear'
           >
-            <Box pos='relative'>
-              <FormContainer
-                isLoading={
-                  isLoadingGetFormDetails ||
-                  isCreatingForm ||
-                  isCreatingFormInFolder ||
-                  isCreatingFormInTeam ||
-                  isCreatingFormInFolderOfTeam ||
-                  isUpdatingForm ||
-                  isUploadingImage
-                }
-                isDisabled={
-                  isCreatingForm ||
-                  isCreatingFormInFolder ||
-                  isCreatingFormInFolderOfTeam ||
-                  isUpdatingForm
-                }
-                currentElementType={currentElementType!}
-                setCurrentLogoFile={setCurrentLogoFile}
-              />
-            </Box>
+            <FormContainer
+              isLoading={
+                isLoadingGetFormDetails ||
+                isCreatingForm ||
+                isCreatingFormInFolder ||
+                isCreatingFormInTeam ||
+                isCreatingFormInFolderOfTeam ||
+                isUpdatingForm ||
+                isUploadingImage
+              }
+              isDisabled={
+                isCreatingForm ||
+                isCreatingFormInFolder ||
+                isCreatingFormInFolderOfTeam ||
+                isUpdatingForm
+              }
+              currentElementType={currentElementType!}
+              setCurrentLogoFile={setCurrentLogoFile}
+            />
             {toggledRightbar || (
               <SaveButton
-                handleSave={() =>
+                handleSave={() => {
                   isEditForm
                     ? handleUpdateForm(+formId!)
-                    : handleCreateFormBasedOnIds()
-                }
+                    : handleCreateFormBasedOnIds();
+                }}
                 isLoading={
                   isCreatingForm ||
                   isCreatingFormInFolder ||

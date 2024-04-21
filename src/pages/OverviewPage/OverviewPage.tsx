@@ -14,10 +14,10 @@ export const OverviewPage = () => {
       <Box className='h-screen'>
         <Header />
         <Box className='flex h-full w-full items-start justify-between gap-0'>
-          <Stack className='h-full w-[20%]'>
+          <Stack className='h-full w-[20%] border-y-0 border-l-0 border-r border-solid border-slate-300'>
             <OverviewSidebar />
           </Stack>
-          <Stack className='mx-2 h-full w-[80%] gap-0'>
+          <Stack className='h-full w-[80%] gap-0'>
             <ActionToolbar
               selectedFormIds={selectedRecords.map(({ id }) => id)}
             />

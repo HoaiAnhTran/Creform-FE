@@ -52,7 +52,11 @@ export const FormsTable = () => {
 
   const navigate = useNavigate();
 
-  const { data, isFetching: isFormFetching } = useGetMyFormsQuery(params);
+  const {
+    data,
+    isFetching: isFormFetching,
+    refetch,
+  } = useGetMyFormsQuery(params);
 
   const [addToFavouritesMutation, { isLoading: isAddingToFavourites }] =
     useAddToFavouritesMutation();
@@ -273,7 +277,7 @@ export const FormsTable = () => {
         accessor: 'more',
         render: (record: FormResponse) =>
           record.deletedAt === null ? (
-            <Menu shadow='sm' offset={10} position='bottom-end' withArrow>
+            <Menu shadow='sm' offset={10} position='bottom' withArrow>
               <Menu.Target>
                 <Button
                   onClick={() => {
@@ -290,12 +294,12 @@ export const FormsTable = () => {
                 />
               </Menu.Target>
 
-              <Menu.Dropdown className='min-w-[200px]'>
+              <Menu.Dropdown className='min-w-[200px] !bg-malachite-100'>
                 {moreOptions.map((option, index) => (
                   <Menu.Item
                     key={index}
                     leftSection={option.icon}
-                    className='gap-4 px-4 py-3 font-medium text-gray-600 delay-100 ease-linear hover:bg-malachite-50 hover:text-malachite-500'
+                    className='mb-1 mt-0.5 gap-4 px-4 py-3 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
                     onClick={() => option.handleClick(record)}
                   >
                     {option.text}
@@ -320,6 +324,10 @@ export const FormsTable = () => {
     ],
     [moreOptions],
   );
+
+  useEffect(() => {
+    refetch();
+  }, [params]);
 
   useEffect(() => {
     setParams({
@@ -373,10 +381,13 @@ export const FormsTable = () => {
         loaderType='oval'
         loaderSize='md'
         loaderColor='green'
-        height={data?.forms && data.forms.length > 0 ? 'auto' : '100%'}
+        scrollAreaProps={{
+          type: 'scroll',
+        }}
         classNames={{
-          root: 'overflow-visible',
-          pagination: 'fixed w-[80%] h-[50px] bottom-0 z-40',
+          table: 'pl-3 mb-[50px]',
+          pagination:
+            'fixed w-[80%] h-[50px] bottom-0 z-40 border-t-0 shadow-[0_-4px_10px_-6px_rgba(0,0,0,0.2)]',
         }}
       />
       <AddToFolderModal

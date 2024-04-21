@@ -8,7 +8,7 @@ import { Anchor, Group, Image, Menu } from '@mantine/core';
 import GreenLogo from '@/assets/images/greenlogo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
-import { useBuildFormContext } from '@/contexts';
+import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
 import { LoadingDots } from '@/molecules/LoadingDots';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { cn, formatDate, httpClient } from '@/utils';
@@ -49,12 +49,12 @@ export const BuildFormHeader = () => {
   };
 
   useEffect(() => {
-    if (isEditForm) {
+    if (isEditForm && form.title !== '') {
       setCurrentTitle(form.title);
     } else {
       setCurrentTitle(currentTitle);
     }
-  }, [currentTitle, form, isEditForm, setCurrentTitle]);
+  }, [isEditForm, currentTitle, form.title, setCurrentTitle]);
 
   useEffect(() => {
     if (isEditForm) return;
@@ -89,9 +89,14 @@ export const BuildFormHeader = () => {
             onFocus={() => {
               setIsEditingTitle(true);
             }}
-            onBlur={() => setIsEditingTitle(false)}
-            className='min-w-14 max-w-full overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
-            style={{ width: `${currentTitle.length * 11}px` }}
+            onBlur={() => {
+              setIsEditingTitle(false);
+              if (currentTitle === '') {
+                setCurrentTitle(DEFAULT_FORM_TITLE);
+              }
+            }}
+            className='min-w-14 overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
+            style={{ width: `${currentTitle.length * 12}px` }}
           />
           {isPublishSection || isEditingTitle || (
             <MdOutlineModeEditOutline

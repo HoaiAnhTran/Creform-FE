@@ -12,7 +12,7 @@ const folderApi = rootApi.injectEndpoints({
       }),
       transformResponse: (response: SuccessResponse<FolderResponse[]>) =>
         response.data,
-      providesTags: ['Folders', 'Teams'],
+      providesTags: ['Folders'],
     }),
     createFolder: build.mutation<
       SuccessResponse<FolderResponse>,

@@ -35,7 +35,7 @@ export const OverviewSidebar = () => {
 
   return (
     <Box className='relative h-full w-full bg-slate-100 text-slate-600'>
-      <Box className='sticky top-0 z-10 w-full border border-solid border-slate-300 bg-inherit px-5 py-4 text-center'>
+      <Box className='sticky top-0 z-10 w-full border border-x-0 border-solid border-slate-300 bg-inherit px-5 py-4 text-center'>
         <Button
           size='md'
           title='CREATE FORM'
@@ -50,32 +50,31 @@ export const OverviewSidebar = () => {
           }
         />
       </Box>
-      <Box className='flex flex-col gap-5 border-y-0 border-l-0 border-r border-solid border-slate-300 bg-inherit p-5'>
-        <Box>
-          <FolderGroup
-            folderList={folderListNotInTeam}
-            isLoading={isFolderLoading}
-            folderName={folderName}
-            setFolderName={setFolderName}
-            folderId={folderId}
-            setFolderId={setFolderId}
-          />
-        </Box>
+      <Box className='flex flex-col gap-5 bg-inherit p-5'>
+        <FolderGroup
+          folderList={folderListNotInTeam}
+          isLoading={isFolderLoading}
+          folderName={folderName}
+          setFolderName={setFolderName}
+          folderId={folderId}
+          setFolderId={setFolderId}
+        />
         <Divider />
-        <Box>
-          <TeamGroup
-            setFolderName={setFolderName}
-            setFolderId={setFolderId}
-            folderName={folderName}
-            folderId={folderId}
-          />
-        </Box>
+        <TeamGroup
+          setFolderName={setFolderName}
+          setFolderId={setFolderId}
+          folderName={folderName}
+          folderId={folderId}
+        />
         <Divider />
-        <Box>
+        <Box className='flex flex-col gap-2'>
           <NavLink
-            className={cn('rounded-md font-bold hover:bg-slate-200', {
-              'bg-slate-400 text-white hover:bg-slate-400': params.isFavourite,
-            })}
+            className={cn(
+              'rounded-md font-bold text-slate-600 hover:bg-slate-300',
+              {
+                'bg-slate-300': params.isFavourite,
+              },
+            )}
             label='Favorites'
             leftSection={<FaStar className='text-amber-500' />}
             onClick={() => {
@@ -90,17 +89,14 @@ export const OverviewSidebar = () => {
             }}
           />
           <NavLink
-            className={cn('rounded-md  font-bold hover:bg-slate-200', {
-              'bg-slate-400 text-white hover:bg-slate-400': params.isDeleted,
-            })}
+            className={cn(
+              'rounded-md font-bold text-slate-600 hover:bg-slate-300',
+              {
+                'bg-slate-300': params.isDeleted,
+              },
+            )}
             label='Trash'
-            leftSection={
-              <FaTrashAlt
-                className={cn('text-gray-400', {
-                  'text-white': params.isDeleted,
-                })}
-              />
-            }
+            leftSection={<FaTrashAlt className='text-gray-600' />}
             onClick={() => {
               setParams({
                 ...defaultFormsParams,

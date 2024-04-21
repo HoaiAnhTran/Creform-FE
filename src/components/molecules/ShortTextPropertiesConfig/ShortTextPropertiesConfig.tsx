@@ -48,12 +48,12 @@ export const ShortTextPropertiesConfig = (
         />
       </Stack>
       <Stack className='p-3'>
-        <Text className='font-bold text-white'>Sub Label</Text>
+        <Text className='font-bold text-white'>Sublabel</Text>
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
           value={edittingItem?.config.sublabel}
-          onChange={handleChangeRequired}
+          onChange={handleChange('sublabel')}
         />
       </Stack>
       <Stack className='justify-between gap-2 p-3'>

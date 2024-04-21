@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
-import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import {
-  Avatar,
   Box,
   Collapse,
   Group,
@@ -59,7 +58,7 @@ export const TeamList = ({
 
   const closeModal = () => setModalType('');
   const { setParams } = useFormParams();
-  const [activeColappse, setActiveCollapse] = useState<number[]>([]);
+  const [activeCollapse, setActiveCollapse] = useState<number[]>([]);
 
   const handleActiveCollapse = (teamId: number) => {
     setActiveCollapse((prev) => {
@@ -69,7 +68,7 @@ export const TeamList = ({
   };
 
   return (
-    <Box className='mt-3 flex flex-col justify-between gap-2'>
+    <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
         <LoadingDots color='green' />
       ) : (
@@ -81,19 +80,19 @@ export const TeamList = ({
               <Group
                 key={uuidv4()}
                 className={cn(
-                  'gap-0 hover:rounded-md hover:bg-slate-300',
-                  isActiveTeam
-                    ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
-                    : 'hover:rounded-md hover:bg-slate-300',
+                  'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-300',
+                  {
+                    'bg-slate-300': isActiveTeam,
+                  },
                 )}
               >
                 <NavLink
                   key={team.id}
                   className={cn(
-                    'w-[85%] font-bold',
-                    isActiveTeam
-                      ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
-                      : 'hover:rounded-md hover:bg-slate-300',
+                    'w-[85%] rounded-md text-slate-600 hover:bg-slate-300',
+                    {
+                      'bg-slate-300': isActiveTeam,
+                    },
                   )}
                   onClick={() => {
                     setActiveTeam(team.id);
@@ -104,16 +103,16 @@ export const TeamList = ({
                   }}
                   label={
                     <Group className='items-center'>
-                      <Text className='font-bold'>{team.name}</Text>
+                      <Text className='text-sm font-semibold'>{team.name}</Text>
                       {team.folders.length > 0 &&
-                        (activeColappse.includes(team.id) ? (
-                          <TiArrowSortedUp
+                        (activeCollapse.includes(team.id) ? (
+                          <IoIosArrowUp
                             onClick={() => {
                               handleActiveCollapse(team.id);
                             }}
                           />
                         ) : (
-                          <TiArrowSortedDown
+                          <IoIosArrowDown
                             onClick={() => {
                               handleActiveCollapse(team.id);
                             }}
@@ -124,30 +123,27 @@ export const TeamList = ({
                   active={isActiveTeam}
                   leftSection={
                     team.logoUrl ? (
-                      <Avatar size='sm' src={team.logoUrl} />
+                      <img
+                        className='h-[20px] w-[20px] rounded-full object-cover'
+                        src={team.logoUrl}
+                      />
                     ) : (
                       <RiTeamFill size={18} />
                     )
                   }
                 />
-                <Menu
-                  position='bottom-start'
-                  withArrow
-                  classNames={{
-                    arrow: 'border-malachite-400',
-                  }}
-                >
+                <Menu position='bottom-start' withArrow trigger='click'>
                   <Menu.Target>
                     <Box className='flex'>
                       <PiDotsThreeOutlineVerticalFill
-                        size='1.4rem'
-                        className='cursor-pointer rounded-md text-slate-100 hover:text-slate-600'
+                        size={18}
+                        className='cursor-pointer rounded-md text-slate-600 transition-all duration-[50ms] ease-linear'
                       />
                     </Box>
                   </Menu.Target>
-                  <Menu.Dropdown className='border-malachite-400 !bg-malachite-400'>
+                  <Menu.Dropdown className='min-w-[180px] !bg-malachite-100'>
                     <Menu.Item
-                      className='font-bold text-white hover:bg-malachite-500'
+                      className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
                       leftSection={<RiTeamFill />}
                       onClick={() => {
                         openModal(ModalTypes.MANAGE_TEAM);
@@ -157,7 +153,7 @@ export const TeamList = ({
                       Manage member
                     </Menu.Item>
                     <Menu.Item
-                      className='font-bold text-white hover:bg-malachite-500'
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
                       leftSection={<RiFolderAddFill />}
                       onClick={() => {
                         openModal(ModalTypes.CREATE_FOLDER);
@@ -167,18 +163,18 @@ export const TeamList = ({
                       Add new folder
                     </Menu.Item>
                     <Menu.Item
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                      leftSection={<MdEdit />}
                       onClick={() => {
                         openModal(ModalTypes.UPDATE_TEAM);
                         setTeamName(team.name);
                         setTeamId(team.id);
                       }}
-                      className='font-bold text-white hover:bg-malachite-500'
-                      leftSection={<MdEdit />}
                     >
                       Change name
                     </Menu.Item>
                     <Menu.Item
-                      className='font-bold text-white hover:bg-malachite-500'
+                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
                       leftSection={<MdDelete />}
                       onClick={() => {
                         openModal(ModalTypes.DELETE_TEAM);
@@ -190,7 +186,7 @@ export const TeamList = ({
                   </Menu.Dropdown>
                 </Menu>
               </Group>
-              {team.folders.length > 0 && activeColappse.includes(team.id) && (
+              {team.folders.length > 0 && activeCollapse.includes(team.id) && (
                 <Collapse in={true}>
                   <Box className='pl-3'>
                     <FolderList

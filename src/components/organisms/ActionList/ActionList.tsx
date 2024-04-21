@@ -179,7 +179,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
   }, [isFormsInTrash, selectedFormIds]);
 
   return (
-    <div className='flex items-center gap-2 border px-3 py-1'>
+    <div className='flex items-center justify-between gap-2'>
       {actionList.map((action, index) => (
         <Button
           className='text-sm font-medium'

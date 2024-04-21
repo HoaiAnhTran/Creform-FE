@@ -175,20 +175,33 @@ export const TopBar = () => {
       )}
       <ConfirmationModal
         body={
-          <Box className='flex flex-col items-center gap-3 px-10 py-5'>
-            <IoIosWarning className='size-28 text-red-500' />
-            <Text size='lg' className='font-bold'>
-              Unsaved Changes
-            </Text>
-            <Text className='text-center text-[15px]'>
-              You have made changes that haven't been saved yet.
-              <br />
-              These changes will be lost if you leave the page without saving
-              them.
-              <br />
-              Are you sure you want to discard changes?
-            </Text>
-          </Box>
+          formId ? (
+            <Box className='flex flex-col items-center gap-3 px-10'>
+              <IoIosWarning className='size-28 text-red-500' />
+              <Text size='lg' className='font-bold'>
+                Unsaved Changes
+              </Text>
+              <Text className='text-center text-[15px]'>
+                You have made changes that haven't been saved yet.
+                <br />
+                These changes will be lost if you leave the page without saving
+                them.
+                <br />
+                Are you sure you want to discard changes?
+              </Text>
+            </Box>
+          ) : (
+            <Box className='flex flex-col items-center gap-3 px-10'>
+              <IoIosWarning className='size-24 text-yellow-500' />
+              <Text size='lg' className='font-bold'>
+                Uncreated Form
+              </Text>
+              <Text className='text-center text-[15px]'>
+                Your form haven't been created yet. Make sure to save your form
+                before leave the page!
+              </Text>
+            </Box>
+          )
         }
         opened={opened}
         onClose={closeConfirmModal}
@@ -196,10 +209,11 @@ export const TopBar = () => {
         onClickConfirm={handleDiscardChanges}
         backButtonProps={{
           title: 'Keep editing',
+          className: !formId ? 'hidden' : '',
         }}
         confirmButtonProps={{
           title: 'Discard changes',
-          className: 'bg-red-500 hover:bg-red-600',
+          className: !formId ? 'hidden' : 'bg-red-500 hover:bg-red-600',
         }}
         isLoading={false}
       />

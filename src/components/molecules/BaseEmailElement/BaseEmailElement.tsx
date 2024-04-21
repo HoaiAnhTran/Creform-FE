@@ -35,7 +35,6 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
       <Box className='w-full'>
         <Field
           name={`${item.id}.fieldLabel`}
-          nameElementField='fieldLabel'
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
@@ -58,7 +57,6 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
         />
         <Field
           name={`${item.id}.sublabel`}
-          nameElementField='sublabel'
           text={item.config.sublabel}
           placeholder='Type a sublabel'
           validate={fieldValidate}

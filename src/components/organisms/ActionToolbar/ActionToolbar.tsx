@@ -62,9 +62,12 @@ export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
 
   return (
     <div
-      className={cn('flex items-center justify-end p-4', {
-        'justify-start': selectedFormIds.length > 0,
-      })}
+      className={cn(
+        'flex items-center justify-end px-3 py-4 shadow-[0_4px_10px_-6px_rgba(0,0,0,0.2)]',
+        {
+          'justify-start': selectedFormIds.length > 0,
+        },
+      )}
     >
       {selectedFormIds.length > 0 ? (
         <ActionList selectedFormIds={selectedFormIds} />

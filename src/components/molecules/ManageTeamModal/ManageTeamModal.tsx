@@ -46,6 +46,7 @@ export const ManageTeamModal = ({
           <Text className='font-bold'>Team name</Text>
           <TextInput
             value={teamName}
+            placeholder='Type team name here'
             onChange={(e) => setTeamName(e.target.value)}
           />
         </Stack>

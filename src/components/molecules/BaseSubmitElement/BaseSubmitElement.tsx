@@ -42,7 +42,8 @@ export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
       <Button
         type='submit'
         className={cn('h-[48px] w-[190px]', { 'cursor-text': isReadOnly })}
-        color={item.config.buttonColor}
+        disabled={isReadOnly}
+        style={{ backgroundColor: item.config.buttonColor, color: 'white' }}
         onClick={handleSubmit}
       >
         {item.config.buttonText}

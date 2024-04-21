@@ -39,7 +39,7 @@ export const ConfirmationModal = ({
         loaderProps={{ color: 'green' }}
       />
       {body}
-      <Group className='justify-between'>
+      <Group className='mt-5 justify-between'>
         <Button
           onClick={onClickBack}
           className='font-bold'

@@ -47,7 +47,7 @@ export const LongTextPropertiesConfig = (
         />
       </Stack>
       <Stack className='p-3'>
-        <Text className='font-bold text-white'>Sub Label</Text>
+        <Text className='font-bold text-white'>Sublabel</Text>
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'

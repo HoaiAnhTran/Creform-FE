@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
 import dayjs from 'dayjs';
 
-import { UnSignedHeader } from '@/atoms/UnsignedHeader';
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { TopBarSubmission } from '@/organisms/ActionToolbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
+import { Header } from '@/templates/Header';
 import { GetResponsesParams } from '@/types';
 
 export const ResponsesPage = () => {
@@ -63,13 +63,13 @@ export const ResponsesPage = () => {
     () => selectedRecords.map((selectedRecord) => selectedRecord.id as number),
     [selectedRecords],
   );
+
   if (response === undefined) return <div></div>;
+
   if (responseRows?.length == 0) {
     return (
       <Box className='h-screen'>
-        <Box className='h-headerHeight bg-malachite-500 px-4 pt-4'>
-          <UnSignedHeader />
-        </Box>
+        <Header />
         <Box className='flex h-contentHeight w-full items-center justify-center bg-malachite-100 pt-10'>
           <div className='text-center'>
             <TbDatabaseOff size={80} />
@@ -81,31 +81,28 @@ export const ResponsesPage = () => {
       </Box>
     );
   }
+
   return (
     <div>
-      <div className='h-screen bg-gray-200'>
-        <div className='h-headerHeight bg-malachite-500 px-4 pt-4'>
-          <UnSignedHeader />
-        </div>
+      <div className='bg-white'>
+        <Header />
         <TopBarSubmission
           formId={Number(formId)}
           selectedResponseIds={selectedResponseIds}
           setSelectedRecords={setSelectedRecords}
           showingResponseRows={responseRows || []}
         />
-        <div>
-          <ResponsesTable
-            elementIdAndNameList={response.elementIdAndNameList}
-            totalResponses={response.totalResponses}
-            pageSize={response.pageSize}
-            isLoading={isLoading}
-            responseRows={responseRows || []}
-            selectedRecords={selectedRecords}
-            setSelectedRecords={setSelectedRecords}
-            params={params}
-            setParams={setParams}
-          />
-        </div>
+        <ResponsesTable
+          elementIdAndNameList={response.elementIdAndNameList}
+          totalResponses={response.totalResponses}
+          pageSize={response.pageSize}
+          isLoading={isLoading}
+          responseRows={responseRows || []}
+          selectedRecords={selectedRecords}
+          setSelectedRecords={setSelectedRecords}
+          params={params}
+          setParams={setParams}
+        />
       </div>
     </div>
   );

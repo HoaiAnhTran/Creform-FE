@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import {
+  Box,
   CloseButton,
   Divider,
   Group,
@@ -151,20 +152,23 @@ export const FormContainer = ({
             }
             labelPosition='center'
             variant='dashed'
+            className='px-4'
           />
         )}
-        <LoadingOverlay
-          visible={isLoading}
-          zIndex={BIG_Z_INDEX}
-          overlayProps={{ radius: 'sm', blur: 2 }}
-          loaderProps={{ color: 'green' }}
-        />
-        <ResponsiveGridLayout
-          currentElementType={currentElementType!}
-          updateItem={updateItem}
-          handleConfig={handleConfig}
-          isDisabled={isDisabled}
-        />
+        <Box pos='relative' className='px-4'>
+          <LoadingOverlay
+            visible={isLoading}
+            zIndex={BIG_Z_INDEX}
+            overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
+            loaderProps={{ color: 'green' }}
+          />
+          <ResponsiveGridLayout
+            currentElementType={currentElementType!}
+            updateItem={updateItem}
+            handleConfig={handleConfig}
+            isDisabled={isDisabled}
+          />
+        </Box>
         <PropertiesRightbar
           edittingItem={edittingItem!}
           updateItem={updateItem}

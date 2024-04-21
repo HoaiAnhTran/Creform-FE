@@ -1,6 +1,5 @@
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
-import { TiTickOutline } from 'react-icons/ti';
 import { ActionIcon, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
@@ -44,23 +43,22 @@ export const TopBarSubmission = (props: TopBarSubmission) => {
   };
 
   if (selectedResponseIds.length === 0)
-    return <div className='h-[74px] w-full bg-slate-200'></div>;
+    return <div className='h-[74px] w-full'></div>;
 
   return (
     <div className='flex w-full items-center justify-between p-4'>
       <div className='flex gap-2'>
-        <div className='flex items-center gap-1 rounded-md bg-malachite-500 px-2 text-white hover:bg-malachite-600 hover:text-white'>
-          <TiTickOutline />
+        <div className='flex w-[120px] items-center justify-between rounded-[0.25rem] border border-solid border-malachite-500 bg-white px-2 text-malachite-500'>
           <Text>
             {`${selectedResponseIds.length} ${selectedResponseIds.length === 1 ? 'entry' : 'entries'}`}
           </Text>
           <ActionIcon
-            className='bg-malachite-300 hover:bg-malachite-400'
+            className='h-[8px] w-[8px] rounded-full bg-white text-red-500 hover:bg-white hover:text-red-600'
             onClick={() => {
               setSelectedRecords([]);
             }}
           >
-            <IoCloseCircleOutline />
+            <IoCloseCircleOutline className='h-full w-full' />
           </ActionIcon>
         </div>
         <Button
@@ -70,7 +68,7 @@ export const TopBarSubmission = (props: TopBarSubmission) => {
           title={
             showingResponseRows.length > selectedResponseIds.length
               ? 'Select All'
-              : 'Deselect All'
+              : 'Unselect All'
           }
         />
       </div>
@@ -80,7 +78,7 @@ export const TopBarSubmission = (props: TopBarSubmission) => {
         variant='outline'
         color='error'
         onClick={handleDeleteOneOrMultiple}
-        leftSection={<MdDelete size={16} />}
+        leftSection={<MdDelete size={22} />}
         title={'Delete'}
       />
     </div>
