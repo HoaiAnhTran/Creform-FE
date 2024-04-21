@@ -3,12 +3,12 @@ import { Box, Image, Stack } from '@mantine/core';
 
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
-import { ElementItem, FormResponse } from '@/types';
+import { ElementItem, FormRequest, FormResponse } from '@/types';
 
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
-  form?: FormResponse;
+  form?: FormResponse | FormRequest;
 }
 
 export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {

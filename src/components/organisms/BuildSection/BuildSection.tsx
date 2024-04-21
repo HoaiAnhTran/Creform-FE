@@ -128,7 +128,7 @@ export const BuildSection = () => {
             ? STRETCH_BUILD_FORM_LEFT_BAR
             : SHRINK_BUILD_FORM_LEFT_BAR
         }
-        className='transition-all duration-200 ease-linear'
+        className='z-[100] transition-all duration-200 ease-linear'
       >
         <BuildFormLeftbar setCurrentElementType={setCurrentElementType} />
       </Box>

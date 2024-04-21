@@ -4,7 +4,7 @@ import { Box, NavLink, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
-import { useFormParams, useOverviewSidebars } from '@/contexts';
+import { useFormParams, useOverviewContext } from '@/contexts';
 import { ManageFolderModal } from '@/molecules/ManageFolderModal';
 import { useCreateFolderMutation } from '@/redux/api/folderApi';
 import {
@@ -35,7 +35,8 @@ export const FolderGroup = ({
   setFolderId,
 }: FolderListProps) => {
   const [modalType, setModalType] = useState<ModalType | ''>('');
-  const { activeAllForms, setActiveAllForms } = useOverviewSidebars();
+  const { activeAllForms, setActiveAllForms, setSelectedRecords } =
+    useOverviewContext();
   const { setParams } = useFormParams();
 
   const openModal = (type: ModalType) => setModalType(type);
@@ -70,6 +71,7 @@ export const FolderGroup = ({
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(!activeAllForms);
+          setSelectedRecords([]);
           setParams({ ...defaultFormsParams });
         }}
       />

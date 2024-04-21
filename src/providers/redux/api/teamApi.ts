@@ -14,6 +14,15 @@ const teamApi = rootApi.injectEndpoints({
         response.data,
       providesTags: ['Teams'],
     }),
+    getTeamDetails: build.query<TeamResponse, { id: number }>({
+      query: ({ id }) => ({
+        url: `${API_URL.TEAMS}/${id}`,
+        method: 'GET',
+      }),
+      transformResponse: (response: SuccessResponse<TeamResponse>) =>
+        response.data,
+      providesTags: (_result, _error, arg) => [{ type: 'Teams', id: arg.id }],
+    }),
     createTeam: build.mutation<SuccessResponse<TeamResponse>, TeamResquest>({
       query: (data) => ({
         url: API_URL.TEAMS,
@@ -68,6 +77,7 @@ const teamApi = rootApi.injectEndpoints({
 
 export const {
   useGetMyTeamsQuery,
+  useGetTeamDetailsQuery,
   useCreateTeamMutation,
   useUpdateTeamMutation,
   useDeleteTeamMutation,

@@ -3,7 +3,7 @@ export const API_URL = {
   LOGIN: '/auth/login',
   FORMS: '/forms',
   FOLDERS: '/folders',
-  INDEPENDENT_FOLDER: 'folders/independent',
+  INDEPENDENT_FOLDER: '/folders/independent',
   TEAMS: '/teams',
   USER_PROFILE: '/users/my-profile',
   CHANGE_PASSWORD: '/users/change-password',

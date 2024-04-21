@@ -7,7 +7,7 @@ import { Box, Group, Menu, NavLink, Stack, Text } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
-import { useOverviewSidebars } from '@/contexts';
+import { useOverviewContext } from '@/contexts';
 import { useFormParams } from '@/contexts';
 import {
   useDeleteFolderMutation,
@@ -36,6 +36,7 @@ interface FolderListProps {
   modalType: ModalType | '';
   folderName: string;
   folderId: number;
+  teamId?: number;
 }
 
 export const FolderList = ({
@@ -46,6 +47,7 @@ export const FolderList = ({
   modalType,
   folderName,
   folderId,
+  teamId,
   folderList,
   isLoading,
 }: FolderListProps) => {
@@ -55,7 +57,8 @@ export const FolderList = ({
     activeAllForms,
     setActiveAllForms,
     setActiveTeam,
-  } = useOverviewSidebars();
+    setSelectedRecords,
+  } = useOverviewContext();
   useEffect(() => {
     if (activeFolder === -1 && !activeAllForms) return;
     setActiveTeam(-1);
@@ -122,7 +125,12 @@ export const FolderList = ({
                   onClick={() => {
                     setActiveFolder(folder.id);
                     setActiveAllForms(false);
-                    setParams({ ...defaultFormsParams, folderId: folder.id });
+                    setSelectedRecords([]);
+                    setParams({
+                      ...defaultFormsParams,
+                      teamId,
+                      folderId: folder.id,
+                    });
                   }}
                   label={folder.name}
                   active={isActiveFolder && !activeAllForms}

@@ -2,7 +2,11 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
-import { BuildFormContextProvider, ElementLayoutProvider } from '@/contexts';
+import {
+  BuildFormContextProvider,
+  ElementLayoutProvider,
+  OverviewContextProvider,
+} from '@/contexts';
 import { BuildSection } from '@/organisms/BuildSection';
 import { PreviewSection } from '@/organisms/PreviewSection';
 import { PublishSection } from '@/organisms/PublishSection';
@@ -61,7 +65,11 @@ export function useRouteElements() {
       children: [
         {
           path: PATH.OVERVIEW_PAGE,
-          element: <OverviewPage />,
+          element: (
+            <OverviewContextProvider>
+              <OverviewPage />,
+            </OverviewContextProvider>
+          ),
         },
         {
           path: PATH.BUILD_FORM_PAGE,

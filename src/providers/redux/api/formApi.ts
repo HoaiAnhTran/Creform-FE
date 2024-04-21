@@ -59,20 +59,6 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
-    addToFolder: build.mutation<
-      SuccessResponse<unknown>,
-      { formId: number; folderId: number }
-    >({
-      query: (data) => ({
-        url: API_URL.ADD_TO_FOLDER.replace(
-          ':formId',
-          data.formId.toString(),
-        ).replace(':folderId', data.folderId.toString()),
-        method: 'POST',
-        data,
-      }),
-      invalidatesTags: ['Forms'],
-    }),
     updateForm: build.mutation<
       SuccessResponse<GetFormsResponse>,
       { id: number; data: FormRequest }
@@ -84,6 +70,26 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    addToFolder: build.mutation<
+      SuccessResponse<unknown>,
+      { formId: number; folderId: number }
+    >({
+      query: ({ formId, folderId }) => ({
+        url: `${API_URL.FORMS}/${formId}/folder/${folderId}/add`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
+    moveToTeam: build.mutation<
+      SuccessResponse<unknown>,
+      { formId: number; teamId: number }
+    >({
+      query: ({ formId, teamId }) => ({
+        url: `${API_URL.FORMS}/${formId}/team/${teamId}/add`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -92,9 +98,10 @@ export const {
   useGetMyFormsQuery,
   useGetFormDetailsQuery,
   useAddToFavouritesMutation,
-  useAddToFolderMutation,
   useDeleteFormMutation,
   useRestoreFormMutation,
   useCreateFormMutation,
   useUpdateFormMutation,
+  useAddToFolderMutation,
+  useMoveToTeamMutation,
 } = formApi;

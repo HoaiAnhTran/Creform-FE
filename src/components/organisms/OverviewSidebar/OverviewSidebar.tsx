@@ -6,7 +6,7 @@ import { Box, Divider, NavLink } from '@mantine/core';
 import { Button } from '@/atoms/Button';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { PATH } from '@/constants/routes';
-import { useFormParams, useOverviewSidebars } from '@/contexts';
+import { useFormParams, useOverviewContext } from '@/contexts';
 import { FolderGroup } from '@/molecules/FolderGroup';
 import { TeamGroup } from '@/molecules/TeamGroup';
 import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
@@ -16,8 +16,12 @@ export const OverviewSidebar = () => {
   const [folderName, setFolderName] = useState<string>('');
   const [folderId, setFolderId] = useState<number>(0);
 
-  const { setActiveFolder, setActiveAllForms, setActiveTeam } =
-    useOverviewSidebars();
+  const {
+    setActiveFolder,
+    setActiveAllForms,
+    setActiveTeam,
+    setSelectedRecords,
+  } = useOverviewContext();
   const { setParams, params } = useFormParams();
 
   const navigate = useNavigate();
@@ -73,6 +77,7 @@ export const OverviewSidebar = () => {
               setActiveFolder(-1);
               setActiveTeam(-1);
               setActiveAllForms(false);
+              setSelectedRecords([]);
             }}
           />
           <NavLink
@@ -95,6 +100,7 @@ export const OverviewSidebar = () => {
               setActiveAllForms(false);
               setActiveFolder(-1);
               setActiveTeam(-1);
+              setSelectedRecords([]);
             }}
           />
         </Box>

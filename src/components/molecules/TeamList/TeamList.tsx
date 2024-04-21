@@ -16,7 +16,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
-import { useFormParams, useOverviewSidebars } from '@/contexts';
+import { useFormParams, useOverviewContext } from '@/contexts';
 import { type ModalType, ModalTypes, TeamResponse } from '@/types';
 import { cn } from '@/utils';
 
@@ -47,8 +47,13 @@ export const TeamList = ({
   modalType,
   setModalType,
 }: TeamListProps) => {
-  const { activeTeam, setActiveTeam, setActiveAllForms, setActiveFolder } =
-    useOverviewSidebars();
+  const {
+    activeTeam,
+    setActiveTeam,
+    setActiveAllForms,
+    setActiveFolder,
+    setSelectedRecords,
+  } = useOverviewContext();
   const openModal = (type: ModalType) => setModalType(type);
 
   const closeModal = () => setModalType('');
@@ -98,6 +103,7 @@ export const TeamList = ({
                   )}
                   onClick={() => {
                     setActiveTeam(team.id);
+                    setSelectedRecords([]);
                     setParams({ ...defaultFormsParams, teamId: team.id });
                   }}
                   label={
@@ -205,6 +211,7 @@ export const TeamList = ({
                       closeModal={closeModal}
                       folderName={folderName}
                       folderId={folderId}
+                      teamId={team.id}
                     />
                   </Box>
                 </Collapse>

@@ -12,15 +12,29 @@ export interface GetFormsParams {
   teamId?: number;
 }
 
-export interface FormResponse extends FormRequest {
+export interface FormResponse {
   id: number;
+  title: string;
+  logoUrl: string;
+  settings: object;
+  elements: ElementItem[];
   totalSubmissions: number;
   permissions: object;
-
+  createdAt: string;
+  updatedAt: string;
   deletedAt: string;
   creatorId: number;
   teamId: number;
-  isFavourite?: boolean;
+  folderId: number;
+  folder: {
+    id: number;
+    name: string;
+  };
+  favouritedByUsers: {
+    id: number;
+    email: string;
+  };
+  isFavourite: boolean;
 }
 
 export interface GetFormsResponse {
@@ -37,7 +51,6 @@ export interface FormRequest {
   logoUrl: string;
   settings: object;
   elements: ElementItem[];
-  teamId?: number;
   createdAt: string;
   updatedAt: string;
 }

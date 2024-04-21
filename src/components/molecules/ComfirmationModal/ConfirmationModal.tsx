@@ -3,6 +3,7 @@ import {
   Box,
   Group,
   LoadingOverlay,
+  MantineSize,
   Modal as MantineModal,
   ModalProps as MantineModalProps,
 } from '@mantine/core';
@@ -10,6 +11,7 @@ import {
 import { Button } from '@/atoms/Button';
 
 interface ConfirmationModal extends MantineModalProps {
+  size?: MantineSize;
   body: ReactNode;
   isLoading: boolean;
   onClickBack: () => void;
@@ -17,13 +19,14 @@ interface ConfirmationModal extends MantineModalProps {
 }
 
 export const ConfirmationModal = ({
+  size = 'xl',
   body,
   onClickBack,
   onClickConfirm,
   isLoading,
   ...props
 }: ConfirmationModal) => (
-  <MantineModal {...props} centered size='xl'>
+  <MantineModal {...props} centered size={size}>
     <Box pos='relative'>
       <LoadingOverlay
         visible={isLoading}

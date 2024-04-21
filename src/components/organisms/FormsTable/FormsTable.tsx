@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BsFileText } from 'react-icons/bs';
-import { FaStar } from 'react-icons/fa';
-import { IoIosArrowDown } from 'react-icons/io';
+import { FaFolder, FaStar } from 'react-icons/fa';
+import { IoIosArrowDown, IoIosWarning } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import {
   ActionIcon,
+  Badge,
+  Box,
+  CloseButton,
   Group,
   Menu,
   Stack,
@@ -21,29 +24,29 @@ import {
   defaultFormsParams,
 } from '@/constants/defaultFormsParams';
 import { PATH } from '@/constants/routes';
-import { sortOptionList } from '@/constants/sortOptions';
-import { useFormParams } from '@/contexts';
+import { useFormParams, useOverviewContext } from '@/contexts';
+import { AddToFolderModal } from '@/molecules/AddToFolderModal';
+import { ConfirmationModal } from '@/molecules/ComfirmationModal';
+import { MoveToTeamModal } from '@/molecules/MoveToTeamModal';
 import {
   useAddToFavouritesMutation,
   useDeleteFormMutation,
   useGetMyFormsQuery,
   useRestoreFormMutation,
 } from '@/redux/api/formApi';
-import { ErrorResponse, FormResponse } from '@/types';
+import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
-interface FormsTableProps {
-  selectedRecords: FormResponse[];
-  setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
-}
+export const FormsTable = () => {
+  const { selectedRecords, setSelectedRecords } = useOverviewContext();
 
-export const FormsTable = ({
-  selectedRecords,
-  setSelectedRecords,
-}: FormsTableProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [modalType, setModalType] = useState<ModalType | ''>('');
 
-  const { params, setParams, sortOptionIndex } = useFormParams();
+  const openModal = (type: ModalType) => setModalType(type);
+
+  const closeModal = () => setModalType('');
+
+  const { params, setParams, currentPage, setCurrentPage } = useFormParams();
 
   const navigate = useNavigate();
 
@@ -52,6 +55,7 @@ export const FormsTable = ({
     useAddToFavouritesMutation();
 
   const [deleteForm, { isLoading: isDeletingForm }] = useDeleteFormMutation();
+
   const [restoreForm, { isLoading: isRestoringForm }] =
     useRestoreFormMutation();
 
@@ -59,10 +63,12 @@ export const FormsTable = ({
     deleteForm({ id: record.id }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
+        closeModal();
         return;
       }
       if (res.error as ErrorResponse) {
         toastify.displayError((res.error as ErrorResponse).message);
+        closeModal();
       }
     });
   };
@@ -79,17 +85,32 @@ export const FormsTable = ({
     });
   };
 
+  const isFetching =
+    isFormFetching || isAddingToFavourites || isDeletingForm || isRestoringForm;
+
   const moreOptions = [
-    { text: 'View', icon: <IoEye size={18} />, handleClick: () => {} },
+    {
+      text: 'View',
+      icon: <IoEye size={18} />,
+      handleClick: (record: FormResponse) => {
+        navigate(`/form/${record.id}`);
+      },
+    },
     {
       text: 'Add to Folder',
       icon: <RiFolderAddFill size={18} />,
-      handleClick: () => {},
+      handleClick: (record: FormResponse) => {
+        setSelectedRecords([record]);
+        openModal(ModalTypes.ADD_TO_FOLDER);
+      },
     },
     {
       text: 'Move to Team',
       icon: <RiTeamFill size={18} />,
-      handleClick: () => {},
+      handleClick: (record: FormResponse) => {
+        setSelectedRecords([record]);
+        openModal(ModalTypes.MOVE_TO_TEAM);
+      },
     },
     {
       text: 'Delete',
@@ -123,9 +144,27 @@ export const FormsTable = ({
           <Group>
             <BsFileText size={36} className='text-malachite-500' />
             <Stack className='gap-2'>
-              <Text className='text-lg font-semibold text-gray-900'>
-                {record.title}
-              </Text>
+              <Group>
+                <Text className='text-lg font-semibold text-gray-900'>
+                  {record.title}
+                </Text>
+                {record.folder && (
+                  <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-yellow-500 px-2 py-0.5'>
+                    <Badge
+                      className='m-0 bg-inherit p-0 text-xs normal-case text-black'
+                      leftSection={<FaFolder />}
+                    >
+                      {record.folder.name}
+                    </Badge>
+                    <CloseButton
+                      variant='transparent'
+                      size={18}
+                      className='hidden text-black group-hover:flex'
+                      onClick={() => {}}
+                    />
+                  </Box>
+                )}
+              </Group>
               <Group className='items-center gap-1'>
                 <UnstyledButton
                   onClick={() => {
@@ -169,7 +208,10 @@ export const FormsTable = ({
               title='Purge'
               variant='subtle'
               className='font-medium'
-              onClick={() => handleDeleteForm(record)}
+              onClick={() => {
+                setSelectedRecords([record]);
+                openModal(ModalTypes.DELETE_FORM_PERMANENTLY);
+              }}
             />
           ),
         cellsClassName: 'cursor-pointer  hover:bg-malachite-100 w-30 h-20 p-0',
@@ -227,44 +269,76 @@ export const FormsTable = ({
   useEffect(() => {
     setParams({
       ...defaultFormsParams,
-      page: currentPage,
-      sortField: sortOptionList[sortOptionIndex].field,
-      sortDirection: sortOptionList[sortOptionIndex].sortDirection,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+  }, []);
 
   return (
-    <DataTable
-      noHeader
-      minHeight={150}
-      withRowBorders={false}
-      highlightOnHover
-      rowClassName='cursor-pointer'
-      columns={columns}
-      records={data?.forms}
-      selectedRecords={selectedRecords}
-      onSelectedRecordsChange={setSelectedRecords}
-      noRecordsText='No records found'
-      totalRecords={data?.totalForms}
-      recordsPerPage={data?.pageSize ?? DEFAULT_PAGE_SIZE}
-      page={currentPage}
-      onPageChange={(page) => setCurrentPage(page)}
-      paginationSize='sm'
-      paginationText={({ from, to, totalRecords }) =>
-        `Showing ${from} - ${to} of ${totalRecords}`
-      }
-      paginationActiveBackgroundColor='green'
-      fetching={
-        isAddingToFavourites ||
-        isDeletingForm ||
-        isFormFetching ||
-        isRestoringForm
-      }
-      loaderType='oval'
-      loaderSize='md'
-      loaderColor='green'
-      className='!h-[85%]'
-    />
+    <>
+      <DataTable
+        noHeader
+        minHeight={150}
+        withRowBorders={false}
+        highlightOnHover
+        rowClassName='cursor-pointer'
+        columns={columns}
+        records={data?.forms}
+        selectedRecords={selectedRecords}
+        onSelectedRecordsChange={setSelectedRecords}
+        noRecordsText='No records found'
+        totalRecords={data?.totalForms}
+        recordsPerPage={data?.pageSize ?? DEFAULT_PAGE_SIZE}
+        page={currentPage}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setParams((prevState) => ({
+            ...prevState,
+            page,
+          }));
+        }}
+        paginationSize='sm'
+        paginationText={({ from, to, totalRecords }) =>
+          `Showing ${from} - ${to} of ${totalRecords}`
+        }
+        paginationActiveBackgroundColor='green'
+        fetching={isFetching}
+        loaderType='oval'
+        loaderSize='md'
+        loaderColor='green'
+        className='!h-[85%]'
+      />
+      <AddToFolderModal
+        opened={modalType === ModalTypes.ADD_TO_FOLDER}
+        onClose={closeModal}
+        closeModal={closeModal}
+        selectedFormIds={selectedRecords.map(({ id }) => id)}
+      />
+      <MoveToTeamModal
+        opened={modalType === ModalTypes.MOVE_TO_TEAM}
+        onClose={closeModal}
+        closeModal={closeModal}
+        selectedFormIds={selectedRecords.map(({ id }) => id)}
+      />
+      <ConfirmationModal
+        size='lg'
+        body={
+          <Box className='flex flex-col items-center px-10'>
+            <IoIosWarning className='size-28 text-error' />
+            <Text size='lg' className='font-bold'>
+              Delete Form
+            </Text>
+            <Text className='text-center'>
+              This form and all of its submissions will be gone forever. This
+              operation cannot be undone.
+            </Text>
+          </Box>
+        }
+        opened={modalType === ModalTypes.DELETE_FORM_PERMANENTLY}
+        onClose={closeModal}
+        onClickBack={closeModal}
+        onClickConfirm={() => handleDeleteForm(selectedRecords[0])}
+        isLoading={isDeletingForm}
+      />
+    </>
   );
 };

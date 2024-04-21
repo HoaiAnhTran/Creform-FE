@@ -1,61 +1,108 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from 'react';
 import { AiOutlineTeam } from 'react-icons/ai';
 import { FaTableCells } from 'react-icons/fa6';
-import { HiDocumentReport } from 'react-icons/hi';
-import { HiTrash } from 'react-icons/hi';
+import { HiDocumentReport, HiTrash } from 'react-icons/hi';
 
 import { Button } from '@/atoms/Button';
+import { MESSAGES } from '@/constants/messages';
+import { useOverviewContext } from '@/contexts';
+import { AddToFolderModal } from '@/molecules/AddToFolderModal';
+import { MoveToTeamModal } from '@/molecules/MoveToTeamModal';
+import { useDeleteFormMutation } from '@/redux/api/formApi';
+import { ModalType, ModalTypes } from '@/types';
+import { toastify } from '@/utils';
 
 interface ActionListFormProps {
   selectedFormIds: number[];
 }
 
-export const ActionList = (props: ActionListFormProps) => {
-  const { selectedFormIds } = props;
+export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
+  const { setSelectedRecords } = useOverviewContext();
 
-  const handleSubmissions = () => {};
+  const [deleteForm] = useDeleteFormMutation();
 
-  const handleAddToFolder = () => {};
+  const [modalType, setModalType] = useState<ModalType | ''>('');
+  const openModal = (type: ModalType) => setModalType(type);
+  const closeModal = () => setModalType('');
 
-  const handleAddToTeam = () => {};
+  const handleViewSubmissions = () => {};
 
-  const handleArchive = () => {};
+  const handleDeleteForm = async () => {
+    await Promise.allSettled(
+      selectedFormIds.map((id) => deleteForm({ id })),
+    ).then((response) => {
+      const { successCount, errorCount } = response.reduce<{
+        successCount: number;
+        errorCount: number;
+      }>(
+        (acc, res) => {
+          if (res.status === 'fulfilled') {
+            acc.successCount += 1;
+            return acc;
+          }
+          acc.errorCount += 1;
+          return acc;
+        },
+        { successCount: 0, errorCount: 0 },
+      );
+
+      if (successCount === response.length) {
+        toastify.displaySuccess(MESSAGES.DELETE_FORM_SUCCESS);
+        closeModal();
+      } else if (errorCount > 0) {
+        toastify.displayError(`${errorCount} form(s) failed to delete`);
+      }
+      setSelectedRecords([]);
+    });
+  };
+
   const SingleFormActions = [
     {
-      icon: <FaTableCells size='25' />,
+      icon: <FaTableCells size={24} />,
       title: 'Submissions',
-      onClick: handleSubmissions,
+      onClick: handleViewSubmissions,
     },
     {
-      icon: <HiDocumentReport size='25' />,
-      title: 'Add to folder',
-      onClick: handleAddToFolder,
+      icon: <HiDocumentReport size={24} />,
+      title: 'Add to Folder',
+      onClick: () => {
+        openModal(ModalTypes.ADD_TO_FOLDER);
+      },
     },
     {
-      icon: <AiOutlineTeam size='25' />,
-      title: 'Move to team',
-      onClick: handleAddToTeam,
+      icon: <AiOutlineTeam size={24} />,
+      title: 'Move to Team',
+      onClick: () => {
+        openModal(ModalTypes.MOVE_TO_TEAM);
+      },
     },
     {
-      icon: <HiTrash size='25' />,
-      title: 'Archive',
-      onClick: handleArchive,
+      icon: <HiTrash size={24} />,
+      title: 'Delete',
+      onClick: handleDeleteForm,
     },
   ];
+
   const MultipleFormActions = [
     {
-      icon: <HiDocumentReport size='25' />,
+      icon: <HiDocumentReport size={24} />,
       title: 'Add to folder',
-      onClick: handleAddToFolder,
+      onClick: () => {
+        openModal(ModalTypes.ADD_TO_FOLDER);
+      },
     },
     {
-      icon: <AiOutlineTeam size='25' />,
+      icon: <AiOutlineTeam size={24} />,
       title: 'Move to team',
-      onClick: handleAddToTeam,
+      onClick: () => {
+        openModal(ModalTypes.MOVE_TO_TEAM);
+      },
     },
     {
-      icon: <HiTrash size='25' />,
-      title: 'Archive',
-      onClick: handleArchive,
+      icon: <HiTrash size={24} />,
+      title: 'Delete',
+      onClick: handleDeleteForm,
     },
   ];
 
@@ -64,11 +111,11 @@ export const ActionList = (props: ActionListFormProps) => {
       {selectedFormIds.length > 1
         ? MultipleFormActions.map((action, index) => (
             <Button
-              className='font-medium'
+              className='text-sm font-medium'
               size='md'
               key={index}
               variant='outline'
-              color={action.title === 'Archive' ? 'error' : 'primary'}
+              color={action.title === 'Delete' ? 'error' : 'primary'}
               onClick={() => action.onClick()}
               leftSection={action.icon}
               title={action.title}
@@ -76,16 +123,28 @@ export const ActionList = (props: ActionListFormProps) => {
           ))
         : SingleFormActions.map((action, index) => (
             <Button
-              className='font-medium'
+              className='text-sm font-medium'
               size='md'
               key={index}
               variant='outline'
-              color={action.title === 'Archive' ? 'error' : 'primary'}
+              color={action.title === 'Delete' ? 'error' : 'primary'}
               leftSection={action.icon}
               onClick={() => action.onClick()}
               title={action.title}
             />
           ))}
+      <AddToFolderModal
+        opened={modalType === ModalTypes.ADD_TO_FOLDER}
+        onClose={closeModal}
+        closeModal={closeModal}
+        selectedFormIds={selectedFormIds}
+      />
+      <MoveToTeamModal
+        opened={modalType === ModalTypes.MOVE_TO_TEAM}
+        onClose={closeModal}
+        closeModal={closeModal}
+        selectedFormIds={selectedFormIds}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
-import { MdOutlineWarning } from 'react-icons/md';
+import { IoIosWarning } from 'react-icons/io';
 import { Box, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
@@ -128,7 +128,7 @@ export const TeamGroup = ({
     });
   };
 
-  //TODO: handle continue button when create new folder
+  // TODO: handle continue button when create new folder
   return (
     <div className='flex flex-col gap-2'>
       <Text className='font-bold'>MY TEAMS</Text>
@@ -192,7 +192,7 @@ export const TeamGroup = ({
       <ConfirmationModal
         body={
           <Box className='flex flex-col items-center px-10'>
-            <MdOutlineWarning className='size-28 text-error' />
+            <IoIosWarning className='size-28 text-error' />
             <Text size='lg' className='font-bold'>
               Delete teams
             </Text>

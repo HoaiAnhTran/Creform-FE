@@ -4,9 +4,10 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, TextInput as TextInputMantine } from '@mantine/core';
 import _debounce from 'lodash.debounce';
 
+import { DEFAULT_PAGE_SIZE } from '@/constants/defaultFormsParams';
 import { SortOption, sortOptionList } from '@/constants/sortOptions';
 import { useFormParams } from '@/contexts';
-import { Menu } from '@/organisms/Menu';
+import { Menu as FormFilter } from '@/organisms/Menu';
 import { cn } from '@/utils';
 
 import { ActionList } from '../ActionList';
@@ -15,10 +16,9 @@ interface ActionToolbarProps {
   selectedFormIds: number[];
 }
 
-export const ActionToolbar = (props: ActionToolbarProps) => {
-  const { selectedFormIds } = props;
-
-  const { setParams, sortOptionIndex, setSortOptionIndex } = useFormParams();
+export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
+  const { setParams, sortOptionIndex, setSortOptionIndex, setCurrentPage } =
+    useFormParams();
 
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -34,6 +34,8 @@ export const ActionToolbar = (props: ActionToolbarProps) => {
   const debounceSetSearchParam = _debounce((value: string) => {
     setParams((prevState) => ({
       ...prevState,
+      page: 1,
+      pageSize: DEFAULT_PAGE_SIZE,
       search: value,
     }));
   }, 500);
@@ -43,13 +45,17 @@ export const ActionToolbar = (props: ActionToolbarProps) => {
   ) => {
     const { value } = event.target;
     setSearchValue(value);
+    setCurrentPage(1);
     debounceSetSearchParam(value);
   };
 
   const handleClearSearchInput = () => {
     setSearchValue('');
+    setCurrentPage(1);
     setParams((prevState) => ({
       ...prevState,
+      page: 1,
+      pageSize: DEFAULT_PAGE_SIZE,
       search: '',
     }));
   };
@@ -64,14 +70,17 @@ export const ActionToolbar = (props: ActionToolbarProps) => {
         <ActionList selectedFormIds={selectedFormIds} />
       ) : (
         <div className='flex items-center justify-between gap-2'>
-          <Menu
+          <FormFilter
+            width={200}
             shadow='md'
             hasArrow={false}
             arrowOffset={1}
             buttonProps={{
+              variant: 'outline',
               size: 'md',
               title: sortOptionList[sortOptionIndex].title,
               rightSection: sortOptionList[sortOptionIndex].icon,
+              className: 'font-semibold text-[15px]',
             }}
             itemList={sortOptionList}
             sortOptionIndex={sortOptionIndex}

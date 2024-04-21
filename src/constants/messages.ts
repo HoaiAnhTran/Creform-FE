@@ -12,4 +12,7 @@ export const MESSAGES = {
   UPDATE_PROFILE_SUCCESS: 'Update profile successfully',
   CHANGE_PASSWORD_SUCCESS: 'Change password successfully',
   ONLY_SUPPORT_IMAGE_FILE_TYPES: 'Support only image file types',
+  ADD_FORM_TO_FOLDER_SUCCESS: 'Form(s) added to folder successfully',
+  MOVE_FORM_TO_TEAM_SUCCESS: 'Form(s) moved to team successfully',
+  DELETE_FORM_SUCCESS: 'Form(s) moved to trash successfully',
 } as const;
