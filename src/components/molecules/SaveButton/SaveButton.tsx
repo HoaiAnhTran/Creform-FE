@@ -33,7 +33,7 @@ export const SaveButton = ({
         className={cn(
           'flex flex-col items-center text-malachite-500 transition-all duration-[600ms] ease-linear',
           className,
-          { 'fixed top-20': isFixed },
+          { 'fixed right-0 top-[90px]': isFixed },
         )}
         onClick={handleSave}
         disabled={!canSave}

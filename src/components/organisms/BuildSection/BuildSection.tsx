@@ -144,7 +144,7 @@ export const BuildSection = () => {
       </Box>
       {toggledRightbar || (
         <SaveButton
-          className='absolute right-10 top-10'
+          className='fixed right-0 top-[160px]'
           handleSave={() =>
             isEditForm ? handleUpdateForm(+formId!) : handleCreateForm()
           }
