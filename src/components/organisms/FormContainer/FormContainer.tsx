@@ -1,10 +1,19 @@
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
-import { CloseButton, Divider, Group, Image, Stack } from '@mantine/core';
+import {
+  Box,
+  CloseButton,
+  Divider,
+  Group,
+  Image,
+  LoadingOverlay,
+  Stack,
+} from '@mantine/core';
 import { Form, Formik } from 'formik';
 
 import { Button } from '@/atoms/Button';
+import { BIG_Z_INDEX } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { ElementItem, ElementType } from '@/types';
@@ -17,12 +26,14 @@ interface FormContainerProps {
   currentElementType?: ElementType;
   setCurrentLogoFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   isDisabled: boolean;
+  isLoading: boolean;
 }
 
 export const FormContainer = ({
   currentElementType,
   setCurrentLogoFile,
   isDisabled,
+  isLoading,
 }: FormContainerProps) => {
   const { setForm, initLogo, currentLogo, setCurrentLogo } =
     useBuildFormContext();
@@ -144,22 +155,29 @@ export const FormContainer = ({
             variant='dashed'
           />
         )}
-        <Formik
-          initialValues={{}}
-          validateOnBlur={true}
-          validateOnChange={false}
-          onSubmit={() => {}}
-        >
-          <Form className='h-full w-full'>
-            <ResponsiveGridLayout
-              currentElementType={currentElementType!}
-              updateItem={updateItem}
-              handleConfig={handleConfig}
-              isDisabled={isDisabled}
-            />
-          </Form>
-        </Formik>
-
+        <Box pos='relative'>
+          <LoadingOverlay
+            visible={isLoading}
+            zIndex={BIG_Z_INDEX}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+            loaderProps={{ color: 'green' }}
+          />
+          <Formik
+            initialValues={{}}
+            validateOnBlur={true}
+            validateOnChange={false}
+            onSubmit={() => {}}
+          >
+            <Form className='h-full w-full'>
+              <ResponsiveGridLayout
+                currentElementType={currentElementType!}
+                updateItem={updateItem}
+                handleConfig={handleConfig}
+                isDisabled={isDisabled}
+              />
+            </Form>
+          </Formik>
+        </Box>
         <PropertiesRightbar
           edittingItem={edittingItem!}
           updateItem={updateItem}

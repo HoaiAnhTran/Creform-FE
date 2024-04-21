@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, LoadingOverlay } from '@mantine/core';
+import { Box } from '@mantine/core';
 import _isEqual from 'lodash.isequal';
 
 import { PATH } from '@/constants/routes';
@@ -136,19 +136,17 @@ export const BuildSection = () => {
         flex={toggledLeftbar ? STRETCH_FORM_CONTAINER : SHRINK_FORM_CONTAINER}
         className='transition-all duration-200 ease-linear'
       >
-        <Box pos='relative'>
-          <LoadingOverlay
-            visible={isLoadingGetFormDetails}
-            zIndex={1000}
-            overlayProps={{ radius: 'sm', blur: 2 }}
-            loaderProps={{ color: 'green' }}
-          />
-          <FormContainer
-            isDisabled={isCreatingForm || isUpdatingForm}
-            currentElementType={currentElementType!}
-            setCurrentLogoFile={setCurrentLogoFile}
-          />
-        </Box>
+        <FormContainer
+          isLoading={
+            isLoadingGetFormDetails ||
+            isCreatingForm ||
+            isUpdatingForm ||
+            isUploadingImage
+          }
+          isDisabled={isCreatingForm || isUpdatingForm}
+          currentElementType={currentElementType!}
+          setCurrentLogoFile={setCurrentLogoFile}
+        />
       </Box>
       {toggledRightbar || (
         <SaveButton

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, LoadingOverlay, Tooltip, UnstyledButton } from '@mantine/core';
+import { Box, Tooltip, UnstyledButton } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
 import { PATH } from '@/constants';
@@ -46,59 +46,44 @@ export const PublicPage = () => {
   };
 
   return (
-    <Box pos='relative'>
-      <LoadingOverlay
-        visible={!data}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-        loaderProps={{ color: 'green' }}
-      />
-      <div className='flex min-h-screen items-center justify-center bg-malachite-50'>
-        {!isSuccess ? (
-          <Formik
-            validateOnBlur={true}
-            validateOnChange={false}
-            initialValues={{}}
-            onSubmit={handleCreateFormResponse}
+    <div className='flex min-h-screen items-center justify-center bg-malachite-50'>
+      {!isSuccess ? (
+        <Formik
+          validateOnBlur={true}
+          validateOnChange={false}
+          initialValues={{}}
+          onSubmit={handleCreateFormResponse}
+        >
+          <Form className='h-full w-full'>
+            <FormRenderComponent
+              form={data}
+              isLoading={isLoadingCreateFormResponse}
+            />
+          </Form>
+        </Formik>
+      ) : (
+        <Box>
+          <Tooltip
+            label='Back to home'
+            position='right'
+            arrowSize={6}
+            withArrow
+            offset={8}
           >
-            <Form className='h-full w-full'>
-              <Box pos='relative'>
-                <LoadingOverlay
-                  visible={isLoadingCreateFormResponse}
-                  zIndex={1000}
-                  overlayProps={{ radius: 'sm', blur: 2 }}
-                  loaderProps={{ color: 'green' }}
-                />
-
-                <FormRenderComponent form={data} />
-              </Box>
-            </Form>
-          </Formik>
-        ) : (
-          <Box>
-            <Tooltip
-              label='Back to home'
-              position='right'
-              arrowSize={6}
-              withArrow
-              offset={8}
+            <UnstyledButton
+              className='fixed left-10 top-10'
+              onClick={() => {
+                navigate(PATH.OVERVIEW_PAGE);
+              }}
             >
-              <UnstyledButton
-                className='fixed left-10 top-10'
-                onClick={() => {
-                  navigate(PATH.OVERVIEW_PAGE);
-                }}
-              >
-                <span className='relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500'>
-                  <MdKeyboardBackspace size={24} className='text-white' />
-                </span>
-              </UnstyledButton>
-            </Tooltip>
-
-            <SubmissionConfirmation />
-          </Box>
-        )}
-      </div>
-    </Box>
+              <span className='relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500'>
+                <MdKeyboardBackspace size={24} className='text-white' />
+              </span>
+            </UnstyledButton>
+          </Tooltip>
+          <SubmissionConfirmation />
+        </Box>
+      )}
+    </div>
   );
 };

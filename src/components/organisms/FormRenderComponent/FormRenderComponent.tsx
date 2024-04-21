@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Box, Image, Stack } from '@mantine/core';
+import { Box, Image, LoadingOverlay, Stack } from '@mantine/core';
 
+import { BIG_Z_INDEX } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { ElementItem, FormRequest, FormResponse } from '@/types';
@@ -9,9 +10,13 @@ import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
   form?: FormResponse | FormRequest;
+  isLoading?: boolean;
 }
 
-export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
+export const FormRenderComponent = ({
+  form,
+  isLoading,
+}: FormRenderComponentProps) => {
   const { elements, setElements, edittingItem, setEdittingItem } =
     useElementLayouts();
 
@@ -72,32 +77,40 @@ export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
         />
       )}
       <Stack className='w-[45%] justify-between gap-7'>
-        <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-md'>
-          <ResponsiveReactGridLayout
-            rowHeight={30}
-            isResizable={false}
-            isDroppable={false}
-            isDraggable={false}
-          >
-            {elements.map((element) => (
-              <Box
-                key={element.id}
-                data-grid={element.gridSize}
-                className='flex w-full flex-col justify-center px-2'
-                onClick={() => setEdittingItem(element)}
-              >
-                <FactoryElement
-                  item={element}
-                  isActive={false}
-                  removeItem={() => {}}
-                  updateItem={() => {}}
-                  handleConfig={() => {}}
-                  handleOnChangeAnswer={handleOnChangeAnswer}
-                />
-              </Box>
-            ))}
-          </ResponsiveReactGridLayout>
-        </div>
+        <Box pos='relative'>
+          <LoadingOverlay
+            visible={isLoading || !form}
+            zIndex={BIG_Z_INDEX}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+            loaderProps={{ color: 'green' }}
+          />
+          <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
+            <ResponsiveReactGridLayout
+              rowHeight={30}
+              isResizable={false}
+              isDroppable={false}
+              isDraggable={false}
+            >
+              {elements.map((element) => (
+                <Box
+                  key={element.id}
+                  data-grid={element.gridSize}
+                  className='flex w-full flex-col justify-center px-2'
+                  onClick={() => setEdittingItem(element)}
+                >
+                  <FactoryElement
+                    item={element}
+                    isActive={false}
+                    removeItem={() => {}}
+                    updateItem={() => {}}
+                    handleConfig={() => {}}
+                    handleOnChangeAnswer={handleOnChangeAnswer}
+                  />
+                </Box>
+              ))}
+            </ResponsiveReactGridLayout>
+          </div>
+        </Box>
       </Stack>
     </div>
   );
