@@ -3,8 +3,10 @@ import { Box, Divider, Stack, Text } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 
 import { useBuildFormContext } from '@/contexts';
+import { AddressPropertiesConfig } from '@/molecules/AddressPropertiesConfig';
 import { EmailProptertiesConfig } from '@/molecules/EmailPropertiesConfig';
 import {
+  isAddressElement,
   isEmailElement,
   isFullnameElement,
   isHeadingElement,
@@ -96,6 +98,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isLongTextElement(edittingItem):
                 return (
                   <LongTextPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isAddressElement(edittingItem):
+                return (
+                  <AddressPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

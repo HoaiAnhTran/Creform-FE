@@ -33,12 +33,24 @@ export interface SubmitConfig {
   buttonAlignment: string;
 }
 
+export interface AddressConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabels: {
+    street: string;
+    ward: string;
+    district: string;
+    city: string;
+  };
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
   | EmailConfig
   | TextConfig
-  | SubmitConfig;
+  | SubmitConfig
+  | AddressConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -90,10 +102,13 @@ export type LongTextElement = BaseElement<ElementType.LONG_TEXT, TextConfig>;
 
 export type SubmitElement = BaseElement<ElementType.SUBMIT, SubmitConfig>;
 
+export type AddressElement = BaseElement<ElementType.ADDRESS, AddressConfig>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
   | EmailElement
   | ShortTextElement
   | LongTextElement
-  | SubmitElement;
+  | SubmitElement
+  | AddressElement;

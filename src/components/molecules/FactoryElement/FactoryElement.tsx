@@ -1,4 +1,5 @@
 import {
+  AddressElement,
   ElementItem,
   ElementType,
   EmailElement,
@@ -9,6 +10,7 @@ import {
   SubmitElement,
 } from '@/types';
 
+import { BaseAddressElement } from '../BaseAddressElement';
 import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
@@ -42,6 +44,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseShortTextElement item={item} {...rest} />;
     case isLongTextElement(item):
       return <BaseLongTextElement item={item} {...rest} />;
+    case isAddressElement(item):
+      return <BaseAddressElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -69,4 +73,8 @@ export function isLongTextElement(item: ElementItem): item is LongTextElement {
 
 export function isSubmitElement(item: ElementItem): item is SubmitElement {
   return item?.type === ElementType.SUBMIT;
+}
+
+export function isAddressElement(item: ElementItem): item is AddressElement {
+  return item?.type === ElementType.ADDRESS;
 }

@@ -1,5 +1,6 @@
 import { DEFAULT_BUTTON_COLOR } from '@/constants/buttonStyles';
 import {
+  AddressConfig,
   EmailConfig,
   FullnameConfig,
   HeadingConfig,
@@ -40,6 +41,17 @@ export const defaultTextConfig: TextConfig = {
   sublabel: 'Please enter your answer',
 };
 
+export const defaultAddressConfig: AddressConfig = {
+  fieldLabel: 'Type your address',
+  required: false,
+  sublabels: {
+    street: 'Type your street',
+    ward: 'Type your ward',
+    district: 'Type your district',
+    city: 'Type your city',
+  },
+};
+
 export const defaultShortTextHeightWidth = {
   h: 4,
   w: 12,
@@ -47,5 +59,10 @@ export const defaultShortTextHeightWidth = {
 
 export const defaultLongTextHeightWidth = {
   h: 6,
+  w: 12,
+};
+
+export const defaultAddressHeightWidth = {
+  h: 9,
   w: 12,
 };

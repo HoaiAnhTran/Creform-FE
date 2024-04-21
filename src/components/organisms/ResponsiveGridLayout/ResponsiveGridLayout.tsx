@@ -5,6 +5,7 @@ import { Box } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
+  defaultAddressConfig,
   defaultEmailConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
@@ -161,6 +162,31 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'longText',
+            },
+          ],
+        };
+      case ElementType.ADDRESS:
+        return {
+          id: uid,
+          type: ElementType.ADDRESS,
+          gridSize: getGridSize(currentItem),
+          config: defaultAddressConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'street',
+            },
+            {
+              id: uuidv4(),
+              name: 'ward',
+            },
+            {
+              id: uuidv4(),
+              name: 'district',
+            },
+            {
+              id: uuidv4(),
+              name: 'city',
             },
           ],
         };

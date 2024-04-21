@@ -1,4 +1,5 @@
 import {
+  defaultAddressHeightWidth,
   defaultLongTextHeightWidth,
   defaultShortTextHeightWidth,
 } from '@/configs/defaultElementConfigs';
@@ -10,6 +11,8 @@ export const getDefaultWidthHeight = (type: ElementType | undefined) => {
       return defaultShortTextHeightWidth;
     case type === ElementType.LONG_TEXT:
       return defaultLongTextHeightWidth;
+    case type === ElementType.ADDRESS:
+      return defaultAddressHeightWidth;
     default:
       return {
         h: 4,

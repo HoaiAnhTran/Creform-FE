@@ -36,7 +36,7 @@ export const ELEMENTS = {
   ADDRESS: {
     icon: FaLocationDot,
     type: ElementType.ADDRESS,
-    isDisabled: true,
+    isDisabled: false,
   },
   PHONE: {
     icon: FaPhoneAlt,
