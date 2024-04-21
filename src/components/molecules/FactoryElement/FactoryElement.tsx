@@ -25,8 +25,10 @@ export interface BaseElementProps<T extends ElementItem = ElementItem> {
   updateItem: (item: T) => void;
   handleConfig: (config: T['config']) => void;
   handleOnChangeAnswer: (
+    elementId: string,
     fieldId: string,
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string,
+  ) => void;
 }
 
 export const FactoryElement = (props: BaseElementProps) => {

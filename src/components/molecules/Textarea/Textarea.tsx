@@ -14,11 +14,14 @@ import { cn } from '@/utils/cn';
 
 interface TextareaProps extends Omit<TextareaMantineProps, 'form'> {
   handleChange?: (
-    key: string,
-  ) => (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    elementId: string,
+    elementFieldId: string,
+    value: string,
+  ) => void;
   classNameError?: string;
   classNameWrapper?: string;
-  nameElementField?: string;
+  elementFieldId?: string;
+  elementId?: string;
   field: FieldInputProps<string>;
   form: {
     setFieldValue: (
@@ -33,7 +36,8 @@ interface TextareaProps extends Omit<TextareaMantineProps, 'form'> {
 
 export const Textarea = (props: TextareaProps) => {
   const {
-    nameElementField,
+    elementFieldId,
+    elementId,
     handleChange,
     field,
     classNameError,
@@ -53,7 +57,8 @@ export const Textarea = (props: TextareaProps) => {
         resize={resize}
         {...rest}
         onChange={(e) => {
-          if (nameElementField) handleChange?.(nameElementField)(e);
+          if (elementFieldId && elementId)
+            handleChange?.(elementId, elementFieldId, e.currentTarget.value);
           field.onChange(e);
         }}
         classNames={rest.classNames}

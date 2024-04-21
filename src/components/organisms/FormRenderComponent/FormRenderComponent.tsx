@@ -17,38 +17,34 @@ export const FormRenderComponent = ({
   form,
   isLoading,
 }: FormRenderComponentProps) => {
-  const { elements, setElements, edittingItem, setEdittingItem } =
-    useElementLayouts();
+  const { elements, setElements } = useElementLayouts();
 
-  const handleFields = (fields: ElementItem['fields']) => {
-    setEdittingItem({ ...edittingItem, fields: fields } as ElementItem);
-  };
-
-  const updateItem = (item: ElementItem) => {
+  const handleOnChangeAnswer = (
+    elementId: string,
+    fieldId: string,
+    value: string,
+  ) => {
+    const onChangingElement = elements.find(
+      (element) => element.id === elementId,
+    );
+    const updatedEdittingField = onChangingElement!.fields.map((field) => {
+      if (field.id !== fieldId) return field;
+      return {
+        id: fieldId,
+        name: field.name,
+        text: value,
+      };
+    });
     setElements(
       elements.map((element) => {
-        if (element.id !== edittingItem!.id) return element;
-        return item;
+        if (element.id !== onChangingElement!.id) return element;
+        return {
+          ...onChangingElement,
+          fields: updatedEdittingField,
+        } as ElementItem;
       }),
     );
   };
-
-  const handleOnChangeAnswer =
-    (fieldId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const updatedEdittingField = edittingItem!.fields.map((field) => {
-        if (field.id !== fieldId) return field;
-        return {
-          id: field.id,
-          name: field.name,
-          text: event.currentTarget.value,
-        };
-      });
-      handleFields(updatedEdittingField);
-      updateItem({
-        ...edittingItem,
-        fields: updatedEdittingField,
-      } as ElementItem);
-    };
 
   useEffect(() => {
     if (form) {
@@ -96,7 +92,6 @@ export const FormRenderComponent = ({
                   key={element.id}
                   data-grid={element.gridSize}
                   className='flex w-full flex-col justify-center px-2'
-                  onClick={() => setEdittingItem(element)}
                 >
                   <FactoryElement
                     item={element}

@@ -51,7 +51,8 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           value={item.fields[0].text}
           validate={!isReadOnly ? emailValidate : null}
           handleChange={handleOnChangeAnswer}
-          nameElementField={item.fields[0].id}
+          elementFieldId={item.fields[0].id}
+          elementId={item.id}
           component={TextInput}
           classNameWrapper='min-h-[60px]'
         />

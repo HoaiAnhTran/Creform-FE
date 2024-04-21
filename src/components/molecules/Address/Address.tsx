@@ -10,8 +10,10 @@ interface AddressProps {
   isReadOnly?: boolean;
   item: AddressElement;
   handleOnChangeAnswer: (
-    fieldId: string,
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    elementId: string,
+    elementFieldId: string,
+    value: string,
+  ) => void;
 }
 
 export const Address = (props: AddressProps) => {
@@ -38,7 +40,8 @@ export const Address = (props: AddressProps) => {
         name={`${item.fields[0].id}.fieldValue`}
         classNameWrapper='w-full'
         validate={!isReadOnly && item.config.required ? validate : null}
-        nameElementField={item.fields[0].id}
+        elementFieldId={item.fields[0].id}
+        elementId={item.id}
         handleChange={handleOnChangeAnswer}
         classNameError='min-h-[0rem]'
         component={TextInput}
@@ -56,7 +59,8 @@ export const Address = (props: AddressProps) => {
         name={`${item.fields[1].id}.fieldValue`}
         classNameWrapper='w-full'
         validate={!isReadOnly && item.config.required ? validate : null}
-        nameElementField={item.fields[1].id}
+        elementFieldId={item.fields[1].id}
+        elementId={item.id}
         handleChange={handleOnChangeAnswer}
         classNameError='min-h-[0rem]'
         component={TextInput}
@@ -74,7 +78,8 @@ export const Address = (props: AddressProps) => {
         name={`${item.fields[2].id}.fieldValue`}
         classNameWrapper='w-full'
         validate={!isReadOnly && item.config.required ? validate : null}
-        nameElementField={item.fields[2].id}
+        elementFieldId={item.fields[2].id}
+        elementId={item.id}
         handleChange={handleOnChangeAnswer}
         classNameError='min-h-[0rem]'
         component={TextInput}
@@ -92,7 +97,8 @@ export const Address = (props: AddressProps) => {
         name={`${item.fields[3].id}.fieldValue`}
         classNameWrapper='w-full'
         validate={!isReadOnly && item.config.required ? validate : null}
-        nameElementField={item.fields[3].id}
+        elementFieldId={item.fields[3].id}
+        elementId={item.id}
         handleChange={handleOnChangeAnswer}
         classNameError='min-h-[0rem]'
         component={TextInput}

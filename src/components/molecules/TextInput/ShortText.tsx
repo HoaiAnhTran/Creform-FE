@@ -11,8 +11,10 @@ import { TextInput } from '.';
 interface ShortTextProps {
   isReadOnly?: boolean;
   handleOnChangeAnswer: (
-    fieldId: string,
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    elementId: string,
+    elementFieldId: string,
+    value: string,
+  ) => void;
   item: ShortTextElement;
 }
 
@@ -47,7 +49,8 @@ export const ShortText = (props: ShortTextProps) => {
             name={`${item.id}.fieldValue`}
             className='w-1/2'
             validate={!isReadOnly && item.config.required ? validate : null}
-            nameElementField={item.fields[0].id}
+            elementFieldId={item.fields[0].id}
+            elementId={item.id}
             handleChange={handleOnChangeAnswer}
             component={TextInput}
           />

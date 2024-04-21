@@ -14,11 +14,14 @@ import { cn } from '@/utils/cn';
 
 interface TextInputProps extends Omit<TextInputMantineProps, 'form'> {
   handleChange?: (
-    key: string,
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    elementId: string,
+    elementFieldId: string,
+    value: string,
+  ) => void;
   classNameError?: string;
   classNameWrapper?: string;
-  nameElementField?: string;
+  elementFieldId?: string;
+  elementId?: string;
   field: FieldInputProps<string>;
   form: {
     setFieldValue: (
@@ -36,7 +39,8 @@ export const TextInput = (props: TextInputProps) => {
   const {
     handleChange,
     field,
-    nameElementField,
+    elementFieldId,
+    elementId,
     classNameWrapper,
     form: { setFieldValue },
     classNameError,
@@ -54,7 +58,8 @@ export const TextInput = (props: TextInputProps) => {
         {...field}
         {...rest}
         onChange={(e) => {
-          if (nameElementField) handleChange?.(nameElementField)(e);
+          if (elementFieldId && elementId)
+            handleChange?.(elementId, elementFieldId, e.currentTarget.value);
           field.onChange(e);
         }}
         classNames={{

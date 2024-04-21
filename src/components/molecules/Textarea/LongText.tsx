@@ -12,8 +12,10 @@ interface LongTextProps {
   isReadOnly?: boolean;
   item: LongTextElement;
   handleOnChangeAnswer: (
-    fieldId: string,
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    elementId: string,
+    elementFieldId: string,
+    value: string,
+  ) => void;
 }
 
 export const LongText = (props: LongTextProps) => {
@@ -48,7 +50,8 @@ export const LongText = (props: LongTextProps) => {
             classNameWrapper='w-full'
             validate={!isReadOnly && item.config.required ? validate : null}
             size='sm'
-            nameElementField={item.fields[0].id}
+            elementFieldId={item.fields[0].id}
+            elementId={item.id}
             handleChange={handleOnChangeAnswer}
             component={Textarea}
             resize={isReadOnly ? 'none' : 'vertical'}
