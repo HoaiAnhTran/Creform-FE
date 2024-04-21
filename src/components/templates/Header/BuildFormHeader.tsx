@@ -22,7 +22,6 @@ export const BuildFormHeader = () => {
     form,
     isEditForm,
     setForm,
-    previewMode,
     isPublishSection,
     currentTitle,
     setCurrentTitle,
@@ -69,9 +68,6 @@ export const BuildFormHeader = () => {
     <header
       className={cn(
         'relative flex h-[70px] flex-row items-center justify-between px-10 py-3',
-        {
-          invisible: previewMode,
-        },
       )}
     >
       <Anchor href={PATH.ROOT_PAGE} className='z-10'>

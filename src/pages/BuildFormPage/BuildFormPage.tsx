@@ -10,19 +10,17 @@ export const BuildFormPage = () => {
   const { previewMode } = useBuildFormContext();
 
   return (
-    <Box className='h-screen justify-between'>
+    <Box
+      className={cn(
+        'h-screen justify-between transition-all duration-[350ms] ease-linear',
+        {
+          '-translate-y-[70px]': previewMode,
+        },
+      )}
+    >
       <BuildFormHeader />
-      <Stack
-        className={cn(
-          'justify-start gap-0 transition-all duration-[350ms] ease-linear',
-          {
-            '-translate-y-[70px]': previewMode,
-          },
-        )}
-      >
-        <Box
-          className={`${previewMode ? 'fixed' : 'sticky'} right-0 top-0 z-[100] w-full transition-all ease-linear`}
-        >
+      <Stack className='justify-start gap-0'>
+        <Box className='sticky right-0 top-0 z-[100]'>
           <TopBar />
         </Box>
         <Outlet />
