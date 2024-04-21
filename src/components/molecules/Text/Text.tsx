@@ -28,6 +28,7 @@ interface TextProps extends Omit<TextMantineProps, 'form'> {
   };
   meta: FieldMetaProps<string>;
   text: string;
+  placeholder?: string;
 }
 export const Text = (props: TextProps) => {
   const {
@@ -52,7 +53,7 @@ export const Text = (props: TextProps) => {
         className={cn('mb-2 text-base font-[500]', rest.className)}
         {...rest}
       >
-        {rest.text}
+        {rest.text ? rest.text : rest.placeholder}
         {required && <span className='text-lg text-red-500'>*</span>}
       </TextMantine>
       <ErrorMessage
