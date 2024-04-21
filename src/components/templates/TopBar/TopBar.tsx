@@ -119,7 +119,7 @@ export const TopBar = () => {
   return (
     <>
       {previewMode ? (
-        <Box className='relative flex h-[50px] items-center justify-start gap-0 bg-gradient-to-r from-ocean-green-400 to-ocean-green-600 pl-10'>
+        <Box className='relative flex h-[50px] items-center justify-start gap-0 bg-gradient-to-r from-burnt-sienna-400 to-burnt-sienna-500 pl-10'>
           <Group className='max-w-[300px] flex-1 items-center justify-between gap-0'>
             <input
               value={formURL}
@@ -132,7 +132,7 @@ export const TopBar = () => {
               onClick={() => {
                 window.open(formURL, '_blank');
               }}
-              className='rounded-l-none rounded-r-[4px]'
+              className='rounded-l-none rounded-r-[4px] text-quarter-pearl-lusta-50 bg-ocean-green-500'
               disabled={!isEditForm}
             >
               <LuExternalLink />
@@ -140,26 +140,26 @@ export const TopBar = () => {
           </Group>
           <ToggleButton
             label='Preview form'
-            className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-white'
+            className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-quarter-pearl-lusta-50'
             isEnable={previewMode}
             handleToggleButton={handleClickPreviewButton}
           />
         </Box>
       ) : (
         <MantineTabs
-          color='#8ad56c'
+          color='#e9aa88'
           variant='pills'
           value={selectedTabValue}
           classNames={{ tabLabel: 'uppercase' }}
           onChange={(value: string | null) => handleChangeTab(value)}
           className='relative'
         >
-          <MantineTabs.List className='h-[50px] justify-center gap-0 bg-gradient-to-r from-ocean-green-400 to-ocean-green-600'>
+          <MantineTabs.List className='h-[50px] justify-center gap-0 bg-gradient-to-r from-burnt-sienna-400 to-burnt-sienna-500'>
             {tabList.map((tab, index) => (
               <MantineTabs.Tab
                 key={index}
                 value={tab.value}
-                className='h-full min-w-40 rounded-[0] px-8 text-lg text-white duration-150 hover:bg-activeTabBackground'
+                className='h-full min-w-40 rounded-[0] px-8 text-lg text-quarter-pearl-lusta-50 duration-150 hover:bg-burnt-sienna-300'
               >
                 {tab.title}
               </MantineTabs.Tab>
@@ -167,7 +167,7 @@ export const TopBar = () => {
           </MantineTabs.List>
           <ToggleButton
             label='Preview form'
-            className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-white'
+            className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-quarter-pearl-lusta-50'
             isEnable={previewMode}
             handleToggleButton={handleClickPreviewButton}
           />

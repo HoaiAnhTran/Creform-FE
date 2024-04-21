@@ -42,7 +42,9 @@ export const Modal = ({
     title={
       <Group className='flex items-center gap-2'>
         {headerIcon && (
-          <Box className='rounded-md bg-ocean-green-500 p-1.5'>{headerIcon}</Box>
+          <Box className='rounded-md bg-ocean-green-500 p-1.5'>
+            {headerIcon}
+          </Box>
         )}
         <Text className='text-lg font-bold capitalize'>{headerTitle}</Text>
       </Group>

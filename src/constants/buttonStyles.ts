@@ -7,14 +7,14 @@ export const BUTTON_COLORS = {
   INDIGO: '#7950f2',
   BLUE: '#4c6ef5',
   SKY_BLUE: '#228be6',
-  TEAL: '#15aabf',
+  TEAL: '#419d78',
   GREEN: '#12b886',
-  LIGHT_GREEN: '#18BD5B',
+  LIGHT_GREEN: '#18bd5b',
   LIME: '#82c91e',
   YELLOW: '#fab005',
   ORANGE: '#fd7e14',
 };
 
-export const DEFAULT_BUTTON_COLOR = BUTTON_COLORS.LIGHT_GREEN;
+export const DEFAULT_BUTTON_COLOR = BUTTON_COLORS.TEAL;
 
 export const ALIGNMENT_OPTIONS = ['auto', 'left', 'center', 'right'];

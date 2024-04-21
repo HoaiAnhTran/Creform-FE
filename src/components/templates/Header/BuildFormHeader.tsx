@@ -5,15 +5,13 @@ import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, Image, Menu } from '@mantine/core';
 
-import GreenLogo from '@/assets/images/greenlogo.png';
+import GreenLogo from '@/assets/images/green-logo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
 import { Loader } from '@/molecules/Loader';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
-import { cn, formatDate, httpClient } from '@/utils';
-
-const LOGO_HEIGHT = 45;
+import { formatDate, httpClient } from '@/utils';
 
 export const BuildFormHeader = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
@@ -65,15 +63,18 @@ export const BuildFormHeader = () => {
   }, [currentTitle, isEditForm, setForm]);
 
   return (
-    <header
-      className={cn(
-        'relative flex h-[70px] flex-row items-center justify-between px-10 py-3',
-      )}
-    >
-      <Anchor href={PATH.ROOT_PAGE} className='z-10'>
-        <Image src={GreenLogo} h={LOGO_HEIGHT} />
+    <header className='flex h-headerHeight flex-row items-center justify-between bg-quarter-pearl-lusta-50 px-10 py-3'>
+      <Anchor
+        href={PATH.ROOT_PAGE}
+        className='no-underline hover:no-underline z-20'
+      >
+        <Group className='justify-center items-end gap-0'>
+          <Image src={GreenLogo} className='h-logoHeight' />
+          <span className='text-ocean-green-500 font-bold text-[24px] tracking-[4px]'>
+            REFORM
+          </span>
+        </Group>
       </Anchor>
-
       <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center'>
         <div className='flex max-w-[50%] items-center justify-between gap-0.5 text-xl font-bold'>
           <input
