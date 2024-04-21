@@ -1,15 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AiOutlineTeam } from 'react-icons/ai';
 import { FaTableCells } from 'react-icons/fa6';
 import { HiDocumentReport, HiTrash } from 'react-icons/hi';
+import { IoTrash } from 'react-icons/io5';
+import { TbRestore } from 'react-icons/tb';
+import { Box, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { MESSAGES } from '@/constants/messages';
 import { useOverviewContext } from '@/contexts';
 import { AddToFolderModal } from '@/molecules/AddToFolderModal';
+import { ConfirmationModal } from '@/molecules/ComfirmationModal';
 import { MoveToTeamModal } from '@/molecules/MoveToTeamModal';
-import { useDeleteFormMutation } from '@/redux/api/formApi';
+import {
+  useDeleteFormMutation,
+  useRestoreFormMutation,
+} from '@/redux/api/formApi';
 import { ModalType, ModalTypes } from '@/types';
 import { toastify } from '@/utils';
 
@@ -18,9 +24,11 @@ interface ActionListFormProps {
 }
 
 export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
-  const { setSelectedRecords } = useOverviewContext();
+  const { selectedRecords, setSelectedRecords } = useOverviewContext();
 
-  const [deleteForm] = useDeleteFormMutation();
+  const [deleteForm, { isLoading: isDeletingForm }] = useDeleteFormMutation();
+
+  const [restoreForm] = useRestoreFormMutation();
 
   const [modalType, setModalType] = useState<ModalType | ''>('');
   const openModal = (type: ModalType) => setModalType(type);
@@ -28,7 +36,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
 
   const handleViewSubmissions = () => {};
 
-  const handleDeleteForm = async () => {
+  const handleDeleteMultipleForms = async () => {
     await Promise.allSettled(
       selectedFormIds.map((id) => deleteForm({ id })),
     ).then((response) => {
@@ -57,6 +65,38 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     });
   };
 
+  const handleRestoreMultipleForms = async () => {
+    await Promise.allSettled(
+      selectedFormIds.map((id) => restoreForm({ id })),
+    ).then((response) => {
+      const { successCount, errorCount } = response.reduce<{
+        successCount: number;
+        errorCount: number;
+      }>(
+        (acc, res) => {
+          if (res.status === 'fulfilled') {
+            acc.successCount += 1;
+            return acc;
+          }
+          acc.errorCount += 1;
+          return acc;
+        },
+        { successCount: 0, errorCount: 0 },
+      );
+
+      if (successCount === response.length) {
+        toastify.displaySuccess(MESSAGES.RESTORE_FORM_SUCCESS);
+        closeModal();
+      } else if (errorCount > 0) {
+        toastify.displayError(`${errorCount} form(s) failed to restore`);
+      }
+      setSelectedRecords([]);
+    });
+  };
+
+  const isFormsInTrash =
+    selectedRecords.findIndex((form) => form.deletedAt !== null) !== -1;
+
   const SingleFormActions = [
     {
       icon: <FaTableCells size={24} />,
@@ -80,7 +120,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     {
       icon: <HiTrash size={24} />,
       title: 'Delete',
-      onClick: handleDeleteForm,
+      onClick: handleDeleteMultipleForms,
     },
   ];
 
@@ -102,37 +142,56 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     {
       icon: <HiTrash size={24} />,
       title: 'Delete',
-      onClick: handleDeleteForm,
+      onClick: handleDeleteMultipleForms,
     },
   ];
 
+  const FormInTrashActions = [
+    {
+      icon: <HiTrash size={24} />,
+      title: 'Purge',
+      onClick: () => {
+        openModal(ModalTypes.DELETE_FORM_PERMANENTLY);
+      },
+    },
+    {
+      icon: <TbRestore size={24} />,
+      title: 'Restore',
+      onClick: handleRestoreMultipleForms,
+    },
+  ];
+
+  const actionList = useMemo(() => {
+    if (isFormsInTrash) {
+      return FormInTrashActions;
+    }
+    if (selectedFormIds.length > 1) {
+      return MultipleFormActions;
+    } else {
+      return SingleFormActions;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFormsInTrash, selectedFormIds]);
+
   return (
     <div className='flex items-center gap-2 border px-3 py-1'>
-      {selectedFormIds.length > 1
-        ? MultipleFormActions.map((action, index) => (
-            <Button
-              className='text-sm font-medium'
-              size='md'
-              key={index}
-              variant='outline'
-              color={action.title === 'Delete' ? 'error' : 'primary'}
-              onClick={() => action.onClick()}
-              leftSection={action.icon}
-              title={action.title}
-            />
-          ))
-        : SingleFormActions.map((action, index) => (
-            <Button
-              className='text-sm font-medium'
-              size='md'
-              key={index}
-              variant='outline'
-              color={action.title === 'Delete' ? 'error' : 'primary'}
-              leftSection={action.icon}
-              onClick={() => action.onClick()}
-              title={action.title}
-            />
-          ))}
+      {actionList.map((action, index) => (
+        <Button
+          className='text-sm font-medium'
+          size='md'
+          key={index}
+          variant='outline'
+          color={
+            action.title === 'Delete' || action.title === 'Purge'
+              ? 'error'
+              : 'primary'
+          }
+          onClick={() => action.onClick()}
+          leftSection={action.icon}
+          title={action.title}
+        />
+      ))}
+
       <AddToFolderModal
         opened={modalType === ModalTypes.ADD_TO_FOLDER}
         onClose={closeModal}
@@ -144,6 +203,26 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
         onClose={closeModal}
         closeModal={closeModal}
         selectedFormIds={selectedFormIds}
+      />
+      <ConfirmationModal
+        size='lg'
+        body={
+          <Box className='flex flex-col items-center gap-3 px-10 py-5'>
+            <IoTrash size={70} className='text-error' />
+            <Text size='lg' className='font-bold'>
+              Delete Form
+            </Text>
+            <Text className='text-center'>
+              Selected form(s) and all of its submissions will be deleted
+              permanently. This operation cannot be undone.
+            </Text>
+          </Box>
+        }
+        opened={modalType === ModalTypes.DELETE_FORM_PERMANENTLY}
+        onClose={closeModal}
+        onClickBack={closeModal}
+        onClickConfirm={handleDeleteMultipleForms}
+        isLoading={isDeletingForm}
       />
     </div>
   );

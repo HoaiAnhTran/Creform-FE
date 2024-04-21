@@ -128,7 +128,6 @@ export const TeamGroup = ({
     });
   };
 
-  // TODO: handle continue button when create new folder
   return (
     <div className='flex flex-col gap-2'>
       <Text className='font-bold'>MY TEAMS</Text>

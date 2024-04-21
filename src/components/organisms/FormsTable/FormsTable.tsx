@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BsFileText } from 'react-icons/bs';
 import { FaFolder, FaStar } from 'react-icons/fa';
-import { IoIosArrowDown, IoIosWarning } from 'react-icons/io';
+import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
@@ -41,9 +41,7 @@ export const FormsTable = () => {
   const { selectedRecords, setSelectedRecords } = useOverviewContext();
 
   const [modalType, setModalType] = useState<ModalType | ''>('');
-
   const openModal = (type: ModalType) => setModalType(type);
-
   const closeModal = () => setModalType('');
 
   const { params, setParams, currentPage, setCurrentPage } = useFormParams();
@@ -51,6 +49,7 @@ export const FormsTable = () => {
   const navigate = useNavigate();
 
   const { data, isFetching: isFormFetching } = useGetMyFormsQuery(params);
+
   const [addToFavouritesMutation, { isLoading: isAddingToFavourites }] =
     useAddToFavouritesMutation();
 
@@ -207,18 +206,21 @@ export const FormsTable = () => {
             <Button
               title='Purge'
               variant='subtle'
-              className='font-medium'
+              classNames={{
+                inner: 'w-20',
+                root: 'flex justify-center items-center',
+              }}
+              className='h-full w-full font-medium focus:font-bold'
               onClick={() => {
                 setSelectedRecords([record]);
                 openModal(ModalTypes.DELETE_FORM_PERMANENTLY);
               }}
             />
           ),
-        cellsClassName: 'cursor-pointer  hover:bg-malachite-100 w-30 h-20 p-0',
+        cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
       },
       {
         accessor: 'more',
-
         render: (record: FormResponse) =>
           record.deletedAt === null ? (
             <Menu shadow='sm' offset={10} position='bottom-end' withArrow>
@@ -234,7 +236,7 @@ export const FormsTable = () => {
                     inner: 'w-20',
                     root: 'flex justify-center items-center',
                   }}
-                  className='h-full w-full font-medium focus:font-bold'
+                  className='h-full w-full font-medium aria-expanded:font-bold'
                 />
               </Menu.Target>
 
@@ -255,12 +257,15 @@ export const FormsTable = () => {
             <Button
               title='Restore'
               variant='subtle'
-              className='font-medium'
+              classNames={{
+                inner: 'w-20',
+                root: 'flex justify-center items-center',
+              }}
+              className='h-full w-full font-medium focus:font-bold'
               onClick={() => handleRestoreForm(record)}
             />
           ),
-        cellsClassName:
-          'cursor-pointer flex justify-center items-center hover:bg-malachite-100 w-30 h-20 p-0',
+        cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
       },
     ],
     [],
@@ -322,14 +327,14 @@ export const FormsTable = () => {
       <ConfirmationModal
         size='lg'
         body={
-          <Box className='flex flex-col items-center px-10'>
-            <IoIosWarning className='size-28 text-error' />
+          <Box className='flex flex-col items-center gap-3 px-10 py-5'>
+            <IoTrash size={70} className='text-error' />
             <Text size='lg' className='font-bold'>
               Delete Form
             </Text>
             <Text className='text-center'>
-              This form and all of its submissions will be gone forever. This
-              operation cannot be undone.
+              This form and all of its submissions will be deleted permanently.
+              This operation cannot be undone.
             </Text>
           </Box>
         }
