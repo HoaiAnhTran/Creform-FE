@@ -3,18 +3,13 @@ import { RiDeleteBinFill } from 'react-icons/ri';
 import { Box, Stack, Text } from '@mantine/core';
 
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
-import { ElementItem } from '@/types';
 
 interface InteractiveIconProps {
-  item: ElementItem;
   removeItem: (id: string) => void;
 }
 
-export const InteractiveIcons = ({
-  item,
-  removeItem,
-}: InteractiveIconProps) => {
-  const { elements, edittingItem, setEdittingItem } = useElementLayouts();
+export const InteractiveIcons = ({ removeItem }: InteractiveIconProps) => {
+  const { edittingItem } = useElementLayouts();
 
   const { toggledRightbar, setToggledRightbar } = useBuildFormContext();
 
@@ -24,7 +19,6 @@ export const InteractiveIcons = ({
         <Box
           onClick={() => {
             setToggledRightbar(!toggledRightbar);
-            setEdittingItem(elements.find((element) => element.id === item.id));
           }}
           className='group absolute left-[100%] top-[50%] ml-3 mt-[-22px] flex translate-y-[-50%] cursor-pointer items-center justify-center gap-2 rounded-full bg-malachite-500 p-2 text-white'
         >

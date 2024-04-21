@@ -49,7 +49,6 @@ export const ResponsiveGridLayout = ({
     xs: Layout[];
     xxs: Layout[];
   }>({ lg: [], md: [], sm: [], xs: [], xxs: [] });
-  const [isDragging, setIsDragging] = useState(false);
   const { isEditForm } = useBuildFormContext();
   const { id: formId } = useParams();
   const { data: form } = useGetFormDetailsQuery(
@@ -188,13 +187,11 @@ export const ResponsiveGridLayout = ({
   };
 
   const handleDragStart = (_layout: Layout[], currentItem: Layout) => {
-    setIsDragging(true);
     setEdittingItem(elements.find((element) => element.id === currentItem.i));
   };
 
   const handleDragStop = (layout: Layout[]) => {
     setElements(getElement(elements, layout));
-    setIsDragging(false);
   };
   useEffect(() => {
     if (form) {
@@ -235,11 +232,10 @@ export const ResponsiveGridLayout = ({
             key={element.id}
             data-grid={element.gridSize}
             className={cn(
-              'flex w-full cursor-move flex-col justify-center px-2',
+              'flex w-full cursor-move flex-col justify-center bg-white px-2',
               {
-                'rounded-md  border-[3px] border-solid border-blue-500':
+                'react-draggable-dragging rounded-md border-[3px] border-solid border-blue-500':
                   element.id === edittingItem?.id,
-                'bg-white': isDragging,
               },
             )}
           >
@@ -252,7 +248,7 @@ export const ResponsiveGridLayout = ({
               handleOnChangeAnswer={() => () => {}}
             />
             {element.id === edittingItem?.id && (
-              <InteractiveIcons item={element} removeItem={removeItem} />
+              <InteractiveIcons removeItem={removeItem} />
             )}
           </Box>
         ))}
