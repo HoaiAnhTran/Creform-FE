@@ -21,90 +21,112 @@ export const ELEMENTS = {
   HEADING: {
     icon: BiHeading,
     type: ElementType.HEADING,
+    isDisabled: false,
   },
   EMAIL: {
     icon: MdEmail,
     type: ElementType.EMAIL,
+    isDisabled: false,
   },
   FULLNAME: {
     icon: FaUser,
     type: ElementType.FULLNAME,
+    isDisabled: false,
   },
   ADDRESS: {
     icon: FaLocationDot,
     type: ElementType.ADDRESS,
+    isDisabled: true,
   },
   PHONE: {
     icon: FaPhoneAlt,
     type: ElementType.PHONE,
+    isDisabled: true,
   },
   DATEPICKER: {
     icon: FaCalendarAlt,
     type: ElementType.DATEPICKER,
+    isDisabled: true,
   },
   APPOINTMENT: {
     icon: FaCalendarCheck,
     type: ElementType.APPOINTMENT,
+    isDisabled: true,
   },
   SHORT_TEXT: {
     icon: PiTextbox,
     type: ElementType.SHORT_TEXT,
+    isDisabled: false,
   },
   LONG_TEXT: {
     icon: PiTextboxBold,
     type: ElementType.LONG_TEXT,
+    isDisabled: false,
   },
   DROPDOWN: {
     icon: RxDropdownMenu,
     type: ElementType.DROPDOWN,
+    isDisabled: true,
   },
   SINGLE_CHOICE: {
     icon: IoMdRadioButtonOn,
     type: ElementType.SINGLE_CHOICE,
+    isDisabled: true,
   },
   MULTIPLE_CHOICE: {
     icon: IoMdCheckbox,
     type: ElementType.MULTIPLE_CHOICE,
+    isDisabled: true,
   },
   NUMBER: {
     icon: RiNumber7,
     type: ElementType.NUMBER,
+    isDisabled: true,
   },
   IMAGE: {
     icon: FaImage,
     type: ElementType.IMAGE,
+    isDisabled: true,
   },
   FILE_UPLOAD: {
     icon: FaFileUpload,
     type: ElementType.FILE_UPLOAD,
+    isDisabled: true,
   },
   TIME: {
     icon: MdWatchLater,
     type: ElementType.TIME,
+    isDisabled: true,
   },
   SUBMIT: {
     icon: BsSendFill,
     type: ElementType.SUBMIT,
+    isDisabled: false,
   },
   INPUT_TABLE: {
     icon: FaTable,
     type: ElementType.INPUT_TABLE,
+    isDisabled: true,
   },
   STAR_RATING: {
     icon: FaStar,
     type: ElementType.STAR_RATING,
+    isDisabled: true,
   },
   SCALE_RATING: {
     icon: FaChartSimple,
     type: ElementType.STAR_RATING,
+    isDisabled: true,
   },
   DIVIDER: {
     icon: RxDividerHorizontal,
     type: ElementType.DIVIDER,
+    isDisabled: true,
   },
   PAGE_BREAK: {
     icon: MdInsertPageBreak,
     type: ElementType.PAGE_BREAK,
+    isDisabled: true,
   },
 };
 
