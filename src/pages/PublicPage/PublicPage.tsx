@@ -11,11 +11,12 @@ import { SubmissionConfirmation } from '@/organisms/SubmissionConfirmation';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { useCreateResponseMutation } from '@/redux/api/responseApi';
 import { ErrorResponse } from '@/types';
-import { toastify } from '@/utils';
+import { getAccessTokenFromLS, toastify } from '@/utils';
 import { getFormAnswerFields } from '@/utils/seperates';
 
 export const PublicPage = () => {
   const { id: formId } = useParams();
+  const isAuthenticated = Boolean(getAccessTokenFromLS());
   const { data } = useGetFormDetailsQuery(
     { id: formId || '' },
     { skip: !formId },
@@ -63,24 +64,26 @@ export const PublicPage = () => {
         </Formik>
       ) : (
         <Box>
-          <Tooltip
-            label='Back to home'
-            position='right'
-            arrowSize={6}
-            withArrow
-            offset={8}
-          >
-            <UnstyledButton
-              className='fixed left-10 top-10'
-              onClick={() => {
-                navigate(PATH.OVERVIEW_PAGE);
-              }}
+          {isAuthenticated && (
+            <Tooltip
+              label='Back to home'
+              position='right'
+              arrowSize={6}
+              withArrow
+              offset={8}
             >
-              <span className='relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500'>
-                <MdKeyboardBackspace size={24} className='text-white' />
-              </span>
-            </UnstyledButton>
-          </Tooltip>
+              <UnstyledButton
+                className='fixed left-10 top-10'
+                onClick={() => {
+                  navigate(PATH.OVERVIEW_PAGE);
+                }}
+              >
+                <span className='relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500'>
+                  <MdKeyboardBackspace size={24} className='text-white' />
+                </span>
+              </UnstyledButton>
+            </Tooltip>
+          )}
           <SubmissionConfirmation />
         </Box>
       )}

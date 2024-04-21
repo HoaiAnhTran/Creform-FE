@@ -139,15 +139,15 @@ export function useRouteElements() {
             </Suspense>
           ),
         },
-        {
-          path: PATH.PUBLIC_PAGE,
-          element: (
-            <ElementLayoutProvider>
-              <PublicPage />
-            </ElementLayoutProvider>
-          ),
-        },
       ],
+    },
+    {
+      path: PATH.PUBLIC_PAGE,
+      element: (
+        <ElementLayoutProvider>
+          <PublicPage />
+        </ElementLayoutProvider>
+      ),
     },
     {
       path: '*',
