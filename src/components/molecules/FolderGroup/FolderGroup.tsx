@@ -35,8 +35,13 @@ export const FolderGroup = ({
   setFolderId,
 }: FolderListProps) => {
   const [modalType, setModalType] = useState<ModalType | ''>('');
-  const { activeAllForms, setActiveAllForms, setSelectedRecords } =
-    useOverviewContext();
+  const {
+    activeAllForms,
+    setActiveAllForms,
+    setActiveFolder,
+    setActiveTeam,
+    setSelectedRecords,
+  } = useOverviewContext();
   const { setParams } = useFormParams();
 
   const openModal = (type: ModalType) => setModalType(type);
@@ -70,7 +75,9 @@ export const FolderGroup = ({
         leftSection={<FaFolder />}
         active={activeAllForms}
         onClick={() => {
-          setActiveAllForms(!activeAllForms);
+          setActiveAllForms(true);
+          setActiveFolder(-1);
+          setActiveTeam(-1);
           setSelectedRecords([]);
           setParams({ ...defaultFormsParams });
         }}

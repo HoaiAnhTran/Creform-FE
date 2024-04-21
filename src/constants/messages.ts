@@ -16,4 +16,5 @@ export const MESSAGES = {
   MOVE_FORM_TO_TEAM_SUCCESS: 'Form(s) moved to team successfully',
   DELETE_FORM_SUCCESS: 'Form(s) deleted successfully',
   RESTORE_FORM_SUCCESS: 'Form(s) restored successfully',
+  REMOVE_FROM_TEAM_SUCCESS: 'Form(s) moved back to My Forms successfully',
 } as const;

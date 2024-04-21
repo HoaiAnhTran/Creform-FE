@@ -3,6 +3,7 @@ import { BsFileText } from 'react-icons/bs';
 import { FaFolder, FaStar } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
+import { MdDriveFileMoveRtl } from 'react-icons/md';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -32,13 +33,16 @@ import {
   useAddToFavouritesMutation,
   useDeleteFormMutation,
   useGetMyFormsQuery,
+  useRemoveFromFolderMutation,
+  useRemoveFromTeamMutation,
   useRestoreFormMutation,
 } from '@/redux/api/formApi';
 import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
 export const FormsTable = () => {
-  const { selectedRecords, setSelectedRecords } = useOverviewContext();
+  const { activeTeam, selectedRecords, setSelectedRecords } =
+    useOverviewContext();
 
   const [modalType, setModalType] = useState<ModalType | ''>('');
   const openModal = (type: ModalType) => setModalType(type);
@@ -57,6 +61,12 @@ export const FormsTable = () => {
 
   const [restoreForm, { isLoading: isRestoringForm }] =
     useRestoreFormMutation();
+
+  const [removeFromFolder, { isLoading: isRemovingFromFolder }] =
+    useRemoveFromFolderMutation();
+
+  const [removeFromTeam, { isLoading: isRemovingFromTeam }] =
+    useRemoveFromTeamMutation();
 
   const handleDeleteForm = (record: FormResponse) => {
     deleteForm({ id: record.id }).then((res) => {
@@ -84,39 +94,79 @@ export const FormsTable = () => {
     });
   };
 
-  const isFetching =
-    isFormFetching || isAddingToFavourites || isDeletingForm || isRestoringForm;
+  const handleRemoveFromFolder = (record: FormResponse) => {
+    removeFromFolder({ formId: record.id, folderId: record.folderId }).then(
+      (res) => {
+        if ('data' in res) {
+          toastify.displaySuccess(res.data.message);
+          return;
+        }
+        if (res.error as ErrorResponse) {
+          toastify.displayError((res.error as ErrorResponse).message);
+        }
+      },
+    );
+  };
 
-  const moreOptions = [
-    {
-      text: 'View',
-      icon: <IoEye size={18} />,
-      handleClick: (record: FormResponse) => {
-        navigate(`/form/${record.id}`);
+  const handleRemoveFromTeam = (record: FormResponse) => {
+    removeFromTeam({ formId: record.id, teamId: record.teamId }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message);
+        closeModal();
+        return;
+      }
+      if (res.error as ErrorResponse) {
+        toastify.displayError((res.error as ErrorResponse).message);
+        closeModal();
+      }
+    });
+  };
+
+  const isFetching =
+    isFormFetching ||
+    isAddingToFavourites ||
+    isDeletingForm ||
+    isRestoringForm ||
+    isRemovingFromFolder ||
+    isRemovingFromTeam;
+
+  const moreOptions = useMemo(
+    () => [
+      {
+        text: 'View',
+        icon: <IoEye size={18} />,
+        handleClick: (record: FormResponse) => {
+          navigate(`/form/${record.id}`);
+        },
       },
-    },
-    {
-      text: 'Add to Folder',
-      icon: <RiFolderAddFill size={18} />,
-      handleClick: (record: FormResponse) => {
-        setSelectedRecords([record]);
-        openModal(ModalTypes.ADD_TO_FOLDER);
+      {
+        text: 'Add to Folder',
+        icon: <RiFolderAddFill size={18} />,
+        handleClick: (record: FormResponse) => {
+          setSelectedRecords([record]);
+          openModal(ModalTypes.ADD_TO_FOLDER);
+        },
       },
-    },
-    {
-      text: 'Move to Team',
-      icon: <RiTeamFill size={18} />,
-      handleClick: (record: FormResponse) => {
-        setSelectedRecords([record]);
-        openModal(ModalTypes.MOVE_TO_TEAM);
+      {
+        text: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
+        icon: <RiTeamFill size={18} />,
+        handleClick: (record: FormResponse) => {
+          setSelectedRecords([record]);
+          if (activeTeam === -1) {
+            openModal(ModalTypes.MOVE_TO_TEAM);
+            return;
+          }
+          openModal(ModalTypes.REMOVE_FROM_TEAM);
+        },
       },
-    },
-    {
-      text: 'Delete',
-      icon: <IoTrash size={18} />,
-      handleClick: (record: FormResponse) => handleDeleteForm(record),
-    },
-  ];
+      {
+        text: 'Delete',
+        icon: <IoTrash size={18} />,
+        handleClick: (record: FormResponse) => handleDeleteForm(record),
+      },
+    ],
+    [activeTeam],
+  );
 
   const columns: DataTableColumn<FormResponse>[] = useMemo(
     () => [
@@ -159,7 +209,7 @@ export const FormsTable = () => {
                       variant='transparent'
                       size={18}
                       className='hidden text-black group-hover:flex'
-                      onClick={() => {}}
+                      onClick={() => handleRemoveFromFolder(record)}
                     />
                   </Box>
                 )}
@@ -268,7 +318,7 @@ export const FormsTable = () => {
         cellsClassName: 'cursor-pointer hover:bg-malachite-100 w-30 h-20 p-0',
       },
     ],
-    [],
+    [moreOptions],
   );
 
   useEffect(() => {
@@ -346,6 +396,29 @@ export const FormsTable = () => {
         onClickBack={closeModal}
         onClickConfirm={() => handleDeleteForm(selectedRecords[0])}
         isLoading={isDeletingForm}
+      />
+      <ConfirmationModal
+        size='lg'
+        body={
+          <Box className='flex flex-col items-center gap-3 px-10 py-5'>
+            <MdDriveFileMoveRtl size={70} className='text-blue-500' />
+            <Text size='lg' className='font-bold'>
+              Move to My Forms
+            </Text>
+            <Text className='text-center'>
+              The team members will no longer access this form.
+            </Text>
+          </Box>
+        }
+        opened={modalType === ModalTypes.REMOVE_FROM_TEAM}
+        onClose={closeModal}
+        onClickBack={closeModal}
+        onClickConfirm={() => handleRemoveFromTeam(selectedRecords[0])}
+        confirmButtonProps={{
+          title: 'Move Now',
+          className: 'bg-blue-500 hover:bg-blue-600',
+        }}
+        isLoading={isRemovingFromTeam}
       />
     </>
   );

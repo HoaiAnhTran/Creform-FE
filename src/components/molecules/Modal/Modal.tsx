@@ -40,16 +40,12 @@ export const Modal = ({
     centered
     size='xl'
     title={
-      <>
-        <Group className='flex items-center gap-2'>
-          {headerIcon && (
-            <Box className='rounded-md bg-malachite-500 p-1.5'>
-              {headerIcon}
-            </Box>
-          )}
-          <Text className='font-bold'>{headerTitle}</Text>
-        </Group>
-      </>
+      <Group className='flex items-center gap-2'>
+        {headerIcon && (
+          <Box className='rounded-md bg-malachite-500 p-1.5'>{headerIcon}</Box>
+        )}
+        <Text className='text-lg font-bold capitalize'>{headerTitle}</Text>
+      </Group>
     }
     {...props}
   >

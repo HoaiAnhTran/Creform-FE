@@ -14,7 +14,7 @@ interface OverviewContextType {
 }
 
 const OverviewContext = createContext<OverviewContextType>({
-  activeFolder: 0,
+  activeFolder: -1,
   setActiveFolder: () => {},
   activeAllForms: true,
   setActiveAllForms: () => {},

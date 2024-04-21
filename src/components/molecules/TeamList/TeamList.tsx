@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
@@ -49,6 +49,7 @@ export const TeamList = ({
 }: TeamListProps) => {
   const {
     activeTeam,
+    activeFolder,
     setActiveTeam,
     setActiveAllForms,
     setActiveFolder,
@@ -67,20 +68,13 @@ export const TeamList = ({
     });
   };
 
-  useEffect(() => {
-    if (activeTeam === -1) return;
-    setActiveAllForms(false);
-    setActiveFolder(-1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTeam]);
-
   return (
     <Box className='mt-3 flex flex-col justify-between gap-2'>
       {isLoading ? (
         <LoadingDots color='green' />
       ) : (
         teamList.map((team) => {
-          const isActiveteam = team.id === activeTeam;
+          const isActiveTeam = team.id === activeTeam && activeFolder === -1;
 
           return (
             <Stack className='gap-2'>
@@ -88,7 +82,7 @@ export const TeamList = ({
                 key={uuidv4()}
                 className={cn(
                   'gap-0 hover:rounded-md hover:bg-slate-300',
-                  isActiveteam
+                  isActiveTeam
                     ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
                     : 'hover:rounded-md hover:bg-slate-300',
                 )}
@@ -97,12 +91,14 @@ export const TeamList = ({
                   key={team.id}
                   className={cn(
                     'w-[85%] font-bold',
-                    isActiveteam
+                    isActiveTeam
                       ? 'rounded-md bg-slate-400 text-white hover:bg-slate-400'
                       : 'hover:rounded-md hover:bg-slate-300',
                   )}
                   onClick={() => {
                     setActiveTeam(team.id);
+                    setActiveAllForms(false);
+                    setActiveFolder(-1);
                     setSelectedRecords([]);
                     setParams({ ...defaultFormsParams, teamId: team.id });
                   }}
@@ -125,13 +121,13 @@ export const TeamList = ({
                         ))}
                     </Group>
                   }
-                  active={isActiveteam}
+                  active={isActiveTeam}
                   leftSection={
                     <Avatar
                       size='sm'
                       src={team.logoUrl}
                       className={
-                        isActiveteam && !team.logoUrl
+                        isActiveTeam && !team.logoUrl
                           ? 'rounded-full bg-white'
                           : ''
                       }

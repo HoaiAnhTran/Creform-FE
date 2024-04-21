@@ -90,6 +90,26 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    removeFromFolder: build.mutation<
+      SuccessResponse<unknown>,
+      { formId: number; folderId: number }
+    >({
+      query: ({ formId, folderId }) => ({
+        url: `${API_URL.FORMS}/${formId}/folder/${folderId}/remove`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
+    removeFromTeam: build.mutation<
+      SuccessResponse<unknown>,
+      { formId: number; teamId: number }
+    >({
+      query: ({ formId, teamId }) => ({
+        url: `${API_URL.FORMS}/${formId}/team/${teamId}/remove`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -104,4 +124,6 @@ export const {
   useUpdateFormMutation,
   useAddToFolderMutation,
   useMoveToTeamMutation,
+  useRemoveFromFolderMutation,
+  useRemoveFromTeamMutation,
 } = formApi;

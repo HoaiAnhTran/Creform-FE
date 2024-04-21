@@ -9,6 +9,7 @@ export enum ModalTypes {
   DELETE_FORM_PERMANENTLY = 'deleteFormPermanently',
   ADD_TO_FOLDER = 'addToFolder',
   MOVE_TO_TEAM = 'moveToTeam',
+  REMOVE_FROM_TEAM = 'removeFromTeam',
 }
 
 export type ModalType =
@@ -21,4 +22,5 @@ export type ModalType =
   | ModalTypes.CREATE_FOLDER
   | ModalTypes.DELETE_FORM_PERMANENTLY
   | ModalTypes.ADD_TO_FOLDER
-  | ModalTypes.MOVE_TO_TEAM;
+  | ModalTypes.MOVE_TO_TEAM
+  | ModalTypes.REMOVE_FROM_TEAM;

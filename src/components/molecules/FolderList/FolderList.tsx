@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { FaFolder } from 'react-icons/fa';
 import { MdDelete, MdEdit, MdOutlineWarning } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
@@ -7,8 +6,7 @@ import { Box, Group, Menu, NavLink, Stack, Text } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
-import { useOverviewContext } from '@/contexts';
-import { useFormParams } from '@/contexts';
+import { useFormParams, useOverviewContext } from '@/contexts';
 import {
   useDeleteFolderMutation,
   useUpdateFolderMutation,
@@ -59,11 +57,6 @@ export const FolderList = ({
     setActiveTeam,
     setSelectedRecords,
   } = useOverviewContext();
-  useEffect(() => {
-    if (activeFolder === -1 && !activeAllForms) return;
-    setActiveTeam(-1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeFolder, activeAllForms]);
 
   const { setParams } = useFormParams();
 
@@ -124,6 +117,7 @@ export const FolderList = ({
                   )}
                   onClick={() => {
                     setActiveFolder(folder.id);
+                    setActiveTeam(teamId || -1);
                     setActiveAllForms(false);
                     setSelectedRecords([]);
                     setParams({

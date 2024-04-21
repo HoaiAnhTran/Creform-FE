@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AiOutlineTeam } from 'react-icons/ai';
+import { RiTeamFill } from 'react-icons/ri';
 import {
   Box,
   CheckIcon,
@@ -12,7 +12,7 @@ import { useOverviewContext } from '@/contexts';
 import { useMoveToTeamMutation } from '@/redux/api/formApi';
 import { useGetMyTeamsQuery } from '@/redux/api/teamApi';
 import { TeamResponse } from '@/types';
-import { toastify } from '@/utils';
+import { countSuccessAndErrors, toastify } from '@/utils';
 
 import { Modal } from '../Modal';
 
@@ -44,21 +44,7 @@ export const MoveToTeamModal = ({
         moveToTeam({ formId: id, teamId: Number(selectedTeamId) }),
       ),
     ).then((response) => {
-      const { successCount, errorCount } = response.reduce<{
-        successCount: number;
-        errorCount: number;
-      }>(
-        (acc, res) => {
-          if (res.status === 'fulfilled') {
-            acc.successCount += 1;
-            return acc;
-          }
-          acc.errorCount += 1;
-          return acc;
-        },
-        { successCount: 0, errorCount: 0 },
-      );
-
+      const { successCount, errorCount } = countSuccessAndErrors(response);
       if (successCount === response.length) {
         toastify.displaySuccess(MESSAGES.MOVE_FORM_TO_TEAM_SUCCESS);
         closeModal();
@@ -72,7 +58,7 @@ export const MoveToTeamModal = ({
   return (
     <Modal
       {...props}
-      headerIcon={<AiOutlineTeam className='text-white' />}
+      headerIcon={<RiTeamFill className='text-white' />}
       headerTitle='Move to team'
       body={
         <Box className='px-3 py-5'>

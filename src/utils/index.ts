@@ -5,6 +5,7 @@ import * as toastify from './toastify';
 
 export * from './capitalize';
 export * from './date';
+export * from './handleApiResponse';
 export * from './http';
 export * from './keyUtils';
 export * from './schemas/signUpSchema';

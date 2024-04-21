@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
-import { AiOutlineTeam } from 'react-icons/ai';
-import { FaTableCells } from 'react-icons/fa6';
-import { HiDocumentReport, HiTrash } from 'react-icons/hi';
+import { FaFolderPlus, FaTableCells } from 'react-icons/fa6';
+import { HiTrash } from 'react-icons/hi';
 import { IoTrash } from 'react-icons/io5';
+import { MdDriveFileMoveRtl } from 'react-icons/md';
+import { RiTeamFill } from 'react-icons/ri';
 import { TbRestore } from 'react-icons/tb';
 import { Box, Text } from '@mantine/core';
 
@@ -14,21 +15,26 @@ import { ConfirmationModal } from '@/molecules/ComfirmationModal';
 import { MoveToTeamModal } from '@/molecules/MoveToTeamModal';
 import {
   useDeleteFormMutation,
+  useRemoveFromTeamMutation,
   useRestoreFormMutation,
 } from '@/redux/api/formApi';
 import { ModalType, ModalTypes } from '@/types';
-import { toastify } from '@/utils';
+import { countSuccessAndErrors, toastify } from '@/utils';
 
 interface ActionListFormProps {
   selectedFormIds: number[];
 }
 
 export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
-  const { selectedRecords, setSelectedRecords } = useOverviewContext();
+  const { activeTeam, selectedRecords, setSelectedRecords } =
+    useOverviewContext();
 
   const [deleteForm, { isLoading: isDeletingForm }] = useDeleteFormMutation();
 
   const [restoreForm] = useRestoreFormMutation();
+
+  const [removeFromTeam, { isLoading: isRemovingFromTeam }] =
+    useRemoveFromTeamMutation();
 
   const [modalType, setModalType] = useState<ModalType | ''>('');
   const openModal = (type: ModalType) => setModalType(type);
@@ -40,21 +46,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     await Promise.allSettled(
       selectedFormIds.map((id) => deleteForm({ id })),
     ).then((response) => {
-      const { successCount, errorCount } = response.reduce<{
-        successCount: number;
-        errorCount: number;
-      }>(
-        (acc, res) => {
-          if (res.status === 'fulfilled') {
-            acc.successCount += 1;
-            return acc;
-          }
-          acc.errorCount += 1;
-          return acc;
-        },
-        { successCount: 0, errorCount: 0 },
-      );
-
+      const { successCount, errorCount } = countSuccessAndErrors(response);
       if (successCount === response.length) {
         toastify.displaySuccess(MESSAGES.DELETE_FORM_SUCCESS);
         closeModal();
@@ -69,26 +61,31 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
     await Promise.allSettled(
       selectedFormIds.map((id) => restoreForm({ id })),
     ).then((response) => {
-      const { successCount, errorCount } = response.reduce<{
-        successCount: number;
-        errorCount: number;
-      }>(
-        (acc, res) => {
-          if (res.status === 'fulfilled') {
-            acc.successCount += 1;
-            return acc;
-          }
-          acc.errorCount += 1;
-          return acc;
-        },
-        { successCount: 0, errorCount: 0 },
-      );
-
+      const { successCount, errorCount } = countSuccessAndErrors(response);
       if (successCount === response.length) {
         toastify.displaySuccess(MESSAGES.RESTORE_FORM_SUCCESS);
         closeModal();
       } else if (errorCount > 0) {
         toastify.displayError(`${errorCount} form(s) failed to restore`);
+      }
+      setSelectedRecords([]);
+    });
+  };
+
+  const handleRemoveMultipleFormsFromTeam = async () => {
+    await Promise.allSettled(
+      selectedRecords.map((form) =>
+        removeFromTeam({ formId: form.id, teamId: form.teamId }),
+      ),
+    ).then((response) => {
+      const { successCount, errorCount } = countSuccessAndErrors(response);
+      if (successCount === response.length) {
+        toastify.displaySuccess(MESSAGES.REMOVE_FROM_TEAM_SUCCESS);
+        closeModal();
+      } else if (errorCount > 0) {
+        toastify.displayError(
+          `${errorCount} form(s) failed to moved back to My Forms`,
+        );
       }
       setSelectedRecords([]);
     });
@@ -104,17 +101,21 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
       onClick: handleViewSubmissions,
     },
     {
-      icon: <HiDocumentReport size={24} />,
+      icon: <FaFolderPlus size={24} />,
       title: 'Add to Folder',
       onClick: () => {
         openModal(ModalTypes.ADD_TO_FOLDER);
       },
     },
     {
-      icon: <AiOutlineTeam size={24} />,
-      title: 'Move to Team',
+      icon: <RiTeamFill size={24} />,
+      title: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
       onClick: () => {
-        openModal(ModalTypes.MOVE_TO_TEAM);
+        if (activeTeam === -1) {
+          openModal(ModalTypes.MOVE_TO_TEAM);
+          return;
+        }
+        openModal(ModalTypes.REMOVE_FROM_TEAM);
       },
     },
     {
@@ -126,17 +127,21 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
 
   const MultipleFormActions = [
     {
-      icon: <HiDocumentReport size={24} />,
+      icon: <FaFolderPlus size={24} />,
       title: 'Add to folder',
       onClick: () => {
         openModal(ModalTypes.ADD_TO_FOLDER);
       },
     },
     {
-      icon: <AiOutlineTeam size={24} />,
-      title: 'Move to team',
+      icon: <RiTeamFill size={24} />,
+      title: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
       onClick: () => {
-        openModal(ModalTypes.MOVE_TO_TEAM);
+        if (activeTeam === -1) {
+          openModal(ModalTypes.MOVE_TO_TEAM);
+          return;
+        }
+        openModal(ModalTypes.REMOVE_FROM_TEAM);
       },
     },
     {
@@ -223,6 +228,29 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
         onClickBack={closeModal}
         onClickConfirm={handleDeleteMultipleForms}
         isLoading={isDeletingForm}
+      />
+      <ConfirmationModal
+        size='lg'
+        body={
+          <Box className='flex flex-col items-center gap-3 px-10 py-5'>
+            <MdDriveFileMoveRtl size={70} className='text-blue-500' />
+            <Text size='lg' className='font-bold'>
+              Move to My Forms
+            </Text>
+            <Text className='text-center'>
+              The team members will no longer access selected form(s).
+            </Text>
+          </Box>
+        }
+        opened={modalType === ModalTypes.REMOVE_FROM_TEAM}
+        onClose={closeModal}
+        onClickBack={closeModal}
+        onClickConfirm={handleRemoveMultipleFormsFromTeam}
+        confirmButtonProps={{
+          title: 'Move Now',
+          className: 'bg-blue-500 hover:bg-blue-600',
+        }}
+        isLoading={isRemovingFromTeam}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HiDocumentReport } from 'react-icons/hi';
+import { FaFolderPlus } from 'react-icons/fa6';
 import {
   Box,
   CheckIcon,
@@ -13,7 +13,7 @@ import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
 import { useAddToFolderMutation } from '@/redux/api/formApi';
 import { useGetTeamDetailsQuery } from '@/redux/api/teamApi';
 import { FolderInTeamResponse, FolderResponse } from '@/types';
-import { toastify } from '@/utils';
+import { countSuccessAndErrors, toastify } from '@/utils';
 
 import { Modal } from '../Modal';
 
@@ -66,21 +66,7 @@ export const AddToFolderModal = ({
         addToFolder({ formId: id, folderId: Number(selectedFolderId) }),
       ),
     ).then((response) => {
-      const { successCount, errorCount } = response.reduce<{
-        successCount: number;
-        errorCount: number;
-      }>(
-        (acc, res) => {
-          if (res.status === 'fulfilled') {
-            acc.successCount += 1;
-            return acc;
-          }
-          acc.errorCount += 1;
-          return acc;
-        },
-        { successCount: 0, errorCount: 0 },
-      );
-
+      const { successCount, errorCount } = countSuccessAndErrors(response);
       if (successCount === response.length) {
         toastify.displaySuccess(MESSAGES.ADD_FORM_TO_FOLDER_SUCCESS);
         closeModal();
@@ -94,7 +80,7 @@ export const AddToFolderModal = ({
   return (
     <Modal
       {...props}
-      headerIcon={<HiDocumentReport className='text-white' />}
+      headerIcon={<FaFolderPlus className='text-white' />}
       headerTitle='Add to folder'
       body={
         <Box className='px-3 py-5'>
