@@ -361,7 +361,7 @@ export const FormsTable = () => {
         loaderType='oval'
         loaderSize='md'
         loaderColor='green'
-        height='auto'
+        height={data?.forms && data.forms.length > 0 ? 'auto' : '100%'}
         classNames={{
           root: 'overflow-visible',
           pagination: 'fixed w-[80%] h-[50px] bottom-0 z-40',

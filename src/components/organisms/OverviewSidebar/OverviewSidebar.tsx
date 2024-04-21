@@ -45,7 +45,7 @@ export const OverviewSidebar = () => {
           }
         />
       </Box>
-      <Box className='flex h-full flex-col gap-5 border-y-0 border-l-0 border-r border-solid border-slate-300 bg-inherit p-5'>
+      <Box className='flex flex-col gap-5 border-y-0 border-l-0 border-r border-solid border-slate-300 bg-inherit p-5'>
         <Box>
           <FolderGroup
             folderList={folderListNotInTeam}
@@ -68,7 +68,7 @@ export const OverviewSidebar = () => {
         <Divider />
         <Box>
           <NavLink
-            className={cn('rounded-md  font-bold hover:bg-slate-200', {
+            className={cn('rounded-md font-bold hover:bg-slate-200', {
               'bg-slate-400 text-white hover:bg-slate-400': params.isFavourite,
             })}
             label='Favorites'

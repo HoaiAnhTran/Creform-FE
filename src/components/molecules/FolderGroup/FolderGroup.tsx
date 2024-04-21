@@ -72,7 +72,11 @@ export const FolderGroup = ({
             : 'hover:rounded-md hover:bg-slate-300',
         )}
         label='All forms'
-        leftSection={<FaFolder />}
+        leftSection={
+          <FaFolder
+            className={activeAllForms ? 'text-white' : 'text-malachite-500'}
+          />
+        }
         active={activeAllForms}
         onClick={() => {
           setActiveAllForms(true);
