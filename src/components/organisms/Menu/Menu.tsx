@@ -1,5 +1,5 @@
 import { TiTick } from 'react-icons/ti';
-import { MantineShadow, Menu as MenuMantine } from '@mantine/core';
+import { Group, MantineShadow, Menu as MenuMantine } from '@mantine/core';
 
 import { Button, ButtonProps } from '@/atoms/Button';
 import { SortOption } from '@/constants/sortOptions';
@@ -52,12 +52,15 @@ export const Menu = (props: MenuProps) => {
             rightSection={
               itemList[sortOptionIndex].field === item.field &&
               itemList[sortOptionIndex].sortDirection === item.sortDirection ? (
-                <TiTick />
+                <TiTick className='text-malachite-500' />
               ) : null
             }
             className='hover:bg-malachite-200'
           >
-            {item.title}
+            <Group className='gap-2'>
+              {item.title}
+              {item.icon}
+            </Group>
           </MenuMantine.Item>
         ))}
       </MenuMantine.Dropdown>
