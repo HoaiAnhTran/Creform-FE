@@ -7,3 +7,37 @@ export interface FieldAnswer {
   fieldId: string;
   text: string;
 }
+export interface GetResponsesParams {
+  page?: number;
+  pageSize?: number;
+  searchText?: string;
+  sortField?: string;
+  sortDirection?: string;
+  fieldsFilter?: string;
+}
+
+export interface RawResponseRow {
+  formAnswers: RawFormAnswerCell[];
+  id: number;
+  createdAt: Date;
+}
+
+export interface RawFormAnswerCell {
+  id: string;
+  elementName: string;
+  answers: RawFieldAnswerCell[];
+}
+
+export interface RawFieldAnswerCell {
+  id: string;
+  fieldName: string;
+  text: string;
+}
+
+export interface ReturnGetResponses {
+  responses: RawResponseRow[];
+  page: number;
+  pageSize: number;
+  totalResponses: number;
+  totalPages: number;
+}

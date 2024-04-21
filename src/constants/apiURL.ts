@@ -9,4 +9,5 @@ export const API_URL = {
   CHANGE_PASSWORD: '/users/change-password',
   UPLOAD_IMAGE: '/images/upload',
   ADD_TO_FOLDER: '/:formId/folder/:folderId/add',
+  RESPONSES: 'responses',
 };

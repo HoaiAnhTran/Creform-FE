@@ -5,7 +5,14 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { ActionIcon, Anchor, Group, Menu, Stack, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Group,
+  Menu,
+  Stack,
+  Text,
+  UnstyledButton,
+} from '@mantine/core';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
@@ -120,14 +127,19 @@ export const FormsTable = ({
                 {record.title}
               </Text>
               <Group className='items-center gap-1'>
-                <Anchor
-                  href=''
-                  target='_blank'
-                  underline='hover'
-                  className='text-sm font-medium text-gray-500 hover:text-malachite-500'
+                <UnstyledButton
+                  onClick={() => {
+                    navigate(
+                      PATH.RESPONSE_PAGE.replace(
+                        ':formId',
+                        record.id.toString(),
+                      ),
+                    );
+                  }}
+                  className='text-sm font-medium text-gray-500 hover:text-malachite-500 hover:underline'
                 >
                   {record.totalSubmissions} submissions.
-                </Anchor>
+                </UnstyledButton>
                 <Text className='text-sm font-medium text-gray-500'>
                   Created on {formatDate(record.createdAt, 'MMM D, YYYY')}
                 </Text>

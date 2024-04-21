@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
@@ -6,6 +7,7 @@ import { BuildSection } from '@/organisms/BuildSection';
 import { PublishSection } from '@/organisms/PublishSection';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
+import { LoadingPage } from '@/pages/LoadingPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
@@ -13,6 +15,7 @@ import { PublicPage } from '@/pages/PublicPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
+const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
 // route required authentication to navigate
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
@@ -76,6 +79,14 @@ export function useRouteElements() {
               element: <PublishSection />,
             },
           ],
+        },
+        {
+          path: PATH.RESPONSE_PAGE,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <ResponsesPage />
+            </Suspense>
+          ),
         },
         {
           path: PATH.EDIT_FORM_PAGE,
