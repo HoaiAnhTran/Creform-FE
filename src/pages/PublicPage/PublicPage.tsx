@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, LoadingOverlay } from '@mantine/core';
+import { MdKeyboardBackspace } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, LoadingOverlay, Tooltip, UnstyledButton } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
+import { PATH } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { FormRenderComponent } from '@/organisms/FormRenderComponent';
 import { SubmissionConfirmation } from '@/organisms/SubmissionConfirmation';
@@ -19,6 +21,7 @@ export const PublicPage = () => {
     { skip: !formId },
   );
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const navigate = useNavigate();
   const { elements, canSubmit } = useElementLayouts();
   const [createFormResponse, { isLoading: isLoadingCreateFormResponse }] =
     useCreateResponseMutation();
@@ -67,7 +70,28 @@ export const PublicPage = () => {
             </Form>
           </Formik>
         ) : (
-          <SubmissionConfirmation />
+          <Box>
+            <Tooltip
+              label='Back to home'
+              position='right'
+              arrowSize={6}
+              withArrow
+              offset={8}
+            >
+              <UnstyledButton
+                className='fixed left-10 top-10'
+                onClick={() => {
+                  navigate(PATH.OVERVIEW_PAGE);
+                }}
+              >
+                <span className='relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500'>
+                  <MdKeyboardBackspace size={24} className='text-white' />
+                </span>
+              </UnstyledButton>
+            </Tooltip>
+
+            <SubmissionConfirmation />
+          </Box>
         )}
       </div>
     </Box>
