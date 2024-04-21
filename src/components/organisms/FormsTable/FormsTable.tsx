@@ -282,7 +282,6 @@ export const FormsTable = () => {
     <>
       <DataTable
         noHeader
-        minHeight={150}
         withRowBorders={false}
         highlightOnHover
         rowClassName='cursor-pointer'
@@ -310,7 +309,11 @@ export const FormsTable = () => {
         loaderType='oval'
         loaderSize='md'
         loaderColor='green'
-        className='!h-[85%]'
+        height='auto'
+        classNames={{
+          root: 'overflow-visible',
+          pagination: 'fixed w-[80%] h-[50px] bottom-0 z-40',
+        }}
       />
       <AddToFolderModal
         opened={modalType === ModalTypes.ADD_TO_FOLDER}

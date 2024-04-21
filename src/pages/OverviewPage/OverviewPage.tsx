@@ -1,4 +1,4 @@
-import { Box, Group, Stack } from '@mantine/core';
+import { Box, Stack } from '@mantine/core';
 
 import { FormParamsProvider, useOverviewContext } from '@/contexts';
 import { ActionToolbar } from '@/organisms/ActionToolbar';
@@ -11,19 +11,19 @@ export const OverviewPage = () => {
 
   return (
     <FormParamsProvider>
-      <Box className='h-screen overflow-hidden'>
+      <Box className='h-screen'>
         <Header />
-        <Group className='h-full items-start justify-between gap-0'>
-          <Stack flex={1} className='h-full'>
+        <Box className='flex h-full w-full items-start justify-between gap-0'>
+          <Stack className='h-full w-[20%]'>
             <OverviewSidebar />
           </Stack>
-          <Stack className='h-full gap-0 px-2' flex={4.5}>
+          <Stack className='mx-2 h-full w-[80%] gap-0'>
             <ActionToolbar
               selectedFormIds={selectedRecords.map(({ id }) => id)}
             />
             <FormsTable />
           </Stack>
-        </Group>
+        </Box>
       </Box>
     </FormParamsProvider>
   );

@@ -67,7 +67,7 @@ export function useRouteElements() {
           path: PATH.OVERVIEW_PAGE,
           element: (
             <OverviewContextProvider>
-              <OverviewPage />,
+              <OverviewPage />
             </OverviewContextProvider>
           ),
         },
