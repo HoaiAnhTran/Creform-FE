@@ -1,8 +1,8 @@
 import { API_URL } from '@/constants';
 import { SuccessResponse } from '@/types';
 import {
+  FormAnswerRequest,
   FormAnswerResponse,
-  FormAnswerRessquest,
   GetResponsesParams,
   ReturnGetResponses,
 } from '@/types/responses';
@@ -29,7 +29,7 @@ export const responseApi = rootApi.injectEndpoints({
       SuccessResponse<FormAnswerResponse>,
       {
         formId?: number;
-        payload: FormAnswerRessquest;
+        payload: FormAnswerRequest;
       }
     >({
       query: ({ formId = undefined, payload }) => ({

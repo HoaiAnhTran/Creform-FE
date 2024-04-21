@@ -7,7 +7,7 @@ export interface FieldAnswer {
   fieldId: string;
   text: string;
 }
-export interface FormAnswerRessquest {
+export interface FormAnswerRequest {
   formAnswers: FormAnswer[];
 }
 

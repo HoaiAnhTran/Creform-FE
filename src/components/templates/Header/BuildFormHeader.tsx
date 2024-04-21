@@ -11,7 +11,7 @@ import { PATH } from '@/constants/routes';
 import { useBuildFormContext } from '@/contexts';
 import { LoadingDots } from '@/molecules/LoadingDots';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
-import { formatDate, httpClient } from '@/utils';
+import { cn, formatDate, httpClient } from '@/utils';
 
 const LOGO_HEIGHT = 45;
 const DEFAULT_FORM_TITLE = 'Form';
@@ -19,7 +19,7 @@ const DEFAULT_FORM_TITLE = 'Form';
 export const BuildFormHeader = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
-  const { form, isEditForm, setForm } = useBuildFormContext();
+  const { form, isEditForm, setForm, previewMode } = useBuildFormContext();
 
   const [currentTitle, setCurrentTitle] = useState<string>(DEFAULT_FORM_TITLE);
 
@@ -50,7 +50,7 @@ export const BuildFormHeader = () => {
     } else {
       setCurrentTitle(currentTitle);
     }
-  }, [form, isEditForm]);
+  }, [currentTitle, form, isEditForm]);
 
   useEffect(() => {
     if (isEditForm) return;
@@ -58,10 +58,17 @@ export const BuildFormHeader = () => {
       ...prevState,
       title: currentTitle,
     }));
-  }, [isEditForm]);
+  }, [currentTitle, isEditForm, setForm]);
 
   return (
-    <header className='relative flex h-[70px] flex-row items-center justify-between px-10 py-3'>
+    <header
+      className={cn(
+        'relative flex h-[70px] flex-row items-center justify-between px-10 py-3',
+        {
+          invisible: previewMode,
+        },
+      )}
+    >
       <Anchor href={PATH.ROOT_PAGE} className='z-10'>
         <Image src={GreenLogo} h={LOGO_HEIGHT} />
       </Anchor>

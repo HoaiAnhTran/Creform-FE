@@ -6,8 +6,9 @@ import { Button } from '@/atoms/Button';
 import { useBuildFormContext } from '@/contexts';
 
 export const PublishSection = () => {
-  const { form } = useBuildFormContext();
-  const link = `${window.location.origin}/form/${form.id}`;
+  const { form, isEditForm } = useBuildFormContext();
+
+  const link = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
 
   return (
     <Box className='flex h-screen w-full items-center justify-center bg-malachite-50'>
@@ -45,7 +46,8 @@ export const PublishSection = () => {
                 <Button
                   onClick={copy}
                   title={copied ? 'Copied to clipboard!' : 'COPY LINK'}
-                ></Button>
+                  disabled={!isEditForm}
+                />
               )}
             </CopyButton>
             <Button
@@ -54,7 +56,8 @@ export const PublishSection = () => {
               onClick={() => {
                 window.open(link, '_blank');
               }}
-            ></Button>
+              disabled={!isEditForm}
+            />
           </Group>
         </Stack>
       </Stack>

@@ -55,8 +55,6 @@ export const TeamGroup = ({
   const closeModal = () => setModalType('');
 
   const handleCreateFolderInTeam = () => {
-    console.log({ teamId: teamId });
-
     createFolder({ teamId: teamId, payload: { name: folderName } }).then(
       (res) => {
         if ('data' in res) {

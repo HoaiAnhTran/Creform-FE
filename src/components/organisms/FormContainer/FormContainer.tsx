@@ -24,7 +24,7 @@ export const FormContainer = ({
   setCurrentLogoFile,
   isDisabled,
 }: FormContainerProps) => {
-  const { form, setForm } = useBuildFormContext();
+  const { setForm, initLogo } = useBuildFormContext();
 
   const [currentLogo, setCurrentLogo] = useState<string>('');
 
@@ -63,8 +63,8 @@ export const FormContainer = ({
   };
 
   useEffect(() => {
-    setCurrentLogo(form.logoUrl);
-  }, [form]);
+    setCurrentLogo(initLogo);
+  }, [initLogo]);
 
   const updateItem = (item: ElementItem) => {
     setElements(
@@ -74,12 +74,13 @@ export const FormContainer = ({
       }),
     );
   };
+
   useEffect(() => {
     setForm((prevState) => ({
       ...prevState,
       elements: elements,
     }));
-  }, [elements]);
+  }, [elements, setForm]);
 
   const handleConfig = (config: ElementItem['config']) => {
     setEdittingItem({ ...edittingItem, config: config } as ElementItem);
@@ -102,13 +103,17 @@ export const FormContainer = ({
               className='h-36 w-72 flex-1 cursor-pointer object-cover'
               onClick={handleClickAddLogo}
             />
-            {currentLogo === form.logoUrl || (
+            {currentLogo === initLogo || (
               <CloseButton
                 radius='lg'
                 size='sm'
                 icon={<IoClose size={14} />}
                 onClick={() => {
-                  setCurrentLogo(form.logoUrl || '');
+                  setCurrentLogo(initLogo);
+                  setForm((prevState) => ({
+                    ...prevState,
+                    logoUrl: initLogo,
+                  }));
                 }}
                 className='absolute right-1 top-1 cursor-pointer bg-slate-200 p-0.5 text-slate-600 opacity-90 hover:bg-slate-300'
               />

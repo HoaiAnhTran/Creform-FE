@@ -2,6 +2,7 @@ import { Button, Stack } from '@mantine/core';
 
 import { ALIGNMENT_OPTIONS } from '@/constants/buttonStyles';
 import { useElementLayouts } from '@/contexts';
+import { useBuildFormContext } from '@/contexts';
 import { SubmitElement } from '@/types';
 import { cn } from '@/utils';
 
@@ -9,6 +10,8 @@ import { BaseElementProps } from '../FactoryElement';
 
 export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
   const { item, handleCreateFormResponse } = props;
+
+  const { previewMode, setClickedSubmit } = useBuildFormContext();
 
   const { isReadOnly } = useElementLayouts();
   const getAlignmentClass = (buttonAlignment: string) => {
@@ -28,13 +31,21 @@ export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
 
   const alignment = getAlignmentClass(item.config.buttonAlignment);
 
+  const handleSubmit = () => {
+    if (previewMode) {
+      setClickedSubmit(true);
+    } else {
+      handleCreateFormResponse();
+    }
+  };
+
   return (
     <Stack className={`py-2 ${alignment}`}>
       <Button
         type='submit'
         className={cn('h-[48px] w-[190px]', { 'cursor-text': isReadOnly })}
         color={item.config.buttonColor}
-        onClick={handleCreateFormResponse}
+        onClick={handleSubmit}
       >
         {item.config.buttonText}
       </Button>

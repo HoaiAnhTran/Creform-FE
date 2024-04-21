@@ -7,7 +7,8 @@ import { useCreateResponseMutation } from '@/redux/api/responseApi';
 import {
   ElementItem,
   ErrorResponse,
-  FormAnswerRessquest,
+  FormAnswerRequest,
+  FormRequest,
   FormResponse,
 } from '@/types';
 import { toastify } from '@/utils';
@@ -16,20 +17,20 @@ import { getFormAnswerFields } from '@/utils/seperates';
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
-  form?: FormResponse;
-  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  form?: FormResponse | FormRequest;
+  setIsSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const FormRenderComponent = ({
   form,
-  setIsSuccess,
+  setIsSuccess = () => {},
 }: FormRenderComponentProps) => {
   const { elements, setElements, edittingItem, setEdittingItem } =
     useElementLayouts();
 
   const [createFormResponse] = useCreateResponseMutation();
 
-  const [formResponse, setFormResponse] = useState<FormAnswerRessquest>();
+  const [formResponse, setFormResponse] = useState<FormAnswerRequest>();
 
   const handleFields = (fields: ElementItem['fields']) => {
     setEdittingItem({ ...edittingItem, fields: fields } as ElementItem);
@@ -104,7 +105,7 @@ export const FormRenderComponent = ({
     <div className='flex w-full flex-col items-center'>
       {form?.logoUrl && (
         <Image
-          src={form?.logoUrl}
+          src={form.logoUrl}
           className='mb-8 h-[140px] w-[360px] object-cover'
         />
       )}

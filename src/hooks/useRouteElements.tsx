@@ -4,6 +4,7 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { PATH } from '@/constants/routes';
 import { BuildFormContextProvider } from '@/contexts';
 import { BuildSection } from '@/organisms/BuildSection';
+import { PreviewSection } from '@/organisms/PreviewSection';
 import { PublishSection } from '@/organisms/PublishSection';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
@@ -78,6 +79,14 @@ export function useRouteElements() {
               path: 'publish',
               element: <PublishSection />,
             },
+            {
+              path: 'preview',
+              element: <PreviewSection />,
+            },
+            {
+              path: 'publish/preview',
+              element: <PreviewSection />,
+            },
           ],
         },
         {
@@ -103,6 +112,14 @@ export function useRouteElements() {
             {
               path: 'publish',
               element: <PublishSection />,
+            },
+            {
+              path: 'preview',
+              element: <PreviewSection />,
+            },
+            {
+              path: 'publish/preview',
+              element: <PreviewSection />,
             },
           ],
         },
