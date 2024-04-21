@@ -55,7 +55,12 @@ export const PublicPage = () => {
       />
       <div className='flex min-h-screen items-center justify-center bg-malachite-50'>
         {!isSuccess ? (
-          <Formik initialValues={{}} onSubmit={handleCreateFormResponse}>
+          <Formik
+            validateOnBlur={true}
+            validateOnChange={false}
+            initialValues={{}}
+            onSubmit={handleCreateFormResponse}
+          >
             <Form className='h-full w-full'>
               <Box pos='relative'>
                 <LoadingOverlay

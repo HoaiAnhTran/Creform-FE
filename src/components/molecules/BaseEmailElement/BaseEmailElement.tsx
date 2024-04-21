@@ -39,13 +39,13 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
         />
         <Field
           name={`${item.fields[0].id}.fieldValue`}
-          required={item.config.required}
           readOnly={isReadOnly}
           value={item.fields[0].text}
           validate={!isReadOnly ? validate : null}
           handleChange={handleOnChangeAnswer}
           nameElementField={item.fields[0].id}
           component={TextInput}
+          classNameWrapper='min-h-[60px]'
         />
 
         <TextInputMantine
@@ -53,7 +53,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           name='sublabel'
           variant='unstyled'
           classNames={{
-            input: 'text-xs font-thin text-slate-500',
+            input: 'text-xs font-thin text-slate-500 min-h-[18px] h-[18px]',
           }}
           value={item.config.sublabel}
           readOnly

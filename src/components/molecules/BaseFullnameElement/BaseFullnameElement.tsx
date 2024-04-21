@@ -45,29 +45,29 @@ export const BaseFullnameElement = (
         }}
       />
       <Group className='w-full flex-nowrap items-center justify-between'>
-        <Box className='flex w-1/2 flex-col justify-between gap-2'>
+        <Box className='flex w-1/2 flex-col justify-between'>
           <Field
             name={`${item.fields[0].id}.fieldValue`}
-            required={item.config.required}
             readOnly={isReadOnly}
             validate={!isReadOnly && item.config.required ? validate : null}
             handleChange={handleOnChangeAnswer}
             nameElementField={item.fields[0].id}
             component={TextInput}
             value={item.fields[0].text}
+            classNameWrapper='min-h-[60px]'
           />
           <Text className='text-[13px]'>{item.config.sublabels.firstName}</Text>
         </Box>
-        <Box className='flex w-1/2 flex-col justify-between gap-2'>
+        <Box className='flex w-1/2 flex-col justify-between'>
           <Field
             name={`${item.fields[1].id}.fieldValue`}
-            required={item.config.required}
             readOnly={isReadOnly}
             validate={!isReadOnly && item.config.required ? validate : null}
             handleChange={handleOnChangeAnswer}
             nameElementField={item.fields[1].id}
             component={TextInput}
             value={item.fields[1].text}
+            classNameWrapper='min-h-[60px]'
           />
           <Text className='text-[13px]'>{item.config.sublabels.lastName}</Text>
         </Box>
