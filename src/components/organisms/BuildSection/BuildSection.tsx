@@ -10,6 +10,7 @@ import { ScrollToTopButton } from '@/molecules/ScrollToTopButton';
 import {
   useCreateFormInFolderMutation,
   useCreateFormInFolderOfTeamMutation,
+  useCreateFormInTeamMutation,
   useCreateFormMutation,
   useGetFormDetailsQuery,
   useUpdateFormMutation,
@@ -31,14 +32,24 @@ const STRETCH_FORM_CONTAINER = 9;
 export const BuildSection = () => {
   const { form, toggledLeftbar, isEditForm, toggledRightbar } =
     useBuildFormContext();
+  const { id: formId } = useParams();
+
   const location = useLocation();
-  const { teamId, folderId } = location.state;
+  let teamId: number;
+  let folderId: number;
+
+  if (!formId && location.state) {
+    teamId = location.state.teamId;
+    folderId = location.state.folderId;
+  }
 
   const [currentElementType, setCurrentElementType] = useState<ElementType>();
   const [currentLogoFile, setCurrentLogoFile] = useState<File>();
   const [createForm, { isLoading: isCreatingForm }] = useCreateFormMutation();
   const [createFormInFolder, { isLoading: isCreatingFormInFolder }] =
     useCreateFormInFolderMutation();
+  const [createFormInTeam, { isLoading: isCreatingFormInTeam }] =
+    useCreateFormInTeamMutation();
   const [
     createFormInFolderOfTeam,
     { isLoading: isCreatingFormInFolderOfTeam },
@@ -47,7 +58,6 @@ export const BuildSection = () => {
   const [uploadImage, { isLoading: isUploadingImage }] =
     useUploadImageMutation();
   const navigate = useNavigate();
-  const { id: formId } = useParams();
 
   const { data: formData, isLoading: isLoadingGetFormDetails } =
     useGetFormDetailsQuery({ id: formId || '' }, { skip: !formId });
@@ -119,6 +129,41 @@ export const BuildSection = () => {
     });
   };
 
+  const handleCreateFormInTeam = (teamId: number) => {
+    const filteredForm = separateFields(form);
+    if (currentLogoFile) {
+      return uploadImage(currentLogoFile).then((imgRes) => {
+        if ('data' in imgRes) {
+          const logoUrl = imgRes.data.data.url;
+
+          return createFormInTeam({
+            teamId,
+            data: {
+              ...filteredForm,
+              logoUrl,
+            },
+          }).then((res) => {
+            if ('data' in res) {
+              toastify.displaySuccess(res.data.message);
+              return navigate(PATH.OVERVIEW_PAGE);
+            }
+
+            return toastify.displayError((res.error as ErrorResponse).message);
+          });
+        }
+
+        return toastify.displayError((imgRes.error as ErrorResponse).message);
+      });
+    }
+    return createFormInTeam({ teamId, data: filteredForm }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message);
+        return navigate(PATH.OVERVIEW_PAGE);
+      }
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
   const handleCreateFormInFolderOfTeam = (folderId: number, teamId: number) => {
     const filteredForm = separateFields(form);
     if (currentLogoFile) {
@@ -165,6 +210,9 @@ export const BuildSection = () => {
     }
     if (teamId === undefined) {
       return handleCreateFormInFolder(folderId);
+    }
+    if (folderId === undefined) {
+      return handleCreateFormInTeam(teamId);
     }
     return handleCreateFormInFolderOfTeam(folderId, teamId);
   };
@@ -227,12 +275,16 @@ export const BuildSection = () => {
           isLoading={
             isLoadingGetFormDetails ||
             isCreatingForm ||
+            isCreatingFormInFolder ||
+            isCreatingFormInTeam ||
+            isCreatingFormInFolderOfTeam ||
             isUpdatingForm ||
             isUploadingImage
           }
           isDisabled={
             isCreatingForm ||
             isCreatingFormInFolder ||
+            isCreatingFormInTeam ||
             isCreatingFormInFolderOfTeam ||
             isUpdatingForm
           }

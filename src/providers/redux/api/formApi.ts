@@ -121,6 +121,17 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    createFormInTeam: build.mutation<
+      SuccessResponse<GetFormsResponse>,
+      { teamId: number; data: FormRequest }
+    >({
+      query: ({ teamId, data }) => ({
+        url: `${API_URL.FORMS}/team/${teamId}`,
+        method: 'POST',
+        data,
+      }),
+      invalidatesTags: ['Forms'],
+    }),
     createFormInFolderOfTeam: build.mutation<
       SuccessResponse<GetFormsResponse>,
       { folderId: number; teamId: number; data: FormRequest }
@@ -149,5 +160,6 @@ export const {
   useRemoveFromFolderMutation,
   useRemoveFromTeamMutation,
   useCreateFormInFolderMutation,
+  useCreateFormInTeamMutation,
   useCreateFormInFolderOfTeamMutation,
 } = formApi;

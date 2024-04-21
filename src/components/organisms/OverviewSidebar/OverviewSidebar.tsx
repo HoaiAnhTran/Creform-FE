@@ -17,6 +17,8 @@ export const OverviewSidebar = () => {
   const [folderId, setFolderId] = useState<number>(0);
 
   const {
+    activeFolder,
+    activeTeam,
     setActiveFolder,
     setActiveAllForms,
     setActiveTeam,
@@ -40,7 +42,10 @@ export const OverviewSidebar = () => {
           className='w-full font-bold'
           onClick={() =>
             navigate(PATH.BUILD_FORM_PAGE, {
-              state: { folderId: undefined, teamId: undefined },
+              state: {
+                folderId: activeFolder === -1 ? undefined : activeFolder,
+                teamId: activeTeam === -1 ? undefined : activeTeam,
+              },
             })
           }
         />
