@@ -37,7 +37,7 @@ export const defaultTextConfig: TextConfig = {
   fieldLabel: 'Type a question',
   required: false,
   placeholder: 'Type a sublabel',
-  sublabel: '',
+  sublabel: 'Please enter your answer',
 };
 
 export const defaultShortTextHeightWidth = {

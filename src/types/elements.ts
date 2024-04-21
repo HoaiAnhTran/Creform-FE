@@ -20,15 +20,6 @@ export interface FullnameConfig {
   };
 }
 
-export interface FullnameConfig {
-  fieldLabel: string;
-  required: boolean;
-  sublabels: {
-    firstName: string;
-    lastName: string;
-  };
-}
-
 export interface TextConfig {
   fieldLabel: string;
   required: boolean;

@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import {
-  Box,
   CloseButton,
   Divider,
   Group,
@@ -10,7 +9,6 @@ import {
   LoadingOverlay,
   Stack,
 } from '@mantine/core';
-import { Form, Formik } from 'formik';
 
 import { Button } from '@/atoms/Button';
 import { BIG_Z_INDEX } from '@/constants';
@@ -155,29 +153,18 @@ export const FormContainer = ({
             variant='dashed'
           />
         )}
-        <Box pos='relative'>
-          <LoadingOverlay
-            visible={isLoading}
-            zIndex={BIG_Z_INDEX}
-            overlayProps={{ radius: 'sm', blur: 2 }}
-            loaderProps={{ color: 'green' }}
-          />
-          <Formik
-            initialValues={{}}
-            validateOnBlur={true}
-            validateOnChange={false}
-            onSubmit={() => {}}
-          >
-            <Form className='h-full w-full'>
-              <ResponsiveGridLayout
-                currentElementType={currentElementType!}
-                updateItem={updateItem}
-                handleConfig={handleConfig}
-                isDisabled={isDisabled}
-              />
-            </Form>
-          </Formik>
-        </Box>
+        <LoadingOverlay
+          visible={isLoading}
+          zIndex={BIG_Z_INDEX}
+          overlayProps={{ radius: 'sm', blur: 2 }}
+          loaderProps={{ color: 'green' }}
+        />
+        <ResponsiveGridLayout
+          currentElementType={currentElementType!}
+          updateItem={updateItem}
+          handleConfig={handleConfig}
+          isDisabled={isDisabled}
+        />
         <PropertiesRightbar
           edittingItem={edittingItem!}
           updateItem={updateItem}

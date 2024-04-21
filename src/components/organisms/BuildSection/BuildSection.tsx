@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
+import { Form, Formik } from 'formik';
 import _isEqual from 'lodash.isequal';
 
 import { PATH } from '@/constants/routes';
@@ -256,60 +257,74 @@ export const BuildSection = () => {
   };
 
   return (
-    <Box className='relative flex h-full w-full bg-malachite-50'>
-      <Box
-        flex={
-          toggledLeftbar
-            ? STRETCH_BUILD_FORM_LEFT_BAR
-            : SHRINK_BUILD_FORM_LEFT_BAR
-        }
-        className='z-[100] transition-all duration-200 ease-linear'
-      >
-        <BuildFormLeftbar setCurrentElementType={setCurrentElementType} />
-      </Box>
-      <Box
-        flex={toggledLeftbar ? STRETCH_FORM_CONTAINER : SHRINK_FORM_CONTAINER}
-        className='transition-all duration-200 ease-linear'
-      >
-        <FormContainer
-          isLoading={
-            isLoadingGetFormDetails ||
-            isCreatingForm ||
-            isCreatingFormInFolder ||
-            isCreatingFormInTeam ||
-            isCreatingFormInFolderOfTeam ||
-            isUpdatingForm ||
-            isUploadingImage
-          }
-          isDisabled={
-            isCreatingForm ||
-            isCreatingFormInFolder ||
-            isCreatingFormInTeam ||
-            isCreatingFormInFolderOfTeam ||
-            isUpdatingForm
-          }
-          currentElementType={currentElementType!}
-          setCurrentLogoFile={setCurrentLogoFile}
-        />
-      </Box>
-      {toggledRightbar || (
-        <SaveButton
-          handleSave={() =>
-            isEditForm
-              ? handleUpdateForm(+formId!)
-              : handleCreateFormBasedOnIds()
-          }
-          isLoading={
-            isCreatingForm ||
-            isCreatingFormInFolder ||
-            isCreatingFormInFolderOfTeam ||
-            isUpdatingForm ||
-            isUploadingImage
-          }
-          canSave={!isEditForm || !_isEqual(formData, form)}
-        />
-      )}
-      <ScrollToTopButton className='fixed bottom-14 right-10'></ScrollToTopButton>
-    </Box>
+    <Formik
+      initialValues={{}}
+      validateOnBlur={true}
+      validateOnChange={false}
+      onSubmit={() => {
+        isEditForm ? handleUpdateForm(+formId!) : handleCreateForm();
+      }}
+    >
+      <Form className='h-full w-full'>
+        <Box className='relative flex h-full w-full bg-malachite-50'>
+          <Box
+            flex={
+              toggledLeftbar
+                ? STRETCH_BUILD_FORM_LEFT_BAR
+                : SHRINK_BUILD_FORM_LEFT_BAR
+            }
+            className='transition-all duration-200 ease-linear'
+          >
+            <BuildFormLeftbar setCurrentElementType={setCurrentElementType} />
+          </Box>
+          <Box
+            flex={
+              toggledLeftbar ? STRETCH_FORM_CONTAINER : SHRINK_FORM_CONTAINER
+            }
+            className='transition-all duration-200 ease-linear'
+          >
+            <Box pos='relative'>
+              <FormContainer
+                isLoading={
+                  isLoadingGetFormDetails ||
+                  isCreatingForm ||
+                  isCreatingFormInFolder ||
+                  isCreatingFormInTeam ||
+                  isCreatingFormInFolderOfTeam ||
+                  isUpdatingForm ||
+                  isUploadingImage
+                }
+                isDisabled={
+                  isCreatingForm ||
+                  isCreatingFormInFolder ||
+                  isCreatingFormInFolderOfTeam ||
+                  isUpdatingForm
+                }
+                currentElementType={currentElementType!}
+                setCurrentLogoFile={setCurrentLogoFile}
+              />
+            </Box>
+            {toggledRightbar || (
+              <SaveButton
+                handleSave={() =>
+                  isEditForm
+                    ? handleUpdateForm(+formId!)
+                    : handleCreateFormBasedOnIds()
+                }
+                isLoading={
+                  isCreatingForm ||
+                  isCreatingFormInFolder ||
+                  isCreatingFormInFolderOfTeam ||
+                  isUpdatingForm ||
+                  isUploadingImage
+                }
+                canSave={!isEditForm || !_isEqual(formData, form)}
+              />
+            )}
+            <ScrollToTopButton className='fixed bottom-14 right-10'></ScrollToTopButton>
+          </Box>
+        </Box>
+      </Form>
+    </Formik>
   );
 };
