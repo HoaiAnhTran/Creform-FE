@@ -7,14 +7,14 @@ import { Form, Formik } from 'formik';
 import { Button } from '@/atoms/Button';
 import { MESSAGES } from '@/constants/messages';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
-import { ElementItem } from '@/types';
+import { ElementItem, ElementType } from '@/types';
 import { toastify } from '@/utils';
 
 import { PropertiesRightbar } from '../PropertiesRightbar';
 import { ResponsiveGridLayout } from '../ResponsiveGridLayout';
 
 interface FormContainerProps {
-  currentElementType?: string;
+  currentElementType?: ElementType;
   setCurrentLogoFile: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
@@ -138,7 +138,12 @@ export const FormContainer = ({
             variant='dashed'
           />
         )}
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik
+          initialValues={{}}
+          validateOnBlur={true}
+          validateOnChange={false}
+          onSubmit={() => {}}
+        >
           <Form className='h-full w-full'>
             <ResponsiveGridLayout
               currentElementType={currentElementType!}

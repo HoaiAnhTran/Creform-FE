@@ -29,6 +29,7 @@ export const SaveButton = ({
       offset={12}
     >
       <UnstyledButton
+        type='submit'
         className={cn(
           'flex flex-col items-center text-malachite-500 transition-all duration-[600ms] ease-linear',
           className,

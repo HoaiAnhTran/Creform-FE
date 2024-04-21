@@ -12,7 +12,7 @@ export const HeadingProptertiesConfig = (
     (key: keyof HeadingConfig) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       handleConfig({
-        ...edittingItem?.config,
+        ...edittingItem.config,
         [key]: event.currentTarget.value,
       });
       updateItem({
@@ -31,7 +31,7 @@ export const HeadingProptertiesConfig = (
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
-          value={(edittingItem?.config as HeadingConfig).headingText}
+          value={edittingItem.config.headingText}
           onChange={handleChange('headingText')}
         />
       </Stack>
@@ -40,7 +40,7 @@ export const HeadingProptertiesConfig = (
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
-          value={(edittingItem?.config as HeadingConfig).subheadingText}
+          value={edittingItem.config.subheadingText}
           onChange={handleChange('subheadingText')}
         />
       </Stack>

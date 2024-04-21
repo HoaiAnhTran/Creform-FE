@@ -13,17 +13,23 @@ import {
   useUpdateFormMutation,
 } from '@/redux/api/formApi';
 import { useUploadImageMutation } from '@/redux/api/imageApi';
-import { ErrorResponse } from '@/types';
+import { ElementType, ErrorResponse } from '@/types';
 import { toastify } from '@/utils';
 
 import { BuildFormLeftbar } from '../BuildFormLeftbar';
 import { FormContainer } from '../FormContainer';
 
+const SHRINK_BUILD_FORM_LEFT_BAR = 0;
+const STRETCH_BUILD_FORM_LEFT_BAR = 3;
+
+const SHRINK_FORM_CONTAINER = 1;
+const STRETCH_FORM_CONTAINER = 9;
+
 export const BuildSection = () => {
   const { form, toggledLeftbar, isEditForm, toggledRightbar } =
     useBuildFormContext();
 
-  const [currentElementType, setCurrentElementType] = useState<string>();
+  const [currentElementType, setCurrentElementType] = useState<ElementType>();
   const [currentLogoFile, setCurrentLogoFile] = useState<File>();
   const [createForm, { isLoading: isCreatingForm }] = useCreateFormMutation();
   const [updateForm, { isLoading: isUpdatingForm }] = useUpdateFormMutation();
@@ -114,15 +120,19 @@ export const BuildSection = () => {
   };
 
   return (
-    <Box className='relative flex min-h-screen w-full bg-malachite-50'>
+    <Box className='relative flex h-full w-full bg-malachite-50'>
       <Box
-        flex={toggledLeftbar ? 3 : 0}
+        flex={
+          toggledLeftbar
+            ? STRETCH_BUILD_FORM_LEFT_BAR
+            : SHRINK_BUILD_FORM_LEFT_BAR
+        }
         className='transition-all duration-200 ease-linear'
       >
         <BuildFormLeftbar setCurrentElementType={setCurrentElementType} />
       </Box>
       <Box
-        flex={toggledLeftbar ? 9 : 1}
+        flex={toggledLeftbar ? STRETCH_FORM_CONTAINER : SHRINK_FORM_CONTAINER}
         className='transition-all duration-200 ease-linear'
       >
         <ElementLayoutProvider>

@@ -10,8 +10,14 @@ import {
   isHeadingElement,
   isSubmitElement,
 } from '@/molecules/FactoryElement';
+import {
+  isLongTextElement,
+  isShortTextElement,
+} from '@/molecules/FactoryElement';
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
+import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
+import { ShortTextPropertiesConfig } from '@/molecules/ShortTextPropertiesConfig';
 import { SubmitProptertiesConfig } from '@/molecules/SubmitPropertiesConfig';
 import { ElementItem } from '@/types';
 import { cn } from '@/utils';
@@ -76,6 +82,20 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isSubmitElement(edittingItem):
                 return (
                   <SubmitProptertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isShortTextElement(edittingItem):
+                return (
+                  <ShortTextPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isLongTextElement(edittingItem):
+                return (
+                  <LongTextPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

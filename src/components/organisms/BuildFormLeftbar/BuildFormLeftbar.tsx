@@ -6,11 +6,12 @@ import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
+import { ElementType } from '@/types';
 import { cn } from '@/utils';
 
 const elementList = ElementList;
 interface BuildFormLeftbarProps {
-  setCurrentElementType: (element: string) => void;
+  setCurrentElementType: (element: ElementType) => void;
 }
 
 export const BuildFormLeftbar = ({
@@ -19,9 +20,8 @@ export const BuildFormLeftbar = ({
   const [toggledLeftbar, setToggledLeftbar] = useState(false);
 
   const [scroll] = useWindowScroll();
-
-  const handleDrop = (elementType: string) => {
-    setCurrentElementType(elementType);
+  const handleDrop = (element: ElementType) => {
+    setCurrentElementType(element);
   };
 
   return (
