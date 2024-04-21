@@ -35,18 +35,24 @@ export interface RawResponseRow {
 }
 
 export interface RawFormAnswerCell {
-  id: string;
+  elementId: string;
   elementName: string;
   answers: RawFieldAnswerCell[];
 }
 
 export interface RawFieldAnswerCell {
-  id: string;
+  fieldId: string;
   fieldName: string;
   text: string;
 }
 
+export interface ElementIdAndName {
+  elementId: string;
+  elementName: string;
+}
+
 export interface ReturnGetResponses {
+  elementIdAndNameList: ElementIdAndName[];
   responses: RawResponseRow[];
   page: number;
   pageSize: number;

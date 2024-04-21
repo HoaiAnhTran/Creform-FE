@@ -25,19 +25,23 @@ export const ResponsesPage = () => {
     () =>
       rawRecords?.map((record) => {
         const answers = record.formAnswers.reduce(
-          (elementAnswersList, elementAnswers, currentIndex) => {
+          (elementAnswersList, elementAnswers) => {
             const elementAnswer = {
-              [`NameElement${currentIndex}`]: elementAnswers.elementName,
-              [`ValueElement${currentIndex}`]: elementAnswers.answers
-                .map((fieldAnswer) => fieldAnswer.text)
-                .join(' '),
+              [`NameElement${elementAnswers.elementId}`]:
+                elementAnswers.elementName,
+              [`ValueElement${elementAnswers.elementId}`]:
+                elementAnswers.answers
+                  .map((fieldAnswer) => fieldAnswer.text)
+                  .join(' '),
             };
 
             const fieldsAnswers = elementAnswers.answers.reduce(
-              (answers, currentFieldAnswer, currentIndex) => ({
+              (answers, currentFieldAnswer) => ({
                 ...answers,
-                [`NameField${currentIndex}`]: currentFieldAnswer.fieldName,
-                [`ValueField${currentIndex}`]: currentFieldAnswer.text,
+                [`NameField${elementAnswers.elementId}`]:
+                  currentFieldAnswer.fieldName,
+                [`ValueField${elementAnswers.elementId}`]:
+                  currentFieldAnswer.text,
               }),
               { ...elementAnswer },
             );
@@ -91,6 +95,7 @@ export const ResponsesPage = () => {
         />
         <div>
           <ResponsesTable
+            elementIdAndNameList={response.elementIdAndNameList}
             totalResponses={response.totalResponses}
             pageSize={response.pageSize}
             isLoading={isLoading}

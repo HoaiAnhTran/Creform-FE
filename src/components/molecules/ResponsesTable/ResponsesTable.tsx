@@ -1,16 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import sortBy from 'lodash.sortby';
-import toString from 'lodash.tostring';
 import {
   DataTable,
   DataTableColumn,
   DataTableSortStatus,
 } from 'mantine-datatable';
 
-import { GetResponsesParams } from '@/types';
-import { isKeyOfObject } from '@/utils';
+import { ElementIdAndName, GetResponsesParams } from '@/types';
 
 interface ResponsesTableProps {
+  elementIdAndNameList: ElementIdAndName[];
   selectedRecords: ResponseRow[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<ResponseRow[]>>;
   responseRows: ResponseRow[];
@@ -27,13 +26,6 @@ export interface StringProperties {
   [key: string]: string;
 }
 
-interface CellTable {
-  accessor: string;
-  nowrap: boolean;
-  sortable: boolean;
-  title: string;
-}
-
 export type ResponseRow =
   | {
       id: number;
@@ -43,6 +35,7 @@ export type ResponseRow =
 
 export const ResponsesTable = (props: ResponsesTableProps) => {
   const {
+    elementIdAndNameList,
     selectedRecords,
     setSelectedRecords,
     responseRows,
@@ -77,40 +70,28 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     resizable: true,
   };
 
-  const elementsKeys = Object.keys(responseRows[0]);
-
   const columns: DataTableColumn<ResponseRow>[] = useMemo(
-    () =>
-      elementsKeys
-        .filter((key) => !key.includes('Field'))
-        .reduce<CellTable[]>((keys, key, currentIndex, array) => {
-          if (key.includes('ValueElement')) return keys;
-          if (
-            key.includes('NameElement') &&
-            isKeyOfObject(key, responseRows[0])
-          )
-            return [
-              ...keys,
-              {
-                accessor: `${array[currentIndex + 1]}`,
-                cellsClassName:
-                  'cursor-pointer text-center hover:bg-malachite-100',
-                title: toString(responseRows[0][key]),
-                ...columnProps,
-              },
-            ];
-          return [
-            ...keys,
-            {
-              accessor: key,
-              cellsClassName:
-                'cursor-pointer text-center hover:bg-malachite-100',
-              title: key === 'createdAt' ? 'Created At' : key,
-              ...columnProps,
-            },
-          ];
-        }, []),
-    [elementsKeys, responseRows],
+    () => [
+      {
+        accessor: 'id',
+        cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
+        title: 'id',
+        ...columnProps,
+      },
+      {
+        accessor: 'createdAt',
+        cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
+        title: 'Created At',
+        ...columnProps,
+      },
+      ...elementIdAndNameList.map((elementIdAndName) => ({
+        accessor: `ValueElement${elementIdAndName.elementId}`,
+        cellsClassName: 'cursor-pointer text-center hover:bg-malachite-100',
+        title: elementIdAndName.elementName,
+        ...columnProps,
+      })),
+    ],
+    [elementIdAndNameList],
   );
 
   return (
