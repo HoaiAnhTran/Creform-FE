@@ -93,16 +93,16 @@ export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
             onChange={(event) => handleOnChangeSearchInput(event)}
             leftSection={<CiSearch size={16} />}
             rightSection={
-              searchValue && (
-                <ActionIcon
-                  variant='transparent'
-                  size='lg'
-                  className='text-gray-400 hover:text-gray-500'
-                  onClick={handleClearSearchInput}
-                >
-                  <IoCloseOutline size={18} />
-                </ActionIcon>
-              )
+              <ActionIcon
+                variant='transparent'
+                size='lg'
+                onClick={handleClearSearchInput}
+                className={cn('invisible text-gray-400 hover:text-gray-500', {
+                  visible: searchValue,
+                })}
+              >
+                <IoCloseOutline size={18} />
+              </ActionIcon>
             }
           />
         </div>
