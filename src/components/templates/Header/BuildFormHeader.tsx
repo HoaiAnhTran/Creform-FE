@@ -86,6 +86,9 @@ export const BuildFormHeader = () => {
                 title: event.target.value,
               }));
             }}
+            onFocus={() => {
+              setIsEditingTitle(true);
+            }}
             onBlur={() => setIsEditingTitle(false)}
             className='min-w-14 max-w-full overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
             style={{ width: `${currentTitle.length * 11}px` }}

@@ -339,6 +339,20 @@ export const FormsTable = () => {
         records={data?.forms}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
+        onRowClick={({ record }) => {
+          setSelectedRecords((prev) => {
+            const isSelected = prev.some(
+              (selectedRecord) => selectedRecord.id === record.id,
+            );
+
+            if (isSelected) {
+              return prev.filter(
+                (selectedRecord) => selectedRecord.id !== record.id,
+              );
+            }
+            return [...prev, record];
+          });
+        }}
         noRecordsText='No records found'
         totalRecords={data?.totalForms}
         recordsPerPage={data?.pageSize ?? DEFAULT_PAGE_SIZE}

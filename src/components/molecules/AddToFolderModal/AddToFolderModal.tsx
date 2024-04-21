@@ -83,7 +83,7 @@ export const AddToFolderModal = ({
       headerIcon={<FaFolderPlus className='text-white' />}
       headerTitle='Add to folder'
       body={
-        <Box className='px-3 py-5'>
+        <Box className='px-3 py-8'>
           <Radio.Group
             defaultValue={''}
             value={selectedFolderId}
@@ -92,7 +92,7 @@ export const AddToFolderModal = ({
             }}
             name='folderOption'
             label='Select a folder below'
-            classNames={{ label: 'text-sm font-semibold' }}
+            classNames={{ label: 'text-base font-semibold' }}
             className='flex flex-col justify-between gap-4'
           >
             <Box className='flex flex-col items-start justify-between gap-4'>
@@ -103,7 +103,7 @@ export const AddToFolderModal = ({
                   label={folder.name}
                   icon={CheckIcon}
                   color='green'
-                  size='xs'
+                  size='sm'
                   disabled={disabledFolderOptions.includes(
                     folder.id.toString(),
                   )}

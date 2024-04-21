@@ -61,7 +61,7 @@ export const MoveToTeamModal = ({
       headerIcon={<RiTeamFill className='text-white' />}
       headerTitle='Move to team'
       body={
-        <Box className='px-3 py-5'>
+        <Box className='px-3 py-8'>
           <Radio.Group
             value={selectedTeamId}
             onChange={(value: string) => {
@@ -69,7 +69,7 @@ export const MoveToTeamModal = ({
             }}
             name='teamOption'
             label='Select a team below'
-            classNames={{ label: 'text-sm font-semibold' }}
+            classNames={{ label: 'text-base font-semibold' }}
             className='flex flex-col justify-between gap-4'
           >
             <Box className='flex flex-col items-start justify-between gap-4'>
@@ -80,7 +80,7 @@ export const MoveToTeamModal = ({
                   label={team.name}
                   icon={CheckIcon}
                   color='green'
-                  size='xs'
+                  size='sm'
                   disabled={disabledTeamOptions.includes(team.id.toString())}
                 />
               ))}

@@ -34,11 +34,6 @@ export const SignupPage = () => {
 
   return (
     <div className='h-screen w-screen'>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={BIG_Z_INDEX}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <div className='h-headerHeight bg-malachite-500 px-4 pt-4'>
         <UnSignedHeader />
       </div>
@@ -51,14 +46,19 @@ export const SignupPage = () => {
             Powerful forms get it done.
           </Text>
         </div>
-        <div className='flex items-center justify-evenly'>
+        <div className='flex h-[405px] items-center justify-evenly'>
           <div className='mt-3'>
             <Image
               className='h-64 w-80 object-contain'
               src='./images/girl.jpeg'
             />
           </div>
-          <div className='w-[400px] rounded border bg-white px-6 py-5 shadow-[0px_0px_15px_rgba(0,0,0,0.2)]'>
+          <div className='relative w-[400px] rounded border bg-white px-6 py-5 shadow-[0px_0px_15px_rgba(0,0,0,0.2)]'>
+            <LoadingOverlay
+              visible={visible}
+              zIndex={BIG_Z_INDEX}
+              overlayProps={{ radius: 'sm', blur: 2 }}
+            />
             <SignupForm onSubmit={onSubmit} />
           </div>
           <div>
