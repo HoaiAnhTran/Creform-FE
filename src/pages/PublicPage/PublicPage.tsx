@@ -22,14 +22,14 @@ export const PublicPage = () => {
   );
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { elements, canSubmit } = useElementLayouts();
+  const { elements } = useElementLayouts();
   const [createFormResponse, { isLoading: isLoadingCreateFormResponse }] =
     useCreateResponseMutation();
 
   const formResponse = useMemo(() => getFormAnswerFields(elements), [elements]);
 
   const handleCreateFormResponse = () => {
-    if (!formResponse || !canSubmit) return;
+    if (!formResponse) return;
     return createFormResponse({ formId: +formId!, payload: formResponse }).then(
       (res) => {
         if ('data' in res) {

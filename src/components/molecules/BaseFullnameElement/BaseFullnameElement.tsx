@@ -19,18 +19,10 @@ export const BaseFullnameElement = (
   props: BaseElementProps<FullnameElement>,
 ) => {
   const { item, handleOnChangeAnswer } = props;
-  const { isReadOnly, setCanSubmit } = useElementLayouts();
+  const { isReadOnly } = useElementLayouts();
 
   const validate = async (value: string) =>
-    stringRequired
-      .validate(value)
-      .then(() => {
-        setCanSubmit(true);
-      })
-      .catch((err) => {
-        setCanSubmit(false);
-        return err.errors[0];
-      });
+    stringRequired.validate(value).catch((err) => err.errors[0]);
 
   return (
     <Stack className='w-full justify-between gap-2.5'>

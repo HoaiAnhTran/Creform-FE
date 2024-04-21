@@ -11,18 +11,12 @@ import { TextInput } from '../TextInput';
 
 export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
   const { item, handleOnChangeAnswer } = props;
-  const { isReadOnly, setCanSubmit } = useElementLayouts();
+  const { isReadOnly } = useElementLayouts();
 
   const validate = async (value: string) =>
     (item.config.required ? emailRequired : emailFormat)
       .validate(value)
-      .then(() => {
-        setCanSubmit(true);
-      })
-      .catch((err) => {
-        setCanSubmit(false);
-        return err.errors[0];
-      });
+      .catch((err) => err.errors[0]);
 
   return (
     <Group>
