@@ -140,6 +140,7 @@ export const BuildSection = () => {
       >
         <ElementLayoutProvider>
           <FormContainer
+            isDisabled={isCreatingForm || isUpdatingForm}
             currentElementType={currentElementType!}
             setCurrentLogoFile={setCurrentLogoFile}
           />

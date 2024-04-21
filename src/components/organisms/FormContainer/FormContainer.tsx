@@ -16,11 +16,13 @@ import { ResponsiveGridLayout } from '../ResponsiveGridLayout';
 interface FormContainerProps {
   currentElementType?: ElementType;
   setCurrentLogoFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+  isDisabled: boolean;
 }
 
 export const FormContainer = ({
   currentElementType,
   setCurrentLogoFile,
+  isDisabled,
 }: FormContainerProps) => {
   const { form, setForm } = useBuildFormContext();
 
@@ -149,6 +151,7 @@ export const FormContainer = ({
               currentElementType={currentElementType!}
               updateItem={updateItem}
               handleConfig={handleConfig}
+              isDisabled={isDisabled}
             />
           </Form>
         </Formik>

@@ -264,6 +264,7 @@ export const FormsTable = ({
       loaderType='oval'
       loaderSize='md'
       loaderColor='green'
+      className='!h-[85%]'
     />
   );
 };

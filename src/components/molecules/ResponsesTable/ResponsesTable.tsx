@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import sortBy from 'lodash/sortBy';
-import toString from 'lodash/tostring';
+import sortBy from 'lodash.sortby';
+import toString from 'lodash.tostring';
 import {
   DataTable,
   DataTableColumn,

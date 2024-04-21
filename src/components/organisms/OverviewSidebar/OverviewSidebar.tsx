@@ -28,7 +28,7 @@ export const OverviewSidebar = () => {
   const folderListNotInTeam = folderList?.filter((folder) => !folder.teamId);
 
   return (
-    <Box className='relative h-full w-full border-r border-slate-300 bg-slate-100 text-slate-600'>
+    <Box className='relative h-full w-full overflow-y-scroll border-r border-slate-300 bg-slate-100 text-slate-600'>
       <Box className='sticky top-0 z-10 w-full border border-solid border-slate-300 bg-slate-100 py-4 pl-[19px] pr-[28px] text-center'>
         <Button
           size='md'
@@ -37,7 +37,7 @@ export const OverviewSidebar = () => {
           onClick={() => navigate(PATH.BUILD_FORM_PAGE)}
         />
       </Box>
-      <Box className='flex flex-col gap-5 overflow-y-scroll bg-slate-100 p-3 lg:p-5'>
+      <Box className='flex flex-col gap-5 bg-slate-100 p-3 lg:p-5'>
         <Box>
           <FolderGroup
             folderList={folderListNotInTeam}
