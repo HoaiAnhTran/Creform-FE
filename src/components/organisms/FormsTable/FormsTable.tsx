@@ -249,7 +249,9 @@ export const FormsTable = () => {
               }}
               className='h-full w-full font-medium focus:font-bold'
               onClick={() => {
-                navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`);
+                navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`, {
+                  state: {},
+                });
               }}
             />
           ) : (

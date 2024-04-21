@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
 import _isEqual from 'lodash.isequal';
 
@@ -8,6 +8,8 @@ import { useBuildFormContext } from '@/contexts';
 import { SaveButton } from '@/molecules/SaveButton';
 import { ScrollToTopButton } from '@/molecules/ScrollToTopButton';
 import {
+  useCreateFormInFolderMutation,
+  useCreateFormInFolderOfTeamMutation,
   useCreateFormMutation,
   useGetFormDetailsQuery,
   useUpdateFormMutation,
@@ -29,10 +31,18 @@ const STRETCH_FORM_CONTAINER = 9;
 export const BuildSection = () => {
   const { form, toggledLeftbar, isEditForm, toggledRightbar } =
     useBuildFormContext();
+  const location = useLocation();
+  const { teamId, folderId } = location.state;
 
   const [currentElementType, setCurrentElementType] = useState<ElementType>();
   const [currentLogoFile, setCurrentLogoFile] = useState<File>();
   const [createForm, { isLoading: isCreatingForm }] = useCreateFormMutation();
+  const [createFormInFolder, { isLoading: isCreatingFormInFolder }] =
+    useCreateFormInFolderMutation();
+  const [
+    createFormInFolderOfTeam,
+    { isLoading: isCreatingFormInFolderOfTeam },
+  ] = useCreateFormInFolderOfTeamMutation();
   const [updateForm, { isLoading: isUpdatingForm }] = useUpdateFormMutation();
   const [uploadImage, { isLoading: isUploadingImage }] =
     useUploadImageMutation();
@@ -54,13 +64,11 @@ export const BuildSection = () => {
             logoUrl,
           }).then((res) => {
             if ('data' in res) {
-              toastify.displaySuccess(res.data.message as string);
+              toastify.displaySuccess(res.data.message);
               return navigate(PATH.OVERVIEW_PAGE);
             }
 
-            return toastify.displayError(
-              (res.error as ErrorResponse).message as string,
-            );
+            return toastify.displayError((res.error as ErrorResponse).message);
           });
         }
 
@@ -69,13 +77,96 @@ export const BuildSection = () => {
     }
     return createForm(filteredForm).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data.message);
         return navigate(PATH.OVERVIEW_PAGE);
       }
-      return toastify.displayError(
-        (res.error as ErrorResponse).message as string,
-      );
+      return toastify.displayError((res.error as ErrorResponse).message);
     });
+  };
+
+  const handleCreateFormInFolder = (folderId: number) => {
+    const filteredForm = separateFields(form);
+    if (currentLogoFile) {
+      return uploadImage(currentLogoFile).then((imgRes) => {
+        if ('data' in imgRes) {
+          const logoUrl = imgRes.data.data.url;
+
+          return createFormInFolder({
+            folderId,
+            data: {
+              ...filteredForm,
+              logoUrl,
+            },
+          }).then((res) => {
+            if ('data' in res) {
+              toastify.displaySuccess(res.data.message);
+              return navigate(PATH.OVERVIEW_PAGE);
+            }
+
+            return toastify.displayError((res.error as ErrorResponse).message);
+          });
+        }
+
+        return toastify.displayError((imgRes.error as ErrorResponse).message);
+      });
+    }
+    return createFormInFolder({ folderId, data: filteredForm }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message);
+        return navigate(PATH.OVERVIEW_PAGE);
+      }
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
+  const handleCreateFormInFolderOfTeam = (folderId: number, teamId: number) => {
+    const filteredForm = separateFields(form);
+    if (currentLogoFile) {
+      return uploadImage(currentLogoFile).then((imgRes) => {
+        if ('data' in imgRes) {
+          const logoUrl = imgRes.data.data.url;
+
+          return createFormInFolderOfTeam({
+            folderId,
+            teamId,
+            data: {
+              ...filteredForm,
+              logoUrl,
+            },
+          }).then((res) => {
+            if ('data' in res) {
+              toastify.displaySuccess(res.data.message);
+              return navigate(PATH.OVERVIEW_PAGE);
+            }
+
+            return toastify.displayError((res.error as ErrorResponse).message);
+          });
+        }
+
+        return toastify.displayError((imgRes.error as ErrorResponse).message);
+      });
+    }
+    return createFormInFolderOfTeam({
+      folderId,
+      teamId,
+      data: filteredForm,
+    }).then((res) => {
+      if ('data' in res) {
+        toastify.displaySuccess(res.data.message);
+        return navigate(PATH.OVERVIEW_PAGE);
+      }
+      return toastify.displayError((res.error as ErrorResponse).message);
+    });
+  };
+
+  const handleCreateFormBasedOnIds = () => {
+    if (folderId === undefined && teamId === undefined) {
+      return handleCreateForm();
+    }
+    if (teamId === undefined) {
+      return handleCreateFormInFolder(folderId);
+    }
+    return handleCreateFormInFolderOfTeam(folderId, teamId);
   };
 
   const handleUpdateForm = (formId: number) => {
@@ -93,13 +184,11 @@ export const BuildSection = () => {
             },
           }).then((res) => {
             if ('data' in res) {
-              toastify.displaySuccess(res.data.message as string);
+              toastify.displaySuccess(res.data.message);
               return;
             }
 
-            return toastify.displayError(
-              (res.error as ErrorResponse).message as string,
-            );
+            return toastify.displayError((res.error as ErrorResponse).message);
           });
         }
 
@@ -111,12 +200,10 @@ export const BuildSection = () => {
       data: filteredForm,
     }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data.message);
         return;
       }
-      return toastify.displayError(
-        (res.error as ErrorResponse).message as string,
-      );
+      return toastify.displayError((res.error as ErrorResponse).message);
     });
   };
 
@@ -143,7 +230,12 @@ export const BuildSection = () => {
             isUpdatingForm ||
             isUploadingImage
           }
-          isDisabled={isCreatingForm || isUpdatingForm}
+          isDisabled={
+            isCreatingForm ||
+            isCreatingFormInFolder ||
+            isCreatingFormInFolderOfTeam ||
+            isUpdatingForm
+          }
           currentElementType={currentElementType!}
           setCurrentLogoFile={setCurrentLogoFile}
         />
@@ -151,9 +243,17 @@ export const BuildSection = () => {
       {toggledRightbar || (
         <SaveButton
           handleSave={() =>
-            isEditForm ? handleUpdateForm(+formId!) : handleCreateForm()
+            isEditForm
+              ? handleUpdateForm(+formId!)
+              : handleCreateFormBasedOnIds()
           }
-          isLoading={isCreatingForm || isUpdatingForm || isUploadingImage}
+          isLoading={
+            isCreatingForm ||
+            isCreatingFormInFolder ||
+            isCreatingFormInFolderOfTeam ||
+            isUpdatingForm ||
+            isUploadingImage
+          }
           canSave={!isEditForm || !_isEqual(formData, form)}
         />
       )}

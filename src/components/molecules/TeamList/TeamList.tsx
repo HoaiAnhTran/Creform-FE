@@ -123,15 +123,11 @@ export const TeamList = ({
                   }
                   active={isActiveTeam}
                   leftSection={
-                    <Avatar
-                      size='sm'
-                      src={team.logoUrl}
-                      className={
-                        isActiveTeam && !team.logoUrl
-                          ? 'rounded-full bg-white'
-                          : ''
-                      }
-                    />
+                    team.logoUrl ? (
+                      <Avatar size='sm' src={team.logoUrl} />
+                    ) : (
+                      <RiTeamFill size={18} />
+                    )
                   }
                 />
                 <Menu
@@ -144,12 +140,12 @@ export const TeamList = ({
                   <Menu.Target>
                     <Box className='flex'>
                       <PiDotsThreeOutlineVerticalFill
-                        size='1.5rem'
-                        className='rounded-md text-slate-100 hover:bg-slate-200 hover:text-slate-600'
+                        size='1.4rem'
+                        className='cursor-pointer rounded-md text-slate-100 hover:text-slate-600'
                       />
                     </Box>
                   </Menu.Target>
-                  <Menu.Dropdown className='border-malachite-400 bg-malachite-400'>
+                  <Menu.Dropdown className='border-malachite-400 !bg-malachite-400'>
                     <Menu.Item
                       className='font-bold text-white hover:bg-malachite-500'
                       leftSection={<RiTeamFill />}

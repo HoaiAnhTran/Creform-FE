@@ -38,10 +38,14 @@ export const OverviewSidebar = () => {
           size='md'
           title='CREATE FORM'
           className='w-full font-bold'
-          onClick={() => navigate(PATH.BUILD_FORM_PAGE)}
+          onClick={() =>
+            navigate(PATH.BUILD_FORM_PAGE, {
+              state: { folderId: undefined, teamId: undefined },
+            })
+          }
         />
       </Box>
-      <Box className='flex flex-col gap-5 border-y-0 border-l-0 border-r border-solid border-slate-300 bg-inherit p-5'>
+      <Box className='flex h-full flex-col gap-5 border-y-0 border-l-0 border-r border-solid border-slate-300 bg-inherit p-5'>
         <Box>
           <FolderGroup
             folderList={folderListNotInTeam}

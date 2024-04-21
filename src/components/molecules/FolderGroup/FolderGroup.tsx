@@ -94,7 +94,7 @@ export const FolderGroup = ({
         isLoading={isLoading}
       />
       <Button
-        className='h-10 font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
+        className='h-10 rounded-md font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
         justify='flex-start'
         variant='subtle'
         leftSection={<FaPlusCircle className='size-4' />}

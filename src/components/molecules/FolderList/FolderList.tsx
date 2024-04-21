@@ -2,9 +2,11 @@ import { FaFolder } from 'react-icons/fa';
 import { MdDelete, MdEdit, MdOutlineWarning } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiAddBoxFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 import { Box, Group, Menu, NavLink, Stack, Text } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
+import { PATH } from '@/constants';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { useFormParams, useOverviewContext } from '@/contexts';
 import {
@@ -57,6 +59,8 @@ export const FolderList = ({
     setActiveTeam,
     setSelectedRecords,
   } = useOverviewContext();
+
+  const navigate = useNavigate();
 
   const { setParams } = useFormParams();
 
@@ -146,15 +150,20 @@ export const FolderList = ({
                   <Menu.Target>
                     <Box className='flex'>
                       <PiDotsThreeOutlineVerticalFill
-                        size='1.5rem'
-                        className='rounded-md text-slate-100 hover:text-slate-600'
+                        size='1.4rem'
+                        className='cursor-pointer rounded-md text-slate-100 hover:text-slate-600'
                       />
                     </Box>
                   </Menu.Target>
-                  <Menu.Dropdown className='border-malachite-400 bg-malachite-400'>
+                  <Menu.Dropdown className='border-malachite-400 !bg-malachite-400'>
                     <Menu.Item
                       className='font-bold text-white hover:bg-malachite-500'
                       leftSection={<RiAddBoxFill />}
+                      onClick={() =>
+                        navigate(PATH.BUILD_FORM_PAGE, {
+                          state: { folderId: folder.id, teamId },
+                        })
+                      }
                     >
                       Add new form
                     </Menu.Item>
