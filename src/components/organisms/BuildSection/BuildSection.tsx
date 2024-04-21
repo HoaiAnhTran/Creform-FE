@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box } from '@mantine/core';
+import { Box, LoadingOverlay } from '@mantine/core';
 import _isEqual from 'lodash.isequal';
 
 import { PATH } from '@/constants/routes';
@@ -39,10 +39,8 @@ export const BuildSection = () => {
   const navigate = useNavigate();
   const { id: formId } = useParams();
 
-  const { data: formData } = useGetFormDetailsQuery(
-    { id: formId || '' },
-    { skip: !formId },
-  );
+  const { data: formData, isLoading: isLoadingGetFormDetails } =
+    useGetFormDetailsQuery({ id: formId || '' }, { skip: !formId });
 
   const handleCreateForm = () => {
     const filteredForm = separateFields(form);
@@ -138,13 +136,21 @@ export const BuildSection = () => {
         flex={toggledLeftbar ? STRETCH_FORM_CONTAINER : SHRINK_FORM_CONTAINER}
         className='transition-all duration-200 ease-linear'
       >
-        <ElementLayoutProvider>
-          <FormContainer
-            isDisabled={isCreatingForm || isUpdatingForm}
-            currentElementType={currentElementType!}
-            setCurrentLogoFile={setCurrentLogoFile}
+        <Box pos='relative'>
+          <LoadingOverlay
+            visible={isLoadingGetFormDetails}
+            zIndex={1000}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+            loaderProps={{ color: 'green' }}
           />
-        </ElementLayoutProvider>
+          <ElementLayoutProvider>
+            <FormContainer
+              isDisabled={isCreatingForm || isUpdatingForm}
+              currentElementType={currentElementType!}
+              setCurrentLogoFile={setCurrentLogoFile}
+            />
+          </ElementLayoutProvider>
+        </Box>
       </Box>
       {toggledRightbar || (
         <SaveButton
