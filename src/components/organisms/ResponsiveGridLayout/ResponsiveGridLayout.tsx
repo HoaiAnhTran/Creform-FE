@@ -232,9 +232,9 @@ export const ResponsiveGridLayout = ({
             key={element.id}
             data-grid={element.gridSize}
             className={cn(
-              'flex w-full cursor-move flex-col justify-center bg-white px-2',
+              'flex w-full cursor-move flex-col justify-center rounded-md border-[3px] border-solid border-transparent bg-white px-2',
               {
-                'react-draggable-dragging rounded-md border-[3px] border-solid border-blue-500':
+                'react-draggable-dragging border-[3px] border-blue-500 !will-change-auto':
                   element.id === edittingItem?.id,
               },
             )}

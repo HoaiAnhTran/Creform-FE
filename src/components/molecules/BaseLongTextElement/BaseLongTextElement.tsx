@@ -14,7 +14,7 @@ export const BaseLongTextElement = (
     <LongText
       handleOnChangeAnswer={handleOnChangeAnswer}
       item={item}
-      isDisabledValue={isReadOnly}
+      isReadOnly={isReadOnly}
     />
   );
 };

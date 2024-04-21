@@ -57,7 +57,7 @@ export const Textarea = (props: TextareaProps) => {
           field.onChange(e);
         }}
       />
-      {rest.disabled || (
+      {rest.readOnly || (
         <ErrorMessage
           name={field.name}
           render={(msg) => (

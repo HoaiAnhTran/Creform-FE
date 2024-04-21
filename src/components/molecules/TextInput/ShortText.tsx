@@ -8,7 +8,7 @@ import { Text } from '../Text';
 import { TextInput } from '.';
 
 interface ShortTextProps {
-  isDisabledValue?: boolean;
+  isReadOnly?: boolean;
   handleOnChangeAnswer: (
     fieldId: string,
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,7 +16,7 @@ interface ShortTextProps {
 }
 
 export const ShortText = (props: ShortTextProps) => {
-  const { isDisabledValue = false, item, handleOnChangeAnswer } = props;
+  const { isReadOnly = false, item, handleOnChangeAnswer } = props;
 
   const validate = async (value: string) =>
     stringRequired
@@ -28,7 +28,7 @@ export const ShortText = (props: ShortTextProps) => {
     <FieldArray
       name='shortText'
       render={() => (
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
             validate={validate}
@@ -38,12 +38,10 @@ export const ShortText = (props: ShortTextProps) => {
             component={Text}
           />
           <Field
-            disabled={isDisabledValue}
+            readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
             className='w-1/2'
-            validate={
-              !isDisabledValue && item.config.required ? validate : null
-            }
+            validate={!isReadOnly && item.config.required ? validate : null}
             nameElementField={item.fields[0].id}
             handleChange={handleOnChangeAnswer}
             component={TextInput}
@@ -53,7 +51,7 @@ export const ShortText = (props: ShortTextProps) => {
             name={`${item.id}.subLabel`}
             size='xs'
             placeholder={item.config.placeholder}
-            nameElementField={isDisabledValue ? 'sublabel' : undefined}
+            nameElementField={isReadOnly ? 'sublabel' : undefined}
             text={item.config.sublabel}
             component={Text}
           />

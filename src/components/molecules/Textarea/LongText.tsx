@@ -8,7 +8,7 @@ import { Text } from '../Text';
 import { Textarea } from '.';
 
 interface LongTextProps {
-  isDisabledValue?: boolean;
+  isReadOnly?: boolean;
   item: LongTextElement;
   handleOnChangeAnswer: (
     fieldId: string,
@@ -16,7 +16,7 @@ interface LongTextProps {
 }
 
 export const LongText = (props: LongTextProps) => {
-  const { isDisabledValue = false, item, handleOnChangeAnswer } = props;
+  const { isReadOnly = false, item, handleOnChangeAnswer } = props;
 
   const validate = async (value: string) =>
     stringRequired
@@ -28,7 +28,7 @@ export const LongText = (props: LongTextProps) => {
     <FieldArray
       name='longText'
       render={() => (
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
             validate={validate}
@@ -38,13 +38,11 @@ export const LongText = (props: LongTextProps) => {
             component={Text}
           />
           <Field
-            disabled={isDisabledValue}
+            readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
             classNameWrapper='w-full'
             size='xl'
-            validate={
-              !isDisabledValue && item.config.required ? validate : null
-            }
+            validate={!isReadOnly && item.config.required ? validate : null}
             nameElementField={item.fields[0].id}
             handleChange={handleOnChangeAnswer}
             component={Textarea}
@@ -54,7 +52,7 @@ export const LongText = (props: LongTextProps) => {
             name={`${item.id}.subLabel`}
             size='xs'
             placeholder={item.config.placeholder}
-            nameElementField={isDisabledValue ? 'sublabel' : undefined}
+            nameElementField={isReadOnly ? 'sublabel' : undefined}
             text={item.config.sublabel}
             component={Text}
           />

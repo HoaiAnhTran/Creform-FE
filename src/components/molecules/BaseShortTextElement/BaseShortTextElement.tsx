@@ -13,7 +13,7 @@ export const BaseShortTextElement = (
   return (
     <ShortText
       item={item}
-      isDisabledValue={isReadOnly}
+      isReadOnly={isReadOnly}
       handleOnChangeAnswer={handleOnChangeAnswer}
     />
   );
