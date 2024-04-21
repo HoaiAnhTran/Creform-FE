@@ -76,20 +76,19 @@ export const BuildSection = () => {
           }).then((res) => {
             if ('data' in res) {
               toastify.displaySuccess(res.data.message);
-              return navigate(PATH.OVERVIEW_PAGE);
+              return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
             }
-
             return toastify.displayError((res.error as ErrorResponse).message);
           });
         }
-
         return toastify.displayError((imgRes.error as ErrorResponse).message);
       });
     }
+
     return createForm(filteredForm).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
-        return navigate(PATH.OVERVIEW_PAGE);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -111,20 +110,19 @@ export const BuildSection = () => {
           }).then((res) => {
             if ('data' in res) {
               toastify.displaySuccess(res.data.message);
-              return navigate(PATH.OVERVIEW_PAGE);
+              return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
             }
-
             return toastify.displayError((res.error as ErrorResponse).message);
           });
         }
-
         return toastify.displayError((imgRes.error as ErrorResponse).message);
       });
     }
+
     return createFormInFolder({ folderId, data: filteredForm }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
-        return navigate(PATH.OVERVIEW_PAGE);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -146,20 +144,19 @@ export const BuildSection = () => {
           }).then((res) => {
             if ('data' in res) {
               toastify.displaySuccess(res.data.message);
-              return navigate(PATH.OVERVIEW_PAGE);
+              return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
             }
-
             return toastify.displayError((res.error as ErrorResponse).message);
           });
         }
-
         return toastify.displayError((imgRes.error as ErrorResponse).message);
       });
     }
+
     return createFormInTeam({ teamId, data: filteredForm }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
-        return navigate(PATH.OVERVIEW_PAGE);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -182,16 +179,15 @@ export const BuildSection = () => {
           }).then((res) => {
             if ('data' in res) {
               toastify.displaySuccess(res.data.message);
-              return navigate(PATH.OVERVIEW_PAGE);
+              return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
             }
-
             return toastify.displayError((res.error as ErrorResponse).message);
           });
         }
-
         return toastify.displayError((imgRes.error as ErrorResponse).message);
       });
     }
+
     return createFormInFolderOfTeam({
       folderId,
       teamId,
@@ -199,7 +195,7 @@ export const BuildSection = () => {
     }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
-        return navigate(PATH.OVERVIEW_PAGE);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
       }
       return toastify.displayError((res.error as ErrorResponse).message);
     });
@@ -273,7 +269,7 @@ export const BuildSection = () => {
                 ? STRETCH_BUILD_FORM_LEFT_BAR
                 : SHRINK_BUILD_FORM_LEFT_BAR
             }
-            className='transition-all duration-200 ease-linear'
+            className='z-[100] transition-all duration-200 ease-linear'
           >
             <BuildFormLeftbar setCurrentElementType={setCurrentElementType} />
           </Box>

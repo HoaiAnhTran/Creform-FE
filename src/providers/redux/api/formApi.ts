@@ -51,7 +51,7 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
-    createForm: build.mutation<SuccessResponse<GetFormsResponse>, FormRequest>({
+    createForm: build.mutation<SuccessResponse<FormResponse>, FormRequest>({
       query: (data) => ({
         url: API_URL.FORMS,
         method: 'POST',
@@ -60,7 +60,7 @@ const formApi = rootApi.injectEndpoints({
       invalidatesTags: ['Forms'],
     }),
     updateForm: build.mutation<
-      SuccessResponse<GetFormsResponse>,
+      SuccessResponse<FormResponse>,
       { id: number; data: FormRequest }
     >({
       query: ({ id, data }) => ({
@@ -111,7 +111,7 @@ const formApi = rootApi.injectEndpoints({
       invalidatesTags: ['Forms'],
     }),
     createFormInFolder: build.mutation<
-      SuccessResponse<GetFormsResponse>,
+      SuccessResponse<FormResponse>,
       { folderId: number; data: FormRequest }
     >({
       query: ({ folderId, data }) => ({
@@ -122,7 +122,7 @@ const formApi = rootApi.injectEndpoints({
       invalidatesTags: ['Forms'],
     }),
     createFormInTeam: build.mutation<
-      SuccessResponse<GetFormsResponse>,
+      SuccessResponse<FormResponse>,
       { teamId: number; data: FormRequest }
     >({
       query: ({ teamId, data }) => ({
@@ -133,7 +133,7 @@ const formApi = rootApi.injectEndpoints({
       invalidatesTags: ['Forms'],
     }),
     createFormInFolderOfTeam: build.mutation<
-      SuccessResponse<GetFormsResponse>,
+      SuccessResponse<FormResponse>,
       { folderId: number; teamId: number; data: FormRequest }
     >({
       query: ({ folderId, teamId, data }) => ({

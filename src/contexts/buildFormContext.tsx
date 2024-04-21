@@ -40,7 +40,7 @@ export const initFormRequestState: FormRequest = {
   createdAt: '',
 };
 
-const DEFAULT_FORM_TITLE = 'Form';
+export const DEFAULT_FORM_TITLE = 'Form';
 
 const BuildFormContext = createContext<BuildFormContextType>({
   form: initFormRequestState,

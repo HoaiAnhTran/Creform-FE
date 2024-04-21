@@ -15,6 +15,7 @@ import _isEqual from 'lodash.isequal';
 import { ToggleButton } from '@/atoms/Button/ToggleButton';
 import {
   DEFAULT_ELEMENTS,
+  DEFAULT_FORM_TITLE,
   initFormRequestState,
   useBuildFormContext,
   useElementLayouts,
@@ -98,12 +99,16 @@ export const TopBar = () => {
       : navigate(pathname.concat('/preview'));
   };
 
-  const handleClickBackButton = () => {
+  const handleDiscardChanges = () => {
     if (isEditForm) {
       setForm({ ...initFormRequestState, ...formData });
       setElements([...(formData?.elements as ElementItem[])]);
     } else {
-      setForm({ ...initFormRequestState });
+      setForm({
+        ...initFormRequestState,
+        title: DEFAULT_FORM_TITLE,
+        elements: DEFAULT_ELEMENTS,
+      });
       setElements(DEFAULT_ELEMENTS);
     }
     setCurrentTitle(initTitle);
@@ -171,27 +176,30 @@ export const TopBar = () => {
       <ConfirmationModal
         body={
           <Box className='flex flex-col items-center gap-3 px-10 py-5'>
-            <IoIosWarning className='size-28 text-yellow-500' />
+            <IoIosWarning className='size-28 text-red-500' />
             <Text size='lg' className='font-bold'>
               Unsaved Changes
             </Text>
             <Text className='text-center text-[15px]'>
-              You have made changes in the form that haven't been saved yet.
+              You have made changes that haven't been saved yet.
               <br />
-              Please save changes before navigating to another page.
+              These changes will be lost if you leave the page without saving
+              them.
+              <br />
+              Are you sure you want to discard changes?
             </Text>
           </Box>
         }
         opened={opened}
         onClose={closeConfirmModal}
-        onClickBack={handleClickBackButton}
-        onClickConfirm={closeConfirmModal}
+        onClickBack={closeConfirmModal}
+        onClickConfirm={handleDiscardChanges}
         backButtonProps={{
-          title: 'Discard changes',
+          title: 'Keep editing',
         }}
         confirmButtonProps={{
-          title: 'OK',
-          className: 'bg-yellow-500 hover:bg-yellow-600',
+          title: 'Discard changes',
+          className: 'bg-red-500 hover:bg-red-600',
         }}
         isLoading={false}
       />
