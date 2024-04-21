@@ -18,7 +18,7 @@ import { TextInput } from '../TextInput';
 export const BaseFullnameElement = (
   props: BaseElementProps<FullnameElement>,
 ) => {
-  const { item } = props;
+  const { item, handleOnChangeAnswer } = props;
   const { isReadOnly } = useElementLayouts();
 
   const validate = async (value: string) =>
@@ -46,8 +46,9 @@ export const BaseFullnameElement = (
             required={item.config.required}
             readOnly={isReadOnly}
             validate={!isReadOnly && item.config.required ? validate : null}
-            handleChange={() => {}}
+            handleChange={handleOnChangeAnswer(item.fields[0].id)}
             component={TextInput}
+            value={item.fields[0].text}
           />
           <Text className='text-[13px]'>{item.config.sublabels.firstName}</Text>
         </Box>
@@ -57,8 +58,9 @@ export const BaseFullnameElement = (
             required={item.config.required}
             readOnly={isReadOnly}
             validate={!isReadOnly && item.config.required ? validate : null}
-            handleChange={() => {}}
+            handleChange={handleOnChangeAnswer(item.fields[1].id)}
             component={TextInput}
+            value={item.fields[1].text}
           />
           <Text className='text-[13px]'>{item.config.sublabels.lastName}</Text>
         </Box>

@@ -15,6 +15,7 @@ import {
 import { useUploadImageMutation } from '@/redux/api/imageApi';
 import { ElementType, ErrorResponse } from '@/types';
 import { toastify } from '@/utils';
+import { separateFields } from '@/utils/seperates';
 
 import { BuildFormLeftbar } from '../BuildFormLeftbar';
 import { FormContainer } from '../FormContainer';
@@ -44,13 +45,14 @@ export const BuildSection = () => {
   );
 
   const handleCreateForm = () => {
+    const filteredForm = separateFields(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
           const logoUrl = imgRes.data.data.url;
 
           return createForm({
-            ...form,
+            ...filteredForm,
             logoUrl,
           }).then((res) => {
             if ('data' in res) {
@@ -67,7 +69,7 @@ export const BuildSection = () => {
         return toastify.displayError((imgRes.error as ErrorResponse).message);
       });
     }
-    return createForm(form).then((res) => {
+    return createForm(filteredForm).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
         return navigate(PATH.OVERVIEW_PAGE);
@@ -79,6 +81,7 @@ export const BuildSection = () => {
   };
 
   const handleUpdateForm = (formId: number) => {
+    const filteredForm = separateFields(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
@@ -87,7 +90,7 @@ export const BuildSection = () => {
           return updateForm({
             id: formId,
             data: {
-              ...form,
+              ...filteredForm,
               logoUrl,
             },
           }).then((res) => {
@@ -107,7 +110,7 @@ export const BuildSection = () => {
     }
     return updateForm({
       id: formId,
-      data: form,
+      data: filteredForm,
     }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);

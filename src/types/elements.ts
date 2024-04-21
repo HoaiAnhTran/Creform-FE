@@ -83,6 +83,7 @@ export interface BaseElement<T extends ElementType, U extends ElementConfig> {
   fields: {
     id: string;
     name: string;
+    text?: string;
   }[];
 }
 

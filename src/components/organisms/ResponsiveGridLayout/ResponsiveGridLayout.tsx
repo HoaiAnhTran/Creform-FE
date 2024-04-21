@@ -106,6 +106,7 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'email',
+              text: '',
             },
           ],
         };
@@ -119,10 +120,12 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'firstName',
+              text: '',
             },
             {
               id: uuidv4(),
               name: 'lastName',
+              text: '',
             },
           ],
         };
@@ -243,6 +246,7 @@ export const ResponsiveGridLayout = ({
               isActive={element.id === edittingItem?.id}
               updateItem={updateItem}
               handleConfig={handleConfig}
+              handleOnChangeAnswer={() => () => {}}
             />
             {element.id === edittingItem?.id && (
               <InteractiveIcons item={element} removeItem={removeItem} />

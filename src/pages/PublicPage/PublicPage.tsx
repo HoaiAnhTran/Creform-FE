@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 
+import { ElementLayoutProvider } from '@/contexts';
 import { FormRenderComponent } from '@/organisms/FormRenderComponent';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 
@@ -14,7 +15,9 @@ export const PublicPage = () => {
   return (
     <Formik initialValues={{}} onSubmit={() => {}}>
       <Form className='h-full w-full'>
-        <FormRenderComponent form={data} />
+        <ElementLayoutProvider>
+          <FormRenderComponent form={data} />
+        </ElementLayoutProvider>
       </Form>
     </Formik>
   );

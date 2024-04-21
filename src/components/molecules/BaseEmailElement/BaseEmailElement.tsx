@@ -10,7 +10,7 @@ import { BaseElementProps } from '../FactoryElement';
 import { TextInput } from '../TextInput';
 
 export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
-  const { item } = props;
+  const { item, handleOnChangeAnswer } = props;
   const { isReadOnly } = useElementLayouts();
 
   const validate = async (value: string) =>
@@ -36,8 +36,9 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           name={`${item.id}.fieldValue`}
           required={item.config.required}
           readOnly={isReadOnly}
+          value={item.fields[0].text}
           validate={!isReadOnly ? validate : null}
-          handleChange={() => {}}
+          handleChange={handleOnChangeAnswer(item.fields[0].id)}
           component={TextInput}
         />
 
