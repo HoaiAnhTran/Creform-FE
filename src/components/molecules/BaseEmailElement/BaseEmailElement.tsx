@@ -11,13 +11,18 @@ import { TextInput } from '../TextInput';
 
 export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
   const { item, handleOnChangeAnswer } = props;
-  const { isReadOnly } = useElementLayouts();
+  const { isReadOnly, setCanSubmit } = useElementLayouts();
 
   const validate = async (value: string) =>
     (item.config.required ? emailRequired : emailFormat)
       .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
+      .then(() => {
+        setCanSubmit(true);
+      })
+      .catch((err) => {
+        setCanSubmit(false);
+        return err.errors[0];
+      });
 
   return (
     <Group>
@@ -33,12 +38,13 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           }}
         />
         <Field
-          name={`${item.id}.fieldValue`}
+          name={`${item.fields[0].id}.fieldValue`}
           required={item.config.required}
           readOnly={isReadOnly}
           value={item.fields[0].text}
           validate={!isReadOnly ? validate : null}
-          handleChange={handleOnChangeAnswer(item.fields[0].id)}
+          handleChange={handleOnChangeAnswer}
+          nameElementField={item.fields[0].id}
           component={TextInput}
         />
 

@@ -250,7 +250,6 @@ export const ResponsiveGridLayout = ({
               updateItem={updateItem}
               handleConfig={handleConfig}
               handleOnChangeAnswer={() => () => {}}
-              handleCreateFormResponse={() => {}}
             />
             {element.id === edittingItem?.id && (
               <InteractiveIcons item={element} removeItem={removeItem} />

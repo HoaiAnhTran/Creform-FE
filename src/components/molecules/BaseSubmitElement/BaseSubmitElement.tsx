@@ -9,7 +9,7 @@ import { cn } from '@/utils';
 import { BaseElementProps } from '../FactoryElement';
 
 export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
-  const { item, handleCreateFormResponse } = props;
+  const { item } = props;
 
   const { previewMode, setClickedSubmit } = useBuildFormContext();
 
@@ -34,8 +34,6 @@ export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
   const handleSubmit = () => {
     if (previewMode) {
       setClickedSubmit(true);
-    } else {
-      handleCreateFormResponse();
     }
   };
 

@@ -19,13 +19,18 @@ export const BaseFullnameElement = (
   props: BaseElementProps<FullnameElement>,
 ) => {
   const { item, handleOnChangeAnswer } = props;
-  const { isReadOnly } = useElementLayouts();
+  const { isReadOnly, setCanSubmit } = useElementLayouts();
 
   const validate = async (value: string) =>
     stringRequired
       .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
+      .then(() => {
+        setCanSubmit(true);
+      })
+      .catch((err) => {
+        setCanSubmit(false);
+        return err.errors[0];
+      });
 
   return (
     <Stack className='w-full justify-between gap-2.5'>
@@ -46,7 +51,8 @@ export const BaseFullnameElement = (
             required={item.config.required}
             readOnly={isReadOnly}
             validate={!isReadOnly && item.config.required ? validate : null}
-            handleChange={handleOnChangeAnswer(item.fields[0].id)}
+            handleChange={handleOnChangeAnswer}
+            nameElementField={item.fields[0].id}
             component={TextInput}
             value={item.fields[0].text}
           />
@@ -58,7 +64,8 @@ export const BaseFullnameElement = (
             required={item.config.required}
             readOnly={isReadOnly}
             validate={!isReadOnly && item.config.required ? validate : null}
-            handleChange={handleOnChangeAnswer(item.fields[1].id)}
+            handleChange={handleOnChangeAnswer}
+            nameElementField={item.fields[1].id}
             component={TextInput}
             value={item.fields[1].text}
           />

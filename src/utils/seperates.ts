@@ -13,7 +13,7 @@ export function separateFields(form: FormRequest) {
   return formWithoutText;
 }
 
-export function getFormAnswerFields(elements: ElementItem[]) {
+export const getFormAnswerFields = (elements: ElementItem[]) => {
   const formAnswers: FormAnswer[] = [];
   for (const element of elements) {
     const FieldAnswers: FormAnswer = {
@@ -31,4 +31,4 @@ export function getFormAnswerFields(elements: ElementItem[]) {
     formAnswers.push(FieldAnswers);
   }
   return { formAnswers: formAnswers };
-}
+};

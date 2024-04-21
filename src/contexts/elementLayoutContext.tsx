@@ -14,6 +14,8 @@ interface ElementLayoutContextType {
   setEdittingItem: React.Dispatch<
     React.SetStateAction<ElementItem | undefined>
   >;
+  canSubmit?: boolean;
+  setCanSubmit: React.Dispatch<React.SetStateAction<boolean>>;
   isReadOnly: boolean;
 }
 
@@ -22,6 +24,8 @@ const ElementLayoutContext = createContext<ElementLayoutContextType>({
   setElements: () => {},
   edittingItem: undefined,
   setEdittingItem: () => {},
+  canSubmit: false,
+  setCanSubmit: () => {},
   isReadOnly: false,
 });
 
@@ -61,6 +65,7 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
     isEditForm ? [] : DEFAULT_ELEMENTS,
   );
   const [edittingItem, setEdittingItem] = useState<ElementItem>();
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const location = useLocation();
   const isReadOnly = location.pathname.includes('build');
 
@@ -72,6 +77,8 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
         edittingItem,
         setEdittingItem,
         isReadOnly,
+        canSubmit,
+        setCanSubmit,
       }}
     >
       {children}

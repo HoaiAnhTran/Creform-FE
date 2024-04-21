@@ -1,36 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Box, Image, Stack } from '@mantine/core';
 
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
-import { useCreateResponseMutation } from '@/redux/api/responseApi';
-import {
-  ElementItem,
-  ErrorResponse,
-  FormAnswerRequest,
-  FormRequest,
-  FormResponse,
-} from '@/types';
-import { toastify } from '@/utils';
-import { getFormAnswerFields } from '@/utils/seperates';
+import { ElementItem, FormResponse } from '@/types';
 
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
-  form?: FormResponse | FormRequest;
-  setIsSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
+  form?: FormResponse;
 }
 
-export const FormRenderComponent = ({
-  form,
-  setIsSuccess = () => {},
-}: FormRenderComponentProps) => {
+export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
   const { elements, setElements, edittingItem, setEdittingItem } =
     useElementLayouts();
-
-  const [createFormResponse] = useCreateResponseMutation();
-
-  const [formResponse, setFormResponse] = useState<FormAnswerRequest>();
 
   const handleFields = (fields: ElementItem['fields']) => {
     setEdittingItem({ ...edittingItem, fields: fields } as ElementItem);
@@ -63,28 +46,6 @@ export const FormRenderComponent = ({
     };
 
   useEffect(() => {
-    setFormResponse(getFormAnswerFields(elements));
-  }, [elements]);
-
-  const handleCreateFormResponse = () => {
-    if (formResponse) {
-      createFormResponse({ formId: form?.id, payload: formResponse }).then(
-        (res) => {
-          if ('data' in res) {
-            toastify.displaySuccess(res.data.message as string);
-            setIsSuccess(true);
-            return;
-          }
-          setIsSuccess(false);
-          return toastify.displayError(
-            (res.error as ErrorResponse).message as string,
-          );
-        },
-      );
-    }
-  };
-
-  useEffect(() => {
     if (form) {
       const elementsForm = form.elements as ElementItem[];
       setElements(
@@ -99,7 +60,8 @@ export const FormRenderComponent = ({
         }),
       );
     }
-  }, [form, setElements]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form]);
 
   return (
     <div className='flex w-full flex-col items-center'>
@@ -117,7 +79,7 @@ export const FormRenderComponent = ({
             isDroppable={false}
             isDraggable={false}
           >
-            {form?.elements.map((element) => (
+            {elements.map((element) => (
               <Box
                 key={element.id}
                 data-grid={element.gridSize}
@@ -131,7 +93,6 @@ export const FormRenderComponent = ({
                   updateItem={() => {}}
                   handleConfig={() => {}}
                   handleOnChangeAnswer={handleOnChangeAnswer}
-                  handleCreateFormResponse={handleCreateFormResponse}
                 />
               </Box>
             ))}

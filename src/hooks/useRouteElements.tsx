@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import { PATH } from '@/constants/routes';
-import { BuildFormContextProvider } from '@/contexts';
+import { BuildFormContextProvider, ElementLayoutProvider } from '@/contexts';
 import { BuildSection } from '@/organisms/BuildSection';
 import { PreviewSection } from '@/organisms/PreviewSection';
 import { PublishSection } from '@/organisms/PublishSection';
@@ -129,7 +129,12 @@ export function useRouteElements() {
         },
         {
           path: PATH.PUBLIC_PAGE,
-          element: <PublicPage />,
+
+          element: (
+            <ElementLayoutProvider>
+              <PublicPage />
+            </ElementLayoutProvider>
+          ),
         },
       ],
     },
