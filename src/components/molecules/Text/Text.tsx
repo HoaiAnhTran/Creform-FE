@@ -48,7 +48,10 @@ export const Text = (props: TextProps) => {
 
   return (
     <div className={cn('flex w-full flex-col', classNameWrapper)}>
-      <TextMantine className='mb-2 text-base font-[500]'>
+      <TextMantine
+        className={cn('mb-2 text-base font-[500]', rest.className)}
+        {...rest}
+      >
         {rest.text}
         {required && <span className='text-lg text-red-500'>*</span>}
       </TextMantine>

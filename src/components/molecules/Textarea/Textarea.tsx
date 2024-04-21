@@ -21,8 +21,6 @@ interface TextareaProps extends Omit<TextareaMantineProps, 'form'> {
   nameElementField?: string;
   field: FieldInputProps<string>;
   form: {
-    touched: Record<string, boolean>;
-    errors: Record<string, string>;
     setFieldValue: (
       field: string,
       value: unknown,
@@ -38,20 +36,15 @@ export const Textarea = (props: TextareaProps) => {
     nameElementField,
     handleChange,
     field,
-    form: { setFieldValue },
     classNameError,
+    form: { setFieldValue },
     classNameWrapper,
     resize = 'vertical',
     ...rest
   } = props;
-
   useEffect(() => {
-    if (rest.valueConfig) {
-      setFieldValue(field.name, rest.valueConfig);
-      return;
-    }
     setFieldValue(field.name, '');
-  }, [field.name, rest.valueConfig]);
+  }, []);
 
   return (
     <div className={cn('flex flex-col', classNameWrapper)}>
@@ -61,16 +54,19 @@ export const Textarea = (props: TextareaProps) => {
         {...rest}
         onChange={(e) => {
           if (nameElementField) handleChange?.(nameElementField)(e);
+          field.onChange(e);
         }}
       />
-      <ErrorMessage
-        name={field.name}
-        render={(msg) => (
-          <div className={cn('mt-1 text-xs text-red-600', classNameError)}>
-            {msg}
-          </div>
-        )}
-      />
+      {rest.disabled || (
+        <ErrorMessage
+          name={field.name}
+          render={(msg) => (
+            <div className={cn('mt-1 text-xs text-red-600', classNameError)}>
+              {msg}
+            </div>
+          )}
+        />
+      )}
     </div>
   );
 };

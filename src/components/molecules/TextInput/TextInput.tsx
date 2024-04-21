@@ -21,8 +21,6 @@ interface TextInputProps extends Omit<TextInputMantineProps, 'form'> {
   nameElementField?: string;
   field: FieldInputProps<string>;
   form: {
-    touched: Record<string, boolean>;
-    errors: Record<string, string>;
     setFieldValue: (
       field: string,
       value: unknown,
@@ -47,12 +45,8 @@ export const TextInput = (props: TextInputProps) => {
   } = props;
 
   useEffect(() => {
-    if (rest.valueConfig) {
-      setFieldValue(field.name, rest.valueConfig);
-      return;
-    }
     setFieldValue(field.name, '');
-  }, [field.name, rest.valueConfig]);
+  }, []);
 
   return (
     <div className={cn('flex w-full flex-col', classNameWrapper)}>
@@ -67,14 +61,16 @@ export const TextInput = (props: TextInputProps) => {
           label: cn('mb-2', classNameLabel),
         }}
       />
-      <ErrorMessage
-        name={field.name}
-        render={(msg) => (
-          <div className={cn('mt-1 text-xs text-red-600', classNameError)}>
-            {msg}
-          </div>
-        )}
-      />
+      {rest.disabled || (
+        <ErrorMessage
+          name={field.name}
+          render={(msg) => (
+            <div className={cn('mt-1 text-xs text-red-600', classNameError)}>
+              {msg}
+            </div>
+          )}
+        />
+      )}
     </div>
   );
 };

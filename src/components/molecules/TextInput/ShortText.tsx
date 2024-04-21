@@ -1,6 +1,6 @@
 import { Field, FieldArray } from 'formik';
 
-import { ShortTextElement, TextConfig } from '@/types';
+import { ShortTextElement } from '@/types';
 import { stringRequired } from '@/utils/schemas/validation';
 
 import { Text } from '../Text';
@@ -9,14 +9,14 @@ import { TextInput } from '.';
 
 interface ShortTextProps {
   isDisabledValue?: boolean;
-  handleChange?: (
-    key: keyof TextConfig,
+  handleOnChangeAnswer: (
+    fieldId: string,
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   item: ShortTextElement;
 }
 
 export const ShortText = (props: ShortTextProps) => {
-  const { isDisabledValue = false, handleChange, item } = props;
+  const { isDisabledValue = false, item, handleOnChangeAnswer } = props;
 
   const validate = async (value: string) =>
     stringRequired
@@ -41,20 +41,21 @@ export const ShortText = (props: ShortTextProps) => {
             disabled={isDisabledValue}
             name={`${item.id}.fieldValue`}
             className='w-1/2'
-            validate={item.config.required ? validate : null}
-            handleChange={handleChange}
+            validate={
+              !isDisabledValue && item.config.required ? validate : null
+            }
+            nameElementField={item.fields[0].id}
+            handleChange={handleOnChangeAnswer}
             component={TextInput}
           />
           <Field
             validate={validate}
             name={`${item.id}.subLabel`}
             size='xs'
-            variant='unstyled'
             placeholder={item.config.placeholder}
-            nameElementField='sublabel'
-            valueConfig={item.config.sublabel}
-            handleChange={handleChange}
-            component={TextInput}
+            nameElementField={isDisabledValue ? 'sublabel' : undefined}
+            text={item.config.sublabel}
+            component={Text}
           />
         </div>
       )}

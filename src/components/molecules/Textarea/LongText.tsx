@@ -1,23 +1,22 @@
 import { Field, FieldArray } from 'formik';
 
-import { LongTextElement, TextConfig } from '@/types';
+import { LongTextElement } from '@/types';
 import { stringRequired } from '@/utils/schemas/validation';
 
 import { Text } from '../Text';
-import { TextInput } from '../TextInput';
 
 import { Textarea } from '.';
 
 interface LongTextProps {
   isDisabledValue?: boolean;
-  handleChange?: (
-    key: keyof TextConfig,
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   item: LongTextElement;
+  handleOnChangeAnswer: (
+    fieldId: string,
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const LongText = (props: LongTextProps) => {
-  const { isDisabledValue = false, handleChange, item } = props;
+  const { isDisabledValue = false, item, handleOnChangeAnswer } = props;
 
   const validate = async (value: string) =>
     stringRequired
@@ -43,20 +42,21 @@ export const LongText = (props: LongTextProps) => {
             name={`${item.id}.fieldValue`}
             classNameWrapper='w-full'
             size='xl'
-            validate={item.config.required ? validate : null}
-            handleChange={handleChange}
+            validate={
+              !isDisabledValue && item.config.required ? validate : null
+            }
+            nameElementField={item.fields[0].id}
+            handleChange={handleOnChangeAnswer}
             component={Textarea}
           />
           <Field
             validate={validate}
             name={`${item.id}.subLabel`}
             size='xs'
-            variant='unstyled'
             placeholder={item.config.placeholder}
-            nameElementField='sublabel'
-            valueConfig={item.config.sublabel}
-            handleChange={handleChange}
-            component={TextInput}
+            nameElementField={isDisabledValue ? 'sublabel' : undefined}
+            text={item.config.sublabel}
+            component={Text}
           />
         </div>
       )}
