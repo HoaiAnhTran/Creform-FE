@@ -75,7 +75,9 @@ export function useRouteElements() {
           path: PATH.BUILD_FORM_PAGE,
           element: (
             <BuildFormContextProvider>
-              <BuildFormPage />
+              <ElementLayoutProvider>
+                <BuildFormPage />
+              </ElementLayoutProvider>
             </BuildFormContextProvider>
           ),
           children: [
@@ -98,18 +100,12 @@ export function useRouteElements() {
           ],
         },
         {
-          path: PATH.RESPONSE_PAGE,
-          element: (
-            <Suspense fallback={<LoadingPage />}>
-              <ResponsesPage />
-            </Suspense>
-          ),
-        },
-        {
           path: PATH.EDIT_FORM_PAGE,
           element: (
             <BuildFormContextProvider>
-              <BuildFormPage />
+              <ElementLayoutProvider>
+                <BuildFormPage />
+              </ElementLayoutProvider>
             </BuildFormContextProvider>
           ),
           children: [
@@ -136,8 +132,15 @@ export function useRouteElements() {
           element: <AccountPage />,
         },
         {
+          path: PATH.RESPONSE_PAGE,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <ResponsesPage />
+            </Suspense>
+          ),
+        },
+        {
           path: PATH.PUBLIC_PAGE,
-
           element: (
             <ElementLayoutProvider>
               <PublicPage />

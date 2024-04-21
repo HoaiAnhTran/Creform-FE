@@ -12,8 +12,11 @@ import { FormRequest } from '@/types';
 
 interface BuildFormContextType {
   form: FormRequest;
-  initLogo: string;
   setForm: React.Dispatch<React.SetStateAction<FormRequest>>;
+  currentLogo: string;
+  setCurrentLogo: React.Dispatch<React.SetStateAction<string>>;
+  currentTitle: string;
+  setCurrentTitle: React.Dispatch<React.SetStateAction<string>>;
   toggledLeftbar: boolean;
   setToggledLeftbar: React.Dispatch<React.SetStateAction<boolean>>;
   toggledRightbar: boolean;
@@ -22,10 +25,13 @@ interface BuildFormContextType {
   setPreviewMode: React.Dispatch<React.SetStateAction<boolean>>;
   clickedSubmit: boolean;
   setClickedSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  initLogo: string;
+  initTitle: string;
   isEditForm: boolean;
+  isPublishSection: boolean;
 }
 
-const initFormRequestState: FormRequest = {
+export const initFormRequestState: FormRequest = {
   title: '',
   logoUrl: '',
   settings: {},
@@ -34,9 +40,15 @@ const initFormRequestState: FormRequest = {
   createdAt: '',
 };
 
+const DEFAULT_FORM_TITLE = 'Form';
+
 const BuildFormContext = createContext<BuildFormContextType>({
   form: initFormRequestState,
   setForm: () => {},
+  currentLogo: '',
+  setCurrentLogo: () => {},
+  currentTitle: '',
+  setCurrentTitle: () => {},
   toggledLeftbar: false,
   setToggledLeftbar: () => {},
   toggledRightbar: false,
@@ -47,6 +59,8 @@ const BuildFormContext = createContext<BuildFormContextType>({
   setClickedSubmit: () => {},
   isEditForm: false,
   initLogo: '',
+  initTitle: '',
+  isPublishSection: false,
 });
 
 export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
@@ -56,8 +70,11 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
   const { pathname } = useLocation();
 
   const isEditForm = Boolean(formId);
+  const isPublishSection = pathname.includes('publish');
 
   const [form, setForm] = useState<FormRequest>(initFormRequestState);
+  const [currentLogo, setCurrentLogo] = useState<string>('');
+  const [currentTitle, setCurrentTitle] = useState<string>(DEFAULT_FORM_TITLE);
   const [toggledLeftbar, setToggledLeftbar] = useState<boolean>(false);
   const [toggledRightbar, setToggledRightbar] = useState<boolean>(false);
   const [previewMode, setPreviewMode] = useState<boolean>(
@@ -71,6 +88,7 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
   );
 
   const initLogo = data?.logoUrl || '';
+  const initTitle = data?.title || DEFAULT_FORM_TITLE;
 
   useEffect(() => {
     if (!data) return;
@@ -83,6 +101,10 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         form,
         setForm,
+        currentLogo,
+        setCurrentLogo,
+        currentTitle,
+        setCurrentTitle,
         toggledLeftbar,
         setToggledLeftbar,
         toggledRightbar,
@@ -93,6 +115,8 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
         setClickedSubmit,
         isEditForm,
         initLogo,
+        initTitle,
+        isPublishSection,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Box, Stack } from '@mantine/core';
+import { Form, Formik } from 'formik';
 
 import { useBuildFormContext } from '@/contexts';
 
@@ -23,8 +24,12 @@ export const PreviewSection = () => {
           <SubmissionConfirmation />
         </Box>
       ) : (
-        <Box className='absolute top-14 w-full'>
-          <FormRenderComponent form={form} />
+        <Box className='absolute top-[50px] w-full py-7'>
+          <Formik initialValues={{}} onSubmit={() => {}}>
+            <Form>
+              <FormRenderComponent form={form} />
+            </Form>
+          </Formik>
         </Box>
       )}
     </Stack>

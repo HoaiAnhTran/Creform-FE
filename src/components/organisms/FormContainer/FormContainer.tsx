@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { CloseButton, Divider, Group, Image, Stack } from '@mantine/core';
@@ -24,9 +24,8 @@ export const FormContainer = ({
   setCurrentLogoFile,
   isDisabled,
 }: FormContainerProps) => {
-  const { setForm, initLogo } = useBuildFormContext();
-
-  const [currentLogo, setCurrentLogo] = useState<string>('');
+  const { setForm, initLogo, currentLogo, setCurrentLogo } =
+    useBuildFormContext();
 
   const logoInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,7 +63,7 @@ export const FormContainer = ({
 
   useEffect(() => {
     setCurrentLogo(initLogo);
-  }, [initLogo]);
+  }, [initLogo, setCurrentLogo]);
 
   const updateItem = (item: ElementItem) => {
     setElements(

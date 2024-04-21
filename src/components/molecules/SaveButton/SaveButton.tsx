@@ -10,7 +10,7 @@ interface SaveButtonProps {
   isLoading: boolean;
   canSave: boolean;
 }
-const TOPBAR_HEIGHT = 50;
+const HEADER_HEIGHT = 50;
 
 export const SaveButton = ({
   isLoading,
@@ -18,7 +18,7 @@ export const SaveButton = ({
   className,
   handleSave,
 }: SaveButtonProps) => {
-  const isFixed = useScroll(TOPBAR_HEIGHT);
+  const isScrolling = useScroll(HEADER_HEIGHT);
 
   return (
     <Tooltip
@@ -31,9 +31,9 @@ export const SaveButton = ({
       <UnstyledButton
         type='submit'
         className={cn(
-          'flex flex-col items-center text-malachite-500 transition-all duration-[600ms] ease-linear',
+          'fixed right-10 top-[160px] flex flex-col items-center text-malachite-500 transition-all duration-[600ms] ease-linear',
           className,
-          { 'fixed right-0 top-[90px]': isFixed },
+          { 'top-[90px]': isScrolling },
         )}
         onClick={handleSave}
         disabled={!canSave}

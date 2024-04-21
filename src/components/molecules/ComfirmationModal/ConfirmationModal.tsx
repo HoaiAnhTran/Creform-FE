@@ -8,7 +8,7 @@ import {
   ModalProps as MantineModalProps,
 } from '@mantine/core';
 
-import { Button } from '@/atoms/Button';
+import { Button, ButtonProps } from '@/atoms/Button';
 
 interface ConfirmationModal extends MantineModalProps {
   size?: MantineSize;
@@ -16,6 +16,8 @@ interface ConfirmationModal extends MantineModalProps {
   isLoading: boolean;
   onClickBack: () => void;
   onClickConfirm: () => void;
+  backButtonProps?: ButtonProps;
+  confirmButtonProps?: ButtonProps;
 }
 
 export const ConfirmationModal = ({
@@ -24,6 +26,8 @@ export const ConfirmationModal = ({
   onClickBack,
   onClickConfirm,
   isLoading,
+  backButtonProps,
+  confirmButtonProps,
   ...props
 }: ConfirmationModal) => (
   <MantineModal {...props} centered size={size}>
@@ -42,12 +46,14 @@ export const ConfirmationModal = ({
           title='Back'
           color='gray'
           variant='outline'
+          {...backButtonProps}
         />
         <Button
           onClick={onClickConfirm}
           color='error'
           className='font-bold'
           title='Confirm'
+          {...confirmButtonProps}
         />
       </Group>
     </Box>

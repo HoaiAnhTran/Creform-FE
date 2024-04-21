@@ -29,7 +29,7 @@ const ElementLayoutContext = createContext<ElementLayoutContextType>({
   isReadOnly: false,
 });
 
-const DEFAULT_ELEMENTS: ElementItem[] = [
+export const DEFAULT_ELEMENTS: ElementItem[] = [
   {
     id: uuidv4(),
     type: ElementType.HEADING,
@@ -67,7 +67,9 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
   const [edittingItem, setEdittingItem] = useState<ElementItem>();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const location = useLocation();
-  const isReadOnly = location.pathname.includes('build');
+  const isReadOnly =
+    location.pathname.includes('build') &&
+    !location.pathname.includes('preview');
 
   return (
     <ElementLayoutContext.Provider

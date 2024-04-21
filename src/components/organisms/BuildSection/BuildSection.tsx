@@ -4,7 +4,7 @@ import { Box, LoadingOverlay } from '@mantine/core';
 import _isEqual from 'lodash.isequal';
 
 import { PATH } from '@/constants/routes';
-import { ElementLayoutProvider, useBuildFormContext } from '@/contexts';
+import { useBuildFormContext } from '@/contexts';
 import { SaveButton } from '@/molecules/SaveButton';
 import { ScrollToTopButton } from '@/molecules/ScrollToTopButton';
 import {
@@ -94,7 +94,7 @@ export const BuildSection = () => {
           }).then((res) => {
             if ('data' in res) {
               toastify.displaySuccess(res.data.message as string);
-              return navigate(PATH.OVERVIEW_PAGE);
+              return;
             }
 
             return toastify.displayError(
@@ -112,7 +112,7 @@ export const BuildSection = () => {
     }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
-        return navigate(PATH.OVERVIEW_PAGE);
+        return;
       }
       return toastify.displayError(
         (res.error as ErrorResponse).message as string,
@@ -143,18 +143,15 @@ export const BuildSection = () => {
             overlayProps={{ radius: 'sm', blur: 2 }}
             loaderProps={{ color: 'green' }}
           />
-          <ElementLayoutProvider>
-            <FormContainer
-              isDisabled={isCreatingForm || isUpdatingForm}
-              currentElementType={currentElementType!}
-              setCurrentLogoFile={setCurrentLogoFile}
-            />
-          </ElementLayoutProvider>
+          <FormContainer
+            isDisabled={isCreatingForm || isUpdatingForm}
+            currentElementType={currentElementType!}
+            setCurrentLogoFile={setCurrentLogoFile}
+          />
         </Box>
       </Box>
       {toggledRightbar || (
         <SaveButton
-          className='fixed right-0 top-[160px]'
           handleSave={() =>
             isEditForm ? handleUpdateForm(+formId!) : handleCreateForm()
           }

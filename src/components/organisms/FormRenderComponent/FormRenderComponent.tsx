@@ -72,7 +72,7 @@ export const FormRenderComponent = ({ form }: FormRenderComponentProps) => {
         />
       )}
       <Stack className='w-[45%] justify-between gap-7'>
-        <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
+        <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-md'>
           <ResponsiveReactGridLayout
             rowHeight={30}
             isResizable={false}

@@ -14,14 +14,19 @@ import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { cn, formatDate, httpClient } from '@/utils';
 
 const LOGO_HEIGHT = 45;
-const DEFAULT_FORM_TITLE = 'Form';
 
 export const BuildFormHeader = () => {
   const { data: myProfile, isLoading } = useGetMyProfileQuery();
 
-  const { form, isEditForm, setForm, previewMode } = useBuildFormContext();
-
-  const [currentTitle, setCurrentTitle] = useState<string>(DEFAULT_FORM_TITLE);
+  const {
+    form,
+    isEditForm,
+    setForm,
+    previewMode,
+    isPublishSection,
+    currentTitle,
+    setCurrentTitle,
+  } = useBuildFormContext();
 
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 
@@ -50,7 +55,7 @@ export const BuildFormHeader = () => {
     } else {
       setCurrentTitle(currentTitle);
     }
-  }, [currentTitle, form, isEditForm]);
+  }, [currentTitle, form, isEditForm, setCurrentTitle]);
 
   useEffect(() => {
     if (isEditForm) return;
@@ -89,7 +94,7 @@ export const BuildFormHeader = () => {
             className='min-w-14 max-w-full overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
             style={{ width: `${currentTitle.length * 11}px` }}
           />
-          {isEditingTitle || (
+          {isPublishSection || isEditingTitle || (
             <MdOutlineModeEditOutline
               size={18}
               onClick={() => {
