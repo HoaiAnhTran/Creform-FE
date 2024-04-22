@@ -1,4 +1,4 @@
 export const VALIDATION = {
-  NOT_EMPTY: 'Must be contain at least 1 character(s)',
+  NOT_EMPTY: 'This field is required!',
   INVALID_EMAIL: 'Invalid email',
 };

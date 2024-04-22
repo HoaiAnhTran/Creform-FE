@@ -115,8 +115,8 @@ export const ELEMENTS = {
   },
   SCALE_RATING: {
     icon: FaChartSimple,
-    type: ElementType.STAR_RATING,
-    isDisabled: true,
+    type: ElementType.SCALE_RATING,
+    isDisabled: false,
   },
   DIVIDER: {
     icon: RxDividerHorizontal,

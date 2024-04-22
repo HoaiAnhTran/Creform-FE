@@ -10,6 +10,7 @@ import {
   isEmailElement,
   isFullnameElement,
   isHeadingElement,
+  isScaleRatingElement,
   isSubmitElement,
 } from '@/molecules/FactoryElement';
 import {
@@ -19,6 +20,7 @@ import {
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
+import { ScaleRatingProptertiesConfig } from '@/molecules/ScaleRatingPropertiesConfig';
 import { ShortTextPropertiesConfig } from '@/molecules/ShortTextPropertiesConfig';
 import { SubmitProptertiesConfig } from '@/molecules/SubmitPropertiesConfig';
 import { ElementItem } from '@/types';
@@ -98,6 +100,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isLongTextElement(edittingItem):
                 return (
                   <LongTextPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isScaleRatingElement(edittingItem):
+                return (
+                  <ScaleRatingProptertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

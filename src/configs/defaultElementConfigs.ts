@@ -4,6 +4,7 @@ import {
   EmailConfig,
   FullnameConfig,
   HeadingConfig,
+  ScaleRatingConfig,
   SubmitConfig,
   TextConfig,
 } from '@/types';
@@ -39,6 +40,13 @@ export const defaultTextConfig: TextConfig = {
   required: false,
   placeholder: 'Type a sublabel',
   sublabel: 'Please enter your answer',
+};
+
+export const defaultScaleRatingConfig: ScaleRatingConfig = {
+  fieldLabel: 'Type a question',
+  required: false,
+  lowestRatingText: 'Worst',
+  highestRatingText: 'Best',
 };
 
 export const defaultAddressConfig: AddressConfig = {

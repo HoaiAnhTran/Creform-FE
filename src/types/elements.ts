@@ -33,6 +33,13 @@ export interface SubmitConfig {
   buttonAlignment: string;
 }
 
+export interface ScaleRatingConfig {
+  fieldLabel: string;
+  required: boolean;
+  lowestRatingText: string;
+  highestRatingText: string;
+}
+
 export interface AddressConfig {
   fieldLabel: string;
   required: boolean;
@@ -50,6 +57,7 @@ export type ElementConfig =
   | EmailConfig
   | TextConfig
   | SubmitConfig
+  | ScaleRatingConfig
   | AddressConfig;
 
 export enum ElementType {
@@ -72,6 +80,7 @@ export enum ElementType {
   SUBMIT = 'Submit',
   INPUT_TABLE = 'Input Table',
   STAR_RATING = 'Star Rating',
+  SCALE_RATING = 'Scale Rating',
   DIVIDER = 'Divider',
   PAGE_BREAK = 'Page Break',
 }
@@ -102,6 +111,11 @@ export type LongTextElement = BaseElement<ElementType.LONG_TEXT, TextConfig>;
 
 export type SubmitElement = BaseElement<ElementType.SUBMIT, SubmitConfig>;
 
+export type ScaleRatingElement = BaseElement<
+  ElementType.SCALE_RATING,
+  ScaleRatingConfig
+>;
+
 export type AddressElement = BaseElement<ElementType.ADDRESS, AddressConfig>;
 
 export type ElementItem =
@@ -111,4 +125,5 @@ export type ElementItem =
   | ShortTextElement
   | LongTextElement
   | SubmitElement
+  | ScaleRatingElement
   | AddressElement;

@@ -6,6 +6,7 @@ import {
   FullnameElement,
   HeadingElement,
   LongTextElement,
+  ScaleRatingElement,
   ShortTextElement,
   SubmitElement,
 } from '@/types';
@@ -15,6 +16,7 @@ import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
 import { BaseLongTextElement } from '../BaseLongTextElement';
+import { BaseScaleRatingElement } from '../BaseScaleRatingElement';
 import { BaseShortTextElement } from '../BaseShortTextElement';
 import { BaseSubmitElement } from '../BaseSubmitElement';
 
@@ -46,6 +48,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseShortTextElement item={item} {...rest} />;
     case isLongTextElement(item):
       return <BaseLongTextElement item={item} {...rest} />;
+    case isScaleRatingElement(item):
+      return <BaseScaleRatingElement item={item} {...rest} />;
     case isAddressElement(item):
       return <BaseAddressElement item={item} {...rest} />;
     default:
@@ -75,6 +79,12 @@ export function isLongTextElement(item: ElementItem): item is LongTextElement {
 
 export function isSubmitElement(item: ElementItem): item is SubmitElement {
   return item?.type === ElementType.SUBMIT;
+}
+
+export function isScaleRatingElement(
+  item: ElementItem,
+): item is ScaleRatingElement {
+  return item?.type === ElementType.SCALE_RATING;
 }
 
 export function isAddressElement(item: ElementItem): item is AddressElement {

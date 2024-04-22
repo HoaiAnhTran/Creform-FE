@@ -9,6 +9,7 @@ import {
   defaultEmailConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
+  defaultScaleRatingConfig,
   defaultSubmitConfig,
   defaultTextConfig,
 } from '@/configs';
@@ -162,6 +163,20 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'longText',
+            },
+          ],
+        };
+      case ElementType.SCALE_RATING:
+        return {
+          id: uid,
+          type: ElementType.SCALE_RATING,
+          gridSize: getGridSize(currentItem),
+          config: defaultScaleRatingConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'scaleRating',
+              text: '',
             },
           ],
         };
