@@ -5,8 +5,8 @@ import { Box, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { useCreateFolderMutation } from '@/redux/api/folderApi';
+import { useCreateInvitationMutation } from '@/redux/api/invitationApi';
 import {
-  useAddMemberMutation,
   useCreateTeamMutation,
   useDeleteTeamMutation,
   useGetMyTeamsQuery,
@@ -39,15 +39,20 @@ export const TeamGroup = ({
   const [teamId, setTeamId] = useState<number>(0);
   const [modalType, setModalType] = useState<ModalType | ''>('');
 
-  const [addMember, { isLoading: isAddMemberLoading }] = useAddMemberMutation();
-  const [removeMember, { isLoading: isRemoveMemberLoading }] =
+  const [createInvitation, { isLoading: isSendingInvitation }] =
+    useCreateInvitationMutation();
+
+  const [removeMember, { isLoading: isRemovingMember }] =
     useRemoveMemberMutation();
 
   const { data: teamList, isLoading: isTeamLoading } = useGetMyTeamsQuery();
 
   const [createTeam, { isLoading: isTeamCreating }] = useCreateTeamMutation();
+
   const [updateTeam, { isLoading: isTeamUpdating }] = useUpdateTeamMutation();
+
   const [deleteTeam, { isLoading: isTeamDeleting }] = useDeleteTeamMutation();
+
   const [createFolder, { isLoading: isFolderInTeamCreating }] =
     useCreateFolderMutation();
 
@@ -69,7 +74,7 @@ export const TeamGroup = ({
   };
 
   const handleInviteMember = (value: { email: string }) => {
-    addMember({ id: teamId, email: value.email }).then((res) => {
+    createInvitation({ teamId, email: value.email }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
         closeModal();
@@ -161,7 +166,7 @@ export const TeamGroup = ({
         onClose={closeModal}
         handleInviteMember={handleInviteMember}
         handleRemoveMember={handleRemoveMember}
-        isLoading={isAddMemberLoading || isRemoveMemberLoading}
+        isLoading={isSendingInvitation || isRemovingMember}
       />
       <ManageFolderModal
         opened={modalType === ModalTypes.CREATE_FOLDER}
