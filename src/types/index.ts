@@ -5,6 +5,7 @@ export * from './auth';
 export * from './elements';
 export * from './folder';
 export * from './forms';
+export * from './invitations';
 export * from './modalType';
 export * from './responses';
 export * from './team';
