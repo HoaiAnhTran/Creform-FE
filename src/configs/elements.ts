@@ -66,7 +66,7 @@ export const ELEMENTS = {
   DROPDOWN: {
     icon: RxDropdownMenu,
     type: ElementType.DROPDOWN,
-    isDisabled: true,
+    isDisabled: false,
   },
   SINGLE_CHOICE: {
     icon: IoMdRadioButtonOn,

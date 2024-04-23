@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {
   defaultAddressConfig,
+  defaultDropdownConfig,
   defaultEmailConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
@@ -202,6 +203,19 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'city',
+            },
+          ],
+        };
+      case ElementType.DROPDOWN:
+        return {
+          id: uid,
+          type: ElementType.DROPDOWN,
+          gridSize: getGridSize(currentItem),
+          config: defaultDropdownConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'dropdown',
             },
           ],
         };

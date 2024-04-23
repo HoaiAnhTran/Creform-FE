@@ -1,5 +1,6 @@
 import {
   AddressElement,
+  DropdownElement,
   ElementItem,
   ElementType,
   EmailElement,
@@ -12,6 +13,7 @@ import {
 } from '@/types';
 
 import { BaseAddressElement } from '../BaseAddressElement';
+import { BaseDropdownElement } from '../BaseDropdownElement';
 import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
@@ -52,6 +54,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseScaleRatingElement item={item} {...rest} />;
     case isAddressElement(item):
       return <BaseAddressElement item={item} {...rest} />;
+    case isDropdownElement(item):
+      return <BaseDropdownElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -89,4 +93,8 @@ export function isScaleRatingElement(
 
 export function isAddressElement(item: ElementItem): item is AddressElement {
   return item?.type === ElementType.ADDRESS;
+}
+
+export function isDropdownElement(item: ElementItem): item is DropdownElement {
+  return item?.type === ElementType.DROPDOWN;
 }

@@ -1,6 +1,7 @@
 import { DEFAULT_BUTTON_COLOR } from '@/constants/buttonStyles';
 import {
   AddressConfig,
+  DropdownConfig,
   EmailConfig,
   FullnameConfig,
   HeadingConfig,
@@ -60,6 +61,13 @@ export const defaultAddressConfig: AddressConfig = {
   },
 };
 
+export const defaultDropdownConfig: DropdownConfig = {
+  fieldLabel: 'Type a question',
+  required: false,
+  sublabel: 'Type a sublabel',
+  options: [],
+};
+
 export const defaultShortTextHeightWidth = {
   h: 4,
   w: 12,
@@ -72,5 +80,10 @@ export const defaultLongTextHeightWidth = {
 
 export const defaultAddressHeightWidth = {
   h: 9,
+  w: 12,
+};
+
+export const defaultDropdownHeightWidth = {
+  h: 4,
   w: 12,
 };

@@ -4,9 +4,11 @@ import { useWindowScroll } from '@mantine/hooks';
 
 import { useBuildFormContext } from '@/contexts';
 import { AddressPropertiesConfig } from '@/molecules/AddressPropertiesConfig';
+import { DropdownPropertiesConfig } from '@/molecules/DropdownPropertiesConfig';
 import { EmailProptertiesConfig } from '@/molecules/EmailPropertiesConfig';
 import {
   isAddressElement,
+  isDropdownElement,
   isEmailElement,
   isFullnameElement,
   isHeadingElement,
@@ -114,6 +116,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isAddressElement(edittingItem):
                 return (
                   <AddressPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isDropdownElement(edittingItem):
+                return (
+                  <DropdownPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

@@ -51,6 +51,13 @@ export interface AddressConfig {
   };
 }
 
+export interface DropdownConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabel: string;
+  options: string[];
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -58,7 +65,8 @@ export type ElementConfig =
   | TextConfig
   | SubmitConfig
   | ScaleRatingConfig
-  | AddressConfig;
+  | AddressConfig
+  | DropdownConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -118,6 +126,8 @@ export type ScaleRatingElement = BaseElement<
 
 export type AddressElement = BaseElement<ElementType.ADDRESS, AddressConfig>;
 
+export type DropdownElement = BaseElement<ElementType.DROPDOWN, DropdownConfig>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -126,4 +136,5 @@ export type ElementItem =
   | LongTextElement
   | SubmitElement
   | ScaleRatingElement
-  | AddressElement;
+  | AddressElement
+  | DropdownElement;
