@@ -1,8 +1,7 @@
 import { Field, FieldArray } from 'formik';
 
 import { LongTextElement } from '@/types';
-import { cn } from '@/utils';
-import { stringRequired } from '@/utils/schemas/validation';
+import { cn, validateFieldValue, validateLabel } from '@/utils';
 
 import { Text } from '../Text';
 
@@ -21,12 +20,6 @@ interface LongTextProps {
 export const LongText = (props: LongTextProps) => {
   const { isReadOnly = false, item, handleOnChangeAnswer } = props;
 
-  const validate = async (value: string) =>
-    stringRequired
-      .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
-
   return (
     <FieldArray
       name='longText'
@@ -34,7 +27,7 @@ export const LongText = (props: LongTextProps) => {
         <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
-            validate={validate}
+            validate={validateLabel}
             text={item.config.fieldLabel}
             placeholder='Type a question'
             name={`${item.id}.fieldLabel`}
@@ -48,7 +41,9 @@ export const LongText = (props: LongTextProps) => {
             readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
             classNameWrapper='w-full'
-            validate={!isReadOnly && item.config.required ? validate : null}
+            validate={
+              !isReadOnly && item.config.required ? validateFieldValue : null
+            }
             size='sm'
             elementFieldId={item.fields[0].id}
             elementId={item.id}
@@ -60,7 +55,7 @@ export const LongText = (props: LongTextProps) => {
             }}
           />
           <Field
-            validate={validate}
+            validate={validateLabel}
             name={`${item.id}.subLabel`}
             size='xs'
             placeholder={item.config.placeholder}

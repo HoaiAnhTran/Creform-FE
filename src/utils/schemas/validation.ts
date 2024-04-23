@@ -1,16 +1,19 @@
 import * as yup from 'yup';
 
-import { VALIDATION } from '@/constants';
+import { MESSAGES } from '@/constants';
 
-export const stringRequired = yup
+export const requiredStringSchema = yup
   .string()
-  .required(VALIDATION.NOT_EMPTY)
-  .min(1, VALIDATION.NOT_EMPTY);
+  .min(1, MESSAGES.NO_EMPTY_STRING);
 
-export const emailRequired = yup
+export const requiredFieldValueSchema = yup
+  .string()
+  .required(MESSAGES.REQUIRED_FIELD);
+
+export const requiredEmailSchema = yup
   .string()
   .trim()
-  .min(1, VALIDATION.NOT_EMPTY)
-  .email(VALIDATION.INVALID_EMAIL);
+  .required(MESSAGES.REQUIRED_FIELD)
+  .email(MESSAGES.INVALID_EMAIL);
 
-export const emailFormat = yup.string().trim().email(VALIDATION.INVALID_EMAIL);
+export const emailSchema = yup.string().trim().email(MESSAGES.INVALID_EMAIL);

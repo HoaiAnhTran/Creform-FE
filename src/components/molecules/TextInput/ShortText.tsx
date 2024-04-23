@@ -1,8 +1,7 @@
 import { Field, FieldArray } from 'formik';
 
 import { ShortTextElement } from '@/types';
-import { cn } from '@/utils';
-import { stringRequired } from '@/utils/schemas/validation';
+import { cn, validateFieldValue, validateLabel } from '@/utils';
 
 import { Text } from '../Text';
 
@@ -21,12 +20,6 @@ interface ShortTextProps {
 export const ShortText = (props: ShortTextProps) => {
   const { isReadOnly = false, item, handleOnChangeAnswer } = props;
 
-  const validate = async (value: string) =>
-    stringRequired
-      .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
-
   return (
     <FieldArray
       name='shortText'
@@ -34,7 +27,7 @@ export const ShortText = (props: ShortTextProps) => {
         <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
-            validate={validate}
+            validate={validateLabel}
             text={item.config.fieldLabel}
             placeholder='Type a question'
             name={`${item.id}.fieldLabel`}
@@ -48,14 +41,16 @@ export const ShortText = (props: ShortTextProps) => {
             readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
             className='w-1/2'
-            validate={!isReadOnly && item.config.required ? validate : null}
+            validate={
+              !isReadOnly && item.config.required ? validateFieldValue : null
+            }
             elementFieldId={item.fields[0].id}
             elementId={item.id}
             handleChange={handleOnChangeAnswer}
             component={TextInput}
           />
           <Field
-            validate={validate}
+            validate={validateLabel}
             name={`${item.id}.sublabel`}
             size='xs'
             placeholder={item.config.placeholder}

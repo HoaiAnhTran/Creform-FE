@@ -256,8 +256,10 @@ export const BuildSection = () => {
     <Formik
       initialValues={{}}
       validateOnBlur={true}
-      validateOnChange={true}
-      onSubmit={() => {}}
+      validateOnChange={false}
+      onSubmit={() => {
+        isEditForm ? handleUpdateForm(+formId!) : handleCreateFormBasedOnIds();
+      }}
     >
       <Form className='h-full w-full'>
         <Box className='relative flex h-full w-full bg-malachite-50'>
@@ -298,11 +300,6 @@ export const BuildSection = () => {
             />
             {toggledRightbar || (
               <SaveButton
-                handleSave={() => {
-                  isEditForm
-                    ? handleUpdateForm(+formId!)
-                    : handleCreateFormBasedOnIds();
-                }}
                 isLoading={
                   isCreatingForm ||
                   isCreatingFormInFolder ||

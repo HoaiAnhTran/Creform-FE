@@ -58,6 +58,16 @@ export interface DropdownConfig {
   options: string[];
 }
 
+export interface SingleChoiceConfig {
+  fieldLabel: string;
+  required: boolean;
+  options: string[];
+  otherOption: {
+    isDisplayed: boolean;
+    text: string;
+  };
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -66,7 +76,8 @@ export type ElementConfig =
   | SubmitConfig
   | ScaleRatingConfig
   | AddressConfig
-  | DropdownConfig;
+  | DropdownConfig
+  | SingleChoiceConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -128,6 +139,11 @@ export type AddressElement = BaseElement<ElementType.ADDRESS, AddressConfig>;
 
 export type DropdownElement = BaseElement<ElementType.DROPDOWN, DropdownConfig>;
 
+export type SingleChoiceElement = BaseElement<
+  ElementType.SINGLE_CHOICE,
+  SingleChoiceConfig
+>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -137,4 +153,5 @@ export type ElementItem =
   | SubmitElement
   | ScaleRatingElement
   | AddressElement
-  | DropdownElement;
+  | DropdownElement
+  | SingleChoiceElement;

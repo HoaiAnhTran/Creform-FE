@@ -10,8 +10,7 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { ScaleRatingElement } from '@/types';
-import { cn } from '@/utils';
-import { stringRequired } from '@/utils/schemas/validation';
+import { cn, validateLabel } from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { Rating } from '../Rating';
@@ -22,12 +21,6 @@ export const BaseScaleRatingElement = (
 ) => {
   const { item, handleOnChangeAnswer } = props;
   const { isReadOnly } = useElementLayouts();
-
-  const validate = async (value: string) =>
-    stringRequired
-      .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
 
   const commonStyle = 'size-9 rounded-full border border-solid p-3';
 
@@ -78,7 +71,7 @@ export const BaseScaleRatingElement = (
         text={item.config.fieldLabel}
         placeholder='Type a question'
         required={item.config.required}
-        validate={validate}
+        validate={validateLabel}
         component={Text}
         classNameWrapper='min-h-[40px]'
         className={cn('flex min-h-[20px] items-start gap-1', {
@@ -88,7 +81,7 @@ export const BaseScaleRatingElement = (
       <Field
         name={`${item.fields[0].id}.fieldValue`}
         classNameWrapper='w-full'
-        validate={!isReadOnly && item.config.required ? validate : null}
+        validate={!isReadOnly && item.config.required ? validateLabel : null}
         elementFieldId={item.fields[0].id}
         elementId={item.id}
         emptySymbol={getEmptyIcon}

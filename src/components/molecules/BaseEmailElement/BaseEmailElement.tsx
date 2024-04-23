@@ -3,12 +3,8 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { EmailElement } from '@/types';
-import { cn } from '@/utils';
-import {
-  emailFormat,
-  emailRequired,
-  stringRequired,
-} from '@/utils/schemas/validation';
+import { cn, validateLabel } from '@/utils';
+import { emailSchema, requiredEmailSchema } from '@/utils/schemas/validation';
 
 import { BaseElementProps } from '../FactoryElement';
 import { Text } from '../Text';
@@ -18,14 +14,8 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
   const { item, handleOnChangeAnswer } = props;
   const { isReadOnly } = useElementLayouts();
 
-  const emailValidate = async (value: string) =>
-    (item.config.required ? emailRequired : emailFormat)
-      .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
-
-  const fieldValidate = async (value: string) =>
-    stringRequired
+  const validateEmail = async (value: string) =>
+    (item.config.required ? requiredEmailSchema : emailSchema)
       .validate(value)
       .then(() => {})
       .catch((err) => err.errors[0]);
@@ -38,7 +28,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
-          validate={fieldValidate}
+          validate={validateLabel}
           component={Text}
           classNameWrapper='min-h-[45px]'
           className={cn('flex min-h-[20px] items-start gap-1', {
@@ -49,7 +39,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           name={`${item.fields[0].id}.fieldValue`}
           readOnly={isReadOnly}
           value={item.fields[0].text}
-          validate={!isReadOnly ? emailValidate : null}
+          validate={!isReadOnly ? validateEmail : null}
           handleChange={handleOnChangeAnswer}
           elementFieldId={item.fields[0].id}
           elementId={item.id}
@@ -60,7 +50,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           name={`${item.id}.sublabel`}
           text={item.config.sublabel}
           placeholder='Type a sublabel'
-          validate={fieldValidate}
+          validate={validateLabel}
           component={Text}
           classNameWrapper='min-h-[42px]'
           className='text-xs font-thin text-slate-500'

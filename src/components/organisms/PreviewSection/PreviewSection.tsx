@@ -25,7 +25,12 @@ export const PreviewSection = () => {
         </Box>
       ) : (
         <Box className='absolute top-[50px] w-full py-7'>
-          <Formik initialValues={{}} onSubmit={() => {}}>
+          <Formik
+            validateOnBlur={true}
+            validateOnChange={false}
+            initialValues={{}}
+            onSubmit={() => {}}
+          >
             <Form>
               <FormRenderComponent form={form} />
             </Form>

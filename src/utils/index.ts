@@ -10,4 +10,5 @@ export * from './http';
 export * from './keyUtils';
 export * from './schemas/signUpSchema';
 export * from './schemas/updateProfileSchema';
+export * from './validate';
 export { toastify };

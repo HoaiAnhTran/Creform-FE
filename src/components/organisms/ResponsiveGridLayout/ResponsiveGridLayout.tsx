@@ -11,6 +11,7 @@ import {
   defaultFullnameConfig,
   defaultHeadingConfig,
   defaultScaleRatingConfig,
+  defaultSingleChoiceConfig,
   defaultSubmitConfig,
   defaultTextConfig,
 } from '@/configs';
@@ -52,7 +53,7 @@ export const ResponsiveGridLayout = ({
     xs: Layout[];
     xxs: Layout[];
   }>({ lg: [], md: [], sm: [], xs: [], xxs: [] });
-  const { isEditForm } = useBuildFormContext();
+  const { isEditForm, setToggledRightbar } = useBuildFormContext();
   const { id: formId } = useParams();
   const { data: form } = useGetFormDetailsQuery(
     { id: formId || '' },
@@ -78,6 +79,8 @@ export const ResponsiveGridLayout = ({
 
   const removeItem = (id: string) => {
     setElements(elements.filter((element) => element.id !== id));
+    setEdittingItem(undefined);
+    setToggledRightbar(false);
   };
 
   const createItem = (
@@ -219,6 +222,19 @@ export const ResponsiveGridLayout = ({
             },
           ],
         };
+      case ElementType.SINGLE_CHOICE:
+        return {
+          id: uid,
+          type: ElementType.SINGLE_CHOICE,
+          gridSize: getGridSize(currentItem),
+          config: defaultSingleChoiceConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'singleChoice',
+            },
+          ],
+        };
       default:
         return undefined;
     }
@@ -245,8 +261,13 @@ export const ResponsiveGridLayout = ({
     setEdittingItem(elements.find((element) => element.id === currentItem.i));
   };
 
-  const handleDragStop = (layout: Layout[]) => {
+  const handleDragStop = (layout: Layout[], currentItem: Layout) => {
     setElements(getElement(elements, layout));
+    setEdittingItem(
+      getElement(elements, layout).find(
+        (element) => element.id === currentItem.i,
+      ),
+    );
   };
   useEffect(() => {
     if (form) {
@@ -287,7 +308,7 @@ export const ResponsiveGridLayout = ({
             key={element.id}
             data-grid={element.gridSize}
             className={cn(
-              '!z-[100] flex w-full cursor-move flex-col justify-center rounded-md border-[3px] border-solid border-transparent bg-white px-2',
+              'flex w-full cursor-move flex-col justify-center rounded-md border-[3px] border-solid border-transparent bg-white px-2',
               {
                 'react-draggable-dragging border-[3px] border-blue-500 !will-change-auto':
                   element.id === edittingItem?.id,

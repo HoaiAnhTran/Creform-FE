@@ -71,7 +71,7 @@ export const ELEMENTS = {
   SINGLE_CHOICE: {
     icon: IoMdRadioButtonOn,
     type: ElementType.SINGLE_CHOICE,
-    isDisabled: true,
+    isDisabled: false,
   },
   MULTIPLE_CHOICE: {
     icon: IoMdCheckbox,

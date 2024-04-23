@@ -2,7 +2,7 @@ import { Field } from 'formik';
 
 import { Text } from '@/molecules/Text';
 import { AddressElement } from '@/types';
-import { stringRequired } from '@/utils/schemas/validation';
+import { validateFieldValue, validateLabel } from '@/utils';
 
 import { TextInput } from '../TextInput';
 
@@ -19,17 +19,11 @@ interface AddressProps {
 export const Address = (props: AddressProps) => {
   const { isReadOnly, item, handleOnChangeAnswer } = props;
 
-  const validate = async (value: string) =>
-    stringRequired
-      .validate(value)
-      .then(() => {})
-      .catch((err) => err.errors[0]);
-
   return (
     <div className='flex flex-col gap-2'>
       <Field
         required={item.config.required}
-        validate={validate}
+        validate={validateLabel}
         text={item.config.fieldLabel}
         name={`${item.id}.fieldLabel`}
         nameElementField='fieldLabel'
@@ -39,7 +33,9 @@ export const Address = (props: AddressProps) => {
         readOnly={isReadOnly}
         name={`${item.fields[0].id}.fieldValue`}
         classNameWrapper='w-full'
-        validate={!isReadOnly && item.config.required ? validate : null}
+        validate={
+          !isReadOnly && item.config.required ? validateFieldValue : null
+        }
         elementFieldId={item.fields[0].id}
         elementId={item.id}
         handleChange={handleOnChangeAnswer}
@@ -47,7 +43,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validate}
+        validate={validateLabel}
         name={`${item.fields[0].id}.subLabel`}
         size='xs'
         nameElementField={isReadOnly ? 'sublabel' : undefined}
@@ -58,7 +54,9 @@ export const Address = (props: AddressProps) => {
         readOnly={isReadOnly}
         name={`${item.fields[1].id}.fieldValue`}
         classNameWrapper='w-full'
-        validate={!isReadOnly && item.config.required ? validate : null}
+        validate={
+          !isReadOnly && item.config.required ? validateFieldValue : null
+        }
         elementFieldId={item.fields[1].id}
         elementId={item.id}
         handleChange={handleOnChangeAnswer}
@@ -66,7 +64,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validate}
+        validate={validateLabel}
         name={`${item.fields[1].id}.subLabel`}
         size='xs'
         nameElementField={isReadOnly ? 'sublabel' : undefined}
@@ -77,7 +75,9 @@ export const Address = (props: AddressProps) => {
         readOnly={isReadOnly}
         name={`${item.fields[2].id}.fieldValue`}
         classNameWrapper='w-full'
-        validate={!isReadOnly && item.config.required ? validate : null}
+        validate={
+          !isReadOnly && item.config.required ? validateFieldValue : null
+        }
         elementFieldId={item.fields[2].id}
         elementId={item.id}
         handleChange={handleOnChangeAnswer}
@@ -85,7 +85,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validate}
+        validate={validateLabel}
         name={`${item.fields[2].id}.subLabel`}
         size='xs'
         nameElementField={isReadOnly ? 'sublabel' : undefined}
@@ -96,7 +96,9 @@ export const Address = (props: AddressProps) => {
         readOnly={isReadOnly}
         name={`${item.fields[3].id}.fieldValue`}
         classNameWrapper='w-full'
-        validate={!isReadOnly && item.config.required ? validate : null}
+        validate={
+          !isReadOnly && item.config.required ? validateFieldValue : null
+        }
         elementFieldId={item.fields[3].id}
         elementId={item.id}
         handleChange={handleOnChangeAnswer}
@@ -104,7 +106,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validate}
+        validate={validateLabel}
         name={`${item.fields[3].id}.subLabel`}
         size='xs'
         nameElementField={isReadOnly ? 'sublabel' : undefined}

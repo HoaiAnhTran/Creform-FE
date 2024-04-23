@@ -9,6 +9,7 @@ import {
   LongTextElement,
   ScaleRatingElement,
   ShortTextElement,
+  SingleChoiceElement,
   SubmitElement,
 } from '@/types';
 
@@ -20,6 +21,7 @@ import { BaseHeadingElement } from '../BaseHeadingElement';
 import { BaseLongTextElement } from '../BaseLongTextElement';
 import { BaseScaleRatingElement } from '../BaseScaleRatingElement';
 import { BaseShortTextElement } from '../BaseShortTextElement';
+import { BaseSingleChoiceElement } from '../BaseSingleChoiceElement';
 import { BaseSubmitElement } from '../BaseSubmitElement';
 
 export interface BaseElementProps<T extends ElementItem = ElementItem> {
@@ -56,6 +58,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseAddressElement item={item} {...rest} />;
     case isDropdownElement(item):
       return <BaseDropdownElement item={item} {...rest} />;
+    case isSingleChoiceElement(item):
+      return <BaseSingleChoiceElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -68,9 +72,11 @@ export function isHeadingElement(item: ElementItem): item is HeadingElement {
 export function isEmailElement(item: ElementItem): item is EmailElement {
   return item?.type === ElementType.EMAIL;
 }
+
 export function isFullnameElement(item: ElementItem): item is FullnameElement {
   return item?.type === ElementType.FULLNAME;
 }
+
 export function isShortTextElement(
   item: ElementItem,
 ): item is ShortTextElement {
@@ -97,4 +103,10 @@ export function isAddressElement(item: ElementItem): item is AddressElement {
 
 export function isDropdownElement(item: ElementItem): item is DropdownElement {
   return item?.type === ElementType.DROPDOWN;
+}
+
+export function isSingleChoiceElement(
+  item: ElementItem,
+): item is SingleChoiceElement {
+  return item?.type === ElementType.SINGLE_CHOICE;
 }

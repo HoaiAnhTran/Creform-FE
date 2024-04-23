@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import {
-  TextInput as TextInputMantine,
-  TextInputProps as TextInputMantineProps,
+  Radio as MantineRadio,
+  RadioProps as MantineRadioProps,
 } from '@mantine/core';
 import {
   ErrorMessage,
@@ -10,18 +10,12 @@ import {
   FormikErrors,
 } from 'formik';
 
+import { useElementLayouts } from '@/contexts';
 import { cn } from '@/utils/cn';
 
-interface TextInputProps extends Omit<TextInputMantineProps, 'form'> {
-  handleChange?: (
-    elementId: string,
-    elementFieldId: string,
-    value: string,
-  ) => void;
+interface RadioProps extends Omit<MantineRadioProps, 'form'> {
   classNameError?: string;
   classNameWrapper?: string;
-  elementFieldId?: string;
-  elementId?: string;
   field: FieldInputProps<string>;
   form: {
     setFieldValue: (
@@ -32,44 +26,47 @@ interface TextInputProps extends Omit<TextInputMantineProps, 'form'> {
   };
   meta: FieldMetaProps<string>;
   classNameLabel?: string;
-  valueConfig: string;
+  optionValue: string | readonly string[] | number | undefined;
 }
 
-export const TextInput = (props: TextInputProps) => {
+export const Radio = (props: RadioProps) => {
   const {
-    handleChange,
     field,
-    elementFieldId,
-    elementId,
     classNameWrapper,
     form: { setFieldValue },
     classNameError,
-    classNameLabel,
+    optionValue,
     ...rest
   } = props;
 
+  const { isReadOnly } = useElementLayouts();
+
   useEffect(() => {
+    if (optionValue) {
+      setFieldValue(field.name, optionValue);
+      return;
+    }
     setFieldValue(field.name, '');
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optionValue]);
 
   return (
     <div className={cn('flex w-full flex-col', classNameWrapper)}>
-      <TextInputMantine
+      <MantineRadio
         {...field}
         {...rest}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          if (elementFieldId && elementId)
-            handleChange?.(elementId, elementFieldId, e.currentTarget.value);
-          field.onChange(e);
-        }}
+        value={optionValue}
+        label={optionValue || 'Type an option'}
+        variant='outline'
         classNames={{
-          label: cn('mb-2', classNameLabel),
+          label: cn('mb-2', optionValue ? 'text-black' : 'text-slate-500'),
         }}
+        disabled={isReadOnly}
       />
       <ErrorMessage
         name={field.name}
         render={(msg) => (
-          <div className={cn('mt-1 text-xs text-red-600', classNameError)}>
+          <div className={cn('text-xs text-red-600', classNameError)}>
             {msg}
           </div>
         )}

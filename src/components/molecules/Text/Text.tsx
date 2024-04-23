@@ -30,6 +30,7 @@ interface TextProps extends Omit<TextMantineProps, 'form'> {
   text: string;
   placeholder?: string;
 }
+
 export const Text = (props: TextProps) => {
   const {
     field,
@@ -39,6 +40,7 @@ export const Text = (props: TextProps) => {
     required = false,
     ...rest
   } = props;
+
   useEffect(() => {
     if (rest.text) {
       setFieldValue(field.name, rest.text);
