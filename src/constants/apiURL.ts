@@ -1,6 +1,7 @@
 export const API_URL = {
   SIGN_UP: '/auth/signup',
   LOGIN: '/auth/login',
+  USERS: '/users',
   FORMS: '/forms',
   FOLDERS: '/folders',
   INDEPENDENT_FOLDER: '/folders/independent',
