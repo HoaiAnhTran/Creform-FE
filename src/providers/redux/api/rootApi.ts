@@ -6,6 +6,7 @@ export const rootApi = createApi({
   baseQuery: axiosBaseQuery(),
   endpoints: () => ({}),
   tagTypes: [
+    'Users',
     'Profile',
     'Forms',
     'Folders',
