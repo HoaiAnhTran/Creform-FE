@@ -140,7 +140,6 @@ export const ElementList = [
       { element: ELEMENTS.ADDRESS },
       { element: ELEMENTS.PHONE },
       { element: ELEMENTS.DATEPICKER },
-      { element: ELEMENTS.APPOINTMENT },
     ],
   },
   {
@@ -151,8 +150,6 @@ export const ElementList = [
       { element: ELEMENTS.DROPDOWN },
       { element: ELEMENTS.SINGLE_CHOICE },
       { element: ELEMENTS.MULTIPLE_CHOICE },
-      { element: ELEMENTS.NUMBER },
-      { element: ELEMENTS.IMAGE },
       { element: ELEMENTS.FILE_UPLOAD },
       { element: ELEMENTS.TIME },
       { element: ELEMENTS.SUBMIT },
@@ -160,14 +157,6 @@ export const ElementList = [
   },
   {
     title: 'Survey elements',
-    elements: [
-      { element: ELEMENTS.INPUT_TABLE },
-      { element: ELEMENTS.STAR_RATING },
-      { element: ELEMENTS.SCALE_RATING },
-    ],
-  },
-  {
-    title: 'Page elements',
-    elements: [{ element: ELEMENTS.DIVIDER }, { element: ELEMENTS.PAGE_BREAK }],
+    elements: [{ element: ELEMENTS.SCALE_RATING }],
   },
 ];
