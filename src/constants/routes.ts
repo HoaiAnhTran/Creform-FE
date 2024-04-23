@@ -8,4 +8,5 @@ export const PATH = {
   MY_ACCOUNT_PAGE: '/my-account',
   PUBLIC_PAGE: '/form/:id',
   RESPONSE_PAGE: '/responses/:formId',
+  ACCEPT_INVITATION_PAGE: '/accept-invitation',
 };

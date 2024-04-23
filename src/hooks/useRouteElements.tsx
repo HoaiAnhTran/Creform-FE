@@ -10,6 +10,7 @@ import {
 import { BuildSection } from '@/organisms/BuildSection';
 import { PreviewSection } from '@/organisms/PreviewSection';
 import { PublishSection } from '@/organisms/PublishSection';
+import { AcceptInvitationPage } from '@/pages/AcceptInvitationPage';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
 import { LoadingPage } from '@/pages/LoadingPage';
@@ -21,17 +22,16 @@ import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
 const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
+
 // route required authentication to navigate
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
-
   return isAuthenticated ? <Outlet /> : <Navigate to={PATH.LOGIN_PAGE} />;
 }
 
 // when not authenticated, it will navigate to this route
 export function RejectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
-
   return !isAuthenticated ? (
     <Outlet />
   ) : (
@@ -148,6 +148,10 @@ export function useRouteElements() {
           <PublicPage />
         </ElementLayoutProvider>
       ),
+    },
+    {
+      path: PATH.ACCEPT_INVITATION_PAGE,
+      element: <AcceptInvitationPage />,
     },
     {
       path: '*',

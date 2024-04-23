@@ -10,7 +10,20 @@ import { rootApi } from './rootApi';
 
 const userApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    getMyProfile: build.query<UserProfileResponse | undefined, void>({
+    getUserByEmail: build.query<UserProfileResponse, { email: string }>({
+      query: (params) => ({
+        url: API_URL.USERS,
+        method: 'GET',
+        params,
+      }),
+      transformResponse: (response: SuccessResponse<UserProfileResponse>) =>
+        response.data,
+      providesTags: (_result, _error, arg) => [
+        { type: 'Users', id: arg.email },
+      ],
+    }),
+
+    getMyProfile: build.query<UserProfileResponse | undefined, unknown>({
       query: () => ({
         url: API_URL.USER_PROFILE,
         method: 'GET',
@@ -48,6 +61,7 @@ const userApi = rootApi.injectEndpoints({
 });
 
 export const {
+  useGetUserByEmailQuery,
   useGetMyProfileQuery,
   useUpdateProfileMutation,
   useChangePasswordMutation,

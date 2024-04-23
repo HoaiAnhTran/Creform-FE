@@ -8,22 +8,51 @@ import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
 import { LoginForm, LoginSchema } from '@/organisms/LoginForm';
 import { useLoginUserMutation } from '@/redux/api/authenticationApi';
+import { useAcceptInvitationMutation } from '@/redux/api/invitationApi';
 import { ErrorResponse } from '@/types';
-import { httpClient, saveAccessTokenToLS, toastify } from '@/utils';
+import {
+  getInvitationTokenFromLS,
+  hasInvitationTokenInLS,
+  httpClient,
+  removeInvitationTokenFromLS,
+  setAccessTokenToLS,
+  toastify,
+} from '@/utils';
 
 export const LoginPage = () => {
-  const [loginUser] = useLoginUserMutation();
-  const [visible, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
+
+  const [visible, { open, close }] = useDisclosure(false);
+
+  const [loginUser] = useLoginUserMutation();
+
+  const [acceptInvitation] = useAcceptInvitationMutation();
 
   const onSubmit = (values: LoginSchema) => {
     open();
     loginUser(values).then((res) => {
       if ('data' in res) {
         httpClient.setToken(res.data.data.token);
-        saveAccessTokenToLS(res.data.data.token);
+        setAccessTokenToLS(res.data.data.token);
         close();
-        navigate(PATH.ROOT_PAGE);
+        if (hasInvitationTokenInLS()) {
+          acceptInvitation({ token: getInvitationTokenFromLS() }).then(
+            (res) => {
+              if ('data' in res) {
+                toastify.displaySuccess(res.data.message as string);
+                removeInvitationTokenFromLS();
+                navigate(PATH.OVERVIEW_PAGE);
+                return;
+              }
+              if (res.error as ErrorResponse)
+                toastify.displayError(
+                  (res.error as ErrorResponse).message as string,
+                );
+            },
+          );
+        } else {
+          navigate(PATH.OVERVIEW_PAGE);
+        }
         return;
       }
       if (res.error as ErrorResponse) {
