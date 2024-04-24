@@ -38,6 +38,7 @@ export interface ScaleRatingConfig {
   required: boolean;
   lowestRatingText: string;
   highestRatingText: string;
+  ratingAmount: number;
 }
 
 export interface AddressConfig {

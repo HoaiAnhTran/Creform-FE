@@ -1,10 +1,3 @@
-import {
-  RiNumber1,
-  RiNumber2,
-  RiNumber3,
-  RiNumber4,
-  RiNumber5,
-} from 'react-icons/ri';
 import { Box } from '@mantine/core';
 import { Field } from 'formik';
 
@@ -21,48 +14,6 @@ export const BaseScaleRatingElement = (
 ) => {
   const { item, handleOnChangeAnswer } = props;
   const { isReadOnly } = useElementLayouts();
-
-  const commonStyle = 'size-9 rounded-full border border-solid p-3';
-
-  const emptyStyle = 'border-slate-500 text-slate-500';
-
-  const fullStyle = 'border-malachite-500 text-white bg-malachite-500';
-
-  const getEmptyIcon = (value: number) => {
-    const iconEmptyStyle = cn(commonStyle, emptyStyle);
-    switch (value) {
-      case 1:
-        return <RiNumber1 className={iconEmptyStyle} />;
-      case 2:
-        return <RiNumber2 className={iconEmptyStyle} />;
-      case 3:
-        return <RiNumber3 className={iconEmptyStyle} />;
-      case 4:
-        return <RiNumber4 className={iconEmptyStyle} />;
-      case 5:
-        return <RiNumber5 className={iconEmptyStyle} />;
-      default:
-        return null;
-    }
-  };
-
-  const getFullIcon = (value: number) => {
-    const iconFullStyle = cn(commonStyle, fullStyle);
-    switch (value) {
-      case 1:
-        return <RiNumber1 className={iconFullStyle} />;
-      case 2:
-        return <RiNumber2 className={iconFullStyle} />;
-      case 3:
-        return <RiNumber3 className={iconFullStyle} />;
-      case 4:
-        return <RiNumber4 className={iconFullStyle} />;
-      case 5:
-        return <RiNumber5 className={iconFullStyle} />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <Box className='w-full'>
@@ -86,8 +37,6 @@ export const BaseScaleRatingElement = (
         }
         elementFieldId={item.fields[0].id}
         elementId={item.id}
-        emptySymbol={getEmptyIcon}
-        fullSymbol={getFullIcon}
         highlightSelectedOnly
         readOnly={isReadOnly}
         handleChange={handleOnChangeAnswer}

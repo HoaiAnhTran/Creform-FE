@@ -53,6 +53,7 @@ export const defaultScaleRatingConfig: ScaleRatingConfig = {
   required: false,
   lowestRatingText: 'Worst',
   highestRatingText: 'Best',
+  ratingAmount: 5,
 };
 
 export const defaultAddressConfig: AddressConfig = {
