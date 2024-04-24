@@ -48,10 +48,32 @@ export const Rating = (props: RatingProps) => {
 
   useEffect(() => {
     setFieldValue(field.name, '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const commonSymbolStyles =
+    'size-9 rounded-full border border-solid p-3 flex justify-center items-center text-sm';
+
+  const emptySymbolStyles = cn(
+    commonSymbolStyles,
+    'border-slate-500 text-slate-500',
+  );
+
+  const fullSymbolStyles = cn(
+    commonSymbolStyles,
+    'border-ocean-green-500 text-white bg-ocean-green-500',
+  );
+
+  const emptySymbol = (value: number) => (
+    <Box className={emptySymbolStyles}>{value}</Box>
+  );
+
+  const fullSymbol = (value: number) => (
+    <Box className={fullSymbolStyles}>{value}</Box>
+  );
+
   return (
-    <div className={cn('flex w-full flex-col', classNameWrapper)}>
+    <div className={cn('flex max-w-fit flex-col gap-2', classNameWrapper)}>
       <RatingMantine
         {...rest}
         onBlur={field.onBlur}
@@ -61,10 +83,13 @@ export const Rating = (props: RatingProps) => {
           setFieldValue(field.name, value.toString());
         }}
         classNames={{
-          root: 'gap-3',
+          root: 'flex gap-5 max-w-full flex-wrap',
         }}
+        count={itemConfig.ratingAmount}
+        emptySymbol={emptySymbol}
+        fullSymbol={fullSymbol}
       />
-      <Group className='w-[228px] justify-between'>
+      <Group className='px-1 justify-between'>
         <Box>
           <Text className='text-xs text-slate-500'>
             {itemConfig.lowestRatingText}
