@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stack, Switch, Text, TextInput } from '@mantine/core';
+import { NumberInput, Stack, Switch, Text, TextInput } from '@mantine/core';
 
 import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
 import { ScaleRatingConfig, ScaleRatingElement } from '@/types';
@@ -43,6 +43,21 @@ export const ScaleRatingProptertiesConfig = (
       },
     });
   };
+
+  const handleChangeRatingAmount = (value: string | number) => {
+    handleConfig({
+      ...edittingItem?.config,
+      ratingAmount: Number(value),
+    });
+    updateItem({
+      ...edittingItem,
+      config: {
+        ...edittingItem.config,
+        ratingAmount: Number(value),
+      },
+    });
+  };
+
   return (
     <>
       <Stack className='p-3'>
@@ -52,7 +67,7 @@ export const ScaleRatingProptertiesConfig = (
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
           value={edittingItem?.config.fieldLabel}
           onChange={handleChange('fieldLabel')}
-        ></TextInput>
+        />
       </Stack>
       <Stack className='w-20 p-3'>
         <Text className='font-bold text-white'>Required</Text>
@@ -71,7 +86,7 @@ export const ScaleRatingProptertiesConfig = (
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
           value={edittingItem?.config.lowestRatingText}
           onChange={handleChange('lowestRatingText')}
-        ></TextInput>
+        />
       </Stack>
       <Stack className='p-3'>
         <Text className='font-bold text-white'>Highest rating text</Text>
@@ -80,7 +95,21 @@ export const ScaleRatingProptertiesConfig = (
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
           value={edittingItem?.config.highestRatingText}
           onChange={handleChange('highestRatingText')}
-        ></TextInput>
+        />
+      </Stack>
+      <Stack className='p-3'>
+        <Text className='font-bold text-white'>Rating amount</Text>
+        <NumberInput
+          autoComplete='off'
+          className='rounded-md border border-solid border-slate-600 bg-slate-100'
+          value={edittingItem?.config.ratingAmount}
+          onChange={handleChangeRatingAmount}
+          min={2}
+          max={10}
+          clampBehavior='strict'
+          allowDecimal={false}
+          allowNegative={false}
+        />
       </Stack>
     </>
   );
