@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { MESSAGES } from '@/constants';
+import { MESSAGES, RULES } from '@/constants';
 
 export const requiredStringSchema = yup
   .string()
@@ -17,3 +17,8 @@ export const requiredEmailSchema = yup
   .email(MESSAGES.INVALID_EMAIL);
 
 export const emailSchema = yup.string().trim().email(MESSAGES.INVALID_EMAIL);
+
+export const isValidPhoneNumber = yup
+  .string()
+  .trim()
+  .matches(RULES.PHONE_NUMBER_REGEX, 'Please enter a valid phone number.');

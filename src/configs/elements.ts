@@ -41,7 +41,7 @@ export const ELEMENTS = {
   PHONE: {
     icon: FaPhoneAlt,
     type: ElementType.PHONE,
-    isDisabled: true,
+    isDisabled: false,
   },
   DATEPICKER: {
     icon: FaCalendarAlt,

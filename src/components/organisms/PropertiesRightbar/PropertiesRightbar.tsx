@@ -13,6 +13,7 @@ import {
   isFullnameElement,
   isHeadingElement,
   isMultipleChoiceElement,
+  isNumberPhoneElement,
   isScaleRatingElement,
   isSingleChoiceElement,
   isSubmitElement,
@@ -25,6 +26,7 @@ import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
 import { MultipleChoicePropertiesConfig } from '@/molecules/MultipleChoicePropertiesConfig';
+import { PhoneNumberPropertiesConfig } from '@/molecules/PhoneNumberPropertiesConfig';
 import { ScaleRatingProptertiesConfig } from '@/molecules/ScaleRatingPropertiesConfig';
 import { ShortTextPropertiesConfig } from '@/molecules/ShortTextPropertiesConfig';
 import { SingleChoicePropertiesConfig } from '@/molecules/SingleChoicePropertiesConfig';
@@ -141,6 +143,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isMultipleChoiceElement(edittingItem):
                 return (
                   <MultipleChoicePropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isNumberPhoneElement(edittingItem):
+                return (
+                  <PhoneNumberPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

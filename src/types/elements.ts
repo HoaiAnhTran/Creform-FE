@@ -78,6 +78,12 @@ export interface MultipleChoiceConfig {
   };
 }
 
+export interface NumberPhoneConfig {
+  fieldLabel: string;
+  sublabel: string;
+  required: boolean;
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -88,7 +94,9 @@ export type ElementConfig =
   | AddressConfig
   | DropdownConfig
   | SingleChoiceConfig
-  | MultipleChoiceConfig;
+  | MultipleChoiceConfig
+  | AddressConfig
+  | NumberPhoneConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -147,6 +155,10 @@ export type ScaleRatingElement = BaseElement<
 >;
 
 export type AddressElement = BaseElement<ElementType.ADDRESS, AddressConfig>;
+export type NumberPhoneElement = BaseElement<
+  ElementType.PHONE,
+  NumberPhoneConfig
+>;
 
 export type DropdownElement = BaseElement<ElementType.DROPDOWN, DropdownConfig>;
 
@@ -171,4 +183,6 @@ export type ElementItem =
   | AddressElement
   | DropdownElement
   | SingleChoiceElement
-  | MultipleChoiceElement;
+  | MultipleChoiceElement
+  | AddressElement
+  | NumberPhoneElement;

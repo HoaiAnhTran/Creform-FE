@@ -8,6 +8,7 @@ import {
   HeadingElement,
   LongTextElement,
   MultipleChoiceElement,
+  NumberPhoneElement,
   ScaleRatingElement,
   ShortTextElement,
   SingleChoiceElement,
@@ -21,6 +22,7 @@ import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
 import { BaseLongTextElement } from '../BaseLongTextElement';
 import { BaseMultipleChoiceElement } from '../BaseMultipleChoiceElement';
+import { BasePhoneNumberElement } from '../BasePhoneNumberElement';
 import { BaseScaleRatingElement } from '../BaseScaleRatingElement';
 import { BaseShortTextElement } from '../BaseShortTextElement';
 import { BaseSingleChoiceElement } from '../BaseSingleChoiceElement';
@@ -64,6 +66,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseSingleChoiceElement item={item} {...rest} />;
     case isMultipleChoiceElement(item):
       return <BaseMultipleChoiceElement item={item} {...rest} />;
+    case isNumberPhoneElement(item):
+      return <BasePhoneNumberElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -119,4 +123,10 @@ export function isMultipleChoiceElement(
   item: ElementItem,
 ): item is MultipleChoiceElement {
   return item?.type === ElementType.MULTIPLE_CHOICE;
+}
+
+export function isNumberPhoneElement(
+  item: ElementItem,
+): item is NumberPhoneElement {
+  return item?.type === ElementType.PHONE;
 }
