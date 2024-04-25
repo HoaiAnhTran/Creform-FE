@@ -15,7 +15,9 @@ export function separateFields(form: FormRequest) {
 
 export const getFormAnswerFields = (elements: ElementItem[]) => {
   const formAnswers: FormAnswer[] = [];
+
   for (const element of elements) {
+    if (!('fieldLabel' in element.config)) continue;
     const FieldAnswers: FormAnswer = {
       elementId: element.id,
       answers: [],
@@ -27,7 +29,6 @@ export const getFormAnswerFields = (elements: ElementItem[]) => {
       };
       FieldAnswers.answers.push(answer);
     }
-
     formAnswers.push(FieldAnswers);
   }
   return { formAnswers: formAnswers };
