@@ -5,6 +5,7 @@ import {
   EmailConfig,
   FullnameConfig,
   HeadingConfig,
+  MultipleChoiceConfig,
   ScaleRatingConfig,
   SingleChoiceConfig,
   SubmitConfig,
@@ -79,6 +80,13 @@ export const defaultSingleChoiceConfig: SingleChoiceConfig = {
   },
 };
 
+export const defaultMultipleChoiceConfig: MultipleChoiceConfig = {
+  fieldLabel: 'Type a question',
+  required: false,
+  options: ['Type option 1', 'Type option 2', 'Type option 3', 'Type option 4'],
+  otherOption: { isDisplayed: false, text: 'Other' },
+};
+
 export const defaultShortTextHeightWidth = {
   h: 4,
   w: 12,
@@ -100,6 +108,11 @@ export const defaultDropdownHeightWidth = {
 };
 
 export const defaultSingleChoiceHeightWidth = {
+  h: 8,
+  w: 12,
+};
+
+export const defaultMultipleChoiceHeightWidth = {
   h: 8,
   w: 12,
 };

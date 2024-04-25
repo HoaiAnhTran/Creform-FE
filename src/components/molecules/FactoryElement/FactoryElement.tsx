@@ -7,6 +7,7 @@ import {
   FullnameElement,
   HeadingElement,
   LongTextElement,
+  MultipleChoiceElement,
   ScaleRatingElement,
   ShortTextElement,
   SingleChoiceElement,
@@ -19,6 +20,7 @@ import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
 import { BaseLongTextElement } from '../BaseLongTextElement';
+import { BaseMultipleChoiceElement } from '../BaseMultipleChoiceElement';
 import { BaseScaleRatingElement } from '../BaseScaleRatingElement';
 import { BaseShortTextElement } from '../BaseShortTextElement';
 import { BaseSingleChoiceElement } from '../BaseSingleChoiceElement';
@@ -60,6 +62,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseDropdownElement item={item} {...rest} />;
     case isSingleChoiceElement(item):
       return <BaseSingleChoiceElement item={item} {...rest} />;
+    case isMultipleChoiceElement(item):
+      return <BaseMultipleChoiceElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -109,4 +113,10 @@ export function isSingleChoiceElement(
   item: ElementItem,
 ): item is SingleChoiceElement {
   return item?.type === ElementType.SINGLE_CHOICE;
+}
+
+export function isMultipleChoiceElement(
+  item: ElementItem,
+): item is MultipleChoiceElement {
+  return item?.type === ElementType.MULTIPLE_CHOICE;
 }

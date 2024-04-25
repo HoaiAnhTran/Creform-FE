@@ -76,7 +76,7 @@ export const ELEMENTS = {
   MULTIPLE_CHOICE: {
     icon: IoMdCheckbox,
     type: ElementType.MULTIPLE_CHOICE,
-    isDisabled: true,
+    isDisabled: false,
   },
   NUMBER: {
     icon: RiNumber7,

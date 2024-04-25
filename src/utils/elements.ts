@@ -2,6 +2,7 @@ import {
   defaultAddressHeightWidth,
   defaultDropdownHeightWidth,
   defaultLongTextHeightWidth,
+  defaultMultipleChoiceHeightWidth,
   defaultShortTextHeightWidth,
   defaultSingleChoiceHeightWidth,
 } from '@/configs/defaultElementConfigs';
@@ -19,6 +20,8 @@ export const getDefaultWidthHeight = (type: ElementType | undefined) => {
       return defaultDropdownHeightWidth;
     case type === ElementType.SINGLE_CHOICE:
       return defaultSingleChoiceHeightWidth;
+    case type === ElementType.MULTIPLE_CHOICE:
+      return defaultMultipleChoiceHeightWidth;
     default:
       return {
         h: 4,

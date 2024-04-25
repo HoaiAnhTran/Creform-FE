@@ -10,6 +10,7 @@ import {
   defaultEmailConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
+  defaultMultipleChoiceConfig,
   defaultScaleRatingConfig,
   defaultSingleChoiceConfig,
   defaultSubmitConfig,
@@ -232,6 +233,19 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'singleChoice',
+            },
+          ],
+        };
+      case ElementType.MULTIPLE_CHOICE:
+        return {
+          id: uid,
+          type: ElementType.MULTIPLE_CHOICE,
+          gridSize: getGridSize(currentItem),
+          config: defaultMultipleChoiceConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'multipleChoice',
             },
           ],
         };

@@ -12,6 +12,7 @@ import {
   isEmailElement,
   isFullnameElement,
   isHeadingElement,
+  isMultipleChoiceElement,
   isScaleRatingElement,
   isSingleChoiceElement,
   isSubmitElement,
@@ -23,6 +24,7 @@ import {
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
+import { MultipleChoicePropertiesConfig } from '@/molecules/MultipleChoicePropertiesConfig';
 import { ScaleRatingProptertiesConfig } from '@/molecules/ScaleRatingPropertiesConfig';
 import { ShortTextPropertiesConfig } from '@/molecules/ShortTextPropertiesConfig';
 import { SingleChoicePropertiesConfig } from '@/molecules/SingleChoicePropertiesConfig';
@@ -132,6 +134,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isSingleChoiceElement(edittingItem):
                 return (
                   <SingleChoicePropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isMultipleChoiceElement(edittingItem):
+                return (
+                  <MultipleChoicePropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

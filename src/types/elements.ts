@@ -68,6 +68,16 @@ export interface SingleChoiceConfig {
   };
 }
 
+export interface MultipleChoiceConfig {
+  fieldLabel: string;
+  required: boolean;
+  options: string[];
+  otherOption: {
+    isDisplayed: boolean;
+    text: string;
+  };
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -77,7 +87,8 @@ export type ElementConfig =
   | ScaleRatingConfig
   | AddressConfig
   | DropdownConfig
-  | SingleChoiceConfig;
+  | SingleChoiceConfig
+  | MultipleChoiceConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -144,6 +155,11 @@ export type SingleChoiceElement = BaseElement<
   SingleChoiceConfig
 >;
 
+export type MultipleChoiceElement = BaseElement<
+  ElementType.MULTIPLE_CHOICE,
+  MultipleChoiceConfig
+>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -154,4 +170,5 @@ export type ElementItem =
   | ScaleRatingElement
   | AddressElement
   | DropdownElement
-  | SingleChoiceElement;
+  | SingleChoiceElement
+  | MultipleChoiceElement;
