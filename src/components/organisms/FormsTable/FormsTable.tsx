@@ -185,7 +185,10 @@ export const FormsTable = () => {
                 : 'text-gray-300 hover:text-gray-300'
             }
             aria-label='Favourites'
-            onClick={() => addToFavouritesMutation({ id: record.id })}
+            onClick={(e) => {
+              e.stopPropagation();
+              addToFavouritesMutation({ id: record.id });
+            }}
           >
             <FaStar size={20} />
           </ActionIcon>
