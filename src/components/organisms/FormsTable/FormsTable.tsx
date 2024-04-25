@@ -77,23 +77,28 @@ export const FormsTable = () => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
         closeModal();
+        setSelectedRecords([]);
         return;
       }
       if (res.error as ErrorResponse) {
         toastify.displayError((res.error as ErrorResponse).message);
         closeModal();
+        setSelectedRecords([]);
       }
     });
   };
 
   const handleRestoreForm = (record: FormResponse) => {
+    setSelectedRecords([record]);
     restoreForm({ id: record.id }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
+        setSelectedRecords([]);
         return;
       }
       if (res.error as ErrorResponse) {
         toastify.displayError((res.error as ErrorResponse).message);
+        setSelectedRecords([]);
       }
     });
   };
@@ -103,10 +108,12 @@ export const FormsTable = () => {
       (res) => {
         if ('data' in res) {
           toastify.displaySuccess(res.data.message);
+          setSelectedRecords([]);
           return;
         }
         if (res.error as ErrorResponse) {
           toastify.displayError((res.error as ErrorResponse).message);
+          setSelectedRecords([]);
         }
       },
     );
@@ -117,11 +124,13 @@ export const FormsTable = () => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
         closeModal();
+        setSelectedRecords([]);
         return;
       }
       if (res.error as ErrorResponse) {
         toastify.displayError((res.error as ErrorResponse).message);
         closeModal();
+        setSelectedRecords([]);
       }
     });
   };
@@ -351,18 +360,14 @@ export const FormsTable = () => {
         records={data?.forms}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
-        onRowClick={({ record }) => {
+        onRowClick={({ record: clickedRecord }) => {
           setSelectedRecords((prev) => {
-            const isSelected = prev.some(
-              (selectedRecord) => selectedRecord.id === record.id,
-            );
-
-            if (isSelected) {
-              return prev.filter(
-                (selectedRecord) => selectedRecord.id !== record.id,
-              );
+            const isSelectedRecord =
+              prev.findIndex((record) => record.id === clickedRecord.id) !== -1;
+            if (isSelectedRecord) {
+              return [...prev];
             }
-            return [...prev, record];
+            return [...prev, clickedRecord];
           });
         }}
         noRecordsText='No records found'

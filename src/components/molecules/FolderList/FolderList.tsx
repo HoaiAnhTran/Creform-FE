@@ -99,7 +99,7 @@ export const FolderList = ({
   };
 
   return (
-    <>
+    <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
         <Loader color='green' />
       ) : (
@@ -109,7 +109,7 @@ export const FolderList = ({
             <Group
               key={uuidv4()}
               className={cn(
-                'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-300',
+                'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-200',
                 {
                   'bg-slate-300': isActiveFolder && !activeAllForms,
                 },
@@ -118,7 +118,7 @@ export const FolderList = ({
               <NavLink
                 key={folder.id}
                 className={cn(
-                  'w-[85%] rounded-md text-slate-600 hover:bg-slate-300',
+                  'w-[85%] rounded-md text-slate-600 hover:bg-slate-200',
                   {
                     'bg-slate-300': isActiveFolder && !activeAllForms,
                   },
@@ -220,6 +220,6 @@ export const FolderList = ({
         onClickConfirm={handleDeleteFolder}
         isLoading={isFolderDeleting}
       />
-    </>
+    </Box>
   );
 };

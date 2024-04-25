@@ -80,7 +80,7 @@ export const TeamList = ({
               <Group
                 key={uuidv4()}
                 className={cn(
-                  'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-300',
+                  'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-200',
                   {
                     'bg-slate-300': isActiveTeam,
                   },
@@ -89,7 +89,7 @@ export const TeamList = ({
                 <NavLink
                   key={team.id}
                   className={cn(
-                    'w-[85%] rounded-md text-slate-600 hover:bg-slate-300',
+                    'w-[85%] rounded-md text-slate-600 hover:bg-slate-200',
                     {
                       'bg-slate-300': isActiveTeam,
                     },

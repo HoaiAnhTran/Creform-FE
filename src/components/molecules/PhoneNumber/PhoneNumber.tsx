@@ -20,7 +20,7 @@ interface NumberPhoneProps {
 export const NumberPhone = (props: NumberPhoneProps) => {
   const { isReadOnly = false, item, handleOnChangeAnswer } = props;
 
-  const phoneNumberValidate = async (value: string) =>
+  const validatePhoneNumber = async (value: string) =>
     isValidPhoneNumber
       .validate(value)
       .then(() => {})
@@ -49,10 +49,10 @@ export const NumberPhone = (props: NumberPhoneProps) => {
             elementId={item.id}
             validate={
               !isReadOnly && item.config.required
-                ? phoneNumberValidate
+                ? validatePhoneNumber
                 : field.value === ''
                   ? null
-                  : phoneNumberValidate
+                  : validatePhoneNumber
             }
             handleChange={handleOnChangeAnswer}
             component={PhoneNumberInput}
