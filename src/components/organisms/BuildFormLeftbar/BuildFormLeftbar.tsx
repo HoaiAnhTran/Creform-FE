@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
-import { Box, Divider, Group, Stack, Text } from '@mantine/core';
+import { Box, Divider, Group, Stack, Text, Tooltip } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
 import { ElementList } from '@/configs';
+import { useElementLayouts } from '@/contexts';
 import { ElementType } from '@/types';
 import { cn } from '@/utils';
 
@@ -19,9 +20,15 @@ const ELEMENT_ICON_SIZE = 25;
 export const BuildFormLeftbar = ({
   setCurrentElementType,
 }: BuildFormLeftbarProps) => {
+  const { elements } = useElementLayouts();
+
   const [toggledLeftbar, setToggledLeftbar] = useState(false);
 
   const [scroll] = useWindowScroll();
+
+  const hasSubmitButton = elements.some(
+    (element) => element.type === ElementType.SUBMIT,
+  );
 
   const handleDrop = (elementType: ElementType) => {
     setCurrentElementType(elementType);
@@ -77,25 +84,67 @@ export const BuildFormLeftbar = ({
                 </Box>
                 <Divider color='gray' />
                 <Box>
-                  {elementType.elements.map(({ element }, index) => (
-                    <Box key={`element-${index}`}>
-                      <Group
-                        className='group cursor-move hover:bg-malachite-500'
-                        draggable={true}
-                        unselectable='on'
-                        onDragStart={(e) => {
-                          e.dataTransfer.setData('text/plain', '');
-                          handleDrop(element.type);
-                        }}
-                      >
-                        <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-malachite-400'>
-                          <element.icon size={ELEMENT_ICON_SIZE} />
-                        </Box>
-                        <Box className='text-white'>{element.type}</Box>
-                      </Group>
-                      <Divider color='gray' />
-                    </Box>
-                  ))}
+                  {elementType.elements.map(({ element }, index) => {
+                    const isSubmitElement = element.type === ElementType.SUBMIT;
+
+                    return (
+                      <Box key={`element-${index}`}>
+                        {!isSubmitElement ? (
+                          <Group
+                            className='group cursor-move hover:bg-malachite-500'
+                            draggable={true}
+                            unselectable='on'
+                            onDragStart={(e) => {
+                              e.dataTransfer.setData('text/plain', '');
+                              handleDrop(element.type);
+                            }}
+                          >
+                            <Box className='flex bg-slate-600 p-3 text-white group-hover:bg-malachite-400'>
+                              <element.icon size={ELEMENT_ICON_SIZE} />
+                            </Box>
+                            <Box className='text-white'>{element.type}</Box>
+                          </Group>
+                        ) : (
+                          <Tooltip
+                            label='Your form already has one submit button'
+                            position='right'
+                            arrowSize={6}
+                            withArrow
+                            offset={15}
+                            disabled={!hasSubmitButton}
+                          >
+                            <Group
+                              className={cn('group', {
+                                'cursor-pointer': hasSubmitButton,
+                                'cursor-move hover:bg-malachite-500':
+                                  !hasSubmitButton,
+                              })}
+                              draggable={!hasSubmitButton}
+                              unselectable='on'
+                              onDragStart={(e) => {
+                                e.dataTransfer.setData('text/plain', '');
+                                handleDrop(element.type);
+                              }}
+                            >
+                              <Box
+                                className={cn(
+                                  'flex bg-slate-600 p-3 text-white',
+                                  {
+                                    'group-hover:bg-malachite-400':
+                                      !hasSubmitButton,
+                                  },
+                                )}
+                              >
+                                <element.icon size={ELEMENT_ICON_SIZE} />
+                              </Box>
+                              <Box className='text-white'>{element.type}</Box>
+                            </Group>
+                          </Tooltip>
+                        )}
+                        <Divider color='gray' />
+                      </Box>
+                    );
+                  })}
                 </Box>
               </Stack>
             ))}
