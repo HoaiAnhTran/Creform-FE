@@ -4,6 +4,7 @@ import { cn } from '@/utils';
 
 interface ToggleButtonProps {
   label: string;
+  labelClassName?: string;
   className?: string;
   isEnable: boolean;
   handleToggleButton: () => void;
@@ -11,12 +12,16 @@ interface ToggleButtonProps {
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({
   label,
+  labelClassName,
   className,
   isEnable,
   handleToggleButton,
 }) => (
-  <Flex className={cn('cursor-pointer gap-2.5', className)}>
-    <Text className='text-sm' onClick={handleToggleButton}>
+  <Flex className={cn('flex cursor-pointer items-center gap-2.5', className)}>
+    <Text
+      className={cn('text-sm font-medium', labelClassName)}
+      onClick={handleToggleButton}
+    >
       {label}
     </Text>
     <label className='relative inline-block h-5 w-12 cursor-pointer'>
@@ -33,7 +38,7 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
       ></span>
       <span
         className={cn(
-          'absolute -bottom-1 left-0 h-7 w-7 rounded-full bg-white shadow-lg transition duration-300',
+          'absolute -bottom-1 left-0 h-7 w-7 rounded-full border-[2px] border-solid border-gray-100 bg-white shadow-xl transition duration-300',
           isEnable && 'translate-x-5 transform',
         )}
       ></span>

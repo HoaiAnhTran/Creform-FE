@@ -9,7 +9,7 @@ import GreenLogo from '@/assets/images/greenlogo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
-import { LoadingDots } from '@/molecules/LoadingDots';
+import { Loader } from '@/molecules/Loader';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { cn, formatDate, httpClient } from '@/utils';
 
@@ -118,7 +118,7 @@ export const BuildFormHeader = () => {
       </div>
 
       {!myProfile || isLoading ? (
-        <LoadingDots color='green' />
+        <Loader color='green' />
       ) : (
         <div className='flex flex-row gap-6'>
           <Menu shadow='sm' offset={5} position='bottom-end' withArrow>

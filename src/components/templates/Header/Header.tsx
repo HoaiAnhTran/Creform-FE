@@ -6,7 +6,7 @@ import { Anchor, Group, Image, Menu } from '@mantine/core';
 import WhiteLogo from '@/assets/images/whitelogo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
-import { LoadingDots } from '@/molecules/LoadingDots';
+import { Loader } from '@/molecules/Loader';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { httpClient } from '@/utils';
 
@@ -28,7 +28,7 @@ export const Header = () => {
         <Image src={WhiteLogo} h={LOGO_HEIGHT} />
       </Anchor>
       {!myProfile || isLoading ? (
-        <LoadingDots color='white' />
+        <Loader color='white' />
       ) : (
         <div>
           <Menu shadow='sm' offset={5} position='bottom-end' withArrow>

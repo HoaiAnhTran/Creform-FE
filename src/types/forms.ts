@@ -13,7 +13,6 @@ export interface GetFormsParams {
 }
 
 export interface FormResponse {
-  disabled?: boolean;
   id: number;
   title: string;
   logoUrl: string;
@@ -36,6 +35,7 @@ export interface FormResponse {
     email: string;
   };
   isFavourite: boolean;
+  disabled: boolean;
 }
 
 export interface GetFormsResponse {

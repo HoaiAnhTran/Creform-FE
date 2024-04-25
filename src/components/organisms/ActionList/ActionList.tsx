@@ -5,9 +5,11 @@ import { IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
 import { TbRestore } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 import { Box, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
+import { PATH } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { useOverviewContext } from '@/contexts';
 import { AddToFolderModal } from '@/molecules/AddToFolderModal';
@@ -26,6 +28,8 @@ interface ActionListFormProps {
 }
 
 export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
+  const navigate = useNavigate();
+
   const { activeTeam, selectedRecords, setSelectedRecords } =
     useOverviewContext();
 
@@ -40,7 +44,11 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
 
-  const handleViewSubmissions = () => {};
+  const handleViewSubmissions = () => {
+    navigate(
+      PATH.RESPONSE_PAGE.replace(':formId', selectedFormIds[0].toString()),
+    );
+  };
 
   const handleDeleteMultipleForms = async () => {
     await Promise.allSettled(

@@ -20,7 +20,7 @@ import { type ModalType, ModalTypes, TeamResponse } from '@/types';
 import { cn } from '@/utils';
 
 import { FolderList } from '../FolderList';
-import { LoadingDots } from '../LoadingDots';
+import { Loader } from '../Loader';
 
 interface TeamListProps {
   teamList?: TeamResponse[];
@@ -70,7 +70,7 @@ export const TeamList = ({
   return (
     <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
-        <LoadingDots color='green' />
+        <Loader color='green' />
       ) : (
         teamList.map((team) => {
           const isActiveTeam = team.id === activeTeam && activeFolder === -1;

@@ -1,31 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaLink } from 'react-icons/fa';
 import { FiLink } from 'react-icons/fi';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   CopyButton,
+  Divider,
   Group,
   Stack,
-  Switch,
   TextInput,
 } from '@mantine/core';
 
-import { Button } from '@/atoms/Button';
+import { Button, ToggleButton } from '@/atoms/Button';
 import { MESSAGES } from '@/constants';
 import { useBuildFormContext } from '@/contexts';
-import { useUpdateDisabledStatusMutation } from '@/redux/api/formApi';
+import {
+  useGetFormDetailsQuery,
+  useUpdateDisabledStatusMutation,
+} from '@/redux/api/formApi';
 import { toastify } from '@/utils';
 
 export const PublishSection = () => {
-  const { form, isEditForm } = useBuildFormContext();
+  const { id: formId } = useParams();
 
-  const link = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
+  const { data: form } = useGetFormDetailsQuery(
+    { id: formId || '' },
+    { skip: !formId },
+  );
   const [updateDisabledStatus] = useUpdateDisabledStatusMutation();
-  const [disabled, setDisabled] = useState(form.disabled);
+
+  const { isEditForm } = useBuildFormContext();
+
+  const [disabledForm, setDisabledForm] = useState<boolean>(false);
+
+  const link = isEditForm ? `${window.location.origin}/form/${form?.id}` : '';
+
+  useEffect(() => {
+    if (form) {
+      setDisabledForm(form.disabled);
+    }
+  }, [form]);
 
   return (
-    <Box className='flex h-screen w-full items-center justify-center bg-malachite-50'>
-      <Stack className='w-[660px] -translate-y-[30%]'>
+    <Box className='relative flex h-screen w-full items-center justify-center bg-malachite-50'>
+      <Stack className='absolute top-[120px] w-[660px]'>
         <Group>
           <Box className='flex h-10 w-10 items-center justify-center rounded bg-malachite-400'>
             <FaLink size={20} className='text-white' />
@@ -72,28 +90,38 @@ export const PublishSection = () => {
               disabled={!isEditForm}
             />
           </Group>
-          <Stack className='gap-2'>
-            <span className='text-base font-semibold uppercase text-blue-200'>
-              Do you want to publish this form ?
-            </span>
-            <Switch
-              size='xl'
-              onLabel='ON'
-              offLabel='OFF'
-              checked={!disabled}
-              onChange={(event) => {
+          <Divider className='bg-slate-300' />
+          <Group className='items-center justify-between gap-2'>
+            <Stack className='gap-[3px]'>
+              <span className='text-base font-semibold uppercase text-blue-200'>
+                FORM STATUS
+              </span>
+              <span className='text-sm text-gray-500'>
+                {`Your form is currently ${disabledForm ? 'unable' : 'able'} to receive submissions`}
+              </span>
+            </Stack>
+            <ToggleButton
+              label={disabledForm ? 'DISABLED' : 'ENABLED'}
+              labelClassName={
+                disabledForm
+                  ? 'text-gray-500 text-xs'
+                  : 'text-malachite-500 text-xs'
+              }
+              className='text-sm text-gray-700'
+              isEnable={!disabledForm}
+              handleToggleButton={() => {
                 if (!form?.id) return;
                 updateDisabledStatus({
                   formId: form.id,
-                  disabled: !event.target.checked,
+                  disabled: !disabledForm,
                 }).catch(() => {
                   toastify.displayError(MESSAGES.UPDATE_PUBLISH_STATUS_ERROR);
-                  setDisabled(!disabled);
+                  return;
                 });
-                setDisabled(!event.target.checked);
+                setDisabledForm(!disabledForm);
               }}
             />
-          </Stack>
+          </Group>
         </Stack>
       </Stack>
     </Box>

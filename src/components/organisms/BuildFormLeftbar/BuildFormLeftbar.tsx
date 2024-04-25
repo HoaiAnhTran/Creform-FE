@@ -120,8 +120,12 @@ export const BuildFormLeftbar = ({
                                   !hasSubmitButton,
                               })}
                               draggable={!hasSubmitButton}
-                              unselectable='on'
+                              unselectable={'on'}
                               onDragStart={(e) => {
+                                if (hasSubmitButton) {
+                                  e.preventDefault();
+                                  return;
+                                }
                                 e.dataTransfer.setData('text/plain', '');
                                 handleDrop(element.type);
                               }}

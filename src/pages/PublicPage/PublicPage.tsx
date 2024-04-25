@@ -4,8 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Tooltip, UnstyledButton } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
+import DisabledFormIcon from '@/assets/images/disable-form.png';
 import { PATH } from '@/constants';
 import { useElementLayouts } from '@/contexts';
+import { Loader } from '@/molecules/Loader';
 import { FormRenderComponent } from '@/organisms/FormRenderComponent';
 import { SubmissionConfirmation } from '@/organisms/SubmissionConfirmation';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
@@ -16,14 +18,20 @@ import { getFormAnswerFields } from '@/utils/seperates';
 
 export const PublicPage = () => {
   const { id: formId } = useParams();
+
   const isAuthenticated = Boolean(getAccessTokenFromLS());
-  const { data } = useGetFormDetailsQuery(
+
+  const { data: formData, isLoading } = useGetFormDetailsQuery(
     { id: formId || '' },
     { skip: !formId },
   );
+
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
   const navigate = useNavigate();
+
   const { elements } = useElementLayouts();
+
   const [createFormResponse, { isLoading: isLoadingCreateFormResponse }] =
     useCreateResponseMutation();
 
@@ -46,49 +54,61 @@ export const PublicPage = () => {
     );
   };
 
-  if (data?.disabled)
+  const renderBackToHomeButton = () => (
+    <Tooltip
+      label='Back to home'
+      position='right'
+      arrowSize={6}
+      withArrow
+      offset={8}
+    >
+      <UnstyledButton
+        className='fixed left-10 top-10'
+        onClick={() => {
+          navigate(PATH.OVERVIEW_PAGE);
+        }}
+        disabled={isLoadingCreateFormResponse}
+      >
+        <span
+          className={cn(
+            'relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500',
+            {
+              'bg-malachite-300 hover:bg-malachite-300':
+                isLoadingCreateFormResponse,
+            },
+          )}
+        >
+          <MdKeyboardBackspace size={24} className='text-white' />
+        </span>
+      </UnstyledButton>
+    </Tooltip>
+  );
+
+  if (isLoading) {
+    return <Loader type='oval' className='translate-y-[50vh]' />;
+  }
+
+  if (formData?.disabled === true)
     return (
-      <div className='flex min-h-screen items-start justify-center bg-malachite-50 py-10'>
-        <div className='mt-20 flex h-40 w-[45%] flex-col rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
-          <h1>Untitled Form</h1>
-          <div>The form Untitled form is no longer accepting responses.</div>
-          <div>
-            Try contacting the owner of the form if you think this is a mistake
-          </div>
+      <div className='text-sl flex min-h-screen items-start justify-center bg-malachite-50 py-10'>
+        {isAuthenticated && renderBackToHomeButton()}
+        <div className='flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid border-t-malachite-500 bg-white px-6 py-8 shadow-lg'>
+          <h2 className='text-[32px]'>{formData.title}</h2>
+          <span className='leading-7'>
+            This form is no longer accepting submissions. <br></br> Try
+            contacting the owner of the form if you think this is a mistake.
+          </span>
+          <img
+            src={DisabledFormIcon}
+            className='mt-5 h-48 w-48 self-center object-contain'
+          />
         </div>
       </div>
     );
+
   return (
     <div className='flex min-h-screen items-center justify-center bg-malachite-50 py-10'>
-      {isAuthenticated && (
-        <Tooltip
-          label='Back to home'
-          position='right'
-          arrowSize={6}
-          withArrow
-          offset={8}
-        >
-          <UnstyledButton
-            className='fixed left-10 top-10'
-            onClick={() => {
-              navigate(PATH.OVERVIEW_PAGE);
-            }}
-            disabled={isLoadingCreateFormResponse}
-          >
-            <span
-              className={cn(
-                'relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500',
-                {
-                  'bg-malachite-300 hover:bg-malachite-300':
-                    isLoadingCreateFormResponse,
-                },
-              )}
-            >
-              <MdKeyboardBackspace size={24} className='text-white' />
-            </span>
-          </UnstyledButton>
-        </Tooltip>
-      )}
+      {isAuthenticated && renderBackToHomeButton()}
       {!isSuccess ? (
         <Formik
           validateOnBlur={true}
@@ -98,7 +118,7 @@ export const PublicPage = () => {
         >
           <Form className='h-full w-full'>
             <FormRenderComponent
-              form={data}
+              form={formData}
               isLoading={isLoadingCreateFormResponse}
             />
           </Form>

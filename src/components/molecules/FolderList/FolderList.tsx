@@ -24,7 +24,7 @@ import {
 import { cn, toastify } from '@/utils';
 
 import { ConfirmationModal } from '../ComfirmationModal';
-import { LoadingDots } from '../LoadingDots';
+import { Loader } from '../Loader';
 import { ManageFolderModal } from '../ManageFolderModal';
 
 interface FolderListProps {
@@ -101,7 +101,7 @@ export const FolderList = ({
   return (
     <>
       {isLoading ? (
-        <LoadingDots color='green' />
+        <Loader color='green' />
       ) : (
         folderList?.map((folder) => {
           const isActiveFolder = folder.id === activeFolder;
