@@ -66,7 +66,7 @@ export const defaultDropdownConfig: DropdownConfig = {
   fieldLabel: 'Type a question',
   required: false,
   sublabel: 'Type a sublabel',
-  options: [],
+  options: ['option 1', 'option 2', 'option 3'],
 };
 
 export const defaultSingleChoiceConfig: SingleChoiceConfig = {
@@ -95,7 +95,7 @@ export const defaultAddressHeightWidth = {
 };
 
 export const defaultDropdownHeightWidth = {
-  h: 4,
+  h: 7,
   w: 12,
 };
 

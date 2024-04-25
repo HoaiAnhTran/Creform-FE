@@ -150,7 +150,6 @@ export const ElementList = [
       { element: ELEMENTS.DROPDOWN },
       { element: ELEMENTS.SINGLE_CHOICE },
       { element: ELEMENTS.MULTIPLE_CHOICE },
-      { element: ELEMENTS.FILE_UPLOAD },
       { element: ELEMENTS.TIME },
       { element: ELEMENTS.SUBMIT },
     ],

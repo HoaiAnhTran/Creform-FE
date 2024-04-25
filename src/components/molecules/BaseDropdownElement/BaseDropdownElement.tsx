@@ -3,7 +3,7 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { DropdownElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
+import { cn, validateFieldValue, validateLabel } from '@/utils';
 
 import { Combobox } from '../Combobox';
 import { BaseElementProps } from '../FactoryElement';
@@ -34,11 +34,13 @@ export const BaseDropdownElement = (
           name={`${item.fields[0].id}.fieldValue`}
           readOnly={isReadOnly}
           item={item}
-          validate={!isReadOnly && item.config.required ? validateLabel : null}
+          validate={
+            !isReadOnly && item.config.required ? validateFieldValue : null
+          }
           handleChange={handleOnChangeAnswer}
           elementFieldId={item.fields[0].id}
           component={Combobox}
-          classNameWrapper='min-h-[56px]'
+          classNameWrapper='min-h-[60px]'
         />
         <Field
           name={`${item.id}.sublabel`}

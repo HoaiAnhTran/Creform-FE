@@ -99,6 +99,10 @@ export const DropdownPropertiesConfig = (
           value={edittingItem?.config.options.join('\n')}
           onChange={handleChangeOptions}
         />
+        <Text className='text-justify text-[13px] text-slate-50'>
+          Give options for users to select from. Enter each option on a new
+          line.
+        </Text>
       </Stack>
     </>
   );
