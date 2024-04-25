@@ -1,5 +1,6 @@
 import {
   AddressElement,
+  DatePickerElement,
   DropdownElement,
   ElementItem,
   ElementType,
@@ -16,6 +17,7 @@ import {
 } from '@/types';
 
 import { BaseAddressElement } from '../BaseAddressElement';
+import { BaseDatePickerElement } from '../BaseDatePickerElement';
 import { BaseDropdownElement } from '../BaseDropdownElement';
 import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
@@ -68,6 +70,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseMultipleChoiceElement item={item} {...rest} />;
     case isNumberPhoneElement(item):
       return <BasePhoneNumberElement item={item} {...rest} />;
+    case isDatePickerInputElement(item):
+      return <BaseDatePickerElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -129,4 +133,10 @@ export function isNumberPhoneElement(
   item: ElementItem,
 ): item is NumberPhoneElement {
   return item?.type === ElementType.PHONE;
+}
+
+export function isDatePickerInputElement(
+  item: ElementItem,
+): item is DatePickerElement {
+  return item?.type === ElementType.DATEPICKER;
 }

@@ -1,6 +1,7 @@
 import { DEFAULT_BUTTON_COLOR } from '@/constants/buttonStyles';
 import {
   AddressConfig,
+  DatePickerConfig,
   DropdownConfig,
   EmailConfig,
   FullnameConfig,
@@ -79,6 +80,12 @@ export const defaultSingleChoiceConfig: SingleChoiceConfig = {
     isDisplayed: false,
     text: 'Other',
   },
+};
+
+export const defaultDatePickerConfig: DatePickerConfig = {
+  fieldLabel: 'Date',
+  required: false,
+  sublabel: 'Date',
 };
 
 export const defaultMultipleChoiceConfig: MultipleChoiceConfig = {

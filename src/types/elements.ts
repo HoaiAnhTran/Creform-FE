@@ -84,6 +84,12 @@ export interface NumberPhoneConfig {
   required: boolean;
 }
 
+export interface DatePickerConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabel: string;
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -96,7 +102,8 @@ export type ElementConfig =
   | SingleChoiceConfig
   | MultipleChoiceConfig
   | AddressConfig
-  | NumberPhoneConfig;
+  | NumberPhoneConfig
+  | DatePickerConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -167,6 +174,11 @@ export type SingleChoiceElement = BaseElement<
   SingleChoiceConfig
 >;
 
+export type DatePickerElement = BaseElement<
+  ElementType.DATEPICKER,
+  DatePickerConfig
+>;
+
 export type MultipleChoiceElement = BaseElement<
   ElementType.MULTIPLE_CHOICE,
   MultipleChoiceConfig
@@ -185,4 +197,5 @@ export type ElementItem =
   | SingleChoiceElement
   | MultipleChoiceElement
   | AddressElement
-  | NumberPhoneElement;
+  | NumberPhoneElement
+  | DatePickerElement;

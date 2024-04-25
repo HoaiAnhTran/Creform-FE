@@ -46,7 +46,7 @@ export const ELEMENTS = {
   DATEPICKER: {
     icon: FaCalendarAlt,
     type: ElementType.DATEPICKER,
-    isDisabled: true,
+    isDisabled: false,
   },
   APPOINTMENT: {
     icon: FaCalendarCheck,

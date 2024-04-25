@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {
   defaultAddressConfig,
+  defaultDatePickerConfig,
   defaultDropdownConfig,
   defaultEmailConfig,
   defaultFullnameConfig,
@@ -260,6 +261,19 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'phoneNumber',
+            },
+          ],
+        };
+      case ElementType.DATEPICKER:
+        return {
+          id: uid,
+          type: ElementType.DATEPICKER,
+          gridSize: getGridSize(currentItem),
+          config: defaultDatePickerConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'longText',
             },
           ],
         };

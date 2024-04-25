@@ -1,46 +1,62 @@
-import { useState } from 'react';
 import { LuCalendarCheck2 } from 'react-icons/lu';
-import { MantineSize, TextInput } from '@mantine/core';
-import { DatePickerInput as DatePickerInputMantine } from '@mantine/dates';
+import { Field } from 'formik';
 
-import { cn } from '@/utils';
+import { Text } from '@/molecules/Text';
+import { DatePickerElement } from '@/types';
+import { cn, validateFieldValue, validateLabel } from '@/utils';
+
+import { DatePickerInput as DatePickerInputCustom } from '../DatePickerInputCustom';
 
 interface DatePickerInputProps {
-  icon?: React.ReactNode;
-  withAsterisk?: boolean;
-  size?: MantineSize | undefined;
-  label?: string;
-  sublabel?: string;
-  className?: string;
+  isReadOnly?: boolean;
+  handleOnChangeAnswer: (
+    elementId: string,
+    elementFieldId: string,
+    value: string,
+  ) => void;
+  item: DatePickerElement;
 }
 
 export const DatePickerInput = (props: DatePickerInputProps) => {
-  const {
-    icon = <LuCalendarCheck2 />,
-    withAsterisk = false,
-    size = 'md',
-    label = 'Date',
-    sublabel = 'Date',
-    className,
-  } = props;
-  const [value, setValue] = useState<Date | null>(null);
+  const { isReadOnly = false, item, handleOnChangeAnswer } = props;
 
   return (
-    <div className={cn('flex flex-col', className)}>
-      <TextInput
-        size='lg'
-        defaultValue={label}
-        variant='unstyled'
-        withAsterisk={withAsterisk}
+    <div className={'flex flex-col gap-2'}>
+      <Field
+        required={item.config.required}
+        validate={validateLabel}
+        text={item.config.fieldLabel}
+        placeholder='Type a question'
+        name={`${item.id}.fieldLabel`}
+        component={Text}
+        classNameWrapper='min-h-[45px]'
+        className={cn('flex min-h-[20px] items-start gap-1', {
+          'text-slate-500': !item.config.fieldLabel,
+        })}
       />
-      <DatePickerInputMantine
+      <Field
+        readOnly={isReadOnly}
+        name={`${item.id}.fieldValue`}
+        className='w-1/2'
+        validate={
+          !isReadOnly && item.config.required ? validateFieldValue : null
+        }
         valueFormat='YYYY MMM DD'
-        value={value}
-        onChange={setValue}
-        rightSection={icon}
-        size={size}
+        rightSection={<LuCalendarCheck2 />}
+        elementFieldId={item.fields[0].id}
+        elementId={item.id}
+        handleChange={handleOnChangeAnswer}
+        component={DatePickerInputCustom}
       />
-      <TextInput size='xs' variant='unstyled' defaultValue={sublabel} />
+      <Field
+        validate={validateLabel}
+        name={`${item.id}.subLabel`}
+        size='xs'
+        text={item.config.sublabel}
+        component={Text}
+        classNameWrapper='min-h-[40px]'
+        className='text-xs font-thin text-slate-500'
+      />
     </div>
   );
 };
