@@ -17,6 +17,7 @@ import {
   defaultSingleChoiceConfig,
   defaultSubmitConfig,
   defaultTextConfig,
+  defaultTimeInputConfig,
 } from '@/configs';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
@@ -274,6 +275,19 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'longText',
+            },
+          ],
+        };
+      case ElementType.TIME:
+        return {
+          id: uid,
+          type: ElementType.TIME,
+          gridSize: getGridSize(currentItem),
+          config: defaultTimeInputConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'timeInput',
             },
           ],
         };

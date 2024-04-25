@@ -14,6 +14,7 @@ import {
   ShortTextElement,
   SingleChoiceElement,
   SubmitElement,
+  TimeInputElement,
 } from '@/types';
 
 import { BaseAddressElement } from '../BaseAddressElement';
@@ -29,6 +30,7 @@ import { BaseScaleRatingElement } from '../BaseScaleRatingElement';
 import { BaseShortTextElement } from '../BaseShortTextElement';
 import { BaseSingleChoiceElement } from '../BaseSingleChoiceElement';
 import { BaseSubmitElement } from '../BaseSubmitElement';
+import { BaseTimeInputElement } from '../BaseTimeInput/BaseTimeInput';
 
 export interface BaseElementProps<T extends ElementItem = ElementItem> {
   item: T;
@@ -72,6 +74,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BasePhoneNumberElement item={item} {...rest} />;
     case isDatePickerInputElement(item):
       return <BaseDatePickerElement item={item} {...rest} />;
+    case isTimeInputElement(item):
+      return <BaseTimeInputElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -139,4 +143,10 @@ export function isDatePickerInputElement(
   item: ElementItem,
 ): item is DatePickerElement {
   return item?.type === ElementType.DATEPICKER;
+}
+
+export function isTimeInputElement(
+  item: ElementItem,
+): item is TimeInputElement {
+  return item?.type === ElementType.TIME;
 }

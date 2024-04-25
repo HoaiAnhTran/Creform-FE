@@ -68,6 +68,15 @@ export interface SingleChoiceConfig {
   };
 }
 
+export interface TimeInputConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabels: {
+    hour: string;
+    minutes: string;
+  };
+}
+
 export interface MultipleChoiceConfig {
   fieldLabel: string;
   required: boolean;
@@ -103,7 +112,8 @@ export type ElementConfig =
   | MultipleChoiceConfig
   | AddressConfig
   | NumberPhoneConfig
-  | DatePickerConfig;
+  | DatePickerConfig
+  | TimeInputConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -173,6 +183,7 @@ export type SingleChoiceElement = BaseElement<
   ElementType.SINGLE_CHOICE,
   SingleChoiceConfig
 >;
+export type TimeInputElement = BaseElement<ElementType.TIME, TimeInputConfig>;
 
 export type DatePickerElement = BaseElement<
   ElementType.DATEPICKER,
@@ -198,4 +209,5 @@ export type ElementItem =
   | MultipleChoiceElement
   | AddressElement
   | NumberPhoneElement
-  | DatePickerElement;
+  | DatePickerElement
+  | TimeInputElement;

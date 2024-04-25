@@ -19,6 +19,7 @@ import {
   isScaleRatingElement,
   isSingleChoiceElement,
   isSubmitElement,
+  isTimeInputElement,
 } from '@/molecules/FactoryElement';
 import {
   isLongTextElement,
@@ -33,6 +34,7 @@ import { ScaleRatingProptertiesConfig } from '@/molecules/ScaleRatingPropertiesC
 import { ShortTextPropertiesConfig } from '@/molecules/ShortTextPropertiesConfig';
 import { SingleChoicePropertiesConfig } from '@/molecules/SingleChoicePropertiesConfig';
 import { SubmitProptertiesConfig } from '@/molecules/SubmitPropertiesConfig';
+import { TimeInputPropertiesConfig } from '@/molecules/TimeInputPropertiesConfig';
 import { ElementItem } from '@/types';
 import { cn } from '@/utils';
 
@@ -159,6 +161,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isDatePickerInputElement(edittingItem):
                 return (
                   <DatePickerInputPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isTimeInputElement(edittingItem):
+                return (
+                  <TimeInputPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

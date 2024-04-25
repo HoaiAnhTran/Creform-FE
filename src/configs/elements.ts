@@ -96,7 +96,7 @@ export const ELEMENTS = {
   TIME: {
     icon: MdWatchLater,
     type: ElementType.TIME,
-    isDisabled: true,
+    isDisabled: false,
   },
   SUBMIT: {
     icon: BsSendFill,

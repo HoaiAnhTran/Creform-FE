@@ -12,6 +12,7 @@ import {
   SingleChoiceConfig,
   SubmitConfig,
   TextConfig,
+  TimeInputConfig,
 } from '@/types';
 
 export const defaultHeadingConfig: HeadingConfig = {
@@ -99,6 +100,15 @@ export const defaultNumberPhoneConfig: NumberPhoneConfig = {
   fieldLabel: 'Type your phone number',
   required: false,
   sublabel: 'Please enter your phone number',
+};
+
+export const defaultTimeInputConfig: TimeInputConfig = {
+  fieldLabel: 'Time',
+  required: false,
+  sublabels: {
+    hour: 'hour',
+    minutes: 'minutes',
+  },
 };
 
 export const defaultShortTextHeightWidth = {
