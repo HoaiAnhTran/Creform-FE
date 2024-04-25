@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import sortBy from 'lodash.sortby';
+import orderby from 'lodash.orderby';
 import {
   DataTable,
   DataTableColumn,
@@ -53,12 +53,15 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     direction: 'asc',
   });
 
-  const [records, setRecords] = useState(sortBy(responseRows, 'id'));
-
-  useEffect(() => {
-    const data = sortBy(responseRows, sortStatus.columnAccessor);
-    setRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
-  }, [sortStatus, responseRows]);
+  const records = useMemo(
+    () =>
+      orderby(
+        responseRows,
+        [sortStatus.columnAccessor],
+        [sortStatus.direction],
+      ),
+    [sortStatus, responseRows],
+  );
 
   useEffect(() => {
     setParams({ ...params, page: currentPage });
