@@ -12,7 +12,6 @@ import {
 } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
-import { BIG_Z_INDEX } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { ElementItem, ElementType } from '@/types';
@@ -158,7 +157,7 @@ export const FormContainer = ({
         <Box pos='relative' className='px-4'>
           <LoadingOverlay
             visible={isLoading}
-            zIndex={BIG_Z_INDEX}
+            zIndex={80}
             overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
             loaderProps={{ color: 'green' }}
           />
