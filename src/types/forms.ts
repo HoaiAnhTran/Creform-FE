@@ -13,6 +13,7 @@ export interface GetFormsParams {
 }
 
 export interface FormResponse {
+  disabled?: boolean;
   id: number;
   title: string;
   logoUrl: string;
@@ -47,6 +48,7 @@ export interface GetFormsResponse {
 
 export interface FormRequest {
   id?: number;
+  disabled?: boolean;
   title: string;
   logoUrl: string;
   settings: object;

@@ -18,4 +18,5 @@ export const MESSAGES = {
   DELETE_FORM_SUCCESS: 'Form(s) deleted successfully',
   RESTORE_FORM_SUCCESS: 'Form(s) restored successfully',
   REMOVE_FROM_TEAM_SUCCESS: 'Form(s) moved back to My Forms successfully',
+  UPDATE_PUBLISH_STATUS_ERROR: 'Form failed to be updated status',
 } as const;

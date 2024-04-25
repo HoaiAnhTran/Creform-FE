@@ -46,6 +46,18 @@ export const PublicPage = () => {
     );
   };
 
+  if (data?.disabled)
+    return (
+      <div className='flex min-h-screen items-start justify-center bg-malachite-50 py-10'>
+        <div className='mt-20 flex h-40 w-[45%] flex-col rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
+          <h1>Untitled Form</h1>
+          <div>The form Untitled form is no longer accepting responses.</div>
+          <div>
+            Try contacting the owner of the form if you think this is a mistake
+          </div>
+        </div>
+      </div>
+    );
   return (
     <div className='flex min-h-screen items-center justify-center bg-malachite-50 py-10'>
       {isAuthenticated && (

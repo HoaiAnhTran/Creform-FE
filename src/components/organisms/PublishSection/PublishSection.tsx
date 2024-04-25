@@ -1,14 +1,27 @@
+import { useState } from 'react';
 import { FaLink } from 'react-icons/fa';
 import { FiLink } from 'react-icons/fi';
-import { Box, CopyButton, Group, Stack, TextInput } from '@mantine/core';
+import {
+  Box,
+  CopyButton,
+  Group,
+  Stack,
+  Switch,
+  TextInput,
+} from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
+import { MESSAGES } from '@/constants';
 import { useBuildFormContext } from '@/contexts';
+import { useUpdateDisabledStatusMutation } from '@/redux/api/formApi';
+import { toastify } from '@/utils';
 
 export const PublishSection = () => {
   const { form, isEditForm } = useBuildFormContext();
 
   const link = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
+  const [updateDisabledStatus] = useUpdateDisabledStatusMutation();
+  const [disabled, setDisabled] = useState(form.disabled);
 
   return (
     <Box className='flex h-screen w-full items-center justify-center bg-malachite-50'>
@@ -59,6 +72,28 @@ export const PublishSection = () => {
               disabled={!isEditForm}
             />
           </Group>
+          <Stack className='gap-2'>
+            <span className='text-base font-semibold uppercase text-blue-200'>
+              Do you want to publish this form ?
+            </span>
+            <Switch
+              size='xl'
+              onLabel='ON'
+              offLabel='OFF'
+              checked={!disabled}
+              onChange={(event) => {
+                if (!form?.id) return;
+                updateDisabledStatus({
+                  formId: form.id,
+                  disabled: !event.target.checked,
+                }).catch(() => {
+                  toastify.displayError(MESSAGES.UPDATE_PUBLISH_STATUS_ERROR);
+                  setDisabled(!disabled);
+                });
+                setDisabled(!event.target.checked);
+              }}
+            />
+          </Stack>
         </Stack>
       </Stack>
     </Box>

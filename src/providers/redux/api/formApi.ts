@@ -143,6 +143,16 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    updateDisabledStatus: build.mutation<
+      SuccessResponse<FormResponse>,
+      { formId: number; disabled: boolean }
+    >({
+      query: ({ formId, disabled }) => ({
+        url: `${API_URL.FORMS}/${formId}/disabled/${disabled}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Forms'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -162,4 +172,5 @@ export const {
   useCreateFormInFolderMutation,
   useCreateFormInTeamMutation,
   useCreateFormInFolderOfTeamMutation,
+  useUpdateDisabledStatusMutation,
 } = formApi;
