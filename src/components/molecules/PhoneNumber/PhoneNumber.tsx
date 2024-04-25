@@ -1,7 +1,7 @@
 import { Field, FieldArray, useField } from 'formik';
 
 import { NumberPhoneElement } from '@/types';
-import { validateLabel } from '@/utils';
+import { cn, validateLabel } from '@/utils';
 import { isValidPhoneNumber } from '@/utils/schemas/validation';
 
 import { PhoneNumberInput } from '../PhoneNumberInput';
@@ -35,9 +35,13 @@ export const NumberPhone = (props: NumberPhoneProps) => {
           <Field
             required={item.config.required}
             validate={validateLabel}
+            placeholder='Type a question'
             text={item.config.fieldLabel}
             name={`${item.id}.fieldLabel`}
             component={Text}
+            className={cn('flex min-h-[20px] items-start gap-1', {
+              'text-slate-500': !item.config.fieldLabel,
+            })}
           />
           <Field
             readOnly={isReadOnly}
@@ -60,9 +64,16 @@ export const NumberPhone = (props: NumberPhoneProps) => {
           <Field
             validate={validateLabel}
             name={`${item.id}.subLabel`}
+            placeholder='Type a sublabel'
             size='xs'
             text={item.config.sublabel}
             component={Text}
+            className={cn(
+              'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+              {
+                'text-slate-400': !item.config.sublabel,
+              },
+            )}
           />
         </div>
       )}

@@ -31,6 +31,8 @@ interface RatingProps extends Omit<RatingMantineProps, 'form'> {
   };
   classNameLabel?: string;
   itemConfig: ScaleRatingConfig;
+  placeholderWorstText?: string;
+  placeholderBestText?: string;
 }
 
 export const Rating = (props: RatingProps) => {
@@ -66,13 +68,25 @@ export const Rating = (props: RatingProps) => {
       />
       <Group className='w-[228px] justify-between'>
         <Box>
-          <Text className='text-xs text-slate-500'>
-            {itemConfig.lowestRatingText}
+          <Text
+            className={cn('text-xs  text-slate-500', {
+              'text-slate-400': !itemConfig.lowestRatingText,
+            })}
+          >
+            {itemConfig.lowestRatingText
+              ? itemConfig.lowestRatingText
+              : rest.placeholderWorstText}
           </Text>
         </Box>
         <Box>
-          <Text className='text-xs  text-slate-500'>
-            {itemConfig.highestRatingText}
+          <Text
+            className={cn('text-xs  text-slate-500', {
+              'text-slate-400': !itemConfig.highestRatingText,
+            })}
+          >
+            {itemConfig.highestRatingText
+              ? itemConfig.highestRatingText
+              : rest.placeholderBestText}
           </Text>
         </Box>
       </Group>

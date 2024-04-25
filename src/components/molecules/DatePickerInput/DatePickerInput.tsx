@@ -51,11 +51,17 @@ export const DatePickerInput = (props: DatePickerInputProps) => {
       <Field
         validate={validateLabel}
         name={`${item.id}.subLabel`}
+        placeholder='Type a sublabel'
         size='xs'
         text={item.config.sublabel}
         component={Text}
         classNameWrapper='min-h-[40px]'
-        className='text-xs font-thin text-slate-500'
+        className={cn(
+          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+          {
+            'text-slate-400': !item.config.sublabel,
+          },
+        )}
       />
     </div>
   );

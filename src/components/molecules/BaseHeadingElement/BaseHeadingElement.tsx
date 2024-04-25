@@ -1,8 +1,11 @@
-import { Box, Group, TextInput } from '@mantine/core';
+import { Box, Group } from '@mantine/core';
+import { Field } from 'formik';
 
 import { HeadingElement } from '@/types';
+import { cn, validateLabel } from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
+import { Text } from '../Text';
 
 export const BaseHeadingElement = (props: BaseElementProps<HeadingElement>) => {
   const { item } = props;
@@ -10,27 +13,34 @@ export const BaseHeadingElement = (props: BaseElementProps<HeadingElement>) => {
   return (
     <Group className='justify-between'>
       <Box className='w-full'>
-        <TextInput
-          autoComplete='off'
-          name='headingText'
-          classNames={{
-            input: 'text-xl font-bold w-fit',
-          }}
-          variant='unstyled'
+        <Field
+          name={`${item.id}.headingText`}
+          text={item.config.headingText}
           placeholder='Type a question'
-          value={item.config.headingText}
-          readOnly
-        ></TextInput>
-        <TextInput
-          autoComplete='off'
-          name='subheadingText'
-          variant='unstyled'
-          classNames={{
-            input: 'text-sm font-thin text-slate-500',
-          }}
-          value={item.config.subheadingText}
-          readOnly
-        ></TextInput>
+          validate={validateLabel}
+          component={Text}
+          classNameWrapper='min-h-[45px]'
+          className={cn(
+            'flex min-h-[20px] items-start gap-1 text-2xl font-bold',
+            {
+              'text-slate-500': !item.config.headingText,
+            },
+          )}
+        />
+        <Field
+          name={`${item.id}.subheadingText`}
+          text={item.config.subheadingText}
+          placeholder='Type a subheading'
+          validate={validateLabel}
+          component={Text}
+          classNameWrapper='min-h-[42px]'
+          className={cn(
+            'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+            {
+              'text-slate-400': !item.config.subheadingText,
+            },
+          )}
+        />
       </Box>
     </Group>
   );

@@ -10,7 +10,7 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { ScaleRatingElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
+import { cn, validateFieldValue, validateLabel } from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { Rating } from '../Rating';
@@ -81,7 +81,9 @@ export const BaseScaleRatingElement = (
       <Field
         name={`${item.fields[0].id}.fieldValue`}
         classNameWrapper='w-full'
-        validate={!isReadOnly && item.config.required ? validateLabel : null}
+        validate={
+          !isReadOnly && item.config.required ? validateFieldValue : null
+        }
         elementFieldId={item.fields[0].id}
         elementId={item.id}
         emptySymbol={getEmptyIcon}
@@ -91,6 +93,8 @@ export const BaseScaleRatingElement = (
         handleChange={handleOnChangeAnswer}
         itemConfig={item.config}
         component={Rating}
+        placeholderWorstText='Type worst text'
+        placeholderBestText='Type best text'
       />
     </Box>
   );

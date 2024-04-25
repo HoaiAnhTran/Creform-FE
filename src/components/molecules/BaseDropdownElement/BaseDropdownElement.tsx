@@ -49,7 +49,12 @@ export const BaseDropdownElement = (
           validate={validateLabel}
           component={Text}
           classNameWrapper='min-h-[42px]'
-          className='text-xs font-thin text-slate-500'
+          className={cn(
+            'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+            {
+              'text-slate-400': !item.config.sublabel,
+            },
+          )}
         />
       </Box>
     </Group>

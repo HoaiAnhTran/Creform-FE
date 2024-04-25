@@ -52,7 +52,12 @@ export const BaseFullnameElement = (
               validate={validateLabel}
               component={Text}
               classNameWrapper='min-h-[40px]'
-              className='text-[13px] font-thin text-slate-500'
+              className={cn(
+                'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+                {
+                  'text-slate-400': !item.config.sublabels.firstName,
+                },
+              )}
             />
           </Box>
           <Box className='flex w-1/2 flex-col justify-between'>
@@ -76,7 +81,12 @@ export const BaseFullnameElement = (
               validate={validateLabel}
               component={Text}
               classNameWrapper='min-h-[40px]'
-              className='text-[13px] font-thin text-slate-500'
+              className={cn(
+                'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+                {
+                  'text-slate-400': !item.config.sublabels.lastName,
+                },
+              )}
             />
           </Box>
         </Group>
