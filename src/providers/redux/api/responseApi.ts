@@ -62,7 +62,7 @@ export const responseApi = rootApi.injectEndpoints({
       }) => ({
         url: `${API_URL.RESPONSES}/${formId}`,
         method: 'DELETE',
-        data: responsesIds,
+        data: { responsesIds: responsesIds },
       }),
       invalidatesTags: ['Responses'],
     }),

@@ -31,15 +31,23 @@ export const TopBarSubmission = (props: TopBarSubmission) => {
     setSelectedRecords([]);
   };
 
-  const [deleteOneResponse] = useDeleteOneResponseMutation();
-  const [deleteMultipleResponses] = useDeleteMultipleResponsesMutation();
+  const [deleteOneResponse, { isLoading: isLoadingDeleteOneResponse }] =
+    useDeleteOneResponseMutation();
+  const [
+    deleteMultipleResponses,
+    { isLoading: isLoadingDeleteMultipleResponse },
+  ] = useDeleteMultipleResponsesMutation();
 
   const handleDeleteOneOrMultiple = () => {
     if (selectedResponseIds.length == 1) {
-      deleteOneResponse({ formId, responseId: selectedResponseIds[0] });
+      deleteOneResponse({ formId, responseId: selectedResponseIds[0] }).then(
+        () => setSelectedRecords([]),
+      );
       return;
     }
-    deleteMultipleResponses({ formId, responsesIds: selectedResponseIds });
+    deleteMultipleResponses({ formId, responsesIds: selectedResponseIds }).then(
+      () => setSelectedRecords([]),
+    );
   };
 
   if (selectedResponseIds.length === 0)
@@ -73,7 +81,9 @@ export const TopBarSubmission = (props: TopBarSubmission) => {
         />
       </div>
       <Button
+        loading={isLoadingDeleteOneResponse || isLoadingDeleteMultipleResponse}
         className='font-medium'
+        loaderProps={{ type: 'dots', color: 'red' }}
         size='md'
         variant='outline'
         color='error'

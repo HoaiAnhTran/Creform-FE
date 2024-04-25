@@ -7,6 +7,7 @@ export const LoadingPage = () => {
     <LoadingOverlay
       visible={visible}
       zIndex={1000}
+      loaderProps={{ color: 'green' }}
       overlayProps={{ radius: 'sm', blur: 2 }}
     />
   );
