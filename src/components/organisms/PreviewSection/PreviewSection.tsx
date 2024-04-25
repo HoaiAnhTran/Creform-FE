@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { Box, Stack } from '@mantine/core';
 import { Form, Formik } from 'formik';
 
@@ -8,18 +8,12 @@ import { FormRenderComponent } from '../FormRenderComponent';
 import { SubmissionConfirmation } from '../SubmissionConfirmation';
 
 export const PreviewSection = () => {
-  const { form, clickedSubmit, setClickedSubmit } = useBuildFormContext();
-
-  useEffect(
-    () => () => {
-      setClickedSubmit(false);
-    },
-    [setClickedSubmit],
-  );
+  const { form } = useBuildFormContext();
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   return (
     <Stack className='relative flex h-screen w-full items-center justify-center overflow-y-scroll bg-malachite-50'>
-      {clickedSubmit ? (
+      {isSuccess ? (
         <Box className='scale-90'>
           <SubmissionConfirmation />
         </Box>
@@ -29,7 +23,9 @@ export const PreviewSection = () => {
             validateOnBlur={true}
             validateOnChange={false}
             initialValues={{}}
-            onSubmit={() => {}}
+            onSubmit={(values) => {
+              setIsSuccess(!!values);
+            }}
           >
             <Form>
               <FormRenderComponent form={form} />

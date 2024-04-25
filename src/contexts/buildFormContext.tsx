@@ -23,8 +23,6 @@ interface BuildFormContextType {
   setToggledRightbar: React.Dispatch<React.SetStateAction<boolean>>;
   previewMode: boolean;
   setPreviewMode: React.Dispatch<React.SetStateAction<boolean>>;
-  clickedSubmit: boolean;
-  setClickedSubmit: React.Dispatch<React.SetStateAction<boolean>>;
   initLogo: string;
   initTitle: string;
   isEditForm: boolean;
@@ -55,8 +53,6 @@ const BuildFormContext = createContext<BuildFormContextType>({
   setToggledRightbar: () => {},
   previewMode: false,
   setPreviewMode: () => {},
-  clickedSubmit: false,
-  setClickedSubmit: () => {},
   isEditForm: false,
   initLogo: '',
   initTitle: '',
@@ -80,7 +76,6 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
   const [previewMode, setPreviewMode] = useState<boolean>(
     pathname.includes('preview'),
   );
-  const [clickedSubmit, setClickedSubmit] = useState<boolean>(false);
 
   const { data } = useGetFormDetailsQuery(
     { id: formId || '' },
@@ -111,8 +106,6 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
         setToggledRightbar,
         previewMode,
         setPreviewMode,
-        clickedSubmit,
-        setClickedSubmit,
         isEditForm,
         initLogo,
         initTitle,
