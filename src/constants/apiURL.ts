@@ -1,6 +1,8 @@
 export const API_URL = {
-  SIGN_UP: '/auth/signup',
   LOGIN: '/auth/login',
+  SIGN_UP: '/auth/signup',
+  FORGOT_PASSWORD: '/auth/forgot-password',
+  RESET_PASSWORD: '/auth/reset-password',
   USERS: '/users',
   FORMS: '/forms',
   FOLDERS: '/folders',

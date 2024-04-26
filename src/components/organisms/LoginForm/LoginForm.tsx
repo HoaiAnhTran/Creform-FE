@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Center } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -7,19 +7,20 @@ import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
 import { PasswordInput } from '@/molecules/PasswordInput';
 import { TextInput } from '@/molecules/TextInput';
-import { signUpSchema } from '@/utils/schemas/signUpSchema';
+import { signUpSchema } from '@/utils/schemas/authSchema';
 
 const loginSchema = signUpSchema.pick(['email', 'password']);
 
-export type LoginSchema = yup.InferType<typeof loginSchema>;
+export type LoginSchemaType = yup.InferType<typeof loginSchema>;
 
 interface LoginFormProps {
-  onSubmit: (value: LoginSchema) => void;
+  onSubmit: (value: LoginSchemaType) => void;
 }
 
 export const LoginForm = (props: LoginFormProps) => {
   const { onSubmit } = props;
-  const initialValues = {
+
+  const initialValues: LoginSchemaType = {
     email: '',
     password: '',
   };
@@ -33,34 +34,38 @@ export const LoginForm = (props: LoginFormProps) => {
       onSubmit={onSubmit}
     >
       <Form className='h-full w-full'>
-        <Field
-          classNameWrapper='mb-3'
-          name='email'
-          label='Email'
-          classNameError='min-h-0'
-          component={TextInput}
-        />
-
-        <Field
-          classNameWrapper='mb-3'
-          name='password'
-          label='Password'
-          classNameError='min-h-0'
-          component={PasswordInput}
-        />
-
-        <Center className='py-2'>
-          <Button title='Login' type='submit' className='w-full' />
-        </Center>
-        <div className='mt-3 flex items-center justify-center text-xs'>
-          <span>Don't have an account?</span>
+        <Stack className='justify-between gap-4'>
+          <Field
+            name='email'
+            label='Email'
+            classNameError='min-h-0'
+            component={TextInput}
+          />
+          <Field
+            name='password'
+            label='Password'
+            classNameError='min-h-0'
+            component={PasswordInput}
+          />
           <Link
-            to={PATH.SIGNUP_PAGE}
-            className='ml-1 text-burnt-sienna-500 no-underline hover:font-medium hover:text-burnt-sienna-600'
+            to={PATH.FORGOT_PASSWORD_PAGE}
+            className='self-end text-xs text-burnt-sienna-500 no-underline hover:text-burnt-sienna-600'
           >
-            Sign Up
+            Forgot password?
           </Link>
-        </div>
+
+          <Button title='Login' type='submit' />
+
+          <div className='flex items-center justify-center text-xs'>
+            <span>Don't have an account?</span>
+            <Link
+              to={PATH.SIGNUP_PAGE}
+              className='ml-1 text-burnt-sienna-500 no-underline hover:text-burnt-sienna-600'
+            >
+              Sign Up
+            </Link>
+          </div>
+        </Stack>
       </Form>
     </Formik>
   );
