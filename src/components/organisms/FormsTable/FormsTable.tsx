@@ -435,7 +435,7 @@ export const FormsTable = () => {
         size='lg'
         body={
           <Box className='flex flex-col items-center gap-3 px-10 py-5'>
-            <MdDriveFileMoveRtl size={70} className='text-blue-500' />
+            <MdDriveFileMoveRtl size={70} className='text-malachite-500' />
             <Text size='lg' className='font-bold'>
               Move to My Forms
             </Text>
@@ -450,7 +450,7 @@ export const FormsTable = () => {
         onClickConfirm={() => handleRemoveFromTeam(selectedRecords[0])}
         confirmButtonProps={{
           title: 'Move Now',
-          className: 'bg-blue-500 hover:bg-blue-600',
+          className: 'bg-malachite-500 hover:bg-malachite-600',
         }}
         isLoading={isRemovingFromTeam}
       />

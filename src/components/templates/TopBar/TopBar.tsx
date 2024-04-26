@@ -174,6 +174,7 @@ export const TopBar = () => {
         </MantineTabs>
       )}
       <ConfirmationModal
+        size={formId ? 'xl' : 'lg'}
         body={
           formId ? (
             <Box className='flex flex-col items-center gap-3 px-10'>
@@ -197,8 +198,8 @@ export const TopBar = () => {
                 Uncreated Form
               </Text>
               <Text className='text-center text-[15px]'>
-                Your form haven't been created yet. Make sure to save your form
-                before leave the page!
+                Your form hasn't been created yet. <br />
+                Please make sure to save this form before leave the page.
               </Text>
             </Box>
           )
