@@ -104,7 +104,6 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       borderRadius='sm'
       withColumnBorders
       verticalAlign='center'
-      pinLastColumn
       records={records}
       columns={columns}
       selectedRecords={selectedRecords}
