@@ -30,7 +30,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           required={item.config.required}
           validate={validateLabel}
           component={Text}
-          classNameWrapper='min-h-[45px]'
+          classNameWrapper='min-h-[45px] mt-4'
           className={cn('flex min-h-[20px] items-start gap-1', {
             'text-slate-500': !item.config.fieldLabel,
           })}
@@ -44,7 +44,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           elementFieldId={item.fields[0].id}
           elementId={item.id}
           component={TextInput}
-          classNameWrapper='min-h-[60px]'
+          classNameWrapper='w-1/2 min-h-[60px]'
         />
         <Field
           name={`${item.id}.sublabel`}

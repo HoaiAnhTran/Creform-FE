@@ -32,6 +32,7 @@ export const TimeInput = (props: TimeInputProps) => {
             name={`${item.id}.fieldLabel`}
             placeholder='Type a question'
             nameElementField='fieldLabel'
+            classNameWrapper='min-h-[40px] mt-4'
             component={Text}
             className={cn('flex min-h-[20px] items-start gap-1', {
               'text-slate-500': !item.config.fieldLabel,
@@ -40,7 +41,7 @@ export const TimeInput = (props: TimeInputProps) => {
           <Field
             readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
-            className='w-1/2'
+            className='min-h-[60px] w-1/2'
             validate={
               !isReadOnly && item.config.required ? validateFieldValue : null
             }

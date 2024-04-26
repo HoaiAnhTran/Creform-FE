@@ -19,7 +19,7 @@ export const BaseHeadingElement = (props: BaseElementProps<HeadingElement>) => {
           placeholder='Type a question'
           validate={validateLabel}
           component={Text}
-          classNameWrapper='min-h-[45px]'
+          classNameWrapper='min-h-[45px] mt-2'
           className={cn(
             'flex min-h-[20px] items-start gap-1 text-2xl font-bold',
             {

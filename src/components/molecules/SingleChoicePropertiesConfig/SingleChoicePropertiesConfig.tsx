@@ -48,7 +48,7 @@ export const SingleChoicePropertiesConfig = (
       ...edittingItem,
       gridSize: {
         ...edittingItem?.gridSize,
-        h: event.currentTarget.value.split('\n').length + 4,
+        h: event.currentTarget.value.split('\n').length + 3,
       },
       config: {
         ...edittingItem?.config,
@@ -72,8 +72,8 @@ export const SingleChoicePropertiesConfig = (
       gridSize: {
         ...edittingItem?.gridSize,
         h: event.currentTarget.checked
-          ? edittingItem?.config.options.length + 5
-          : edittingItem?.config.options.length + 4,
+          ? edittingItem?.config.options.length + 4
+          : edittingItem?.config.options.length + 3,
       },
       config: {
         ...edittingItem.config,
@@ -99,7 +99,7 @@ export const SingleChoicePropertiesConfig = (
       ...edittingItem,
       gridSize: {
         ...edittingItem?.gridSize,
-        h: edittingItem?.config.options.length + 5,
+        h: edittingItem?.config.options.length + 4,
       },
       config: {
         ...edittingItem.config,

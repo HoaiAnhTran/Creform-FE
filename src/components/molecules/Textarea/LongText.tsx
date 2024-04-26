@@ -32,7 +32,7 @@ export const LongText = (props: LongTextProps) => {
             placeholder='Type a question'
             name={`${item.id}.fieldLabel`}
             component={Text}
-            classNameWrapper='min-h-[45px]'
+            classNameWrapper='min-h-[45px] mt-4'
             className={cn('flex min-h-[20px] items-start gap-1', {
               'text-slate-500': !item.config.fieldLabel,
             })}
@@ -40,7 +40,7 @@ export const LongText = (props: LongTextProps) => {
           <Field
             readOnly={isReadOnly}
             name={`${item.id}.fieldValue`}
-            classNameWrapper='w-full'
+            classNameWrapper='w-full min-h-[124px]'
             validate={
               !isReadOnly && item.config.required ? validateFieldValue : null
             }
@@ -61,7 +61,7 @@ export const LongText = (props: LongTextProps) => {
             placeholder={item.config.placeholder}
             text={item.config.sublabel}
             component={Text}
-            classNameWrapper='min-h-[40px]'
+            classNameWrapper='min-h-[42px]'
             className={cn(
               'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
               {

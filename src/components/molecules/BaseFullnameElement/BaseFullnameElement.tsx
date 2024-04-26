@@ -25,7 +25,7 @@ export const BaseFullnameElement = (
           required={item.config.required}
           validate={validateLabel}
           component={Text}
-          classNameWrapper='min-h-[40px]'
+          classNameWrapper='min-h-[40px] mt-4'
           className={cn('flex min-h-[20px] items-start gap-1', {
             'text-slate-500': !item.config.fieldLabel,
           })}

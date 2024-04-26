@@ -28,6 +28,7 @@ export const Address = (props: AddressProps) => {
         text={item.config.fieldLabel}
         name={`${item.id}.fieldLabel`}
         nameElementField='fieldLabel'
+        classNameWrapper='min-h-[40px]'
         component={Text}
         className={cn('flex min-h-[20px] items-start gap-1', {
           'text-slate-500': !item.config.fieldLabel,

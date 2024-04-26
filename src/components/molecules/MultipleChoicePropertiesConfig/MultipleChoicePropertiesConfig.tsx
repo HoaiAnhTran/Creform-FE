@@ -39,7 +39,7 @@ export const MultipleChoicePropertiesConfig = (
       },
       gridSize: {
         ...edittingItem?.gridSize,
-        h: event.currentTarget.value.split('\n').length + 4,
+        h: event.currentTarget.value.split('\n').length + 3,
       },
     });
   };
@@ -67,8 +67,8 @@ export const MultipleChoicePropertiesConfig = (
         ...edittingItem?.gridSize,
         h:
           event.currentTarget.checked === true
-            ? edittingItem.config.options.length + 5
-            : edittingItem.config.options.length + 4,
+            ? edittingItem.config.options.length + 4
+            : edittingItem.config.options.length + 3,
       },
     });
   };
@@ -94,7 +94,7 @@ export const MultipleChoicePropertiesConfig = (
       },
       gridSize: {
         ...edittingItem?.gridSize,
-        h: edittingItem?.config.options.length + 5,
+        h: edittingItem?.config.options.length + 4,
       },
     });
   };

@@ -112,31 +112,50 @@ export const defaultTimeInputConfig: TimeInputConfig = {
 };
 
 export const defaultShortTextHeightWidth = {
+  h: 5,
+  w: 12,
+};
+export const defaultTimeHeightWidth = {
+  h: 4,
+  w: 12,
+};
+
+export const defaultScaleRatingHeightWidth = {
   h: 4,
   w: 12,
 };
 
 export const defaultLongTextHeightWidth = {
-  h: 6,
-  w: 12,
-};
-
-export const defaultAddressHeightWidth = {
-  h: 9,
-  w: 12,
-};
-
-export const defaultDropdownHeightWidth = {
   h: 7,
   w: 12,
 };
 
+export const defaultHeadingHeightWidth = {
+  h: 4,
+  w: 12,
+};
+
+export const defaultSubmitHeightWidth = {
+  h: 4,
+  w: 12,
+};
+
+export const defaultAddressHeightWidth = {
+  h: 10,
+  w: 12,
+};
+
+export const defaultDropdownHeightWidth = {
+  h: 5,
+  w: 12,
+};
+
 export const defaultSingleChoiceHeightWidth = {
-  h: 8,
+  h: 7,
   w: 12,
 };
 
 export const defaultMultipleChoiceHeightWidth = {
-  h: 8,
+  h: 7,
   w: 12,
 };
