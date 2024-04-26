@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
 
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
-import { TopBarSubmission } from '@/organisms/ActionToolbar';
+import { SubmissionTopbar } from '@/organisms/SubmissionTopbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { Header } from '@/templates/Header';
 import { GetResponsesParams } from '@/types';
@@ -82,7 +82,7 @@ export const ResponsesPage = () => {
     <div>
       <div className='bg-white'>
         <Header />
-        <TopBarSubmission
+        <SubmissionTopbar
           formId={Number(formId)}
           selectedResponseIds={selectedResponseIds}
           setSelectedRecords={setSelectedRecords}
