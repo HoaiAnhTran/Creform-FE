@@ -159,7 +159,7 @@ export const FormContainer = ({
             visible={isLoading}
             zIndex={80}
             overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
-            loaderProps={{ color: 'green' }}
+            loaderProps={{ color: 'ocean-green.5' }}
           />
           <ResponsiveGridLayout
             currentElementType={currentElementType!}

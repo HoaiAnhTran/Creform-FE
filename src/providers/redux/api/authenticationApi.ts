@@ -15,7 +15,14 @@ export const authenticationApi = rootApi.injectEndpoints({
         method: 'POST',
         data,
       }),
-      invalidatesTags: ['Profile', 'Forms', 'Folders', 'Teams', 'Responses', 'Invitations'],
+      invalidatesTags: [
+        'Profile',
+        'Forms',
+        'Folders',
+        'Teams',
+        'Responses',
+        'Invitations',
+      ],
     }),
     signUpUser: build.mutation<
       SuccessResponse<AuthResponse>,

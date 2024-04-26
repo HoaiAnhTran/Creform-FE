@@ -81,7 +81,7 @@ export const LoginPage = () => {
             visible={visible}
             zIndex={BIG_Z_INDEX}
             overlayProps={{ radius: 'sm', blur: 2 }}
-            loaderProps={{ color: 'green' }}
+            loaderProps={{ color: 'ocean-green.5' }}
           />
           <LoginForm onSubmit={onSubmit} />
         </Stack>

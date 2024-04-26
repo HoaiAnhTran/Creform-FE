@@ -14,7 +14,7 @@ import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { formatDate, httpClient } from '@/utils';
 
 export const BuildFormHeader = () => {
-  const { data: myProfile, isLoading } = useGetMyProfileQuery();
+  const { data: myProfile, isLoading } = useGetMyProfileQuery({});
 
   const {
     form,
@@ -119,7 +119,7 @@ export const BuildFormHeader = () => {
       </div>
 
       {!myProfile || isLoading ? (
-        <Loader color='green' />
+        <Loader />
       ) : (
         <div className='flex flex-row gap-6'>
           <Menu shadow='sm' offset={5} position='bottom-end' withArrow>

@@ -70,7 +70,7 @@ export const TeamList = ({
   return (
     <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
-        <Loader color='green' />
+        <Loader />
       ) : (
         teamList.map((team) => {
           const isActiveTeam = team.id === activeTeam && activeFolder === -1;

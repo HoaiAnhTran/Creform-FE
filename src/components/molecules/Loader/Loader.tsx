@@ -11,7 +11,7 @@ interface LoaderProps extends MantineLoaderProps {
 }
 
 export const Loader = (props: LoaderProps) => {
-  const { color = 'green', type = 'dots', className, ...rest } = props;
+  const { color = 'ocean-green.5', type = 'dots', className, ...rest } = props;
   return (
     <Stack className={cn('items-center justify-center', className)}>
       <MantineLoader color={color} type={type} {...rest} />

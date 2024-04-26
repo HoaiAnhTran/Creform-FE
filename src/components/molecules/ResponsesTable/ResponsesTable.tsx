@@ -127,13 +127,13 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       paginationText={({ from, to, totalRecords }) =>
         `Showing ${from} - ${to} of ${totalRecords}`
       }
-      paginationActiveBackgroundColor='green'
+      paginationActiveBackgroundColor='ocean-green.5'
       fetching={isLoading}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
       loaderType='oval'
       loaderSize='md'
-      loaderColor='green'
+      loaderColor='ocean-green.5'
       height={records && records.length > 0 ? 'auto' : '100%'}
       classNames={{
         root: 'overflow-visible',

@@ -12,3 +12,4 @@ export * from './schemas/authSchema';
 export * from './schemas/updateProfileSchema';
 export * from './validate';
 export { toastify };
+export * from './theme.utils';

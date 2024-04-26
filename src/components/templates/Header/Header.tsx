@@ -11,7 +11,7 @@ import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { httpClient } from '@/utils';
 
 export const Header = () => {
-  const { data: myProfile, isLoading } = useGetMyProfileQuery();
+  const { data: myProfile, isLoading } = useGetMyProfileQuery({});
 
   const navigate = useNavigate();
 
