@@ -82,7 +82,7 @@ export const TeamList = ({
                 className={cn(
                   'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-200',
                   {
-                    'bg-slate-300': isActiveTeam,
+                    'bg-slate-300 hover:bg-slate-300': isActiveTeam,
                   },
                 )}
               >
@@ -91,7 +91,7 @@ export const TeamList = ({
                   className={cn(
                     'w-[85%] rounded-md text-slate-600 hover:bg-slate-200',
                     {
-                      'bg-slate-300': isActiveTeam,
+                      'bg-slate-300 hover:bg-slate-300': isActiveTeam,
                     },
                   )}
                   onClick={() => {

@@ -111,7 +111,8 @@ export const FolderList = ({
               className={cn(
                 'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-slate-200',
                 {
-                  'bg-slate-300': isActiveFolder && !activeAllForms,
+                  'bg-slate-300 hover:bg-slate-300':
+                    isActiveFolder && !activeAllForms,
                 },
               )}
             >
@@ -120,7 +121,8 @@ export const FolderList = ({
                 className={cn(
                   'w-[85%] rounded-md text-slate-600 hover:bg-slate-200',
                   {
-                    'bg-slate-300': isActiveFolder && !activeAllForms,
+                    'bg-slate-300 hover:bg-slate-300':
+                      isActiveFolder && !activeAllForms,
                   },
                 )}
                 onClick={() => {
