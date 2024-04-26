@@ -79,6 +79,7 @@ export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
             hasArrow={false}
             arrowOffset={1}
             buttonProps={{
+              color: 'secondary',
               variant: 'outline',
               size: 'md',
               title: sortOptionList[sortOptionIndex].title,

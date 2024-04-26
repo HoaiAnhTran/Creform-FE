@@ -40,7 +40,7 @@ export const ManageFolderModal = ({
         )}
       </>
     }
-    headerTitle={folderId ? 'Change Folder Name' : 'Add folder name'}
+    headerTitle={folderId ? 'Change Folder Name' : 'Add New Folder'}
     body={
       <>
         <Stack className='gap-2 pb-[100px] pt-8'>

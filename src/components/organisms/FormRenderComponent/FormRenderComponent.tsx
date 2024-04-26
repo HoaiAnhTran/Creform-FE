@@ -81,7 +81,9 @@ export const FormRenderComponent = ({
             loaderProps={{ color: 'ocean-green.5' }}
           />
           <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
-            <Text className='mt-6 px-4 text-2xl font-bold'>{form?.title}</Text>
+            <Text className='mt-6 px-4 text-2xl font-bold text-ocean-green-600'>
+              {form?.title}
+            </Text>
             <ResponsiveReactGridLayout
               rowHeight={30}
               isResizable={false}

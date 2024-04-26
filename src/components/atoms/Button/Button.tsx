@@ -8,7 +8,7 @@ import { cn } from '@/utils';
 
 type ButtonVariant = 'filled' | 'light' | 'outline' | 'subtle';
 
-type ButtonColor = 'primary' | 'error' | 'gray';
+type ButtonColor = 'primary' | 'secondary' | 'error' | 'gray';
 
 export interface ButtonProps
   extends Omit<MantineButtonProps, 'style'>,
@@ -55,6 +55,30 @@ export const Button = forwardRef(
               break;
           }
           break;
+
+        case color === 'secondary':
+          switch (true) {
+            case variant === 'filled':
+              buttonStyles =
+                'bg-ocean-green-500 text-white hover:bg-ocean-green-600 hover:text-white';
+              break;
+            case variant === 'light':
+              buttonStyles =
+                'bg-ocean-green-50 text-ocean-green-500 hover:bg-ocean-green-100 hover:text-ocean-green-500';
+              break;
+            case variant === 'outline':
+              buttonStyles =
+                'border-ocean-green-500 bg-white text-ocean-green-500 hover:bg-ocean-green-50 hover:text-ocean-green-500';
+              break;
+            case variant === 'subtle':
+              buttonStyles =
+                'bg-transparent text-ocean-green-500 hover:bg-ocean-green-100 hover:text-ocean-green-500';
+              break;
+            default:
+              break;
+          }
+          break;
+
         case color === 'error':
           switch (true) {
             case variant === 'filled':
@@ -77,6 +101,7 @@ export const Button = forwardRef(
               break;
           }
           break;
+
         case color === 'gray':
           switch (true) {
             case variant === 'filled':
