@@ -115,7 +115,7 @@ export const PublishSection = () => {
                   formId: form.id,
                   disabled: !disabledForm,
                 }).catch(() => {
-                  toastify.displayError(MESSAGES.UPDATE_PUBLISH_STATUS_ERROR);
+                  toastify.displayError(MESSAGES.UPDATE_FORM_STATUS_FAILED);
                   return;
                 });
                 setDisabledForm(!disabledForm);

@@ -73,7 +73,7 @@ export const OverviewSidebar = () => {
             className={cn(
               'rounded-md font-bold text-slate-600 hover:bg-slate-200',
               {
-                'bg-slate-300': params.isFavourite,
+                'bg-slate-300 hover:bg-slate-300': params.isFavourite,
               },
             )}
             label='Favorites'
@@ -93,7 +93,7 @@ export const OverviewSidebar = () => {
             className={cn(
               'rounded-md font-bold text-slate-600 hover:bg-slate-200',
               {
-                'bg-slate-300': params.isDeleted,
+                'bg-slate-300 hover:bg-slate-300': params.isDeleted,
               },
             )}
             label='Trash'

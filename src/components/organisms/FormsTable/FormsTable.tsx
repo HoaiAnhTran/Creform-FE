@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BsFileText } from 'react-icons/bs';
 import { FaFolder, FaStar } from 'react-icons/fa';
+import { FaPlayCircle } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
+import { PiPauseCircleFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -15,11 +17,13 @@ import {
   Menu,
   Stack,
   Text,
+  Tooltip,
   UnstyledButton,
 } from '@mantine/core';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 
 import { Button } from '@/atoms/Button';
+import { MESSAGES } from '@/constants';
 import {
   DEFAULT_PAGE_SIZE,
   defaultFormsParams,
@@ -36,6 +40,7 @@ import {
   useRemoveFromFolderMutation,
   useRemoveFromTeamMutation,
   useRestoreFormMutation,
+  useUpdateDisabledStatusMutation,
 } from '@/redux/api/formApi';
 import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
@@ -71,6 +76,9 @@ export const FormsTable = () => {
 
   const [removeFromTeam, { isLoading: isRemovingFromTeam }] =
     useRemoveFromTeamMutation();
+
+  const [updateDisabledStatus, { isLoading: isUpdatingFormStatus }] =
+    useUpdateDisabledStatusMutation();
 
   const handleDeleteForm = (record: FormResponse) => {
     deleteForm({ id: record.id }).then((res) => {
@@ -135,13 +143,38 @@ export const FormsTable = () => {
     });
   };
 
+  const handleUpdateFormStatus = (
+    record: FormResponse,
+    action: 'enable' | 'disable',
+  ) => {
+    updateDisabledStatus({
+      formId: record.id,
+      disabled: action === 'disable',
+    })
+      .then(() => {
+        toastify.displaySuccess(
+          action === 'enable'
+            ? MESSAGES.ENABLE_FORM_SUCCESS
+            : MESSAGES.DISABLE_FORM_SUCCESS,
+        );
+        setSelectedRecords([]);
+        return;
+      })
+      .catch(() => {
+        toastify.displayError(MESSAGES.UPDATE_FORM_STATUS_FAILED);
+        setSelectedRecords([]);
+        return;
+      });
+  };
+
   const isFetching =
     isFormFetching ||
     isAddingToFavourites ||
     isDeletingForm ||
     isRestoringForm ||
     isRemovingFromFolder ||
-    isRemovingFromTeam;
+    isRemovingFromTeam ||
+    isUpdatingFormStatus;
 
   const moreOptions = useMemo(
     () => [
@@ -171,6 +204,18 @@ export const FormsTable = () => {
           }
           openModal(ModalTypes.REMOVE_FROM_TEAM);
         },
+      },
+      {
+        text: 'Disable',
+        icon: <PiPauseCircleFill size={18} />,
+        handleClick: (record: FormResponse) =>
+          handleUpdateFormStatus(record, 'disable'),
+      },
+      {
+        text: 'Enable',
+        icon: <FaPlayCircle size={18} />,
+        handleClick: (record: FormResponse) =>
+          handleUpdateFormStatus(record, 'enable'),
       },
       {
         text: 'Delete',
@@ -207,7 +252,25 @@ export const FormsTable = () => {
         accessor: 'title',
         render: (record: FormResponse) => (
           <Group>
-            <BsFileText size={36} className='text-malachite-500' />
+            <Tooltip
+              color='gray'
+              arrowOffset={20}
+              arrowSize={5}
+              label='This form is currently disabled'
+              withArrow
+              position='top-start'
+              className='text-xs text-white'
+              disabled={!record.disabled}
+            >
+              <UnstyledButton>
+                <BsFileText
+                  size={36}
+                  className={
+                    record.disabled ? 'text-gray-400' : 'text-malachite-500'
+                  }
+                />
+              </UnstyledButton>
+            </Tooltip>
             <Stack className='gap-2'>
               <Group>
                 <Text className='text-lg font-semibold text-gray-900'>
@@ -307,16 +370,31 @@ export const FormsTable = () => {
               </Menu.Target>
 
               <Menu.Dropdown className='min-w-[200px] !bg-malachite-100'>
-                {moreOptions.map((option, index) => (
-                  <Menu.Item
-                    key={index}
-                    leftSection={option.icon}
-                    className='mb-1 mt-0.5 gap-4 px-4 py-3 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
-                    onClick={() => option.handleClick(record)}
-                  >
-                    {option.text}
-                  </Menu.Item>
-                ))}
+                {record.disabled
+                  ? moreOptions
+                      .filter((option) => option.text !== 'Disable')
+                      .map((option, index) => (
+                        <Menu.Item
+                          key={index}
+                          leftSection={option.icon}
+                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                          onClick={() => option.handleClick(record)}
+                        >
+                          {option.text}
+                        </Menu.Item>
+                      ))
+                  : moreOptions
+                      .filter((option) => option.text !== 'Enable')
+                      .map((option, index) => (
+                        <Menu.Item
+                          key={index}
+                          leftSection={option.icon}
+                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'
+                          onClick={() => option.handleClick(record)}
+                        >
+                          {option.text}
+                        </Menu.Item>
+                      ))}
               </Menu.Dropdown>
             </Menu>
           ) : (
