@@ -58,6 +58,7 @@ export const LoginPage = () => {
               visible={visible}
               zIndex={BIG_Z_INDEX}
               overlayProps={{ radius: 'sm', blur: 2 }}
+              loaderProps={{ color: 'green' }}
             />
             <LoginForm onSubmit={onSubmit} />
           </div>

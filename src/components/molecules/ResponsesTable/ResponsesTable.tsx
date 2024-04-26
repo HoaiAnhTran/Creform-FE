@@ -78,13 +78,13 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       {
         accessor: 'id',
         cellsClassName: 'h-10 cursor-pointer text-center',
-        title: 'id',
+        title: 'ID',
         ...columnProps,
       },
       {
         accessor: 'createdAt',
         cellsClassName: 'h-10 cursor-pointer text-center',
-        title: 'Created At',
+        title: 'Submission Date',
         ...columnProps,
       },
       ...elementIdAndNameList.map((elementIdAndName) => ({

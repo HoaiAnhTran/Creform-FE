@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { FaStar, FaTrashAlt } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import { IoTrash } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { Box, Divider, NavLink } from '@mantine/core';
 
@@ -96,7 +97,7 @@ export const OverviewSidebar = () => {
               },
             )}
             label='Trash'
-            leftSection={<FaTrashAlt className='text-gray-600' />}
+            leftSection={<IoTrash className='text-gray-600' />}
             onClick={() => {
               setParams({
                 ...defaultFormsParams,

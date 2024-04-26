@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { FaFolderPlus, FaTableCells } from 'react-icons/fa6';
-import { HiTrash } from 'react-icons/hi';
 import { IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
@@ -127,7 +126,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
       },
     },
     {
-      icon: <HiTrash size={24} />,
+      icon: <IoTrash size={24} />,
       title: 'Delete',
       onClick: handleDeleteMultipleForms,
     },
@@ -153,7 +152,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
       },
     },
     {
-      icon: <HiTrash size={24} />,
+      icon: <IoTrash size={24} />,
       title: 'Delete',
       onClick: handleDeleteMultipleForms,
     },
@@ -161,7 +160,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
 
   const FormInTrashActions = [
     {
-      icon: <HiTrash size={24} />,
+      icon: <IoTrash size={24} />,
       title: 'Purge',
       onClick: () => {
         openModal(ModalTypes.DELETE_FORM_PERMANENTLY);

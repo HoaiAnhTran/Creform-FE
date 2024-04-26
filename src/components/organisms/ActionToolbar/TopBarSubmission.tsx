@@ -1,6 +1,5 @@
-import { IoCloseCircleOutline } from 'react-icons/io5';
-import { MdDelete } from 'react-icons/md';
-import { ActionIcon, Text } from '@mantine/core';
+import { IoTrash } from 'react-icons/io5';
+import { Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { ResponseRow } from '@/molecules/ResponsesTable';
@@ -55,41 +54,31 @@ export const TopBarSubmission = (props: TopBarSubmission) => {
 
   return (
     <div className='flex w-full items-center justify-between p-4'>
-      <div className='flex gap-2'>
-        <div className='flex w-[120px] items-center justify-between rounded-[0.25rem] border border-solid border-malachite-500 bg-white px-2 text-malachite-500'>
-          <Text>
-            {`${selectedResponseIds.length} ${selectedResponseIds.length === 1 ? 'entry' : 'entries'}`}
-          </Text>
-          <ActionIcon
-            className='h-[8px] w-[8px] rounded-full bg-white text-red-500 hover:bg-white hover:text-red-600'
-            onClick={() => {
-              setSelectedRecords([]);
-            }}
-          >
-            <IoCloseCircleOutline className='h-full w-full' />
-          </ActionIcon>
-        </div>
+      <div className='flex items-center justify-between gap-3'>
+        <Text className='text-[15px] text-gray-600'>
+          {`Selected ${selectedResponseIds.length} ${selectedResponseIds.length === 1 ? 'record' : 'records'}`}
+        </Text>
         <Button
-          className='font-medium'
+          className='h-[36px]'
           size='md'
           onClick={handleSelectAllOrDeselectClick}
           title={
             showingResponseRows.length > selectedResponseIds.length
-              ? 'Select All'
-              : 'Unselect All'
+              ? 'Select all'
+              : 'Unselect all'
           }
         />
       </div>
       <Button
         loading={isLoadingDeleteOneResponse || isLoadingDeleteMultipleResponse}
-        className='font-medium'
+        className='h-[36px]'
         loaderProps={{ type: 'dots', color: 'red' }}
         size='md'
         variant='outline'
         color='error'
         onClick={handleDeleteOneOrMultiple}
-        leftSection={<MdDelete size={22} />}
-        title={'Delete'}
+        leftSection={<IoTrash size={18} />}
+        title='Delete'
       />
     </div>
   );

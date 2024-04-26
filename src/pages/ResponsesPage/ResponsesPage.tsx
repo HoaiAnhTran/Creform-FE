@@ -1,14 +1,14 @@
 import { useMemo, useState } from 'react';
-import { TbDatabaseOff } from 'react-icons/tb';
+import { BsDatabaseExclamation } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
-import dayjs from 'dayjs';
 
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { TopBarSubmission } from '@/organisms/ActionToolbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { Header } from '@/templates/Header';
 import { GetResponsesParams } from '@/types';
+import { formatDate } from '@/utils';
 
 export const ResponsesPage = () => {
   const { formId } = useParams();
@@ -49,7 +49,7 @@ export const ResponsesPage = () => {
           },
           {
             id: record.id,
-            createdAt: dayjs(record.createdAt).format('MMM DD, YYYY'),
+            createdAt: formatDate(record.createdAt, 'MMM D, YYYY HH:mm:ss A'),
           },
         );
 
@@ -70,13 +70,9 @@ export const ResponsesPage = () => {
     return (
       <Box className='h-screen'>
         <Header />
-        <Box className='flex h-contentHeight w-full items-center justify-center bg-malachite-100 pt-10'>
-          <div className='text-center'>
-            <TbDatabaseOff size={80} />
-            <p className='mb-8 text-lg text-gray-600'>
-              Oops! No records found.
-            </p>
-          </div>
+        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-malachite-100 pt-10'>
+          <BsDatabaseExclamation size={64} className='text-gray-500' />
+          <span className='mb-8 text-lg text-gray-600'>No records found.</span>
         </Box>
       </Box>
     );
