@@ -44,7 +44,7 @@ export const BuildFormLeftbar = ({
           setToggledLeftbar(true);
         }}
         className={cn(
-          'fixed left-0 top-[160px] h-12 w-[170px] -translate-x-[170px] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-[600ms] ease-linear',
+          'fixed left-0 top-[160px] h-12 w-[170px] -translate-x-[170px] rounded-l-none rounded-r-full bg-slate-500 py-1 pr-0 text-sm leading-4 transition-all duration-500 ease-linear',
           { 'translate-x-[0]': !toggledLeftbar },
           { 'top-[90px]': scroll.y > 0 },
         )}
@@ -60,7 +60,7 @@ export const BuildFormLeftbar = ({
       />
       <Box
         className={cn(
-          'fixed bottom-0 left-0 top-[120px] w-[320px] -translate-x-[320px] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
+          'fixed bottom-0 left-0 top-[120px] w-[320px] -translate-x-[320px] overflow-y-scroll bg-slate-500 transition-all duration-500 ease-linear',
           { 'translate-x-[0]': toggledLeftbar },
           { 'top-[50px]': scroll.y > 0 },
         )}
@@ -86,7 +86,6 @@ export const BuildFormLeftbar = ({
                 <Box>
                   {elementType.elements.map(({ element }, index) => {
                     const isSubmitElement = element.type === ElementType.SUBMIT;
-
                     return (
                       <Box key={`element-${index}`}>
                         {!isSubmitElement ? (
@@ -115,7 +114,7 @@ export const BuildFormLeftbar = ({
                           >
                             <Group
                               className={cn('group', {
-                                'cursor-pointer': hasSubmitButton,
+                                'cursor-not-allowed': hasSubmitButton,
                                 'cursor-move hover:bg-malachite-500':
                                   !hasSubmitButton,
                               })}

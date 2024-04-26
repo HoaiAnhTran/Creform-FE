@@ -336,7 +336,7 @@ export const ResponsiveGridLayout = ({
   }, []);
 
   return (
-    <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7'>
+    <div className='w-full rounded-md border border-solid border-slate-200 bg-white px-9 py-7'>
       <ResponsiveReactGridLayout
         className={cn('min-h-[200px]', {
           'rounded-md border-2 border-dashed border-slate-300 bg-slate-100':

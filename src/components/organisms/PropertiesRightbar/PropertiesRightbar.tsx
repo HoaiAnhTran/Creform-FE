@@ -54,7 +54,7 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
   return (
     <Box
       className={cn(
-        'fixed bottom-0 right-0 top-[120px] z-20 w-[320px] translate-x-[320px] overflow-y-scroll bg-slate-500 transition-all duration-[600ms] ease-linear',
+        'fixed bottom-0 right-0 top-[120px] z-20 w-[320px] translate-x-[320px] overflow-y-scroll bg-slate-500 transition-all duration-500 ease-linear',
         { 'translate-x-[0]': toggledRightbar },
         { 'top-[50px]': scroll.y > 0 },
       )}

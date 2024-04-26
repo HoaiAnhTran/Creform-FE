@@ -31,7 +31,7 @@ export const SaveButton = ({
       <UnstyledButton
         type='submit'
         className={cn(
-          'fixed right-10 top-[160px] flex flex-col items-center text-malachite-500 transition-all duration-[600ms] ease-linear',
+          'fixed right-10 top-[160px] flex flex-col items-center text-malachite-500 transition-all duration-500 ease-linear',
           className,
           { 'top-[90px]': isScrolling },
         )}
