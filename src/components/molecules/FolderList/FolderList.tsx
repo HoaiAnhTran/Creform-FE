@@ -141,7 +141,9 @@ export const FolderList = ({
                 }}
                 label={folder.name}
                 active={isActiveFolder && !activeAllForms}
-                leftSection={<FaFolder size={16} />}
+                leftSection={
+                  <FaFolder size={16} className='text-burnt-sienna-600' />
+                }
               />
               <Menu position='bottom-start' withArrow trigger='click'>
                 <Menu.Target>

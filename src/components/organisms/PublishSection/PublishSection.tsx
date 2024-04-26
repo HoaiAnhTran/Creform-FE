@@ -44,7 +44,7 @@ export const PublishSection = () => {
   return (
     <Box className='relative flex h-screen w-full items-center justify-center bg-quarter-pearl-lusta-50'>
       <Stack className='absolute top-[50%] w-[660px] -translate-y-[50%]'>
-        <Stack className='mt-4 gap-8 rounded border border-solid border-blue-50 bg-white px-6 py-8'>
+        <Stack className='mt-4 gap-8 rounded border border-solid border-slate-200 bg-white px-6 py-8'>
           <Group>
             <Box className='flex h-10 w-10 items-center justify-center rounded bg-ocean-green-400'>
               <FaLink size={20} className='text-white' />

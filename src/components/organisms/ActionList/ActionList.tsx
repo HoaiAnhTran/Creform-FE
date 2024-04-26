@@ -196,7 +196,7 @@ export const ActionList = ({ selectedFormIds }: ActionListFormProps) => {
           color={
             action.title === 'Delete' || action.title === 'Purge'
               ? 'error'
-              : 'primary'
+              : 'secondary'
           }
           onClick={() => action.onClick()}
           leftSection={action.icon}

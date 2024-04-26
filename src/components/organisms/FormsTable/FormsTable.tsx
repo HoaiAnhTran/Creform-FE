@@ -277,17 +277,20 @@ export const FormsTable = () => {
                   {record.title}
                 </Text>
                 {record.folder && (
-                  <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-yellow-500 px-2 py-0.5'>
+                  <Box className='group flex h-6 items-center justify-center gap-1 rounded-full bg-burnt-sienna-100 px-2 py-0.5'>
                     <Badge
-                      className='m-0 bg-inherit p-0 text-xs normal-case text-black'
+                      className='m-0 bg-inherit p-0 text-xs normal-case text-burnt-sienna-600'
                       leftSection={<FaFolder />}
+                      classNames={{
+                        section: 'mr-2',
+                      }}
                     >
                       {record.folder.name}
                     </Badge>
                     <CloseButton
                       variant='transparent'
                       size={18}
-                      className='hidden text-black group-hover:flex'
+                      className='hidden text-burnt-sienna-600 group-hover:flex'
                       onClick={() => handleRemoveFromFolder(record)}
                     />
                   </Box>
@@ -321,6 +324,7 @@ export const FormsTable = () => {
           record.deletedAt === null ? (
             <Button
               title='Edit Form'
+              color='secondary'
               variant='subtle'
               classNames={{
                 inner: 'w-20',
@@ -334,6 +338,7 @@ export const FormsTable = () => {
           ) : (
             <Button
               title='Purge'
+              color='secondary'
               variant='subtle'
               classNames={{
                 inner: 'w-20',
@@ -359,6 +364,7 @@ export const FormsTable = () => {
                     setSelectedRecords([record]);
                   }}
                   title='More'
+                  color='secondary'
                   variant='subtle'
                   rightSection={<IoIosArrowDown />}
                   classNames={{
@@ -400,6 +406,7 @@ export const FormsTable = () => {
           ) : (
             <Button
               title='Restore'
+              color='secondary'
               variant='subtle'
               classNames={{
                 inner: 'w-20',

@@ -61,6 +61,7 @@ export const PublicPage = () => {
       arrowSize={6}
       withArrow
       offset={8}
+      color='ocean-green.5'
     >
       <UnstyledButton
         className='fixed left-10 top-10'
@@ -71,14 +72,17 @@ export const PublicPage = () => {
       >
         <span
           className={cn(
-            'relative flex h-12 w-12 items-center justify-center rounded-full bg-malachite-400 hover:bg-malachite-500',
+            'relative flex h-12 w-12 items-center justify-center rounded-full bg-ocean-green-400 hover:bg-ocean-green-500',
             {
-              'bg-malachite-300 hover:bg-malachite-300':
+              'bg-ocean-green-300 hover:bg-ocean-green-300':
                 isLoadingCreateFormResponse,
             },
           )}
         >
-          <MdKeyboardBackspace size={24} className='text-white' />
+          <MdKeyboardBackspace
+            size={24}
+            className='text-quarter-pearl-lusta-50'
+          />
         </span>
       </UnstyledButton>
     </Tooltip>
@@ -90,24 +94,26 @@ export const PublicPage = () => {
 
   if (formData?.disabled === true || formData?.deletedAt !== null)
     return (
-      <div className='text-sl flex min-h-screen items-start justify-center bg-malachite-50 py-10'>
+      <div className='text-sl flex min-h-screen items-start justify-center bg-ocean-green-50 py-10'>
         {isAuthenticated && renderBackToHomeButton()}
-        <div className='flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid border-t-malachite-500 bg-white px-6 py-8 shadow-lg'>
-          <h2 className='text-[32px]'>{formData?.title}</h2>
+        <div className='flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid border-t-ocean-green-500 bg-white px-6 py-8 shadow-lg'>
+          <h2 className='text-[32px] text-ocean-green-600'>
+            {formData?.title}
+          </h2>
           <span className='leading-7'>
             This form is no longer accepting submissions. <br></br> Try
             contacting the owner of the form if you think this is a mistake.
           </span>
           <img
             src={DisabledFormIcon}
-            className='mt-5 h-48 w-48 self-center object-contain'
+            className='mt-5 h-48 w-48 self-center object-contain text-ocean-green-500'
           />
         </div>
       </div>
     );
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-malachite-50 py-10'>
+    <div className='flex min-h-screen items-center justify-center bg-ocean-green-50 py-10'>
       {isAuthenticated && renderBackToHomeButton()}
       {!isSuccess ? (
         <Formik
