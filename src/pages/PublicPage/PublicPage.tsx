@@ -88,12 +88,12 @@ export const PublicPage = () => {
     return <Loader type='oval' className='translate-y-[50vh]' />;
   }
 
-  if (formData?.disabled === true)
+  if (formData?.disabled === true || formData?.deletedAt !== null)
     return (
       <div className='text-sl flex min-h-screen items-start justify-center bg-malachite-50 py-10'>
         {isAuthenticated && renderBackToHomeButton()}
         <div className='flex h-fit w-[50%] flex-col justify-between gap-3 rounded-xl border-x-0 border-b-0 border-t-[25px] border-solid border-t-malachite-500 bg-white px-6 py-8 shadow-lg'>
-          <h2 className='text-[32px]'>{formData.title}</h2>
+          <h2 className='text-[32px]'>{formData?.title}</h2>
           <span className='leading-7'>
             This form is no longer accepting submissions. <br></br> Try
             contacting the owner of the form if you think this is a mistake.
