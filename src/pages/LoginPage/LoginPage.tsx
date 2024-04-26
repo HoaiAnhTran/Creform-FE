@@ -6,7 +6,7 @@ import Person from '@/assets/images/person.png';
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
 import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
-import { LoginForm, LoginSchema } from '@/organisms/LoginForm';
+import { LoginForm, LoginSchemaType } from '@/organisms/LoginForm';
 import { useLoginUserMutation } from '@/redux/api/authenticationApi';
 import { useAcceptInvitationMutation } from '@/redux/api/invitationApi';
 import { ErrorResponse } from '@/types';
@@ -28,7 +28,7 @@ export const LoginPage = () => {
 
   const [acceptInvitation] = useAcceptInvitationMutation();
 
-  const onSubmit = (values: LoginSchema) => {
+  const onSubmit = (values: LoginSchemaType) => {
     open();
     loginUser(values).then((res) => {
       if ('data' in res) {
@@ -39,15 +39,13 @@ export const LoginPage = () => {
           acceptInvitation({ token: getInvitationTokenFromLS() }).then(
             (res) => {
               if ('data' in res) {
-                toastify.displaySuccess(res.data.message as string);
+                toastify.displaySuccess(res.data.message);
                 removeInvitationTokenFromLS();
                 navigate(PATH.OVERVIEW_PAGE);
                 return;
               }
               if (res.error as ErrorResponse)
-                toastify.displayError(
-                  (res.error as ErrorResponse).message as string,
-                );
+                toastify.displayError((res.error as ErrorResponse).message);
             },
           );
         } else {

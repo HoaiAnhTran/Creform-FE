@@ -7,6 +7,7 @@ export const MESSAGES = {
   REQUIRED_EMAIL: 'Email is required',
   REQUIRED_USERNAME: 'Username is required',
   REQUIRED_PASSWORD: 'Password is required',
+  REQUIRED_TOKEN: 'Token is required',
   PASSWORD_AT_LEAST_EIGHT_CHARACTERS: 'Password must be at least 8 characters',
   VALID_PASSWORD_RULE:
     'Password must contain at least 1 special character, 1 uppercase letter and 1 lowercase letter',

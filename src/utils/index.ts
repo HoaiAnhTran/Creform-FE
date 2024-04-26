@@ -8,7 +8,7 @@ export * from './date';
 export * from './handleApiResponse';
 export * from './http';
 export * from './keyUtils';
-export * from './schemas/signUpSchema';
+export * from './schemas/authSchema';
 export * from './schemas/updateProfileSchema';
 export * from './validate';
 export { toastify };

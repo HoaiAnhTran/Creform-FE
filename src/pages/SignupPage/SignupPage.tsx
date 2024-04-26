@@ -6,7 +6,7 @@ import Person from '@/assets/images/person.png';
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
 import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
-import { SignupForm, SignupSchema } from '@/organisms/SignupForm';
+import { SignupForm, SignupSchemaType } from '@/organisms/SignupForm';
 import { useSignUpUserMutation } from '@/redux/api/authenticationApi';
 import { useAcceptInvitationMutation } from '@/redux/api/invitationApi';
 import { ErrorResponse } from '@/types';
@@ -28,9 +28,9 @@ export const SignupPage = () => {
 
   const [acceptInvitation] = useAcceptInvitationMutation();
 
-  const onSubmit = (values: SignupSchema) => {
-    const { username, email, password } = values;
+  const onSubmit = (values: SignupSchemaType) => {
     open();
+    const { username, email, password } = values;
     signUpUser({ username, email, password }).then((res) => {
       if ('data' in res) {
         httpClient.setToken(res.data.data.token);
@@ -40,15 +40,13 @@ export const SignupPage = () => {
           acceptInvitation({ token: getInvitationTokenFromLS() }).then(
             (res) => {
               if ('data' in res) {
-                toastify.displaySuccess(res.data.message as string);
+                toastify.displaySuccess(res.data.message);
                 removeInvitationTokenFromLS();
                 navigate(PATH.OVERVIEW_PAGE);
                 return;
               }
               if (res.error as ErrorResponse)
-                toastify.displayError(
-                  (res.error as ErrorResponse).message as string,
-                );
+                toastify.displayError((res.error as ErrorResponse).message);
             },
           );
         } else {
@@ -78,7 +76,7 @@ export const SignupPage = () => {
           <Image className='h-64 w-64 object-contain' src={Person} />
         </Stack>
 
-        <Stack className='gap-4 justify-between items-center border-3 w-[400px] rounded-lg bg-burnt-sienna-50 p-6'>
+        <Stack className='gap-3 justify-between items-center border-3 w-[400px] rounded-lg bg-burnt-sienna-50 p-6'>
           <Text className='text-xl font-bold text-burnt-sienna-500'>
             Sign Up
           </Text>

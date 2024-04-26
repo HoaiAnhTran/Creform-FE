@@ -21,3 +21,11 @@ export const signUpSchema = Yup.object().shape({
     .matches(RULES.PASSWORD_REGEX, MESSAGES.VALID_PASSWORD_RULE),
   confirmPassword: handleConfirmPasswordYup('password'),
 });
+
+export const resetPasswordSchema = Yup.object().shape({
+  passwordResetToken: Yup.string().required(MESSAGES.REQUIRED_TOKEN),
+  newPassword: Yup.string()
+    .required(MESSAGES.REQUIRED_PASSWORD)
+    .min(MINIMUM_PASSWORD_LENGTH, MESSAGES.PASSWORD_AT_LEAST_EIGHT_CHARACTERS)
+    .matches(RULES.PASSWORD_REGEX, MESSAGES.VALID_PASSWORD_RULE),
+});

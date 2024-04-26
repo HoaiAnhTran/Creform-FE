@@ -13,11 +13,13 @@ import { PublishSection } from '@/organisms/PublishSection';
 import { AcceptInvitationPage } from '@/pages/AcceptInvitationPage';
 import { AccountPage } from '@/pages/AccountPage';
 import { BuildFormPage } from '@/pages/BuildFormPage';
+import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
 import { LoadingPage } from '@/pages/LoadingPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OverviewPage } from '@/pages/OverviewPage';
 import { PublicPage } from '@/pages/PublicPage';
+import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { getAccessTokenFromLS } from '@/utils';
 
@@ -56,6 +58,14 @@ export function useRouteElements() {
         {
           path: PATH.SIGNUP_PAGE,
           element: <SignupPage />,
+        },
+        {
+          path: PATH.FORGOT_PASSWORD_PAGE,
+          element: <ForgotPasswordPage />,
+        },
+        {
+          path: PATH.RESET_PASSWORD_PAGE,
+          element: <ResetPasswordPage />,
         },
       ],
     },

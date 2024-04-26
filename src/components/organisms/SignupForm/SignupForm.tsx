@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Center } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -7,17 +7,18 @@ import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
 import { PasswordInput } from '@/molecules/PasswordInput';
 import { TextInput } from '@/molecules/TextInput';
-import { signUpSchema } from '@/utils/schemas/signUpSchema';
+import { signUpSchema } from '@/utils/schemas/authSchema';
 
-export type SignupSchema = yup.InferType<typeof signUpSchema>;
+export type SignupSchemaType = yup.InferType<typeof signUpSchema>;
 
 interface SignupFormProps {
-  onSubmit: (value: SignupSchema) => void;
+  onSubmit: (value: SignupSchemaType) => void;
 }
 
 export const SignupForm = (props: SignupFormProps) => {
   const { onSubmit } = props;
-  const initialValues = {
+
+  const initialValues: SignupSchemaType = {
     username: '',
     email: '',
     password: '',
@@ -33,49 +34,41 @@ export const SignupForm = (props: SignupFormProps) => {
       onSubmit={onSubmit}
     >
       <Form className='h-full w-full'>
-        <Field
-          classNameWrapper='mb-2'
-          name='username'
-          label='Username'
-          size='xs'
-          component={TextInput}
-        />
-        <Field
-          classNameWrapper='mb-2'
-          name='email'
-          label='Email'
-          size='xs'
-          component={TextInput}
-        />
-        <Field
-          classNameWrapper='mb-2'
-          name='password'
-          label='Password'
-          type='password'
-          size='xs'
-          component={PasswordInput}
-        />
-        <Field
-          classNameWrapper='mb-2'
-          name='confirmPassword'
-          label='Confirm Password'
-          type='password'
-          size='xs'
-          component={PasswordInput}
-        />
+        <Stack className='justify-between gap-3'>
+          <Field
+            name='username'
+            label='Username'
+            size='xs'
+            component={TextInput}
+          />
+          <Field name='email' label='Email' size='xs' component={TextInput} />
+          <Field
+            name='password'
+            label='Password'
+            type='password'
+            size='xs'
+            component={PasswordInput}
+          />
+          <Field
+            name='confirmPassword'
+            label='Confirm Password'
+            type='password'
+            size='xs'
+            component={PasswordInput}
+          />
 
-        <Center className='py-2'>
-          <Button title='Sign Up' type='submit' className='w-full' />
-        </Center>
-        <div className='mt-3 flex items-center justify-center text-xs'>
-          <span>Already have an account?</span>
-          <Link
-            to={PATH.LOGIN_PAGE}
-            className='ml-1 text-burnt-sienna-500  no-underline hover:font-medium hover:text-burnt-sienna-600'
-          >
-            Login
-          </Link>
-        </div>
+          <Button title='Sign Up' type='submit' />
+
+          <div className='flex items-center justify-center text-xs'>
+            <span>Already have an account?</span>
+            <Link
+              to={PATH.LOGIN_PAGE}
+              className='ml-1 text-burnt-sienna-500 no-underline hover:text-burnt-sienna-600'
+            >
+              Login
+            </Link>
+          </div>
+        </Stack>
       </Form>
     </Formik>
   );
