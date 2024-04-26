@@ -102,7 +102,7 @@ export const AddToFolderModal = ({
                   value={folder.id.toString()}
                   label={folder.name}
                   icon={CheckIcon}
-                  color='green'
+                  color='ocean-green.5'
                   size='sm'
                   disabled={disabledFolderOptions.includes(
                     folder.id.toString(),

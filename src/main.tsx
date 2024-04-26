@@ -8,13 +8,14 @@ import { store } from '@/redux/store.ts';
 import { Layout } from '@/templates/Layout/Layout.tsx';
 
 import App from './App';
+import { customTheme } from './utils';
 
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <MantineProvider>
+      <MantineProvider theme={customTheme}>
         <ReduxProvider store={store}>
           <Layout>
             <App />

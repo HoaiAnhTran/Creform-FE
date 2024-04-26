@@ -55,7 +55,7 @@ const emptyInitialValues = {
 };
 
 export const AccountPage = () => {
-  const { data: myProfile } = useGetMyProfileQuery();
+  const { data: myProfile } = useGetMyProfileQuery({});
 
   const [
     updateProfile,

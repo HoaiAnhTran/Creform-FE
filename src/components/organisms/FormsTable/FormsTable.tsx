@@ -463,11 +463,11 @@ export const FormsTable = () => {
         paginationText={({ from, to, totalRecords }) =>
           `Showing ${from} - ${to} of ${totalRecords}`
         }
-        paginationActiveBackgroundColor='green'
+        paginationActiveBackgroundColor='ocean-green.5'
         fetching={isFetching}
         loaderType='oval'
         loaderSize='md'
-        loaderColor='green'
+        loaderColor='ocean-green.5'
         scrollAreaProps={{
           type: 'scroll',
         }}

@@ -101,7 +101,7 @@ export const FolderList = ({
   return (
     <Box className='flex flex-col justify-between gap-2'>
       {isLoading ? (
-        <Loader color='green' />
+        <Loader />
       ) : (
         folderList?.map((folder) => {
           const isActiveFolder = folder.id === activeFolder;

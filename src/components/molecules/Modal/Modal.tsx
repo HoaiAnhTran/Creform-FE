@@ -56,7 +56,7 @@ export const Modal = ({
         visible={isLoading}
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
-        loaderProps={{ color: 'green' }}
+        loaderProps={{ color: 'ocean-green.5' }}
       />
       <Divider />
       {body}

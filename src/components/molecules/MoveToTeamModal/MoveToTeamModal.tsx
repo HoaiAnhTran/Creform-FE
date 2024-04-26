@@ -79,7 +79,7 @@ export const MoveToTeamModal = ({
                   value={team.id.toString()}
                   label={team.name}
                   icon={CheckIcon}
-                  color='green'
+                  color='ocean-green.5'
                   size='sm'
                   disabled={disabledTeamOptions.includes(team.id.toString())}
                 />
