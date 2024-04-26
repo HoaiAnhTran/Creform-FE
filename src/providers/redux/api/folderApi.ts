@@ -37,14 +37,14 @@ const folderApi = rootApi.injectEndpoints({
         method: 'PATCH',
         data,
       }),
-      invalidatesTags: ['Folders', 'Teams'],
+      invalidatesTags: ['Folders', 'Teams', 'Forms'],
     }),
     deleteFolder: build.mutation<SuccessResponse<FolderResponse>, number>({
       query: (id) => ({
         url: `${API_URL.FOLDERS}/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Folders', 'Teams'],
+      invalidatesTags: ['Folders', 'Teams', 'Forms'],
     }),
   }),
   overrideExisting: false,
