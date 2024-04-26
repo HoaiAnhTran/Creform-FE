@@ -150,7 +150,7 @@ export const TeamList = ({
                         setTeamId(team.id);
                       }}
                     >
-                      Manage member
+                      Manage members
                     </Menu.Item>
                     <Menu.Item
                       className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-malachite-400 hover:text-white'

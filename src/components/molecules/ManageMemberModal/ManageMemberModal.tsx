@@ -57,7 +57,7 @@ export const ManageMemberModal = ({
     <Modal
       {...props}
       headerIcon={<RiTeamFill className='text-white' />}
-      headerTitle='Manage member of team'
+      headerTitle='Manage members'
       body={
         <>
           <Stack className='gap-4 pb-8 pt-8'>
@@ -65,36 +65,46 @@ export const ManageMemberModal = ({
               TEAM MEMBERS
             </Text>
             <Stack>
-              {membersInTeam.map((member) => (
-                <Group key={member.id} className='justify-between'>
-                  <Group>
-                    <Avatar />
-                    <Stack gap='2'>
-                      <Text size='sm' className='font-bold text-gray-700'>
-                        {member.username}
-                      </Text>
-                      <Text size='xs' className='font-bold text-blue-950'>
-                        {member.email}
-                      </Text>
-                    </Stack>
+              {membersInTeam
+                .sort((firstVal, secondVal) => {
+                  if (firstVal.isOwner && !secondVal.isOwner) {
+                    return -1;
+                  } else if (!firstVal.isOwner && secondVal.isOwner) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                })
+                .map((member) => (
+                  <Group key={member.id} className='justify-between'>
+                    <Group>
+                      <Avatar />
+                      <Stack gap='2'>
+                        <Text size='sm' className='font-bold text-gray-700'>
+                          {member.username}
+                        </Text>
+                        <Text size='xs' className='font-bold text-blue-950'>
+                          {member.email}
+                        </Text>
+                      </Stack>
+                    </Group>
+                    <Group>
+                      <Box className='rounded-[4px] bg-gray-200 p-2'>
+                        <Text className='text-sm font-bold text-gray-600'>
+                          {member.isOwner ? 'Owner' : 'Member'}
+                        </Text>
+                      </Box>
+                      {!member.isOwner && (
+                        <ActionIcon
+                          className='h-9 w-10 bg-red-500 text-white hover:bg-red-600 hover:text-white'
+                          onClick={() => handleRemoveMember(member.id)}
+                        >
+                          <MdDelete size={22} />
+                        </ActionIcon>
+                      )}
+                    </Group>
                   </Group>
-                  <Group>
-                    <Box className='rounded-sm bg-gray-200 p-2'>
-                      <Text className='font-bold text-gray-600'>
-                        {member.isOwner ? 'Owner' : 'Member'}
-                      </Text>
-                    </Box>
-                    {!member.isOwner && (
-                      <ActionIcon
-                        className='h-10 w-10 bg-red-500 text-white hover:bg-red-600 hover:text-white'
-                        onClick={() => handleRemoveMember(member.id)}
-                      >
-                        <MdDelete size={22} />
-                      </ActionIcon>
-                    )}
-                  </Group>
-                </Group>
-              ))}
+                ))}
             </Stack>
           </Stack>
           <Formik
