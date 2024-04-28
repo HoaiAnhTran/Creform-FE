@@ -15,7 +15,7 @@ interface GetResponsesType extends GetResponsesParams {
 
 export const responseApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    getResponsesByFormId: build.query({
+    getResponsesByFormId: build.query<ReturnGetResponses, GetResponsesType>({
       query: ({ formId, ...params }: GetResponsesType) => ({
         url: `${API_URL.RESPONSES}/${formId}`,
         method: 'GET',
@@ -24,6 +24,14 @@ export const responseApi = rootApi.injectEndpoints({
       transformResponse: (response: SuccessResponse<ReturnGetResponses>) =>
         response.data,
       providesTags: ['Responses'],
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getResponsesExcelFile: build.query<any, { formId: number }>({
+      query: ({ formId }) => ({
+        url: `${API_URL.RESPONSES}/export/${formId}`,
+        method: 'GET',
+        responseType: 'arraybuffer', // must define this
+      }),
     }),
     createResponse: build.mutation<
       SuccessResponse<FormAnswerResponse>,
@@ -72,6 +80,7 @@ export const responseApi = rootApi.injectEndpoints({
 
 export const {
   useGetResponsesByFormIdQuery,
+  useLazyGetResponsesExcelFileQuery,
   useCreateResponseMutation,
   useDeleteMultipleResponsesMutation,
   useDeleteOneResponseMutation,

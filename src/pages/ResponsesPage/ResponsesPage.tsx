@@ -7,7 +7,7 @@ import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { SubmissionTopbar } from '@/organisms/SubmissionTopbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { Header } from '@/templates/Header';
-import { GetResponsesParams } from '@/types';
+import { ElementType, GetResponsesParams } from '@/types';
 import { formatDate } from '@/utils';
 
 export const ResponsesPage = () => {
@@ -32,7 +32,11 @@ export const ResponsesPage = () => {
               [`ValueElement${elementAnswers.elementId}`]:
                 elementAnswers.answers
                   .map((fieldAnswer) => fieldAnswer.text)
-                  .join(' '),
+                  .join(
+                    elementAnswers.elementType === ElementType.FULLNAME
+                      ? ' '
+                      : ', ',
+                  ),
             };
 
             const fieldsAnswers = elementAnswers.answers.reduce(
@@ -70,7 +74,7 @@ export const ResponsesPage = () => {
     return (
       <Box className='h-screen'>
         <Header />
-        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-ocean-green-100 pt-10'>
+        <Box className='flex h-contentHeight w-full flex-col items-center justify-center gap-3 bg-quarter-pearl-lusta-50 pt-10'>
           <BsDatabaseExclamation size={64} className='text-gray-500' />
           <span className='mb-8 text-lg text-gray-600'>No records found.</span>
         </Box>
@@ -79,27 +83,25 @@ export const ResponsesPage = () => {
   }
 
   return (
-    <div>
-      <div className='bg-white'>
-        <Header />
-        <SubmissionTopbar
-          formId={Number(formId)}
-          selectedResponseIds={selectedResponseIds}
-          setSelectedRecords={setSelectedRecords}
-          showingResponseRows={responseRows || []}
-        />
-        <ResponsesTable
-          elementIdAndNameList={response.elementIdAndNameList}
-          totalResponses={response.totalResponses}
-          pageSize={response.pageSize}
-          isLoading={isFetching}
-          responseRows={responseRows || []}
-          selectedRecords={selectedRecords}
-          setSelectedRecords={setSelectedRecords}
-          params={params}
-          setParams={setParams}
-        />
-      </div>
+    <div className='bg-quarter-pearl-lusta-50'>
+      <Header />
+      <SubmissionTopbar
+        formId={Number(formId)}
+        selectedResponseIds={selectedResponseIds}
+        setSelectedRecords={setSelectedRecords}
+        showingResponseRows={responseRows || []}
+      />
+      <ResponsesTable
+        elementIdAndNameList={response.elementIdAndNameList}
+        totalResponses={response.totalResponses}
+        pageSize={response.pageSize}
+        isLoading={isFetching}
+        responseRows={responseRows || []}
+        selectedRecords={selectedRecords}
+        setSelectedRecords={setSelectedRecords}
+        params={params}
+        setParams={setParams}
+      />
     </div>
   );
 };

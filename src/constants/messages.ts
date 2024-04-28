@@ -23,4 +23,5 @@ export const MESSAGES = {
   ENABLE_FORM_SUCCESS: 'Form has been enabled',
   DISABLE_FORM_SUCCESS: 'Form has been disabled',
   UPDATE_FORM_STATUS_FAILED: 'Form failed to be updated status',
+  EXPORT_TO_EXCEL_FAILED: 'Export to Excel failed',
 } as const;

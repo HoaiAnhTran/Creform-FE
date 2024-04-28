@@ -49,7 +49,7 @@ export const TopBar = () => {
     useDisclosure(false);
 
   const [selectedTabValue, setSelectedTabValue] = useState<string | null>(
-    tabList[0].value,
+    isPublishSection ? tabList[1].value : tabList[0].value,
   );
 
   const navigate = useNavigate();
@@ -72,6 +72,7 @@ export const TopBar = () => {
   const formURL = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
 
   const handleChangeTab = (value: string | null) => {
+    // from "build" to "publish"
     if (value === tabList[1].value && !isPublishSection) {
       if (haveUnsavedChanges) {
         openConfirmModal();
@@ -81,6 +82,7 @@ export const TopBar = () => {
       navigate(pathname.concat(`/${value}`));
       return;
     }
+    // from "publish" to "build"
     if (value === tabList[0].value && isPublishSection) {
       setSelectedTabValue(value);
       navigate(pathname.replace('/publish', ''));

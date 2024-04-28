@@ -13,11 +13,12 @@ export const axiosBaseQuery =
       data?: AxiosRequestConfig['data'];
       params?: AxiosRequestConfig['params'];
       headers?: AxiosRequestConfig['headers'];
+      responseType?: AxiosRequestConfig['responseType'];
     },
     unknown,
     unknown
   > =>
-  async ({ url, method, data, params, headers }) => {
+  async ({ url, method, data, params, headers, responseType }) => {
     try {
       const result = await http({
         url: baseUrl + url,
@@ -25,6 +26,7 @@ export const axiosBaseQuery =
         data,
         params,
         headers,
+        responseType,
       });
       return { data: result.data };
     } catch (axiosError) {
