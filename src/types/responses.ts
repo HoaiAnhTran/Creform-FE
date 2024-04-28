@@ -36,6 +36,7 @@ export interface RawResponseRow {
 
 export interface RawFormAnswerCell {
   elementId: string;
+  elementType: string;
   elementName: string;
   answers: RawFieldAnswerCell[];
 }

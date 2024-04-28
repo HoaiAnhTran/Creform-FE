@@ -65,9 +65,13 @@ export const FolderGroup = ({
     <Box className='flex flex-col gap-2'>
       <Text className='font-bold'>MY FORMS</Text>
       <NavLink
-        className={cn('mt-3 rounded-md text-slate-600 hover:bg-slate-300', {
-          'bg-slate-300': activeAllForms,
-        })}
+        className={cn(
+          'mt-3 rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
+          {
+            'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
+              activeAllForms,
+          },
+        )}
         classNames={{
           label: 'text-sm font-semibold',
         }}
@@ -94,7 +98,7 @@ export const FolderGroup = ({
         isLoading={isLoading}
       />
       <Button
-        className='h-10 rounded-md font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
+        className='h-10 rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100 hover:text-slate-600'
         justify='flex-start'
         variant='subtle'
         leftSection={<FaPlusCircle className='size-4' />}

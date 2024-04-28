@@ -12,14 +12,14 @@ export const BuildFormPage = () => {
   return (
     <Box
       className={cn(
-        'h-screen justify-between transition-all duration-[350ms] ease-linear',
+        'h-screen flex flex-col justify-start transition-all duration-[350ms] ease-linear',
         {
           '-translate-y-[70px]': previewMode,
         },
       )}
     >
       <BuildFormHeader />
-      <Stack className='justify-start gap-0'>
+      <Stack className='flex-1 justify-start gap-0'>
         <Box className='sticky right-0 top-0 z-[100]'>
           <TopBar />
         </Box>

@@ -35,7 +35,7 @@ export const OverviewSidebar = () => {
   const folderListNotInTeam = folderList?.filter((folder) => !folder.teamId);
 
   return (
-    <Box className='relative h-full w-full bg-slate-100 text-slate-600'>
+    <Box className='relative h-full w-full bg-quarter-pearl-lusta-50 text-slate-600'>
       <Box className='sticky top-0 z-10 w-full border border-x-0 border-solid border-slate-300 bg-inherit px-5 py-4 text-center'>
         <Button
           size='md'
@@ -71,9 +71,10 @@ export const OverviewSidebar = () => {
         <Box className='flex flex-col gap-2'>
           <NavLink
             className={cn(
-              'rounded-md font-bold text-slate-600 hover:bg-slate-200',
+              'rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100',
               {
-                'bg-slate-300 hover:bg-slate-300': params.isFavourite,
+                'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
+                  params.isFavourite,
               },
             )}
             label='Favorites'
@@ -91,13 +92,14 @@ export const OverviewSidebar = () => {
           />
           <NavLink
             className={cn(
-              'rounded-md font-bold text-slate-600 hover:bg-slate-200',
+              'rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100',
               {
-                'bg-slate-300 hover:bg-slate-300': params.isDeleted,
+                'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
+                  params.isDeleted,
               },
             )}
             label='Trash'
-            leftSection={<IoTrash className='text-gray-600' />}
+            leftSection={<IoTrash className='text-slate-600' />}
             onClick={() => {
               setParams({
                 ...defaultFormsParams,

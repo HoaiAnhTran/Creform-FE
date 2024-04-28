@@ -188,16 +188,14 @@ export const FormsTable = () => {
       {
         text: 'Add to Folder',
         icon: <RiFolderAddFill size={18} />,
-        handleClick: (record: FormResponse) => {
-          setSelectedRecords([record]);
+        handleClick: () => {
           openModal(ModalTypes.ADD_TO_FOLDER);
         },
       },
       {
         text: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
         icon: <RiTeamFill size={18} />,
-        handleClick: (record: FormResponse) => {
-          setSelectedRecords([record]);
+        handleClick: () => {
           if (activeTeam === -1) {
             openModal(ModalTypes.MOVE_TO_TEAM);
             return;
@@ -331,7 +329,8 @@ export const FormsTable = () => {
                 root: 'flex justify-center items-center',
               }}
               className='h-full w-full font-medium focus:font-bold'
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation();
                 navigate(`${PATH.BUILD_FORM_PAGE}/${record.id}`);
               }}
             />
@@ -345,7 +344,8 @@ export const FormsTable = () => {
                 root: 'flex justify-center items-center',
               }}
               className='h-full w-full font-medium focus:font-bold'
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation();
                 setSelectedRecords([record]);
                 openModal(ModalTypes.DELETE_FORM_PERMANENTLY);
               }}
@@ -360,7 +360,8 @@ export const FormsTable = () => {
             <Menu shadow='sm' offset={10} position='bottom' withArrow>
               <Menu.Target>
                 <Button
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation();
                     setSelectedRecords([record]);
                   }}
                   title='More'
@@ -384,7 +385,10 @@ export const FormsTable = () => {
                           key={index}
                           leftSection={option.icon}
                           className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
-                          onClick={() => option.handleClick(record)}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            option.handleClick(record);
+                          }}
                         >
                           {option.text}
                         </Menu.Item>
@@ -396,7 +400,10 @@ export const FormsTable = () => {
                           key={index}
                           leftSection={option.icon}
                           className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
-                          onClick={() => option.handleClick(record)}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            option.handleClick(record);
+                          }}
                         >
                           {option.text}
                         </Menu.Item>
@@ -413,7 +420,10 @@ export const FormsTable = () => {
                 root: 'flex justify-center items-center',
               }}
               className='h-full w-full font-medium focus:font-bold'
-              onClick={() => handleRestoreForm(record)}
+              onClick={(event) => {
+                event.stopPropagation();
+                handleRestoreForm(record);
+              }}
             />
           ),
         cellsClassName: 'cursor-pointer hover:bg-ocean-green-100 w-30 h-20 p-0',
@@ -440,9 +450,10 @@ export const FormsTable = () => {
         noHeader
         withRowBorders={false}
         highlightOnHover
-        rowClassName='cursor-pointer'
+        rowClassName='hover:!bg-quarter-pearl-lusta-50 data-[selected]:bg-quarter-pearl-lusta-50 data-[selected]:hover:!bg-quarter-pearl-lusta-50'
         columns={columns}
         records={data?.forms}
+        selectionCheckboxProps={{ size: 'xs', color: 'ocean-green.5' }}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
         onRowClick={({ record: clickedRecord }) => {
@@ -450,7 +461,7 @@ export const FormsTable = () => {
             const isSelectedRecord =
               prev.findIndex((record) => record.id === clickedRecord.id) !== -1;
             if (isSelectedRecord) {
-              return [...prev];
+              return prev.filter((record) => record.id !== clickedRecord.id);
             }
             return [...prev, clickedRecord];
           });

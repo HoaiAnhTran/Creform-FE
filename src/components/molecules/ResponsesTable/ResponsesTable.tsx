@@ -68,7 +68,6 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
   }, [currentPage]);
 
   const columnProps = {
-    nowrap: true,
     sortable: true,
     resizable: true,
   };
@@ -77,20 +76,23 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     () => [
       {
         accessor: 'id',
-        cellsClassName: 'h-10 cursor-pointer text-center',
         title: 'ID',
+        titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
+        cellsClassName: 'h-10 text-center',
         ...columnProps,
       },
       {
         accessor: 'createdAt',
-        cellsClassName: 'h-10 cursor-pointer text-center',
         title: 'Submission Date',
+        titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
+        cellsClassName: 'h-10 text-center',
         ...columnProps,
       },
       ...elementIdAndNameList.map((elementIdAndName) => ({
         accessor: `ValueElement${elementIdAndName.elementId}`,
-        cellsClassName: 'h-10 cursor-pointer text-center',
         title: elementIdAndName.elementName,
+        titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
+        cellsClassName: 'h-10 text-center max-w-[300px]',
         ...columnProps,
       })),
     ],
@@ -106,6 +108,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       verticalAlign='center'
       records={records}
       columns={columns}
+      selectionCheckboxProps={{ size: 'xs', color: 'ocean-green.5' }}
       selectedRecords={selectedRecords}
       onSelectedRecordsChange={setSelectedRecords}
       onRowClick={({ record }) => {
@@ -139,6 +142,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
         root: 'overflow-visible',
         pagination: 'fixed w-full h-[50px] bottom-0 z-40',
       }}
+      rowClassName='hover:!bg-quarter-pearl-lusta-50 data-[selected]:bg-quarter-pearl-lusta-50 data-[selected]:hover:!bg-quarter-pearl-lusta-50'
     />
   );
 };

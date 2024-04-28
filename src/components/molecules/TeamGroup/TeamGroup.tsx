@@ -149,7 +149,7 @@ export const TeamGroup = ({
         folderName={folderName}
       />
       <Button
-        className='h-10 rounded-md font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-500'
+        className='h-10 rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100 hover:text-slate-600'
         onClick={() => {
           openModal(ModalTypes.CREATE_TEAM);
           setTeamName('');

@@ -42,9 +42,9 @@ export const PublishSection = () => {
   }, [form]);
 
   return (
-    <Box className='relative flex h-screen w-full items-center justify-center bg-quarter-pearl-lusta-50'>
-      <Stack className='absolute top-[50%] w-[660px] -translate-y-[50%]'>
-        <Stack className='mt-4 gap-8 rounded border border-solid border-slate-200 bg-white px-6 py-8'>
+    <Box className='flex h-full w-full items-center justify-center bg-quarter-pearl-lusta-50'>
+      <Stack className='w-[660px]'>
+        <Stack className='gap-8 rounded border border-solid border-slate-200 bg-white px-6 py-8'>
           <Group>
             <Box className='flex h-10 w-10 items-center justify-center rounded bg-ocean-green-400'>
               <FaLink size={20} className='text-white' />
@@ -65,7 +65,7 @@ export const PublishSection = () => {
             variant='filled'
             readOnly
             classNames={{
-              input: 'h-10 focus:border-none',
+              input: 'h-10 border-none outline-none',
             }}
             onClick={(e) => e.currentTarget.select()}
           />
