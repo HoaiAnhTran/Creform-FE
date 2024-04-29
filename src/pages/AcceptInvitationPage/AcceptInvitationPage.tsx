@@ -96,9 +96,9 @@ export const AcceptInvitationPage = () => {
   }, [validInvitation, token]);
 
   const renderInvalidInvitation = () => (
-    <Stack className='justify-center items-center flex-1 gap-4 px-7'>
+    <Stack className='flex-1 items-center justify-center gap-4 px-7'>
       <IoIosWarning className='size-24 text-quarter-pearl-lusta-400' />
-      <Text className='font-semibold text-[20px]'>
+      <Text className='text-[20px] font-semibold'>
         Invitation is not available
       </Text>
       <Text className='text-sm text-gray-500'>
@@ -108,18 +108,18 @@ export const AcceptInvitationPage = () => {
   );
 
   return (
-    <div className='bg-quarter-pearl-lusta-50 w-full h-screen flex flex-col justify-center items-center'>
+    <div className='flex h-screen w-full flex-col items-center justify-center bg-quarter-pearl-lusta-50'>
       {isLoadingInvitation ? (
         <Loader />
       ) : (
-        <div className='w-[550px] h-[360px] bg-white flex flex-col text-center gap-0 shadow-[0_0_9px_3px_rgba(141,200,173,0.3)] rounded-md'>
+        <div className='flex h-[360px] w-[550px] flex-col gap-0 rounded-md bg-white text-center shadow-[0_0_9px_3px_rgba(141,200,173,0.3)]'>
           <Anchor
             href={PATH.ROOT_PAGE}
             className='no-underline hover:no-underline'
           >
-            <Group className='justify-center items-end gap-0 bg-ocean-green-500 py-4 rounded-t-md'>
+            <Group className='items-end justify-center gap-0 rounded-t-md bg-ocean-green-500 py-4'>
               <Image src={BeigeLogo} className='h-logoHeight' />
-              <span className='text-quarter-pearl-lusta-50 font-bold text-[22px] tracking-[4px]'>
+              <span className='text-[22px] font-bold tracking-[4px] text-quarter-pearl-lusta-50'>
                 REFORM
               </span>
             </Group>
@@ -127,8 +127,8 @@ export const AcceptInvitationPage = () => {
           {!validInvitation ? (
             renderInvalidInvitation()
           ) : (
-            <Stack className='justify-center flex-1 gap-[30px] px-7'>
-              <Text className='font-semibold text-[22px]'>Join the team!</Text>
+            <Stack className='flex-1 justify-center gap-[30px] px-7'>
+              <Text className='text-[22px] font-semibold'>Join the team!</Text>
               <Stack>
                 <Text className='text-sm leading-7'>
                   You have been invited to join the&nbsp;

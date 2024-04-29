@@ -12,7 +12,7 @@ export const BuildFormPage = () => {
   return (
     <Box
       className={cn(
-        'h-screen flex flex-col justify-start transition-all duration-[350ms] ease-linear',
+        'flex h-screen flex-col justify-start transition-all duration-[350ms] ease-linear',
         {
           '-translate-y-[70px]': previewMode,
         },

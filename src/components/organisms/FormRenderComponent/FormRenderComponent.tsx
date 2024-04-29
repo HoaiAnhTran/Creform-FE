@@ -69,7 +69,7 @@ export const FormRenderComponent = ({
       {form?.logoUrl && (
         <Image
           src={form.logoUrl}
-          className='mb-8 h-[140px] w-[360px] object-cover'
+          className='mb-8 max-h-36 max-w-72 cursor-pointer object-contain'
         />
       )}
       <Stack className='w-[45%] justify-between gap-7'>

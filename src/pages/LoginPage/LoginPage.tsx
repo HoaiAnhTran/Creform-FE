@@ -65,8 +65,8 @@ export const LoginPage = () => {
       <UnSignedHeader />
 
       <Group className='h-contentHeight justify-evenly gap-5 px-5'>
-        <Stack className='justify-between gap-5 text-center items-center'>
-          <Text className='text-2xl font-semibold text-burnt-sienna-500 tracking-wider'>
+        <Stack className='items-center justify-between gap-5 text-center'>
+          <Text className='text-2xl font-semibold tracking-wider text-burnt-sienna-500'>
             EASY ONLINE FORM BUILDER
           </Text>
           <Text className='text-3xl font-bold text-ocean-green-500'>
@@ -75,7 +75,7 @@ export const LoginPage = () => {
           <Image className='h-64 w-64 object-contain' src={Person} />
         </Stack>
 
-        <Stack className='gap-4 justify-between items-center border-3 w-[400px] rounded-lg bg-burnt-sienna-50 p-6'>
+        <Stack className='border-3 w-[400px] items-center justify-between gap-4 rounded-lg bg-burnt-sienna-50 p-6'>
           <Text className='text-xl font-bold text-burnt-sienna-500'>Login</Text>
           <LoadingOverlay
             visible={visible}

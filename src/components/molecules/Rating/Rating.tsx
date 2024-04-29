@@ -91,7 +91,7 @@ export const Rating = (props: RatingProps) => {
         emptySymbol={emptySymbol}
         fullSymbol={fullSymbol}
       />
-      <Group className='px-1 justify-between'>
+      <Group className='justify-between px-1'>
         <Box>
           <Text
             className={cn('text-xs  text-slate-500', {

@@ -134,7 +134,7 @@ export const TopBar = () => {
               onClick={() => {
                 window.open(formURL, '_blank');
               }}
-              className='rounded-l-none rounded-r-[4px] text-quarter-pearl-lusta-50 bg-ocean-green-500'
+              className='rounded-l-none rounded-r-[4px] bg-ocean-green-500 text-quarter-pearl-lusta-50'
               disabled={!isEditForm}
             >
               <LuExternalLink />

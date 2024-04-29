@@ -6,9 +6,9 @@ import { PATH } from '@/constants/routes';
 export const UnSignedHeader = () => (
   <header className='flex h-headerHeight flex-row items-center justify-between bg-ocean-green-500 px-10 py-3'>
     <Anchor href={PATH.ROOT_PAGE} className='no-underline hover:no-underline'>
-      <Group className='justify-center items-end gap-0'>
+      <Group className='items-end justify-center gap-0'>
         <Image src={BeigeLogo} className='h-logoHeight' />
-        <span className='text-quarter-pearl-lusta-50 font-bold text-[24px] tracking-[4px]'>
+        <span className='text-[24px] font-bold tracking-[4px] text-quarter-pearl-lusta-50'>
           REFORM
         </span>
       </Group>
