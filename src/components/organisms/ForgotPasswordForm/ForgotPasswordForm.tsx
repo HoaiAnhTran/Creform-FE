@@ -38,7 +38,7 @@ export const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
     >
       <Form className='h-full w-full'>
         <Stack className='justify-between gap-6'>
-          <Text className='text-[13px] leading-5 text-center'>
+          <Text className='text-center text-[13px] leading-5'>
             Enter the email address associated with your account and we'll send
             you a token to reset your password.
           </Text>
@@ -55,7 +55,7 @@ export const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
             title='Back to Login'
             leftSection={<IoIosArrowBack size={14} />}
             onClick={() => navigate(PATH.LOGIN_PAGE)}
-            className='text-xs bg-transparent hover:bg-transparent font-normal text-burnt-sienna-500 hover:text-burnt-sienna-600'
+            className='bg-transparent text-xs font-normal text-burnt-sienna-500 hover:bg-transparent hover:text-burnt-sienna-600'
             classNames={{
               section: 'mr-[4px]',
             }}

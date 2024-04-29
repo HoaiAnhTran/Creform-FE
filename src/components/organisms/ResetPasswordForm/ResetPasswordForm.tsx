@@ -32,7 +32,7 @@ export const ResetPasswordForm = (props: ResetPasswordFormProps) => {
     >
       <Form className='h-full w-full'>
         <Stack className='justify-between gap-5'>
-          <Text className='text-[13px] leading-5 text-center'>
+          <Text className='text-center text-[13px] leading-5'>
             Check your email and enter the password reset token.
           </Text>
           <Field

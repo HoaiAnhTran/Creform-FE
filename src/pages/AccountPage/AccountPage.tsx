@@ -11,6 +11,7 @@ import {
 import { useFormik } from 'formik';
 
 import { Button } from '@/atoms/Button';
+import { ALLOWED_IMAGE_FILE_TYPES } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { UserInfoItem } from '@/molecules/UserInfoItem';
 import { useUploadImageMutation } from '@/redux/api/imageApi';
@@ -117,8 +118,9 @@ export const AccountPage = () => {
     if (!event.target.files) return;
     const file = event.target.files[0];
 
-    if (!file.type.startsWith('image/')) {
+    if (!ALLOWED_IMAGE_FILE_TYPES.includes(file.type)) {
       toastify.displayError(MESSAGES.ONLY_SUPPORT_IMAGE_FILE_TYPES);
+      event.target.value = '';
       return;
     }
 
@@ -566,7 +568,7 @@ export const AccountPage = () => {
   return (
     <Stack className='h-max min-h-screen w-full gap-0 bg-quarter-pearl-lusta-50'>
       <Header />
-      <Stack className='bg-quarter-pearl-lusta-50 px-40 p-8'>
+      <Stack className='bg-quarter-pearl-lusta-50 p-8 px-40'>
         <Stack className='items-center justify-center gap-12 rounded-xl px-14'>
           <Text className='text-center text-[26px] font-semibold text-ocean-green-600'>
             Update Account and General Information

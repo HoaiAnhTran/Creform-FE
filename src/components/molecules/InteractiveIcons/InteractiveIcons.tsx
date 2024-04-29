@@ -1,5 +1,4 @@
-import { IoSettingsSharp } from 'react-icons/io5';
-import { RiDeleteBinFill } from 'react-icons/ri';
+import { IoSettingsSharp, IoTrash } from 'react-icons/io5';
 import { Box, Stack, Text } from '@mantine/core';
 
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
@@ -31,7 +30,7 @@ export const InteractiveIcons = ({ removeItem }: InteractiveIconProps) => {
           onClick={() => removeItem(edittingItem!.id)}
           className='group absolute bottom-[50%] left-[100%] mb-[-22px] ml-3 flex translate-y-[50%] cursor-pointer items-center justify-center gap-2 rounded-full bg-error p-2 text-white'
         >
-          <RiDeleteBinFill className='size-5' />
+          <IoTrash className='size-5' />
           <Text className='hidden pr-1 text-sm group-hover:inline-block'>
             Remove
           </Text>

@@ -18,7 +18,7 @@ export const PreviewSection = () => {
           <SubmissionConfirmation />
         </Box>
       ) : (
-        <Box className='absolute top-[50px] w-full py-7'>
+        <Box className='absolute top-8 w-full pb-8'>
           <Formik
             validateOnBlur={true}
             validateOnChange={false}

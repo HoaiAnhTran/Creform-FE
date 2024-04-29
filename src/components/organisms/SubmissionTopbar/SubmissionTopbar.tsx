@@ -77,7 +77,7 @@ export const SubmissionTopbar = (props: SubmissionTopbar) => {
   return (
     <div className='flex w-full items-center justify-between p-4'>
       {selectedResponseIds.length === 0 ? (
-        <Group className='justify-end w-full'>
+        <Group className='w-full justify-end'>
           <Button
             title='Export to Excel'
             className='h-[36px] text-sm'

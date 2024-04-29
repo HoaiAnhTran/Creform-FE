@@ -40,7 +40,7 @@ export const OverviewSidebar = () => {
         <Button
           size='md'
           title='CREATE FORM'
-          className='w-full font-bold bg-burnt-sienna-500'
+          className='w-full bg-burnt-sienna-500 font-bold'
           onClick={() =>
             navigate(PATH.BUILD_FORM_PAGE, {
               state: {

@@ -1,17 +1,17 @@
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoTrash } from 'react-icons/io5';
 import {
   Box,
   CloseButton,
   Divider,
-  Group,
   Image,
   LoadingOverlay,
   Stack,
 } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
+import { ALLOWED_IMAGE_FILE_TYPES } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { ElementItem, ElementType } from '@/types';
@@ -49,8 +49,9 @@ export const FormContainer = ({
     if (!event.target.files) return;
     const file = event.target.files[0];
 
-    if (!file.type.startsWith('image/')) {
+    if (!ALLOWED_IMAGE_FILE_TYPES.includes(file.type)) {
       toastify.displayError(MESSAGES.ONLY_SUPPORT_IMAGE_FILE_TYPES);
+      event.target.value = '';
       return;
     }
 
@@ -68,6 +69,15 @@ export const FormContainer = ({
       setCurrentLogoFile(file);
     }
     event.target.value = '';
+  };
+
+  const handleClickRemoveLogo = () => {
+    setCurrentLogo('');
+    setForm((prevState) => ({
+      ...prevState,
+      logoUrl: '',
+    }));
+    setCurrentLogoFile(undefined);
   };
 
   useEffect(() => {
@@ -98,35 +108,62 @@ export const FormContainer = ({
     <Stack className='min-h-screen items-center py-7'>
       <Stack className='w-[45%] justify-between gap-7'>
         {currentLogo ? (
-          <Group className='relative mx-auto'>
-            <input
-              type='file'
-              ref={logoInputRef}
-              onChange={(event) => handleLogoChange(event)}
-              accept='image/*'
-              className='hidden'
+          <Box pos='relative' className='px-4'>
+            <LoadingOverlay
+              visible={isLoading}
+              zIndex={80}
+              overlayProps={{ radius: 'sm', blur: 2 }}
+              loaderProps={{ color: 'ocean-green.5', type: 'dots' }}
             />
-            <Image
-              src={currentLogo}
-              className='h-36 w-72 flex-1 cursor-pointer object-cover'
-              onClick={handleClickAddLogo}
-            />
-            {currentLogo === initLogo || (
-              <CloseButton
-                radius='lg'
-                size='sm'
-                icon={<IoClose size={14} />}
-                onClick={() => {
-                  setCurrentLogo(initLogo);
-                  setForm((prevState) => ({
-                    ...prevState,
-                    logoUrl: initLogo,
-                  }));
-                }}
-                className='absolute right-1 top-1 cursor-pointer bg-slate-200 p-0.5 text-slate-600 opacity-90 hover:bg-slate-300'
-              />
-            )}
-          </Group>
+            <Stack className='gap-2'>
+              <Stack className='relative mx-auto'>
+                <input
+                  type='file'
+                  ref={logoInputRef}
+                  onChange={(event) => handleLogoChange(event)}
+                  accept='image/*'
+                  className='hidden'
+                />
+                <Image
+                  src={currentLogo}
+                  className='max-h-36 max-w-72 cursor-pointer object-contain'
+                  onClick={handleClickAddLogo}
+                />
+                {currentLogo !== initLogo && (
+                  <CloseButton
+                    radius='lg'
+                    size='sm'
+                    icon={<IoClose size={14} />}
+                    onClick={() => {
+                      setCurrentLogo(initLogo);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        logoUrl: initLogo,
+                      }));
+                    }}
+                    className='absolute right-1 top-1 cursor-pointer bg-slate-200 p-0.5 text-slate-600 opacity-90 hover:bg-slate-300'
+                  />
+                )}
+              </Stack>
+              {currentLogo === initLogo && (
+                <Divider
+                  size='sm'
+                  label={
+                    <Button
+                      title='Remove logo'
+                      variant='subtle'
+                      leftSection={<IoTrash size={14} />}
+                      onClick={handleClickRemoveLogo}
+                      className='my-2 h-[33px] text-xs font-medium uppercase'
+                    />
+                  }
+                  labelPosition='center'
+                  variant='dashed'
+                  className='px-4'
+                />
+              )}
+            </Stack>
+          </Box>
         ) : (
           <Divider
             size='sm'
@@ -142,10 +179,10 @@ export const FormContainer = ({
                 <Button
                   title='Add your logo'
                   variant='subtle'
-                  color='primary'
                   leftSection={<IoIosAdd size={16} />}
                   onClick={handleClickAddLogo}
-                  className='my-2 text-xs font-medium uppercase'
+                  className='my-2 h-[33px] text-xs font-medium uppercase'
+                  disabled={isLoading}
                 />
               </>
             }
@@ -159,7 +196,7 @@ export const FormContainer = ({
             visible={isLoading}
             zIndex={80}
             overlayProps={{ radius: 'sm', blur: 2, className: 'scale-x-150' }}
-            loaderProps={{ color: 'ocean-green.5' }}
+            loaderProps={{ color: 'ocean-green.5', type: 'dots' }}
           />
           <ResponsiveGridLayout
             currentElementType={currentElementType!}
