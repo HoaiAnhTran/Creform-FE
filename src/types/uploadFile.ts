@@ -5,6 +5,6 @@ export enum UploadImage {
 
 export type ImageType = UploadImage.AVATAR | UploadImage.LOGO;
 
-export interface UploadImageResponse {
+export interface UploadResponse {
   url: string;
 }

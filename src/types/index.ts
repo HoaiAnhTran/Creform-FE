@@ -9,5 +9,5 @@ export * from './invitations';
 export * from './modalType';
 export * from './responses';
 export * from './team';
-export * from './uploadImage';
+export * from './uploadFile';
 export * from './users';

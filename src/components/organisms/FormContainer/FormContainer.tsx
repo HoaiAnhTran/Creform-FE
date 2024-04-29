@@ -121,7 +121,7 @@ export const FormContainer = ({
                   type='file'
                   ref={logoInputRef}
                   onChange={(event) => handleLogoChange(event)}
-                  accept='image/*'
+                  accept={ALLOWED_IMAGE_FILE_TYPES.join(',')}
                   className='hidden'
                 />
                 <Image
@@ -173,7 +173,7 @@ export const FormContainer = ({
                   type='file'
                   ref={logoInputRef}
                   onChange={(event) => handleLogoChange(event)}
-                  accept='image/*'
+                  accept={ALLOWED_IMAGE_FILE_TYPES.join(',')}
                   className='hidden'
                 />
                 <Button

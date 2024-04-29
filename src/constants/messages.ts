@@ -16,6 +16,8 @@ export const MESSAGES = {
   CHANGE_PASSWORD_SUCCESS: 'Change password successfully',
   ONLY_SUPPORT_IMAGE_FILE_TYPES:
     'Support only image file types (.png, .jpg, .jpeg)',
+  ONLY_SUPPORT_DOCUMENT_FILE_TYPES:
+    'Support only document file types (.pdf, .doc, .docx)',
   ADD_FORM_TO_FOLDER_SUCCESS: 'Form(s) added to folder successfully',
   MOVE_FORM_TO_TEAM_SUCCESS: 'Form(s) moved to team successfully',
   DELETE_FORM_SUCCESS: 'Form(s) deleted successfully',

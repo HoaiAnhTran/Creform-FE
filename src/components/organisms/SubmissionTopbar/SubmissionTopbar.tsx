@@ -11,6 +11,7 @@ import {
   useDeleteOneResponseMutation,
   useLazyGetResponsesExcelFileQuery,
 } from '@/redux/api/responseApi';
+import { GetResponsesParams } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
 interface SubmissionTopbar {
@@ -18,6 +19,11 @@ interface SubmissionTopbar {
   selectedResponseIds: number[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<ResponseRow[]>>;
   showingResponseRows: ResponseRow[];
+  params: GetResponsesParams | undefined;
+  setParams: React.Dispatch<
+    React.SetStateAction<GetResponsesParams | undefined>
+  >;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const SubmissionTopbar = (props: SubmissionTopbar) => {
@@ -26,6 +32,9 @@ export const SubmissionTopbar = (props: SubmissionTopbar) => {
     setSelectedRecords,
     showingResponseRows,
     formId,
+    params,
+    setParams,
+    setCurrentPage,
   } = props;
   const handleSelectAllOrDeselectClick = () => {
     if (showingResponseRows.length > selectedResponseIds.length) {
@@ -49,12 +58,20 @@ export const SubmissionTopbar = (props: SubmissionTopbar) => {
   const handleDeleteOneOrMultiple = () => {
     if (selectedResponseIds.length == 1) {
       deleteOneResponse({ formId, responseId: selectedResponseIds[0] }).then(
-        () => setSelectedRecords([]),
+        () => {
+          setParams({ ...params, page: 1 });
+          setCurrentPage(1);
+          setSelectedRecords([]);
+        },
       );
       return;
     }
     deleteMultipleResponses({ formId, responsesIds: selectedResponseIds }).then(
-      () => setSelectedRecords([]),
+      () => {
+        setParams({ ...params, page: 1 });
+        setCurrentPage(1);
+        setSelectedRecords([]);
+      },
     );
   };
 

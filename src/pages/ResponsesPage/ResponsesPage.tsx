@@ -12,9 +12,14 @@ import { formatDate } from '@/utils';
 
 export const ResponsesPage = () => {
   const { formId } = useParams();
+
   const [selectedRecords, setSelectedRecords] = useState<ResponseRow[]>([]);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const [params, setParams] = useState<GetResponsesParams>();
-  const { data: response, isFetching } = useGetResponsesByFormIdQuery({
+
+  const { data: response } = useGetResponsesByFormIdQuery({
     formId: Number(formId),
     ...params,
   });
@@ -90,17 +95,19 @@ export const ResponsesPage = () => {
         selectedResponseIds={selectedResponseIds}
         setSelectedRecords={setSelectedRecords}
         showingResponseRows={responseRows || []}
+        params={params}
+        setParams={setParams}
+        setCurrentPage={setCurrentPage}
       />
       <ResponsesTable
         elementIdAndNameList={response.elementIdAndNameList}
-        totalResponses={response.totalResponses}
-        pageSize={response.pageSize}
-        isLoading={isFetching}
         responseRows={responseRows || []}
         selectedRecords={selectedRecords}
         setSelectedRecords={setSelectedRecords}
         params={params}
         setParams={setParams}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
     </div>
   );

@@ -76,7 +76,7 @@ export const TeamList = ({
           const isActiveTeam = team.id === activeTeam && activeFolder === -1;
 
           return (
-            <Stack className='gap-2'>
+            <Stack className='gap-2' key={team.id}>
               <Group
                 key={uuidv4()}
                 className={cn(

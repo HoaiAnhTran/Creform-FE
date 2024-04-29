@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { defaultHeadingConfig, defaultSubmitConfig } from '@/configs';
+import { defaultHeadingConfig, defaultSubmitConfig } from '@/constants';
 import { ElementItem, ElementType } from '@/types';
 
 import { useBuildFormContext } from '.';

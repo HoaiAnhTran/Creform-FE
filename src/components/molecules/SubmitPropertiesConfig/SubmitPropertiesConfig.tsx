@@ -10,10 +10,10 @@ import {
 } from '@mantine/core';
 
 import {
-  ALIGNMENT_OPTIONS,
+  BUTTON_ALIGNMENT_OPTIONS,
   BUTTON_COLORS,
   DEFAULT_BUTTON_COLOR,
-} from '@/constants/buttonStyles';
+} from '@/constants';
 import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
 import { SubmitConfig, SubmitElement } from '@/types';
 import { capitalize, cn } from '@/utils';
@@ -72,7 +72,7 @@ export const SubmitProptertiesConfig = (
           onChange={handleChange('buttonAlignment')}
         >
           <Group className='gap-0'>
-            {ALIGNMENT_OPTIONS.map((alignment) => (
+            {BUTTON_ALIGNMENT_OPTIONS.map((alignment) => (
               <Radio
                 key={alignment}
                 value={alignment}

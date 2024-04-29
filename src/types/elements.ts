@@ -100,6 +100,12 @@ export interface DatePickerConfig {
   sublabel: string;
 }
 
+export interface FileUploadConfig {
+  fieldLabel: string;
+  required: boolean;
+  sublabel: string;
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -114,7 +120,8 @@ export type ElementConfig =
   | AddressConfig
   | NumberPhoneConfig
   | DatePickerConfig
-  | TimeInputConfig;
+  | TimeInputConfig
+  | FileUploadConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -184,6 +191,7 @@ export type SingleChoiceElement = BaseElement<
   ElementType.SINGLE_CHOICE,
   SingleChoiceConfig
 >;
+
 export type TimeInputElement = BaseElement<ElementType.TIME, TimeInputConfig>;
 
 export type DatePickerElement = BaseElement<
@@ -194,6 +202,11 @@ export type DatePickerElement = BaseElement<
 export type MultipleChoiceElement = BaseElement<
   ElementType.MULTIPLE_CHOICE,
   MultipleChoiceConfig
+>;
+
+export type FileUploadElement = BaseElement<
+  ElementType.FILE_UPLOAD,
+  FileUploadConfig
 >;
 
 export type ElementItem =
@@ -211,4 +224,5 @@ export type ElementItem =
   | AddressElement
   | NumberPhoneElement
   | DatePickerElement
-  | TimeInputElement;
+  | TimeInputElement
+  | FileUploadElement;

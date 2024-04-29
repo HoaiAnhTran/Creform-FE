@@ -14,7 +14,7 @@ import { Button } from '@/atoms/Button';
 import { ALLOWED_IMAGE_FILE_TYPES } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { UserInfoItem } from '@/molecules/UserInfoItem';
-import { useUploadImageMutation } from '@/redux/api/imageApi';
+import { useUploadImageMutation } from '@/redux/api/uploadApi';
 import {
   useChangePasswordMutation,
   useGetMyProfileQuery,
@@ -340,7 +340,7 @@ export const AccountPage = () => {
               ref={avatarInputRef}
               onChange={(event) => handleImageChange(event, UploadImage.AVATAR)}
               className='hidden'
-              accept='image/*'
+              accept={ALLOWED_IMAGE_FILE_TYPES.join(',')}
             />
             <Button
               title='Save'
@@ -379,7 +379,7 @@ export const AccountPage = () => {
               ref={avatarInputRef}
               onChange={(event) => handleImageChange(event, UploadImage.AVATAR)}
               className='hidden'
-              accept='image/*'
+              accept={ALLOWED_IMAGE_FILE_TYPES.join(',')}
             />
             {myProfile?.avatarUrl ? (
               <>
@@ -471,7 +471,7 @@ export const AccountPage = () => {
               ref={logoInputRef}
               onChange={(event) => handleImageChange(event, UploadImage.LOGO)}
               className='hidden'
-              accept='image/*'
+              accept={ALLOWED_IMAGE_FILE_TYPES.join(',')}
             />
             <Button
               title='Save'
@@ -510,7 +510,7 @@ export const AccountPage = () => {
               ref={logoInputRef}
               onChange={(event) => handleImageChange(event, UploadImage.LOGO)}
               className='hidden'
-              accept='image/*'
+              accept={ALLOWED_IMAGE_FILE_TYPES.join(',')}
             />
             {myProfile?.organizationLogo ? (
               <>

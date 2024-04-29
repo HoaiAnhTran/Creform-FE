@@ -21,6 +21,7 @@ import { BaseAddressElement } from '../BaseAddressElement';
 import { BaseDatePickerElement } from '../BaseDatePickerElement';
 import { BaseDropdownElement } from '../BaseDropdownElement';
 import { BaseEmailElement } from '../BaseEmailElement';
+import { BaseFileUploadElement } from '../BaseFileUploadElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
 import { BaseLongTextElement } from '../BaseLongTextElement';
@@ -76,6 +77,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseDatePickerElement item={item} {...rest} />;
     case isTimeInputElement(item):
       return <BaseTimeInputElement item={item} {...rest} />;
+    case isFileUploadElement(item):
+      return <BaseFileUploadElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -149,4 +152,10 @@ export function isTimeInputElement(
   item: ElementItem,
 ): item is TimeInputElement {
   return item?.type === ElementType.TIME;
+}
+
+export function isFileUploadElement(
+  item: ElementItem,
+): item is TimeInputElement {
+  return item?.type === ElementType.FILE_UPLOAD;
 }

@@ -5,7 +5,6 @@ import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 import { RiAddBoxFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { Box, Group, Menu, NavLink, Text } from '@mantine/core';
-import { v4 as uuidv4 } from 'uuid';
 
 import { PATH } from '@/constants';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
@@ -107,7 +106,7 @@ export const FolderList = ({
           const isActiveFolder = folder.id === activeFolder;
           return (
             <Group
-              key={uuidv4()}
+              key={folder.id}
               className={cn(
                 'group cursor-pointer justify-between gap-0 rounded-md pr-2 text-slate-600 hover:bg-quarter-pearl-lusta-100',
                 {
