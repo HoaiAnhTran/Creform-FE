@@ -4,7 +4,7 @@ import { Stack, Switch, Text, TextInput } from '@mantine/core';
 import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
 import { EmailConfig, EmailElement } from '@/types';
 
-export const EmailPropertiesConfig = (
+export const FileUploadPropertiesConfig = (
   props: BasePropertiesProps<EmailElement>,
 ) => {
   const { edittingItem, updateItem, handleConfig } = props;

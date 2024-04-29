@@ -1,7 +1,7 @@
 import { ElementItem, FormRequest } from '@/types';
 import { FieldAnswer, FormAnswer } from '@/types/responses';
 
-export function separateFields(form: FormRequest) {
+export const separateFields = (form: FormRequest) => {
   const formWithoutText = JSON.parse(JSON.stringify(form));
 
   formWithoutText.elements.forEach((element: ElementItem) => {
@@ -11,7 +11,7 @@ export function separateFields(form: FormRequest) {
   });
 
   return formWithoutText;
-}
+};
 
 export const getFormAnswerFields = (elements: ElementItem[]) => {
   const formAnswers: FormAnswer[] = [];

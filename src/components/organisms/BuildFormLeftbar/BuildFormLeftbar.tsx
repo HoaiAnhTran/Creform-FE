@@ -5,7 +5,7 @@ import { Box, Divider, Group, Stack, Text, Tooltip } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 
 import { Button } from '@/atoms/Button';
-import { ElementList } from '@/configs';
+import { ElementList } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { ElementType } from '@/types';
 import { cn } from '@/utils';

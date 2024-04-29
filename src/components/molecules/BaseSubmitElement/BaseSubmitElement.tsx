@@ -1,6 +1,6 @@
 import { Button, Stack } from '@mantine/core';
 
-import { ALIGNMENT_OPTIONS } from '@/constants/buttonStyles';
+import { BUTTON_ALIGNMENT_OPTIONS } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { SubmitElement } from '@/types';
 import { cn } from '@/utils';
@@ -12,7 +12,7 @@ export const BaseSubmitElement = (props: BaseElementProps<SubmitElement>) => {
 
   const { isReadOnly } = useElementLayouts();
   const getAlignmentClass = (buttonAlignment: string) => {
-    if (!ALIGNMENT_OPTIONS.includes(buttonAlignment)) {
+    if (!BUTTON_ALIGNMENT_OPTIONS.includes(buttonAlignment)) {
       buttonAlignment = 'auto';
     }
 

@@ -6,25 +6,25 @@ import { useBuildFormContext } from '@/contexts';
 import { AddressPropertiesConfig } from '@/molecules/AddressPropertiesConfig';
 import { DatePickerInputPropertiesConfig } from '@/molecules/DatePickerInputPropertiesConfig';
 import { DropdownPropertiesConfig } from '@/molecules/DropdownPropertiesConfig';
-import { EmailProptertiesConfig } from '@/molecules/EmailPropertiesConfig';
+import { EmailPropertiesConfig } from '@/molecules/EmailPropertiesConfig';
 import {
   isAddressElement,
   isDatePickerInputElement,
   isDropdownElement,
   isEmailElement,
+  isFileUploadElement,
   isFullnameElement,
   isHeadingElement,
+  isLongTextElement,
   isMultipleChoiceElement,
   isNumberPhoneElement,
   isScaleRatingElement,
+  isShortTextElement,
   isSingleChoiceElement,
   isSubmitElement,
   isTimeInputElement,
 } from '@/molecules/FactoryElement';
-import {
-  isLongTextElement,
-  isShortTextElement,
-} from '@/molecules/FactoryElement';
+import { FileUploadPropertiesConfig } from '@/molecules/FileUploadPropertiesConfig';
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
@@ -82,7 +82,7 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
                 );
               case isEmailElement(edittingItem):
                 return (
-                  <EmailProptertiesConfig
+                  <EmailPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />
@@ -168,6 +168,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isTimeInputElement(edittingItem):
                 return (
                   <TimeInputPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isFileUploadElement(edittingItem):
+                return (
+                  <FileUploadPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

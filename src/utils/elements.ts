@@ -1,6 +1,8 @@
 import {
   defaultAddressHeightWidth,
   defaultDropdownHeightWidth,
+  defaultElementHeightWidth,
+  defaultFileUploadHeightWidth,
   defaultHeadingHeightWidth,
   defaultLongTextHeightWidth,
   defaultMultipleChoiceHeightWidth,
@@ -9,7 +11,7 @@ import {
   defaultSingleChoiceHeightWidth,
   defaultSubmitHeightWidth,
   defaultTimeHeightWidth,
-} from '@/configs/defaultElementConfigs';
+} from '@/constants';
 import { ElementType } from '@/types';
 
 export const getDefaultWidthHeight = (type: ElementType | undefined) => {
@@ -34,10 +36,9 @@ export const getDefaultWidthHeight = (type: ElementType | undefined) => {
       return defaultHeadingHeightWidth;
     case type === ElementType.SUBMIT:
       return defaultSubmitHeightWidth;
+    case type === ElementType.FILE_UPLOAD:
+      return defaultFileUploadHeightWidth;
     default:
-      return {
-        h: 5,
-        w: 12,
-      };
+      return defaultElementHeightWidth;
   }
 };

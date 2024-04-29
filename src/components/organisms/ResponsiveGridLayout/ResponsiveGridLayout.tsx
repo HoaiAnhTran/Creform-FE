@@ -9,6 +9,7 @@ import {
   defaultDatePickerConfig,
   defaultDropdownConfig,
   defaultEmailConfig,
+  defaultFileUploadConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
   defaultMultipleChoiceConfig,
@@ -18,7 +19,7 @@ import {
   defaultSubmitConfig,
   defaultTextConfig,
   defaultTimeInputConfig,
-} from '@/configs';
+} from '@/constants';
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { InteractiveIcons } from '@/molecules/InteractiveIcons';
@@ -288,6 +289,19 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'timeInput',
+            },
+          ],
+        };
+      case ElementType.FILE_UPLOAD:
+        return {
+          id: uid,
+          type: ElementType.FILE_UPLOAD,
+          gridSize: getGridSize(currentItem),
+          config: defaultFileUploadConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'fileUpload',
             },
           ],
         };

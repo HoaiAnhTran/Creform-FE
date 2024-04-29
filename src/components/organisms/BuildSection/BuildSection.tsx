@@ -16,7 +16,7 @@ import {
   useGetFormDetailsQuery,
   useUpdateFormMutation,
 } from '@/redux/api/formApi';
-import { useUploadImageMutation } from '@/redux/api/imageApi';
+import { useUploadImageMutation } from '@/redux/api/uploadApi';
 import { ElementType, ErrorResponse } from '@/types';
 import { toastify } from '@/utils';
 import { separateFields } from '@/utils/seperates';
@@ -33,6 +33,9 @@ const STRETCH_FORM_CONTAINER = 9;
 export const BuildSection = () => {
   const { form, toggledLeftbar, isEditForm, toggledRightbar } =
     useBuildFormContext();
+
+  const navigate = useNavigate();
+
   const { id: formId } = useParams();
 
   const location = useLocation();
@@ -46,6 +49,7 @@ export const BuildSection = () => {
 
   const [currentElementType, setCurrentElementType] = useState<ElementType>();
   const [currentLogoFile, setCurrentLogoFile] = useState<File>();
+
   const [createForm, { isLoading: isCreatingForm }] = useCreateFormMutation();
   const [createFormInFolder, { isLoading: isCreatingFormInFolder }] =
     useCreateFormInFolderMutation();
@@ -58,7 +62,6 @@ export const BuildSection = () => {
   const [updateForm, { isLoading: isUpdatingForm }] = useUpdateFormMutation();
   const [uploadImage, { isLoading: isUploadingImage }] =
     useUploadImageMutation();
-  const navigate = useNavigate();
 
   const { data: formData, isLoading: isLoadingGetFormDetails } =
     useGetFormDetailsQuery({ id: formId || '' }, { skip: !formId });

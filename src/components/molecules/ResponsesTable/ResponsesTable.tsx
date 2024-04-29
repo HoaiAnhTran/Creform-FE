@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import orderby from 'lodash.orderby';
 import {
   DataTable,
@@ -6,6 +7,8 @@ import {
   DataTableSortStatus,
 } from 'mantine-datatable';
 
+import { DEFAULT_PAGE_SIZE } from '@/constants';
+import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { ElementIdAndName, GetResponsesParams } from '@/types';
 
 interface ResponsesTableProps {
@@ -13,13 +16,12 @@ interface ResponsesTableProps {
   selectedRecords: ResponseRow[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<ResponseRow[]>>;
   responseRows: ResponseRow[];
-  isLoading: boolean;
-  totalResponses: number;
-  pageSize: number;
   params: GetResponsesParams | undefined;
   setParams: React.Dispatch<
     React.SetStateAction<GetResponsesParams | undefined>
   >;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface StringProperties {
@@ -39,13 +41,19 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     selectedRecords,
     setSelectedRecords,
     responseRows,
-    isLoading,
-    totalResponses,
-    pageSize,
     params,
     setParams,
+    currentPage,
+    setCurrentPage,
   } = props;
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const { formId } = useParams();
+
+  const { data, isFetching, refetch } = useGetResponsesByFormIdQuery({
+    formId: Number(formId),
+    ...params,
+  });
+
   const [sortStatus, setSortStatus] = useState<
     DataTableSortStatus<ResponseRow>
   >({
@@ -64,8 +72,14 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
   );
 
   useEffect(() => {
-    setParams({ ...params, page: currentPage });
-  }, [currentPage]);
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+
+  useEffect(() => {
+    setParams({ ...params, page: 1 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const columnProps = {
     sortable: true,
@@ -96,6 +110,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
         ...columnProps,
       })),
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [elementIdAndNameList],
   );
 
@@ -121,17 +136,23 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
             .concat(prev.some((rec) => rec.id === record.id) ? [] : [record]),
         );
       }}
-      page={currentPage}
       noRecordsText='No records found'
-      onPageChange={setCurrentPage}
-      totalRecords={totalResponses}
+      page={currentPage}
+      onPageChange={(page) => {
+        setCurrentPage(page);
+        setParams((prevState) => ({
+          ...prevState,
+          page,
+        }));
+      }}
+      totalRecords={data?.totalResponses}
       paginationSize='sm'
-      recordsPerPage={pageSize}
+      recordsPerPage={data?.pageSize ?? DEFAULT_PAGE_SIZE}
       paginationText={({ from, to, totalRecords }) =>
         `Showing ${from} - ${to} of ${totalRecords}`
       }
       paginationActiveBackgroundColor='ocean-green.5'
-      fetching={isLoading}
+      fetching={isFetching}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
       loaderType='oval'

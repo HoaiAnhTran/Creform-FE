@@ -1,9 +1,9 @@
-import { DEFAULT_BUTTON_COLOR } from '@/constants/buttonStyles';
 import {
   AddressConfig,
   DatePickerConfig,
   DropdownConfig,
   EmailConfig,
+  FileUploadConfig,
   FullnameConfig,
   HeadingConfig,
   MultipleChoiceConfig,
@@ -14,6 +14,8 @@ import {
   TextConfig,
   TimeInputConfig,
 } from '@/types';
+
+import { DEFAULT_BUTTON_COLOR } from './buttonStyles';
 
 export const defaultHeadingConfig: HeadingConfig = {
   headingText: 'Heading',
@@ -94,7 +96,10 @@ export const defaultMultipleChoiceConfig: MultipleChoiceConfig = {
   fieldLabel: 'Type a question',
   required: false,
   options: ['Type option 1', 'Type option 2', 'Type option 3', 'Type option 4'],
-  otherOption: { isDisplayed: false, text: 'Other' },
+  otherOption: {
+    isDisplayed: false,
+    text: 'Other',
+  },
 };
 
 export const defaultNumberPhoneConfig: NumberPhoneConfig = {
@@ -112,10 +117,22 @@ export const defaultTimeInputConfig: TimeInputConfig = {
   },
 };
 
+export const defaultFileUploadConfig: FileUploadConfig = {
+  fieldLabel: 'File Upload',
+  required: false,
+  sublabel: 'Please upload a file',
+};
+
+export const defaultElementHeightWidth = {
+  h: 5,
+  w: 12,
+};
+
 export const defaultShortTextHeightWidth = {
   h: 5,
   w: 12,
 };
+
 export const defaultTimeHeightWidth = {
   h: 4,
   w: 12,
@@ -158,5 +175,10 @@ export const defaultSingleChoiceHeightWidth = {
 
 export const defaultMultipleChoiceHeightWidth = {
   h: 7,
+  w: 12,
+};
+
+export const defaultFileUploadHeightWidth = {
+  h: 6,
   w: 12,
 };
