@@ -42,7 +42,7 @@ const userApi = rootApi.injectEndpoints({
         method: 'PATCH',
         data: payload,
       }),
-      invalidatesTags: ['Profile'],
+      invalidatesTags: ['Profile', 'Teams'],
     }),
 
     changePassword: build.mutation<

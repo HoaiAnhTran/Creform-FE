@@ -22,18 +22,16 @@ import { ResponsiveGridLayout } from '../ResponsiveGridLayout';
 
 interface FormContainerProps {
   currentElementType?: ElementType;
-  setCurrentLogoFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   isDisabled: boolean;
   isLoading: boolean;
 }
 
 export const FormContainer = ({
   currentElementType,
-  setCurrentLogoFile,
   isDisabled,
   isLoading,
 }: FormContainerProps) => {
-  const { setForm, initLogo, currentLogo, setCurrentLogo } =
+  const { setForm, initLogo, currentLogo, setCurrentLogo, setCurrentLogoFile } =
     useBuildFormContext();
 
   const logoInputRef = useRef<HTMLInputElement>(null);
@@ -79,10 +77,6 @@ export const FormContainer = ({
     }));
     setCurrentLogoFile(undefined);
   };
-
-  useEffect(() => {
-    setCurrentLogo(initLogo);
-  }, [initLogo, setCurrentLogo]);
 
   const updateItem = (item: ElementItem) => {
     setElements(
@@ -140,6 +134,7 @@ export const FormContainer = ({
                         ...prevState,
                         logoUrl: initLogo,
                       }));
+                      setCurrentLogoFile(undefined);
                     }}
                     className='absolute right-1 top-1 cursor-pointer bg-slate-200 p-0.5 text-slate-600 opacity-90 hover:bg-slate-300'
                   />

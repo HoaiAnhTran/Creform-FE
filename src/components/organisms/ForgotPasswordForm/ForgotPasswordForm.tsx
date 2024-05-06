@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants';
 import { TextInput } from '@/molecules/TextInput';
-import { signUpSchema } from '@/utils/schemas/authSchema';
+import { signUpSchema } from '@/utils';
 
 const forgotPasswordSchema = signUpSchema.pick(['email']);
 

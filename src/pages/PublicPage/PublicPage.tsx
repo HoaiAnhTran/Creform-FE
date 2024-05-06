@@ -13,8 +13,12 @@ import { SubmissionConfirmation } from '@/organisms/SubmissionConfirmation';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { useCreateResponseMutation } from '@/redux/api/responseApi';
 import { ErrorResponse } from '@/types';
-import { cn, getAccessTokenFromLS, toastify } from '@/utils';
-import { getFormAnswerFields } from '@/utils/seperates';
+import {
+  cn,
+  getAccessTokenFromLS,
+  getFormAnswerFields,
+  toastify,
+} from '@/utils';
 
 export const PublicPage = () => {
   const { id: formId } = useParams();

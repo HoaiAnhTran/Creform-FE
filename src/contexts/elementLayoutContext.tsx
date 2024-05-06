@@ -1,8 +1,15 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { defaultHeadingConfig, defaultSubmitConfig } from '@/constants';
+import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { ElementItem, ElementType } from '@/types';
 
 import { useBuildFormContext } from '.';
@@ -55,16 +62,31 @@ export const DEFAULT_ELEMENTS: ElementItem[] = [
 export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const location = useLocation();
+
+  const { id: formId } = useParams();
+
+  const { data: formData } = useGetFormDetailsQuery(
+    { id: formId || '' },
+    { skip: !formId },
+  );
+
   const { isEditForm } = useBuildFormContext();
 
   const [elements, setElements] = useState<ElementItem[]>(
     isEditForm ? [] : DEFAULT_ELEMENTS,
   );
   const [edittingItem, setEdittingItem] = useState<ElementItem>();
-  const location = useLocation();
+
   const isReadOnly =
     location.pathname.includes('build') &&
     !location.pathname.includes('preview');
+
+  useEffect(() => {
+    if (!formData) return;
+    setElements(formData.elements as ElementItem[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData]);
 
   return (
     <ElementLayoutContext.Provider

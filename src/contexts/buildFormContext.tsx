@@ -17,6 +17,8 @@ interface BuildFormContextType {
   setCurrentLogo: React.Dispatch<React.SetStateAction<string>>;
   currentTitle: string;
   setCurrentTitle: React.Dispatch<React.SetStateAction<string>>;
+  currentLogoFile: File | undefined;
+  setCurrentLogoFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   toggledLeftbar: boolean;
   setToggledLeftbar: React.Dispatch<React.SetStateAction<boolean>>;
   toggledRightbar: boolean;
@@ -47,6 +49,8 @@ const BuildFormContext = createContext<BuildFormContextType>({
   setCurrentLogo: () => {},
   currentTitle: '',
   setCurrentTitle: () => {},
+  currentLogoFile: undefined,
+  setCurrentLogoFile: () => {},
   toggledLeftbar: false,
   setToggledLeftbar: () => {},
   toggledRightbar: false,
@@ -70,6 +74,7 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const [form, setForm] = useState<FormRequest>(initFormRequestState);
   const [currentLogo, setCurrentLogo] = useState<string>('');
+  const [currentLogoFile, setCurrentLogoFile] = useState<File>();
   const [currentTitle, setCurrentTitle] = useState<string>(DEFAULT_FORM_TITLE);
   const [toggledLeftbar, setToggledLeftbar] = useState<boolean>(false);
   const [toggledRightbar, setToggledRightbar] = useState<boolean>(false);
@@ -91,6 +96,10 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  useEffect(() => {
+    setCurrentLogo(initLogo);
+  }, [initLogo]);
+
   return (
     <BuildFormContext.Provider
       value={{
@@ -98,6 +107,8 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
         setForm,
         currentLogo,
         setCurrentLogo,
+        currentLogoFile,
+        setCurrentLogoFile,
         currentTitle,
         setCurrentTitle,
         toggledLeftbar,

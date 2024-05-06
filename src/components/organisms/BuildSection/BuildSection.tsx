@@ -18,8 +18,7 @@ import {
 } from '@/redux/api/formApi';
 import { useUploadImageMutation } from '@/redux/api/uploadApi';
 import { ElementType, ErrorResponse } from '@/types';
-import { toastify } from '@/utils';
-import { separateFields } from '@/utils/seperates';
+import { removeTextFromFieldOfElement, toastify } from '@/utils';
 
 import { BuildFormLeftbar } from '../BuildFormLeftbar';
 import { FormContainer } from '../FormContainer';
@@ -31,7 +30,7 @@ const SHRINK_FORM_CONTAINER = 1;
 const STRETCH_FORM_CONTAINER = 9;
 
 export const BuildSection = () => {
-  const { form, toggledLeftbar, isEditForm, toggledRightbar } =
+  const { form, toggledLeftbar, isEditForm, toggledRightbar, currentLogoFile } =
     useBuildFormContext();
 
   const navigate = useNavigate();
@@ -48,7 +47,6 @@ export const BuildSection = () => {
   }
 
   const [currentElementType, setCurrentElementType] = useState<ElementType>();
-  const [currentLogoFile, setCurrentLogoFile] = useState<File>();
 
   const [createForm, { isLoading: isCreatingForm }] = useCreateFormMutation();
   const [createFormInFolder, { isLoading: isCreatingFormInFolder }] =
@@ -67,7 +65,7 @@ export const BuildSection = () => {
     useGetFormDetailsQuery({ id: formId || '' }, { skip: !formId });
 
   const handleCreateForm = () => {
-    const filteredForm = separateFields(form);
+    const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
@@ -98,7 +96,7 @@ export const BuildSection = () => {
   };
 
   const handleCreateFormInFolder = (folderId: number) => {
-    const filteredForm = separateFields(form);
+    const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
@@ -132,7 +130,7 @@ export const BuildSection = () => {
   };
 
   const handleCreateFormInTeam = (teamId: number) => {
-    const filteredForm = separateFields(form);
+    const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
@@ -166,7 +164,7 @@ export const BuildSection = () => {
   };
 
   const handleCreateFormInFolderOfTeam = (folderId: number, teamId: number) => {
-    const filteredForm = separateFields(form);
+    const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
@@ -218,7 +216,7 @@ export const BuildSection = () => {
   };
 
   const handleUpdateForm = (formId: number) => {
-    const filteredForm = separateFields(form);
+    const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
         if ('data' in imgRes) {
@@ -299,7 +297,6 @@ export const BuildSection = () => {
                 isUpdatingForm
               }
               currentElementType={currentElementType!}
-              setCurrentLogoFile={setCurrentLogoFile}
             />
             {toggledRightbar || (
               <SaveButton
@@ -310,7 +307,10 @@ export const BuildSection = () => {
                   isUpdatingForm ||
                   isUploadingImage
                 }
-                canSave={!isEditForm || !_isEqual(formData, form)}
+                canSave={
+                  !isEditForm ||
+                  !_isEqual(formData, removeTextFromFieldOfElement(form))
+                }
               />
             )}
             <ScrollToTopButton className='fixed bottom-14 right-10'></ScrollToTopButton>

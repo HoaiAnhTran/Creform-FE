@@ -1,7 +1,7 @@
 import { ElementItem, FormRequest } from '@/types';
 import { FieldAnswer, FormAnswer } from '@/types/responses';
 
-export const separateFields = (form: FormRequest) => {
+export const removeTextFromFieldOfElement = (form: FormRequest) => {
   const formWithoutText = JSON.parse(JSON.stringify(form));
 
   formWithoutText.elements.forEach((element: ElementItem) => {

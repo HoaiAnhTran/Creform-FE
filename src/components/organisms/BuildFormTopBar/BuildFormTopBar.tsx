@@ -26,6 +26,7 @@ import {
 import { ConfirmationModal } from '@/molecules/ComfirmationModal';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { ElementItem } from '@/types';
+import { removeTextFromFieldOfElement } from '@/utils';
 
 const tabList = [
   { title: 'Build', value: '/' },
@@ -67,9 +68,9 @@ export const BuildFormTopBar = () => {
   );
 
   const haveUnsavedChanges = useMemo(
-    () => !isEditForm || !_isEqual(formData, form),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isEditForm, form],
+    () =>
+      !isEditForm || !_isEqual(formData, removeTextFromFieldOfElement(form)),
+    [isEditForm, formData, form],
   );
 
   const formURL = isEditForm ? `${window.location.origin}/form/${form.id}` : '';
@@ -94,14 +95,24 @@ export const BuildFormTopBar = () => {
   };
 
   const handleClickPreviewButton = () => {
-    if (!previewMode && haveUnsavedChanges) {
-      openConfirmModal();
-      return;
-    }
     setPreviewMode((prevState) => !prevState);
     previewMode
       ? navigate(pathname.replace('/preview', ''))
       : navigate(pathname.concat('/preview'));
+  };
+
+  const handleClickBackButton = () => {
+    if (haveUnsavedChanges) {
+      openConfirmModal();
+      return;
+    }
+    if (formData?.teamId) {
+      navigate(
+        PATH.MY_TEAMS_PAGE.replace(':teamId', formData.teamId.toString()),
+      );
+    } else {
+      navigate(PATH.OVERVIEW_PAGE);
+    }
   };
 
   const handleDiscardChanges = () => {
@@ -163,20 +174,9 @@ export const BuildFormTopBar = () => {
             label={
               formData?.teamId ? 'Back to Team Workspace' : 'Back to My Forms'
             }
-            className='absolute left-10 top-[50%] -translate-y-1/2 bg-transparent text-sm text-quarter-pearl-lusta-50 hover:bg-transparent'
+            className='absolute left-10 top-[50%] w-max -translate-y-1/2 bg-transparent text-sm text-quarter-pearl-lusta-50 hover:bg-transparent'
             leftSection={<IoArrowBackOutline size={17} />}
-            onClick={() => {
-              if (formData?.teamId) {
-                navigate(
-                  PATH.MY_TEAMS_PAGE.replace(
-                    ':teamId',
-                    formData.teamId.toString(),
-                  ),
-                );
-              } else {
-                navigate(PATH.OVERVIEW_PAGE);
-              }
-            }}
+            onClick={handleClickBackButton}
           />
           <MantineTabs.List className='h-[50px] justify-center gap-0 bg-gradient-to-r from-burnt-sienna-400 to-burnt-sienna-500'>
             {tabList.map((tab, index) => (

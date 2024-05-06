@@ -160,6 +160,7 @@ export const AccountPage = () => {
             ? updateProfile({ avatarUrl: res.data.data.url })
             : updateProfile({ organizationLogo: res.data.data.url });
           handleCancelEdit();
+          setSelectedFile(undefined);
           return;
         }
         if (res.error as ErrorResponse)
@@ -173,9 +174,20 @@ export const AccountPage = () => {
     type: ImageType,
   ) => {
     event.preventDefault();
-    type === UploadImage.AVATAR
-      ? updateProfile({ avatarUrl: '' })
-      : updateProfile({ organizationLogo: '' });
+    if (type === UploadImage.AVATAR) {
+      updateProfile({ avatarUrl: '' });
+      setCurrentImages((prev) => ({
+        ...prev,
+        avatarUrl: '',
+      }));
+    } else {
+      updateProfile({ organizationLogo: '' });
+      setCurrentImages((prev) => ({
+        ...prev,
+        organizationLogo: '',
+      }));
+    }
+    setSelectedFile(undefined);
     handleCancelEdit();
   };
 
@@ -357,6 +369,7 @@ export const AccountPage = () => {
                   ...prev,
                   avatarUrl: myProfile?.avatarUrl ?? '',
                 }));
+                setSelectedFile(undefined);
                 handleCancelEdit();
               }}
               disabled={isUploadingImage}
@@ -488,6 +501,7 @@ export const AccountPage = () => {
                   ...prev,
                   organizationLogo: myProfile?.organizationLogo ?? '',
                 }));
+                setSelectedFile(undefined);
                 handleCancelEdit();
               }}
               disabled={isUploadingImage}

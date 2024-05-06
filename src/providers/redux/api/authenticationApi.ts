@@ -33,7 +33,14 @@ export const authenticationApi = rootApi.injectEndpoints({
         method: 'POST',
         data,
       }),
-      invalidatesTags: ['Profile', 'Forms', 'Invitations'],
+      invalidatesTags: [
+        'Profile',
+        'Forms',
+        'Folders',
+        'Teams',
+        'Responses',
+        'Invitations',
+      ],
     }),
     forgotPassword: build.mutation<
       SuccessResponse<unknown>,

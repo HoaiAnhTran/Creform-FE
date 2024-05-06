@@ -3,11 +3,12 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { EmailElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
 import {
+  cn,
   notRequiredEmailSchema,
   requiredEmailSchema,
-} from '@/utils/schemas/validation';
+  validateLabel,
+} from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { Text } from '../Text';

@@ -33,7 +33,7 @@ import {
   TeamResponse,
 } from '@/types';
 import { toastify } from '@/utils';
-import { teamNameValidationSchema } from '@/utils/schemas/updateTeamSchema';
+import { teamNameValidationSchema } from '@/utils';
 
 enum GeneralSettingsFields {
   TEAM_NAME = 'name',
