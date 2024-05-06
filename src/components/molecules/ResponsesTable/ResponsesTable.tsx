@@ -49,10 +49,13 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
 
   const { formId } = useParams();
 
-  const { data, isFetching, refetch } = useGetResponsesByFormIdQuery({
-    formId: Number(formId),
-    ...params,
-  });
+  const { data, isFetching, refetch } = useGetResponsesByFormIdQuery(
+    {
+      formId: Number(formId),
+      ...params,
+    },
+    { refetchOnFocus: true },
+  );
 
   const [sortStatus, setSortStatus] = useState<
     DataTableSortStatus<ResponseRow>
@@ -121,7 +124,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       borderRadius='sm'
       withColumnBorders
       verticalAlign='center'
-      records={records}
+      records={responseRows.length === 0 ? [] : records}
       columns={columns}
       selectionCheckboxProps={{ size: 'xs', color: 'ocean-green.5' }}
       selectedRecords={selectedRecords}
@@ -153,15 +156,15 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
       }
       paginationActiveBackgroundColor='ocean-green.5'
       fetching={isFetching}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
       loaderType='oval'
       loaderSize='md'
       loaderColor='ocean-green.5'
-      height={records && records.length > 0 ? 'auto' : '100%'}
+      sortStatus={sortStatus}
+      onSortStatusChange={setSortStatus}
       classNames={{
-        root: 'overflow-visible',
-        pagination: 'fixed w-full h-[50px] bottom-0 z-40',
+        table: 'mb-[50px]',
+        pagination:
+          'fixed w-full h-[50px] bottom-0 z-40 border-t-0 shadow-[0_-4px_10px_-6px_rgba(0,0,0,0.2)]',
       }}
       rowClassName='hover:!bg-quarter-pearl-lusta-50 data-[selected]:bg-quarter-pearl-lusta-50 data-[selected]:hover:!bg-quarter-pearl-lusta-50'
     />

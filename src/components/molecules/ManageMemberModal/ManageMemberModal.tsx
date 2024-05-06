@@ -1,9 +1,7 @@
-import { FaPlusCircle } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
+import { IoSend, IoTrash } from 'react-icons/io5';
 import { RiTeamFill } from 'react-icons/ri';
 import {
   ActionIcon,
-  Avatar,
   Box,
   Group,
   ModalProps as MantineModalProps,
@@ -13,8 +11,9 @@ import {
 import { Field, Form, Formik } from 'formik';
 
 import { Button } from '@/atoms/Button';
+import { UserAvatar } from '@/atoms/UserAvatar';
 import { TeamResponse } from '@/types';
-import { signUpSchema } from '@/utils';
+import { addRoleToTeamMembers, signUpSchema } from '@/utils';
 
 import { Modal } from '../Modal';
 import { TextInput } from '../TextInput';
@@ -26,22 +25,12 @@ interface ManageMemberModalProps extends MantineModalProps {
   handleRemoveMember: (id: number) => void;
   isLoading: boolean;
 }
-const emailSchema = signUpSchema.pick(['email']);
 
-const getMembersInTeamWithOwnership = (
-  teamList: TeamResponse[],
-  teamId: number,
-) => {
+const getTeamMembersWithRole = (teamList: TeamResponse[], teamId: number) => {
   const team = teamList.find((team) => team.id === teamId);
-
   if (!team) return null;
-
-  const membersWithOwnership = team.members.map((member) => ({
-    ...member,
-    isOwner: member.id === team.creatorId,
-  }));
-
-  return membersWithOwnership;
+  const membersWithRoles = addRoleToTeamMembers(team);
+  return membersWithRoles;
 };
 
 export const ManageMemberModal = ({
@@ -52,86 +41,82 @@ export const ManageMemberModal = ({
   isLoading,
   ...props
 }: ManageMemberModalProps) => {
-  const membersInTeam = getMembersInTeamWithOwnership(teamList, teamId) || [];
+  const membersInTeam = getTeamMembersWithRole(teamList, teamId) || [];
+
   return (
     <Modal
       {...props}
       headerIcon={<RiTeamFill className='text-white' />}
       headerTitle='Manage members'
       body={
-        <>
-          <Stack className='gap-4 pb-8 pt-8'>
-            <Text className='font-bold' size='lg'>
-              TEAM MEMBERS
+        <Stack className='gap-4 pb-1 pt-4'>
+          <Stack className='justify-between gap-4'>
+            <Text className='font-bold' size='md'>
+              {`TEAM MEMBERS (${membersInTeam.length})`}
             </Text>
             <Stack>
-              {membersInTeam
-                .sort((firstVal, secondVal) => {
-                  if (firstVal.isOwner && !secondVal.isOwner) {
-                    return -1;
-                  } else if (!firstVal.isOwner && secondVal.isOwner) {
-                    return 1;
-                  } else {
-                    return 0;
-                  }
-                })
-                .map((member) => (
-                  <Group key={member.id} className='justify-between'>
-                    <Group>
-                      <Avatar />
-                      <Stack gap='2'>
-                        <Text size='sm' className='font-bold text-gray-700'>
-                          {member.username}
-                        </Text>
-                        <Text size='xs' className='font-bold text-blue-950'>
-                          {member.email}
-                        </Text>
-                      </Stack>
-                    </Group>
-                    <Group>
-                      <Box className='rounded-[4px] bg-gray-200 p-2'>
-                        <Text className='text-sm font-bold text-gray-600'>
-                          {member.isOwner ? 'Owner' : 'Member'}
-                        </Text>
-                      </Box>
-                      {!member.isOwner && (
-                        <ActionIcon
-                          className='h-9 w-10 bg-red-500 text-white hover:bg-red-600 hover:text-white'
-                          onClick={() => handleRemoveMember(member.id)}
-                        >
-                          <MdDelete size={22} />
-                        </ActionIcon>
-                      )}
-                    </Group>
+              {membersInTeam.map((member) => (
+                <Group key={member.id} className='justify-between'>
+                  <Group>
+                    <UserAvatar avatarUrl={member.avatarUrl} />
+                    <Stack gap='2'>
+                      <Text size='sm' className='font-semibold text-gray-700'>
+                        {member.username}
+                      </Text>
+                      <Text size='xs' className='font-medium text-gray-500'>
+                        {member.email}
+                      </Text>
+                    </Stack>
                   </Group>
-                ))}
+                  <Group className='gap-3'>
+                    <Box className='rounded-[4px] bg-gray-200 p-2'>
+                      <Text className='text-sm font-bold text-gray-600'>
+                        {member.isOwner ? 'Team Owner' : 'Member'}
+                      </Text>
+                    </Box>
+                    {!member.isOwner && (
+                      <ActionIcon
+                        className='h-[34px] w-[34px] bg-red-500 text-white hover:bg-red-600 hover:text-white'
+                        onClick={() => handleRemoveMember(member.id)}
+                      >
+                        <IoTrash size={18} />
+                      </ActionIcon>
+                    )}
+                  </Group>
+                </Group>
+              ))}
             </Stack>
           </Stack>
           <Formik
             initialValues={{ email: '' }}
             validateOnBlur={true}
-            validateOnChange={false}
-            validationSchema={emailSchema}
+            validateOnChange={true}
+            validationSchema={signUpSchema.pick(['email'])}
             onSubmit={handleInviteMember}
           >
-            <Form className='flex w-full justify-between'>
-              <Field
-                name='email'
-                placeholder='Type email'
-                classNameWrapper='w-[75%]'
-                component={TextInput}
-              />
-              <Button
-                className='font-bold'
-                title='Invite member'
-                variant='outline'
-                color='gray'
-                type='submit'
-                leftSection={<FaPlusCircle />}
-              />
-            </Form>
+            <div className='flex flex-col justify-between gap-4'>
+              <Text className='font-bold' size='md'>
+                INVITE MEMBER
+              </Text>
+              <Form className='flex w-full justify-between'>
+                <Field
+                  name='email'
+                  placeholder='Enter an email address'
+                  classNameWrapper='w-[75%]'
+                  component={TextInput}
+                />
+                <Button
+                  className='font-bold'
+                  title='Send Invitation'
+                  variant='outline'
+                  color='gray'
+                  type='submit'
+                  leftSection={<IoSend />}
+                />
+              </Form>
+            </div>
           </Formik>
-        </>
+        </Stack>
       }
       hasFooter={false}
       isLoading={isLoading}

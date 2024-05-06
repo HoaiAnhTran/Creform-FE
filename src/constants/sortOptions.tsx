@@ -9,45 +9,47 @@ export interface SortOption {
   icon: ReactNode;
 }
 
-export enum SortDirection {
+export enum SORT_DIRECTION {
   ASC = 'asc',
   DESC = 'desc',
 }
 
-export const sortOptionList: SortOption[] = [
+export const DEFAULT_SORT_OPTION_INDEX = 3;
+
+export const SORT_OPTION_LIST: SortOption[] = [
   {
     field: 'title',
-    sortDirection: SortDirection.ASC,
+    sortDirection: SORT_DIRECTION.ASC,
     title: 'Title',
     icon: <FaArrowUpShortWide />,
   },
   {
     field: 'title',
-    sortDirection: SortDirection.DESC,
+    sortDirection: SORT_DIRECTION.DESC,
     title: 'Title',
     icon: <FaArrowDownShortWide />,
   },
   {
     field: 'createdAt',
-    sortDirection: SortDirection.ASC,
+    sortDirection: SORT_DIRECTION.ASC,
     title: 'Date created',
     icon: <FaArrowUpShortWide />,
   },
   {
     field: 'createdAt',
-    sortDirection: SortDirection.DESC,
+    sortDirection: SORT_DIRECTION.DESC,
     title: 'Date created',
     icon: <FaArrowDownShortWide />,
   },
   {
     field: 'updatedAt',
-    sortDirection: SortDirection.ASC,
+    sortDirection: SORT_DIRECTION.ASC,
     title: 'Last edit',
     icon: <FaArrowUpShortWide />,
   },
   {
     field: 'updatedAt',
-    sortDirection: SortDirection.DESC,
+    sortDirection: SORT_DIRECTION.DESC,
     title: 'Last edit',
     icon: <FaArrowDownShortWide />,
   },

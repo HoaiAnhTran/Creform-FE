@@ -35,6 +35,7 @@ export const FolderGroup = ({
   setFolderId,
 }: FolderListProps) => {
   const [modalType, setModalType] = useState<ModalType | ''>('');
+
   const {
     activeAllForms,
     setActiveAllForms,
@@ -45,7 +46,9 @@ export const FolderGroup = ({
   const { setParams } = useFormParams();
 
   const openModal = (type: ModalType) => setModalType(type);
+
   const closeModal = () => setModalType('');
+
   const [createFolder, { isLoading: isFolderCreating }] =
     useCreateFolderMutation();
 
@@ -53,6 +56,8 @@ export const FolderGroup = ({
     createFolder({ payload: { name: folderName } }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
+        setActiveAllForms(false);
+        setActiveFolder(res.data.data.id);
         closeModal();
         return;
       }
@@ -63,7 +68,7 @@ export const FolderGroup = ({
 
   return (
     <Box className='flex flex-col gap-2'>
-      <Text className='font-bold'>MY FORMS</Text>
+      <Text className='cursor-default font-bold'>MY FORMS</Text>
       <NavLink
         className={cn(
           'mt-3 rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
@@ -98,7 +103,7 @@ export const FolderGroup = ({
         isLoading={isLoading}
       />
       <Button
-        className='h-10 rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100 hover:text-slate-600'
+        className='h-10 rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100 hover:text-slate-600'
         justify='flex-start'
         variant='subtle'
         leftSection={<FaPlusCircle className='size-4' />}

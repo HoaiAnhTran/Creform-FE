@@ -21,9 +21,21 @@ export interface TeamResponse {
   deletedAt: string;
   creatorId: number;
   members: Member[];
+  invitations: {
+    id: number;
+    email: string;
+    accepted: boolean;
+    createdAt: string;
+    expiresAt: string;
+    creator: {
+      id: number;
+      username: string;
+      email: string;
+    };
+  }[];
 }
 
-export interface TeamResquest {
-  name: string;
+export interface TeamPayload {
+  name?: string;
   logoUrl?: string;
 }

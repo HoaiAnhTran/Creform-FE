@@ -56,7 +56,7 @@ export const PublicPage = () => {
 
   const renderBackToHomeButton = () => (
     <Tooltip
-      label='Back to home'
+      label='Back to Home'
       position='right'
       arrowSize={6}
       withArrow

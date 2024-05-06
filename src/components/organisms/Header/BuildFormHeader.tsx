@@ -2,18 +2,27 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { IoIosLogOut } from 'react-icons/io';
 import { IoPersonOutline } from 'react-icons/io5';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
-import { Anchor, Group, Image, Menu } from '@mantine/core';
+import { RiTeamFill } from 'react-icons/ri';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ActionIcon, Anchor, Group, Image, Menu, Tooltip } from '@mantine/core';
 
 import GreenLogo from '@/assets/images/green-logo.png';
 import { UserAvatar } from '@/atoms/UserAvatar';
 import { PATH } from '@/constants/routes';
 import { DEFAULT_FORM_TITLE, useBuildFormContext } from '@/contexts';
 import { Loader } from '@/molecules/Loader';
+import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { formatDate, httpClient } from '@/utils';
 
 export const BuildFormHeader = () => {
+  const { id: formId } = useParams();
+
+  const { data: formData } = useGetFormDetailsQuery(
+    { id: formId || '' },
+    { skip: !formId },
+  );
+
   const { data: myProfile, isLoading } = useGetMyProfileQuery({});
 
   const {
@@ -75,8 +84,42 @@ export const BuildFormHeader = () => {
           </span>
         </Group>
       </Anchor>
-      <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center'>
+      <div className='absolute left-1/2 flex w-full -translate-x-1/2 flex-col items-center justify-center gap-0.5'>
         <div className='flex max-w-[50%] items-center justify-between gap-0.5 text-xl font-bold'>
+          {formData?.teamId &&
+            (formData.team.logoUrl ? (
+              <Tooltip
+                label={formData.team.name}
+                offset={10}
+                withArrow
+                arrowOffset={20}
+                arrowSize={5}
+                position='left'
+                className='bg-ocean-green-500 text-xs font-medium text-quarter-pearl-lusta-50'
+              >
+                <Image
+                  className='size-8 rounded-full object-cover'
+                  src={formData.team.logoUrl}
+                />
+              </Tooltip>
+            ) : (
+              <Tooltip
+                label={formData.team.name}
+                offset={10}
+                withArrow
+                arrowOffset={20}
+                arrowSize={5}
+                position='left'
+                className='bg-ocean-green-500 text-xs font-medium text-quarter-pearl-lusta-50'
+              >
+                <ActionIcon className='cursor-default bg-transparent hover:bg-transparent'>
+                  <RiTeamFill
+                    size={28}
+                    className='rounded-full bg-gray-200 p-1 text-gray-600'
+                  />
+                </ActionIcon>
+              </Tooltip>
+            ))}
           <input
             ref={titleInputRef}
             value={currentTitle}
@@ -96,7 +139,7 @@ export const BuildFormHeader = () => {
                 setCurrentTitle(DEFAULT_FORM_TITLE);
               }
             }}
-            className='min-w-14 overflow-hidden text-ellipsis whitespace-nowrap border-none text-center outline-none'
+            className='min-w-14 overflow-hidden text-ellipsis whitespace-nowrap border-none bg-transparent text-center outline-none'
             style={{ width: `${currentTitle.length * 12}px` }}
           />
           {isPublishSection || isEditingTitle || (

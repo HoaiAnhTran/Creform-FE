@@ -14,13 +14,13 @@ import { Button } from '@/atoms/Button';
 import { ALLOWED_IMAGE_FILE_TYPES } from '@/constants';
 import { MESSAGES } from '@/constants/messages';
 import { UserInfoItem } from '@/molecules/UserInfoItem';
+import { Header } from '@/organisms/Header';
 import { useUploadImageMutation } from '@/redux/api/uploadApi';
 import {
   useChangePasswordMutation,
   useGetMyProfileQuery,
   useUpdateProfileMutation,
 } from '@/redux/api/userApi';
-import { Header } from '@/templates/Header';
 import { ErrorResponse, type ImageType, UploadImage } from '@/types';
 import {
   emailValidationSchema,

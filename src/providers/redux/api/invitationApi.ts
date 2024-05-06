@@ -30,7 +30,7 @@ const invitationApi = rootApi.injectEndpoints({
         method: 'POST',
         data: { email },
       }),
-      invalidatesTags: ['Teams', 'Invitations'],
+      invalidatesTags: ['Invitations', 'Teams'],
     }),
     acceptInvitation: build.mutation<
       SuccessResponse<InvitationResponse>,
@@ -41,7 +41,20 @@ const invitationApi = rootApi.injectEndpoints({
         method: 'PATCH',
         data: payload,
       }),
-      invalidatesTags: ['Teams', 'Folders', 'Forms', 'Invitations'],
+      invalidatesTags: [
+        'Invitations',
+        'Teams',
+        'Folders',
+        'Forms',
+        'Responses',
+      ],
+    }),
+    deleteInvitation: build.mutation<SuccessResponse<unknown>, { id: number }>({
+      query: ({ id }) => ({
+        url: `${API_URL.INVITATION}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Invitations', 'Teams'],
     }),
   }),
   overrideExisting: false,
@@ -51,4 +64,5 @@ export const {
   useGetInvitationByTokenQuery,
   useCreateInvitationMutation,
   useAcceptInvitationMutation,
+  useDeleteInvitationMutation,
 } = invitationApi;

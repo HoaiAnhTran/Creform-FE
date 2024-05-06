@@ -39,7 +39,7 @@ const folderApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Folders', 'Teams', 'Forms'],
     }),
-    deleteFolder: build.mutation<SuccessResponse<FolderResponse>, number>({
+    deleteFolder: build.mutation<SuccessResponse<unknown>, number>({
       query: (id) => ({
         url: `${API_URL.FOLDERS}/${id}`,
         method: 'DELETE',

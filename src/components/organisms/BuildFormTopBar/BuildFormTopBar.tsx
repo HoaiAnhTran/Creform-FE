@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react';
 import { IoIosWarning } from 'react-icons/io';
+import { IoArrowBackOutline } from 'react-icons/io5';
 import { LuExternalLink } from 'react-icons/lu';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   ActionIcon,
   Box,
   Group,
+  NavLink,
   Tabs as MantineTabs,
   Text,
 } from '@mantine/core';
@@ -13,6 +15,7 @@ import { useDisclosure } from '@mantine/hooks';
 import _isEqual from 'lodash.isequal';
 
 import { ToggleButton } from '@/atoms/Button/ToggleButton';
+import { PATH } from '@/constants';
 import {
   DEFAULT_ELEMENTS,
   DEFAULT_FORM_TITLE,
@@ -29,7 +32,7 @@ const tabList = [
   { title: 'Publish', value: 'publish' },
 ];
 
-export const TopBar = () => {
+export const BuildFormTopBar = () => {
   const {
     isEditForm,
     isPublishSection,
@@ -156,6 +159,25 @@ export const TopBar = () => {
           onChange={(value: string | null) => handleChangeTab(value)}
           className='relative'
         >
+          <NavLink
+            label={
+              formData?.teamId ? 'Back to Team Workspace' : 'Back to My Forms'
+            }
+            className='absolute left-10 top-[50%] -translate-y-1/2 bg-transparent text-sm text-quarter-pearl-lusta-50 hover:bg-transparent'
+            leftSection={<IoArrowBackOutline size={17} />}
+            onClick={() => {
+              if (formData?.teamId) {
+                navigate(
+                  PATH.MY_TEAMS_PAGE.replace(
+                    ':teamId',
+                    formData.teamId.toString(),
+                  ),
+                );
+              } else {
+                navigate(PATH.OVERVIEW_PAGE);
+              }
+            }}
+          />
           <MantineTabs.List className='h-[50px] justify-center gap-0 bg-gradient-to-r from-burnt-sienna-400 to-burnt-sienna-500'>
             {tabList.map((tab, index) => (
               <MantineTabs.Tab

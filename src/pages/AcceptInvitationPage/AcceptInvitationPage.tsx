@@ -80,20 +80,21 @@ export const AcceptInvitationPage = () => {
     });
   };
 
-  const validInvitation = useMemo(() => {
+  const isValidInvitation = useMemo(() => {
     if (invitation) {
       return (
         !invitation.accepted &&
         new Date(invitation.expiresAt) > new Date(Date.now())
       );
     }
+    return false;
   }, [invitation]);
 
   useEffect(() => {
-    if (validInvitation && token) {
+    if (isValidInvitation && token) {
       setInvitationTokenToLS(token);
     }
-  }, [validInvitation, token]);
+  }, [isValidInvitation, token]);
 
   const renderInvalidInvitation = () => (
     <Stack className='flex-1 items-center justify-center gap-4 px-7'>
@@ -106,6 +107,18 @@ export const AcceptInvitationPage = () => {
       </Text>
     </Stack>
   );
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+      removeInvitationTokenFromLS();
+    });
+
+    return () => {
+      window.removeEventListener('beforeunload', () => {
+        removeInvitationTokenFromLS();
+      });
+    };
+  }, []);
 
   return (
     <div className='flex h-screen w-full flex-col items-center justify-center bg-quarter-pearl-lusta-50'>
@@ -124,7 +137,7 @@ export const AcceptInvitationPage = () => {
               </span>
             </Group>
           </Anchor>
-          {!validInvitation ? (
+          {!isValidInvitation ? (
             renderInvalidInvitation()
           ) : (
             <Stack className='flex-1 justify-center gap-[30px] px-7'>

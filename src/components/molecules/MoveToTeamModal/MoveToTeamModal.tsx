@@ -8,35 +8,36 @@ import {
 } from '@mantine/core';
 
 import { MESSAGES } from '@/constants/messages';
-import { useOverviewContext } from '@/contexts';
 import { useMoveToTeamMutation } from '@/redux/api/formApi';
 import { useGetMyTeamsQuery } from '@/redux/api/teamApi';
-import { TeamResponse } from '@/types';
+import { FormResponse, TeamResponse } from '@/types';
 import { countSuccessAndErrors, toastify } from '@/utils';
 
 import { Modal } from '../Modal';
 
 interface MoveToTeamModalProps extends MantineModalProps {
-  closeModal: () => void;
-  selectedFormIds: number[];
+  selectedRecords: FormResponse[];
+  setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
+  onClickCancel: () => void;
 }
 
 export const MoveToTeamModal = ({
-  closeModal,
-  selectedFormIds,
+  selectedRecords,
+  setSelectedRecords,
+  onClickCancel,
   ...props
 }: MoveToTeamModalProps) => {
-  const { selectedRecords, setSelectedRecords } = useOverviewContext();
+  const [selectedTeamId, setSelectedTeamId] = useState<string>();
 
-  const disabledTeamOptions = selectedRecords.map(
-    (form) => form.teamId && form.teamId.toString(),
+  const selectedFormIds: number[] = selectedRecords.map(({ id }) => id);
+
+  const disabledTeamOptions = selectedRecords.map((form) =>
+    form.teamId?.toString(),
   );
 
   const { data: teams } = useGetMyTeamsQuery();
 
   const [moveToTeam, { isLoading: isMovingToTeam }] = useMoveToTeamMutation();
-
-  const [selectedTeamId, setSelectedTeamId] = useState<string>();
 
   const handleMoveToTeam = async () => {
     await Promise.allSettled(
@@ -47,7 +48,7 @@ export const MoveToTeamModal = ({
       const { successCount, errorCount } = countSuccessAndErrors(response);
       if (successCount === response.length) {
         toastify.displaySuccess(MESSAGES.MOVE_FORM_TO_TEAM_SUCCESS);
-        closeModal();
+        onClickCancel();
       } else if (errorCount > 0) {
         toastify.displayError(`${errorCount} form(s) failed to move to team`);
       }
@@ -58,6 +59,10 @@ export const MoveToTeamModal = ({
   return (
     <Modal
       {...props}
+      onClose={() => {
+        props.onClose();
+        setSelectedTeamId('');
+      }}
       headerIcon={<RiTeamFill className='text-white' />}
       headerTitle='Move to team'
       body={
@@ -82,13 +87,17 @@ export const MoveToTeamModal = ({
                   color='ocean-green.5'
                   size='sm'
                   disabled={disabledTeamOptions.includes(team.id.toString())}
+                  classNames={{
+                    radio: 'cursor-pointer',
+                    label: 'cursor-pointer',
+                  }}
                 />
               ))}
             </Box>
           </Radio.Group>
         </Box>
       }
-      onClickCancel={closeModal}
+      onClickCancel={onClickCancel}
       onClickSubmit={handleMoveToTeam}
       isLoading={isMovingToTeam}
     />

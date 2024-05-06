@@ -1,5 +1,3 @@
-import { TeamResponse } from './team';
-
 export interface InvitationResponse {
   id: number;
   email: string;
@@ -9,7 +7,15 @@ export interface InvitationResponse {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
-  team: TeamResponse;
+  team: {
+    id: number;
+    name: string;
+  };
+  creator: {
+    id: number;
+    username: string;
+    email: string;
+  };
 }
 
 export interface CreateInvitationPayload {

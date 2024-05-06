@@ -1,5 +1,6 @@
 import { API_URL } from '@/constants/apiURL';
 import {
+  FormDetailsResponse,
   FormRequest,
   FormResponse,
   GetFormsParams,
@@ -21,12 +22,12 @@ const formApi = rootApi.injectEndpoints({
         response.data,
       providesTags: ['Forms', 'Responses'],
     }),
-    getFormDetails: build.query<FormResponse, { id: string }>({
+    getFormDetails: build.query<FormDetailsResponse, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.FORMS}/${id}`,
         method: 'GET',
       }),
-      transformResponse: (response: SuccessResponse<FormResponse>) =>
+      transformResponse: (response: SuccessResponse<FormDetailsResponse>) =>
         response.data,
       providesTags: (_result, _error, arg) => [{ type: 'Forms', id: arg.id }],
     }),

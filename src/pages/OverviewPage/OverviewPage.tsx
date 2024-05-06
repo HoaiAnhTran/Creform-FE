@@ -4,8 +4,8 @@ import { Box, Stack } from '@mantine/core';
 import { FormParamsProvider, useOverviewContext } from '@/contexts';
 import { ActionToolbar } from '@/organisms/ActionToolbar';
 import { FormsTable } from '@/organisms/FormsTable';
+import { Header } from '@/organisms/Header';
 import { OverviewSidebar } from '@/organisms/OverviewSidebar';
-import { Header } from '@/templates/Header';
 import { removeInvitationTokenFromLS } from '@/utils';
 
 export const OverviewPage = () => {

@@ -4,7 +4,10 @@ import { Field } from 'formik';
 import { useElementLayouts } from '@/contexts';
 import { EmailElement } from '@/types';
 import { cn, validateLabel } from '@/utils';
-import { emailSchema, requiredEmailSchema } from '@/utils/schemas/validation';
+import {
+  notRequiredEmailSchema,
+  requiredEmailSchema,
+} from '@/utils/schemas/validation';
 
 import { BaseElementProps } from '../FactoryElement';
 import { Text } from '../Text';
@@ -15,7 +18,7 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
   const { isReadOnly } = useElementLayouts();
 
   const validateEmail = async (value: string) =>
-    (item.config.required ? requiredEmailSchema : emailSchema)
+    (item.config.required ? requiredEmailSchema : notRequiredEmailSchema)
       .validate(value)
       .then(() => {})
       .catch((err) => err.errors[0]);

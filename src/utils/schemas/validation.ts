@@ -12,11 +12,12 @@ export const requiredFieldValueSchema = yup
 
 export const requiredEmailSchema = yup
   .string()
-  .trim()
-  .required(MESSAGES.REQUIRED_FIELD)
-  .email(MESSAGES.INVALID_EMAIL);
+  .email(MESSAGES.INVALID_EMAIL)
+  .required(MESSAGES.REQUIRED_FIELD);
 
-export const emailSchema = yup.string().trim().email(MESSAGES.INVALID_EMAIL);
+export const notRequiredEmailSchema = yup
+  .string()
+  .email(MESSAGES.INVALID_EMAIL);
 
 export const isValidPhoneNumber = yup
   .string()

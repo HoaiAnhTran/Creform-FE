@@ -8,37 +8,41 @@ import {
 } from '@mantine/core';
 
 import { MESSAGES } from '@/constants/messages';
-import { useOverviewContext } from '@/contexts';
 import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
 import { useAddToFolderMutation } from '@/redux/api/formApi';
 import { useGetTeamDetailsQuery } from '@/redux/api/teamApi';
-import { FolderInTeamResponse, FolderResponse } from '@/types';
+import { FolderInTeamResponse, FolderResponse, FormResponse } from '@/types';
 import { countSuccessAndErrors, toastify } from '@/utils';
 
 import { Modal } from '../Modal';
 
 interface AddToFolderModalProps extends MantineModalProps {
-  closeModal: () => void;
-  selectedFormIds: number[];
+  teamId: number;
+  selectedRecords: FormResponse[];
+  setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
+  onClickCancel: () => void;
 }
 
 export const AddToFolderModal = ({
-  closeModal,
-  selectedFormIds,
+  teamId,
+  selectedRecords,
+  setSelectedRecords,
+  onClickCancel,
   ...props
 }: AddToFolderModalProps) => {
-  const { activeTeam, selectedRecords, setSelectedRecords } =
-    useOverviewContext();
+  const [selectedFolderId, setSelectedFolderId] = useState<string>('');
 
-  const disabledFolderOptions = selectedRecords.map(
-    (form) => form.folderId && form.folderId.toString(),
+  const selectedFormIds: number[] = selectedRecords.map(({ id }) => id);
+
+  const disabledFolderOptions = selectedRecords.map((form) =>
+    form.folderId?.toString(),
   );
 
   const { data: folders } = useGetMyFoldersQuery();
 
   const { data: team } = useGetTeamDetailsQuery(
-    { id: activeTeam },
-    { skip: activeTeam === -1 },
+    { id: teamId },
+    { skip: teamId === -1 },
   );
 
   const [folderList, setFolderList] = useState<
@@ -46,19 +50,17 @@ export const AddToFolderModal = ({
   >();
 
   useEffect(() => {
-    if (activeTeam === -1) {
+    if (teamId === -1) {
       setFolderList(folders);
       return;
     }
     if (team) {
       setFolderList(team.folders);
     }
-  }, [team, folders, activeTeam]);
+  }, [team, folders, teamId]);
 
   const [addToFolder, { isLoading: isAddingToFolder }] =
     useAddToFolderMutation();
-
-  const [selectedFolderId, setSelectedFolderId] = useState<string>('');
 
   const handleAddToFolder = async () => {
     await Promise.allSettled(
@@ -69,7 +71,7 @@ export const AddToFolderModal = ({
       const { successCount, errorCount } = countSuccessAndErrors(response);
       if (successCount === response.length) {
         toastify.displaySuccess(MESSAGES.ADD_FORM_TO_FOLDER_SUCCESS);
-        closeModal();
+        onClickCancel();
       } else if (errorCount > 0) {
         toastify.displayError(`${errorCount} form(s) failed to add to folder`);
       }
@@ -80,6 +82,10 @@ export const AddToFolderModal = ({
   return (
     <Modal
       {...props}
+      onClose={() => {
+        props.onClose();
+        setSelectedFolderId('');
+      }}
       headerIcon={<FaFolderPlus className='text-white' />}
       headerTitle='Add to folder'
       body={
@@ -107,13 +113,17 @@ export const AddToFolderModal = ({
                   disabled={disabledFolderOptions.includes(
                     folder.id.toString(),
                   )}
+                  classNames={{
+                    radio: 'cursor-pointer',
+                    label: 'cursor-pointer',
+                  }}
                 />
               ))}
             </Box>
           </Radio.Group>
         </Box>
       }
-      onClickCancel={closeModal}
+      onClickCancel={onClickCancel}
       onClickSubmit={() => handleAddToFolder()}
       isLoading={isAddingToFolder}
     />
