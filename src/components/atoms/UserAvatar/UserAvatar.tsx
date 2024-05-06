@@ -4,12 +4,13 @@ import { Avatar, AvatarProps } from '@mantine/core';
 
 interface UserAvatarProps extends AvatarProps {
   avatarUrl: string;
+  defaultIconSize?: string | number;
 }
 
 const AVATAR_SIZE = 38;
 
 export const UserAvatar = forwardRef<HTMLDivElement, UserAvatarProps>(
-  ({ avatarUrl, ...props }: UserAvatarProps, ref) =>
+  ({ avatarUrl, defaultIconSize = 20, ...props }: UserAvatarProps, ref) =>
     avatarUrl ? (
       <Avatar
         ref={ref}
@@ -27,7 +28,7 @@ export const UserAvatar = forwardRef<HTMLDivElement, UserAvatarProps>(
         {...props}
         className='cursor-pointer bg-ocean-green-50 shadow-whiteShadow'
       >
-        <FaUser size={20} className='text-ocean-green-500' />
+        <FaUser size={defaultIconSize} className='text-ocean-green-500' />
       </Avatar>
     ),
 );

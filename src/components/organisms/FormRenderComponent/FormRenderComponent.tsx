@@ -4,12 +4,12 @@ import { Box, Image, LoadingOverlay, Stack, Text } from '@mantine/core';
 import { BIG_Z_INDEX } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
-import { ElementItem, FormRequest, FormResponse } from '@/types';
+import { ElementItem, FormDetailsResponse, FormRequest } from '@/types';
 
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
-  form?: FormResponse | FormRequest;
+  form?: FormDetailsResponse | FormRequest;
   isLoading?: boolean;
 }
 

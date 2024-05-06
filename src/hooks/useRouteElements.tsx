@@ -21,6 +21,7 @@ import { OverviewPage } from '@/pages/OverviewPage';
 import { PublicPage } from '@/pages/PublicPage';
 import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
 import { SignupPage } from '@/pages/SignupPage';
+import { TeamPage } from '@/pages/TeamPage';
 import { getAccessTokenFromLS } from '@/utils';
 
 const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
@@ -148,6 +149,14 @@ export function useRouteElements() {
               <ResponsesPage />
             </Suspense>
           ),
+        },
+        {
+          path: PATH.MY_TEAMS_PAGE,
+          element: <TeamPage />,
+        },
+        {
+          path: PATH.TEAMS_SETTINGS_PAGE,
+          element: <TeamPage />,
         },
       ],
     },

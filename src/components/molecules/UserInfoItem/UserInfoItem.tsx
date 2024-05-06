@@ -25,7 +25,7 @@ export const UserInfoItem = ({
 }: UserInfoItemProps) => (
   <>
     <Flex align='start' justify='space-between' gap='xl'>
-      <Text className='font-bold' flex={1.5}>
+      <Text className='font-bold text-gray-700' flex={1.5}>
         {_startCase(fieldName)}
       </Text>
       <Flex

@@ -42,7 +42,7 @@ export const ManageTeamModal = ({
     headerTitle={teamId ? 'Change team name' : 'Add team name'}
     body={
       <>
-        <Stack className='pb-16 pt-7'>
+        <Stack className='min-h-[170px] gap-3 px-3 py-8'>
           <Text className='font-bold'>Team name</Text>
           <TextInput
             value={teamName}

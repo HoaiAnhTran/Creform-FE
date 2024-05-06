@@ -43,3 +43,24 @@ export const customTheme = createTheme({
     ],
   },
 });
+
+export const generateAvatarBgColor = () => {
+  const hexArray = [
+    '#03AED2',
+    '#7ABA78',
+    '#ED9455',
+    '#0A6EBD',
+    '#3468C0',
+    '#EF9595',
+    '#5D9C59',
+    '#A459D1',
+    '#ADA2FF',
+    '#FF865E',
+    '#845EC2',
+    '#E64848',
+    '#318FB5',
+    '#91684A',
+    '#005086',
+  ];
+  return hexArray[Math.floor(Math.random() * 15)];
+};

@@ -39,8 +39,8 @@ export const OverviewSidebar = () => {
       <Box className='sticky top-0 z-10 w-full border border-x-0 border-solid border-slate-300 bg-inherit px-5 py-4 text-center'>
         <Button
           size='md'
-          title='CREATE FORM'
-          className='w-full bg-burnt-sienna-500 font-bold'
+          title='Create form'
+          className='w-full font-bold uppercase'
           onClick={() =>
             navigate(PATH.BUILD_FORM_PAGE, {
               state: {
@@ -71,7 +71,7 @@ export const OverviewSidebar = () => {
         <Box className='flex flex-col gap-2'>
           <NavLink
             className={cn(
-              'rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100',
+              'rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
               {
                 'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                   params.isFavourite,
@@ -92,7 +92,7 @@ export const OverviewSidebar = () => {
           />
           <NavLink
             className={cn(
-              'rounded-md font-bold text-slate-600 hover:bg-quarter-pearl-lusta-100',
+              'rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
               {
                 'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                   params.isDeleted,

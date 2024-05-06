@@ -7,8 +7,6 @@ interface FormParamsContextType {
   setParams: React.Dispatch<React.SetStateAction<GetFormsParams>>;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  sortOptionIndex: number;
-  setSortOptionIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const FormParamsContext = createContext<FormParamsContextType>({
@@ -16,8 +14,6 @@ const FormParamsContext = createContext<FormParamsContextType>({
   setParams: () => {},
   currentPage: 0,
   setCurrentPage: () => {},
-  sortOptionIndex: 0,
-  setSortOptionIndex: () => {},
 });
 
 export const FormParamsProvider: React.FC<{ children: ReactNode }> = ({
@@ -27,8 +23,6 @@ export const FormParamsProvider: React.FC<{ children: ReactNode }> = ({
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [sortOptionIndex, setSortOptionIndex] = useState<number>(3);
-
   return (
     <FormParamsContext.Provider
       value={{
@@ -36,8 +30,6 @@ export const FormParamsProvider: React.FC<{ children: ReactNode }> = ({
         setParams,
         currentPage,
         setCurrentPage,
-        sortOptionIndex,
-        setSortOptionIndex,
       }}
     >
       {children}

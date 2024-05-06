@@ -24,6 +24,11 @@ export interface FormResponse {
   updatedAt: string;
   deletedAt: string;
   creatorId: number;
+  creator: {
+    id: number;
+    email: string;
+    username: string;
+  };
   teamId: number;
   folderId: number;
   folder: {
@@ -36,6 +41,28 @@ export interface FormResponse {
   };
   isFavourite: boolean;
   disabled: boolean;
+}
+
+export interface FormDetailsResponse {
+  id: number;
+  title: string;
+  logoUrl: string;
+  settings: object;
+  disabled: boolean;
+  elements: ElementItem[];
+  totalSubmissions: number;
+  permissions: object;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  creatorId: number;
+  folderId: number;
+  teamId: number;
+  team: {
+    id: number;
+    name: string;
+    logoUrl: string;
+  };
 }
 
 export interface GetFormsResponse {

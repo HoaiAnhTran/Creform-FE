@@ -43,7 +43,7 @@ export const ManageFolderModal = ({
     headerTitle={folderId ? 'Change Folder Name' : 'Add New Folder'}
     body={
       <>
-        <Stack className='gap-2 pb-[100px] pt-8'>
+        <Stack className='min-h-[170px] gap-3 px-3 py-8'>
           <Text className='font-bold'>Folder name</Text>
           <TextInput
             value={folderName}

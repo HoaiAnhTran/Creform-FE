@@ -5,8 +5,12 @@ import { ActionIcon, TextInput as TextInputMantine } from '@mantine/core';
 import _debounce from 'lodash.debounce';
 
 import { DEFAULT_PAGE_SIZE } from '@/constants/defaultFormsParams';
-import { SortOption, sortOptionList } from '@/constants/sortOptions';
-import { useFormParams } from '@/contexts';
+import {
+  DEFAULT_SORT_OPTION_INDEX,
+  SORT_OPTION_LIST,
+  SortOption,
+} from '@/constants/sortOptions';
+import { useFormParams, useOverviewContext } from '@/contexts';
 import { Menu as FormFilter } from '@/organisms/Menu';
 import { cn } from '@/utils';
 
@@ -17,8 +21,14 @@ interface ActionToolbarProps {
 }
 
 export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
-  const { setParams, sortOptionIndex, setSortOptionIndex, setCurrentPage } =
-    useFormParams();
+  const { activeTeam, selectedRecords, setSelectedRecords } =
+    useOverviewContext();
+
+  const { setParams, setCurrentPage } = useFormParams();
+
+  const [sortOptionIndex, setSortOptionIndex] = useState<number>(
+    DEFAULT_SORT_OPTION_INDEX,
+  );
 
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -70,7 +80,11 @@ export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
       )}
     >
       {selectedFormIds.length > 0 ? (
-        <ActionList selectedFormIds={selectedFormIds} />
+        <ActionList
+          teamId={activeTeam}
+          selectedRecords={selectedRecords}
+          setSelectedRecords={setSelectedRecords}
+        />
       ) : (
         <div className='flex items-center justify-between gap-2'>
           <FormFilter
@@ -82,16 +96,16 @@ export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {
               color: 'secondary',
               variant: 'outline',
               size: 'md',
-              title: sortOptionList[sortOptionIndex].title,
-              rightSection: sortOptionList[sortOptionIndex].icon,
+              title: SORT_OPTION_LIST[sortOptionIndex].title,
+              rightSection: SORT_OPTION_LIST[sortOptionIndex].icon,
               className: 'font-semibold text-[15px]',
             }}
-            itemList={sortOptionList}
+            itemList={SORT_OPTION_LIST}
             sortOptionIndex={sortOptionIndex}
             handleOnClick={handleOnClick}
           />
           <TextInputMantine
-            placeholder='Search my forms...'
+            placeholder='Search forms...'
             size='md'
             value={searchValue}
             onChange={(event) => handleOnChangeSearchInput(event)}

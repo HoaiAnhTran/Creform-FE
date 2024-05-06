@@ -85,10 +85,15 @@ export const FolderList = ({
     deleteFolder(folderId).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);
-        setActiveAllForms(true);
-        setActiveFolder(-1);
-        setParams({ ...defaultFormsParams });
-
+        if (!teamId) {
+          setActiveAllForms(true);
+          setActiveFolder(-1);
+          setActiveTeam(-1);
+        } else {
+          setActiveAllForms(false);
+          setActiveFolder(-1);
+          setActiveTeam(teamId);
+        }
         closeModal();
         return;
       }

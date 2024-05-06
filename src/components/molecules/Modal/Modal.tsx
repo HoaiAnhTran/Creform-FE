@@ -9,7 +9,7 @@ import {
   Text,
 } from '@mantine/core';
 
-import { Button } from '@/atoms/Button';
+import { Button, ButtonProps } from '@/atoms/Button';
 
 interface ModalProps extends MantineModalProps {
   headerTitle: string;
@@ -20,10 +20,19 @@ interface ModalProps extends MantineModalProps {
   hasFooter?: true;
   canSubmit?: boolean;
   isLoading: boolean;
+  cancelButtonProps?: ButtonProps;
+  submitButtonProps?: ButtonProps;
 }
 
 interface NoFooterModalProps
-  extends Omit<ModalProps, 'hasFooter' | 'onClickCancel' | 'onClickSubmit'> {
+  extends Omit<
+    ModalProps,
+    | 'hasFooter'
+    | 'onClickCancel'
+    | 'onClickSubmit'
+    | 'cancelButtonProps'
+    | 'submitButtonProps'
+  > {
   hasFooter: false;
   isLoading: boolean;
 }
@@ -70,12 +79,14 @@ export const Modal = ({
               title='Cancel'
               color='gray'
               variant='outline'
+              {...props.cancelButtonProps}
             />
             <Button
               onClick={props.onClickSubmit}
               className='font-bold'
               title='Submit'
               disabled={!canSubmit}
+              {...props.submitButtonProps}
             />
           </Group>
         </>

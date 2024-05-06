@@ -42,11 +42,12 @@ import {
   useRestoreFormMutation,
   useUpdateDisabledStatusMutation,
 } from '@/redux/api/formApi';
+import { useGetMyProfileQuery } from '@/redux/api/userApi';
 import { ErrorResponse, FormResponse, ModalType, ModalTypes } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
 export const FormsTable = () => {
-  const { activeTeam, selectedRecords, setSelectedRecords } =
+  const { activeFolder, activeTeam, selectedRecords, setSelectedRecords } =
     useOverviewContext();
 
   const [modalType, setModalType] = useState<ModalType | ''>('');
@@ -56,6 +57,8 @@ export const FormsTable = () => {
   const { params, setParams, currentPage, setCurrentPage } = useFormParams();
 
   const navigate = useNavigate();
+
+  const { data: myProfile } = useGetMyProfileQuery({});
 
   const {
     data,
@@ -177,13 +180,14 @@ export const FormsTable = () => {
     isUpdatingFormStatus;
 
   const moreOptions = useMemo(
-    () => [
+    () => (record: FormResponse) => [
       {
         text: 'View',
         icon: <IoEye size={18} />,
         handleClick: (record: FormResponse) => {
           navigate(`/form/${record.id}`);
         },
+        isHidden: false,
       },
       {
         text: 'Add to Folder',
@@ -191,34 +195,45 @@ export const FormsTable = () => {
         handleClick: () => {
           openModal(ModalTypes.ADD_TO_FOLDER);
         },
+        isHidden: false,
       },
       {
-        text: activeTeam === -1 ? 'Move to Team' : 'Move to My Forms',
+        text: 'Move to Team',
         icon: <RiTeamFill size={18} />,
         handleClick: () => {
-          if (activeTeam === -1) {
-            openModal(ModalTypes.MOVE_TO_TEAM);
-            return;
-          }
+          openModal(ModalTypes.MOVE_TO_TEAM);
+        },
+        isHidden: activeTeam !== -1,
+      },
+      {
+        text: 'Move to My Forms',
+        icon: <RiTeamFill size={18} />,
+        handleClick: () => {
           openModal(ModalTypes.REMOVE_FROM_TEAM);
         },
+        isHidden:
+          activeTeam === -1 ||
+          (activeTeam !== -1 && record.creator.email !== myProfile?.email),
       },
       {
         text: 'Disable',
         icon: <PiPauseCircleFill size={18} />,
         handleClick: (record: FormResponse) =>
           handleUpdateFormStatus(record, 'disable'),
+        isHidden: false,
       },
       {
         text: 'Enable',
         icon: <FaPlayCircle size={18} />,
         handleClick: (record: FormResponse) =>
           handleUpdateFormStatus(record, 'enable'),
+        isHidden: false,
       },
       {
         text: 'Delete',
         icon: <IoTrash size={18} />,
         handleClick: (record: FormResponse) => handleDeleteForm(record),
+        isHidden: false,
       },
     ],
     [activeTeam],
@@ -309,7 +324,7 @@ export const FormsTable = () => {
                   {record.totalSubmissions} submissions.
                 </UnstyledButton>
                 <Text className='text-sm font-medium text-gray-500'>
-                  Created on {formatDate(record.createdAt, 'MMM D, YYYY')}
+                  {`Created on ${formatDate(record.createdAt, 'MMM D, YYYY')} by ${record.creator.email === myProfile?.email ? 'me' : record.creator.username}`}
                 </Text>
               </Group>
             </Stack>
@@ -378,8 +393,12 @@ export const FormsTable = () => {
 
               <Menu.Dropdown className='min-w-[200px] !bg-ocean-green-100'>
                 {record.disabled
-                  ? moreOptions
-                      .filter((option) => option.text !== 'Disable')
+                  ? moreOptions(record)
+                      .filter(
+                        (option) =>
+                          option.text !== 'Disable' &&
+                          option.isHidden === false,
+                      )
                       .map((option, index) => (
                         <Menu.Item
                           key={index}
@@ -393,8 +412,11 @@ export const FormsTable = () => {
                           {option.text}
                         </Menu.Item>
                       ))
-                  : moreOptions
-                      .filter((option) => option.text !== 'Enable')
+                  : moreOptions(record)
+                      .filter(
+                        (option) =>
+                          option.text !== 'Enable' && option.isHidden === false,
+                      )
                       .map((option, index) => (
                         <Menu.Item
                           key={index}
@@ -440,9 +462,11 @@ export const FormsTable = () => {
   useEffect(() => {
     setParams({
       ...defaultFormsParams,
+      folderId: activeFolder !== -1 ? activeFolder : undefined,
+      teamId: activeTeam !== -1 ? activeTeam : undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeFolder, activeTeam]);
 
   return (
     <>
@@ -498,14 +522,17 @@ export const FormsTable = () => {
       <AddToFolderModal
         opened={modalType === ModalTypes.ADD_TO_FOLDER}
         onClose={closeModal}
-        closeModal={closeModal}
-        selectedFormIds={selectedRecords.map(({ id }) => id)}
+        onClickCancel={closeModal}
+        teamId={activeTeam}
+        selectedRecords={selectedRecords}
+        setSelectedRecords={setSelectedRecords}
       />
       <MoveToTeamModal
         opened={modalType === ModalTypes.MOVE_TO_TEAM}
         onClose={closeModal}
-        closeModal={closeModal}
-        selectedFormIds={selectedRecords.map(({ id }) => id)}
+        onClickCancel={closeModal}
+        selectedRecords={selectedRecords}
+        setSelectedRecords={setSelectedRecords}
       />
       <ConfirmationModal
         size='lg'

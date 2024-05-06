@@ -1,5 +1,5 @@
 import { API_URL } from '@/constants/apiURL';
-import { SuccessResponse, TeamResponse, TeamResquest } from '@/types';
+import { SuccessResponse, TeamPayload, TeamResponse } from '@/types';
 
 import { rootApi } from './rootApi';
 
@@ -23,7 +23,7 @@ const teamApi = rootApi.injectEndpoints({
         response.data,
       providesTags: (_result, _error, arg) => [{ type: 'Teams', id: arg.id }],
     }),
-    createTeam: build.mutation<SuccessResponse<TeamResponse>, TeamResquest>({
+    createTeam: build.mutation<SuccessResponse<TeamResponse>, TeamPayload>({
       query: (data) => ({
         url: API_URL.TEAMS,
         method: 'POST',
@@ -33,7 +33,7 @@ const teamApi = rootApi.injectEndpoints({
     }),
     updateTeam: build.mutation<
       SuccessResponse<TeamResponse>,
-      { id: number; data: TeamResquest }
+      { id: number; data: TeamPayload }
     >({
       query: ({ id, data }) => ({
         url: `${API_URL.TEAMS}/${id}`,
@@ -42,7 +42,7 @@ const teamApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Teams'],
     }),
-    deleteTeam: build.mutation<SuccessResponse<TeamResponse>, { id: number }>({
+    deleteTeam: build.mutation<SuccessResponse<unknown>, { id: number }>({
       query: ({ id }) => ({
         url: `${API_URL.TEAMS}/${id}`,
         method: 'DELETE',

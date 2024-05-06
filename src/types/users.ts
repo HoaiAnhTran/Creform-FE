@@ -1,4 +1,5 @@
 export interface UserProfileResponse {
+  id: number;
   username: string;
   email: string;
   avatarUrl: string;

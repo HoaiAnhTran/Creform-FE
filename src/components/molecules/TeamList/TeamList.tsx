@@ -1,8 +1,14 @@
 import { useState } from 'react';
+import { BiSolidCategoryAlt } from 'react-icons/bi';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
-import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
+import {
+  RiFolderAddFill,
+  RiTeamFill,
+  RiUserSettingsFill,
+} from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Collapse,
@@ -14,6 +20,7 @@ import {
 } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
+import { PATH } from '@/constants';
 import { defaultFormsParams } from '@/constants/defaultFormsParams';
 import { useFormParams, useOverviewContext } from '@/contexts';
 import { type ModalType, ModalTypes, TeamResponse } from '@/types';
@@ -54,11 +61,16 @@ export const TeamList = ({
     setActiveFolder,
     setSelectedRecords,
   } = useOverviewContext();
+
   const openModal = (type: ModalType) => setModalType(type);
 
   const closeModal = () => setModalType('');
+
   const { setParams } = useFormParams();
+
   const [activeCollapse, setActiveCollapse] = useState<number[]>([]);
+
+  const navigate = useNavigate();
 
   const handleActiveCollapse = (teamId: number) => {
     setActiveCollapse((prev) => {
@@ -146,7 +158,22 @@ export const TeamList = ({
                   <Menu.Dropdown className='min-w-[180px] !bg-ocean-green-100'>
                     <Menu.Item
                       className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
-                      leftSection={<RiTeamFill />}
+                      leftSection={<BiSolidCategoryAlt />}
+                      onClick={() => {
+                        navigate(
+                          PATH.MY_TEAMS_PAGE.replace(
+                            ':teamId',
+                            team.id.toString(),
+                          ),
+                        );
+                        setTeamId(team.id);
+                      }}
+                    >
+                      Team workspace
+                    </Menu.Item>
+                    <Menu.Item
+                      className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
+                      leftSection={<RiUserSettingsFill />}
                       onClick={() => {
                         openModal(ModalTypes.MANAGE_TEAM);
                         setTeamId(team.id);
@@ -174,16 +201,6 @@ export const TeamList = ({
                       }}
                     >
                       Change name
-                    </Menu.Item>
-                    <Menu.Item
-                      className='mb-1 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
-                      leftSection={<MdDelete />}
-                      onClick={() => {
-                        openModal(ModalTypes.DELETE_TEAM);
-                        setTeamId(team.id);
-                      }}
-                    >
-                      Delete
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
