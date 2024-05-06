@@ -1,8 +1,7 @@
 import { Field, FieldArray, useField } from 'formik';
 
 import { NumberPhoneElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
-import { isValidPhoneNumber } from '@/utils/schemas/validation';
+import { cn, isValidPhoneNumber, validateLabel } from '@/utils';
 
 import { PhoneNumberInput } from '../PhoneNumberInput';
 import { Text } from '../Text';

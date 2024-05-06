@@ -7,7 +7,7 @@ import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants/routes';
 import { PasswordInput } from '@/molecules/PasswordInput';
 import { TextInput } from '@/molecules/TextInput';
-import { signUpSchema } from '@/utils/schemas/authSchema';
+import { signUpSchema } from '@/utils';
 
 export type SignupSchemaType = yup.InferType<typeof signUpSchema>;
 

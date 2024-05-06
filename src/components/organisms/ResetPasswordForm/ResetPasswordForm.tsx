@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants';
 import { PasswordInput } from '@/molecules/PasswordInput';
-import { resetPasswordSchema } from '@/utils/schemas/authSchema';
+import { resetPasswordSchema } from '@/utils';
 
 export type ResetPasswordSchemaType = yup.InferType<typeof resetPasswordSchema>;
 

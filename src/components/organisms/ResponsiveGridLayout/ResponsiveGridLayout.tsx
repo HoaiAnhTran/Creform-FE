@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
-import { useParams } from 'react-router-dom';
 import { Box } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,10 +22,8 @@ import {
 import { useBuildFormContext, useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { InteractiveIcons } from '@/molecules/InteractiveIcons';
-import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { ElementItem, ElementType } from '@/types';
-import { cn } from '@/utils';
-import { getDefaultWidthHeight } from '@/utils/elements';
+import { cn, getDefaultWidthHeight } from '@/utils';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
@@ -58,12 +55,7 @@ export const ResponsiveGridLayout = ({
     xs: Layout[];
     xxs: Layout[];
   }>({ lg: [], md: [], sm: [], xs: [], xxs: [] });
-  const { isEditForm, setToggledRightbar } = useBuildFormContext();
-  const { id: formId } = useParams();
-  const { data: form } = useGetFormDetailsQuery(
-    { id: formId || '' },
-    { skip: !formId },
-  );
+  const { setToggledRightbar } = useBuildFormContext();
 
   function getLayout(element: ElementItem, layouts: Layout[]) {
     const foundlayout = layouts.find((layout) => element.id === layout.i);
@@ -339,11 +331,6 @@ export const ResponsiveGridLayout = ({
       ),
     );
   };
-  useEffect(() => {
-    if (form) {
-      setElements(form.elements as ElementItem[]);
-    }
-  }, [isEditForm, form, setElements]);
 
   useEffect(() => {
     setMounted(true);
