@@ -109,7 +109,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
         accessor: `ValueElement${elementIdAndName.elementId}`,
         title: elementIdAndName.elementName,
         titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
-        cellsClassName: 'h-10 text-center max-w-[300px]',
+        cellsClassName: 'h-10 text-center max-w-[300px] truncate',
         ...columnProps,
       })),
     ],

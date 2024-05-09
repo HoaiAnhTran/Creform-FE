@@ -267,7 +267,7 @@ export const ResponsiveGridLayout = ({
           fields: [
             {
               id: uuidv4(),
-              name: 'longText',
+              name: 'datePicker',
             },
           ],
         };

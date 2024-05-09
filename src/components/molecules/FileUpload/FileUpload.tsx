@@ -121,8 +121,8 @@ export const FileUpload = (props: FileUploadProps) => {
       />
 
       {uploadedFile ? (
-        <Group className='h-16 items-center justify-between gap-1 rounded-lg bg-ocean-green-50 px-4 py-3'>
-          <FaFileCircleCheck size={28} className='text-ocean-green-500' />
+        <Group className='h-16 flex-nowrap items-center justify-between gap-3 rounded-lg bg-ocean-green-50 px-4 py-3'>
+          <FaFileCircleCheck size={26} className='text-ocean-green-500' />
           <div className='flex flex-col items-start justify-between gap-0.5'>
             <Text className='w-[100px] truncate text-[15px] font-semibold text-ocean-green-500'>
               {uploadedFile.name}

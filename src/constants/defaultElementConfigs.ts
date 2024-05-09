@@ -55,7 +55,8 @@ export const defaultScaleRatingConfig: ScaleRatingConfig = {
   required: false,
   lowestRatingText: 'Worst',
   highestRatingText: 'Best',
-  ratingAmount: 5,
+  lowestRatingValue: 1,
+  highestRatingValue: 5,
 };
 
 export const defaultAddressConfig: AddressConfig = {
@@ -139,7 +140,7 @@ export const defaultTimeHeightWidth = {
 };
 
 export const defaultScaleRatingHeightWidth = {
-  h: 4,
+  h: 5,
   w: 12,
 };
 

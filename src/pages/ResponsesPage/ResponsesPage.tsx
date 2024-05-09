@@ -45,13 +45,14 @@ export const ResponsesPage = () => {
             const fieldsAnswers = elementAnswers.answers.reduce(
               (answers, currentFieldAnswer) => ({
                 ...answers,
-                [`NameField${elementAnswers.elementId}`]:
+                [`NameField${currentFieldAnswer.fieldId}`]:
                   currentFieldAnswer.fieldName,
-                [`ValueField${elementAnswers.elementId}`]:
+                [`ValueField${currentFieldAnswer.fieldId}`]:
                   currentFieldAnswer.text,
               }),
               { ...elementAnswer },
             );
+
             return { ...elementAnswersList, ...fieldsAnswers };
           },
           {

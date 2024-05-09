@@ -44,16 +44,19 @@ export const ScaleRatingProptertiesConfig = (
     });
   };
 
-  const handleChangeRatingAmount = (value: string | number) => {
+  const handleChangeRatingValue = (
+    value: string | number,
+    key: keyof ScaleRatingConfig,
+  ) => {
     handleConfig({
       ...edittingItem?.config,
-      ratingAmount: Number(value),
+      [key]: Number(value),
     });
     updateItem({
       ...edittingItem,
       config: {
         ...edittingItem.config,
-        ratingAmount: Number(value),
+        [key]: Number(value),
       },
     });
   };
@@ -98,12 +101,30 @@ export const ScaleRatingProptertiesConfig = (
         />
       </Stack>
       <Stack className='p-3'>
-        <Text className='font-bold text-white'>Rating amount</Text>
+        <Text className='font-bold text-white'>Lowest rating value</Text>
         <NumberInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
-          value={edittingItem?.config.ratingAmount}
-          onChange={handleChangeRatingAmount}
+          value={edittingItem?.config.lowestRatingValue}
+          onChange={(value) =>
+            handleChangeRatingValue(value, 'lowestRatingValue')
+          }
+          min={0}
+          max={1}
+          clampBehavior='strict'
+          allowDecimal={false}
+          allowNegative={false}
+        />
+      </Stack>
+      <Stack className='p-3'>
+        <Text className='font-bold text-white'>Highest rating value</Text>
+        <NumberInput
+          autoComplete='off'
+          className='rounded-md border border-solid border-slate-600 bg-slate-100'
+          value={edittingItem?.config.highestRatingValue}
+          onChange={(value) =>
+            handleChangeRatingValue(value, 'highestRatingValue')
+          }
           min={2}
           max={10}
           clampBehavior='strict'

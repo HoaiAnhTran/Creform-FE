@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import {
   Box,
-  Group,
   Rating as RatingMantine,
   RatingProps as RatingMantineProps,
-  Text,
 } from '@mantine/core';
 import { ErrorMessage, FieldInputProps, FormikErrors } from 'formik';
 
@@ -31,8 +29,6 @@ interface RatingProps extends Omit<RatingMantineProps, 'form'> {
   };
   classNameLabel?: string;
   itemConfig: ScaleRatingConfig;
-  placeholderWorstText?: string;
-  placeholderBestText?: string;
 }
 
 export const Rating = (props: RatingProps) => {
@@ -67,58 +63,50 @@ export const Rating = (props: RatingProps) => {
   );
 
   const emptySymbol = (value: number) => (
-    <Box className={emptySymbolStyles}>{value}</Box>
+    <Box className={emptySymbolStyles}>
+      {itemConfig.lowestRatingValue === 0 ? value - 1 : value}
+    </Box>
   );
 
   const fullSymbol = (value: number) => (
-    <Box className={fullSymbolStyles}>{value}</Box>
+    <Box className={fullSymbolStyles}>
+      {itemConfig.lowestRatingValue === 0 ? value - 1 : value}
+    </Box>
   );
 
   return (
-    <div className={cn('flex max-w-fit flex-col gap-2', classNameWrapper)}>
+    <div className={cn('flex w-full flex-col gap-2', classNameWrapper)}>
       <RatingMantine
         {...rest}
         onBlur={field.onBlur}
         onChange={(value: number) => {
           if (elementFieldId && elementId)
-            handleChange?.(elementId, elementFieldId, value.toString());
-          setFieldValue(field.name, value.toString());
+            handleChange?.(
+              elementId,
+              elementFieldId,
+              itemConfig.lowestRatingValue === 0
+                ? (value - 1).toString()
+                : value.toString(),
+            );
+          setFieldValue(
+            field.name,
+            itemConfig.lowestRatingValue === 0
+              ? (value - 1).toString()
+              : value.toString(),
+          );
         }}
         classNames={{
-          root: 'flex gap-5 max-w-full flex-wrap',
+          root: `flex gap-1.5 w-max flex-wrap`,
         }}
-        count={itemConfig.ratingAmount}
+        count={itemConfig.highestRatingValue - itemConfig.lowestRatingValue + 1}
         emptySymbol={emptySymbol}
         fullSymbol={fullSymbol}
+        highlightSelectedOnly
       />
-      <Group className='justify-between px-1'>
-        <Box>
-          <Text
-            className={cn('text-xs  text-slate-500', {
-              'text-slate-400': !itemConfig.lowestRatingText,
-            })}
-          >
-            {itemConfig.lowestRatingText
-              ? itemConfig.lowestRatingText
-              : rest.placeholderWorstText}
-          </Text>
-        </Box>
-        <Box>
-          <Text
-            className={cn('text-xs  text-slate-500', {
-              'text-slate-400': !itemConfig.highestRatingText,
-            })}
-          >
-            {itemConfig.highestRatingText
-              ? itemConfig.highestRatingText
-              : rest.placeholderBestText}
-          </Text>
-        </Box>
-      </Group>
       <ErrorMessage
         name={field.name}
         render={(msg) => (
-          <div className={cn('mt-1 text-xs text-red-600', classNameError)}>
+          <div className={cn('mb-1 text-xs text-red-600', classNameError)}>
             {msg}
           </div>
         )}
