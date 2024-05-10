@@ -27,4 +27,8 @@ export const MESSAGES = {
   DISABLE_FORM_SUCCESS: 'Form has been disabled',
   UPDATE_FORM_STATUS_FAILED: 'Form failed to be updated status',
   EXPORT_TO_EXCEL_FAILED: 'Export to Excel failed',
+  INVALID_URL: 'Invalid URL',
+  INVALID_GOOGLE_FORMS_URL: 'Invalid Google Forms URL',
+  IMPORT_FROM_GG_FORMS_SUCCESS: 'Import form from Google Forms successfully',
+  IMPORT_FROM_GG_FORMS_FAILED: 'Import form from Google Forms failed',
 } as const;

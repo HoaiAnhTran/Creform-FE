@@ -43,7 +43,7 @@ export const ManageTeamModal = ({
     body={
       <>
         <Stack className='min-h-[170px] gap-3 px-3 py-8'>
-          <Text className='font-bold'>Team name</Text>
+          <Text className='text-base font-semibold'>Team name</Text>
           <TextInput
             value={teamName}
             placeholder='Type team name here'

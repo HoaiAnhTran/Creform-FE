@@ -85,12 +85,14 @@ export const ResponsiveGridLayout = ({
     currentItem: Layout,
   ): ElementItem | undefined => {
     const uid = uuidv4();
+
     const getGridSize = (currentItem: Layout) => ({
       x: currentItem.x,
       y: currentItem.y,
       w: currentItem.w,
       h: currentItem.h,
     });
+
     switch (type) {
       case ElementType.HEADING:
         return {
@@ -110,7 +112,6 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'email',
-              text: '',
             },
           ],
         };
@@ -124,12 +125,10 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'firstName',
-              text: '',
             },
             {
               id: uuidv4(),
               name: 'lastName',
-              text: '',
             },
           ],
         };
@@ -177,7 +176,6 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'scaleRating',
-              text: '',
             },
           ],
         };

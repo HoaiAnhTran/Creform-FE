@@ -1,5 +1,22 @@
-import { ElementItem, FormRequest } from '@/types';
+import { ElementItem, FormDetailsResponse, FormRequest } from '@/types';
 import { FieldAnswer, FormAnswer } from '@/types/responses';
+
+export const addTextToFieldOfElement = (
+  form: FormRequest | FormDetailsResponse,
+) => {
+  const updatedElements = form.elements.map((element) => {
+    const updatedFields = element.fields.map((field) => ({
+      ...field,
+      text: '',
+    }));
+    return {
+      ...element,
+      fields: updatedFields,
+    };
+  });
+
+  return { ...form, elements: updatedElements };
+};
 
 export const removeTextFromFieldOfElement = (form: FormRequest) => {
   const formWithoutText = JSON.parse(JSON.stringify(form));

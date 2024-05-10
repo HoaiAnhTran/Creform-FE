@@ -151,16 +151,18 @@ export enum ElementType {
 
 export type GridSize = Pick<LayoutProps, 'x' | 'y' | 'w' | 'h'>;
 
+export type FieldsOfElement = {
+  id: string;
+  name: string;
+  text?: string;
+}[];
+
 export interface BaseElement<T extends ElementType, U extends ElementConfig> {
   id: string;
   type: T;
   gridSize: GridSize;
   config: U;
-  fields: {
-    id: string;
-    name: string;
-    text?: string;
-  }[];
+  fields: FieldsOfElement;
 }
 
 export type HeadingElement = BaseElement<ElementType.HEADING, HeadingConfig>;
