@@ -76,7 +76,7 @@ export const ResponsesPage = () => {
   if (response === undefined) return <></>;
 
   return (
-    <div className='h-screen bg-quarter-pearl-lusta-50'>
+    <div className='h-screen'>
       <Header />
       <SubmissionTopbar
         formId={Number(formId)}

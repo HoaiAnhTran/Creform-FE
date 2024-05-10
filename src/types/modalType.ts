@@ -11,6 +11,7 @@ export enum ModalTypes {
   MOVE_TO_TEAM = 'moveToTeam',
   REMOVE_FROM_TEAM = 'removeFromTeam',
   INVITE_MEMBER = 'inviteMember',
+  IMPORT_FORM = 'importForm',
 }
 
 export type ModalType =
@@ -25,4 +26,5 @@ export type ModalType =
   | ModalTypes.ADD_TO_FOLDER
   | ModalTypes.MOVE_TO_TEAM
   | ModalTypes.REMOVE_FROM_TEAM
-  | ModalTypes.INVITE_MEMBER;
+  | ModalTypes.INVITE_MEMBER
+  | ModalTypes.IMPORT_FORM;

@@ -5,6 +5,7 @@ import {
   FormResponse,
   GetFormsParams,
   GetFormsResponse,
+  ImportFormResponse,
   SuccessResponse,
 } from '@/types';
 
@@ -154,6 +155,17 @@ const formApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Forms'],
     }),
+    importForm: build.mutation<
+      SuccessResponse<ImportFormResponse>,
+      { formUrl: string }
+    >({
+      query: (payload) => ({
+        url: `${API_URL.FORMS}/import`,
+        method: 'POST',
+        data: payload,
+      }),
+      invalidatesTags: ['Forms'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -174,4 +186,5 @@ export const {
   useCreateFormInTeamMutation,
   useCreateFormInFolderOfTeamMutation,
   useUpdateDisabledStatusMutation,
+  useImportFormMutation,
 } = formApi;

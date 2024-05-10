@@ -102,7 +102,7 @@ export const BuildFormTopBar = () => {
   };
 
   const handleClickBackButton = () => {
-    if (haveUnsavedChanges) {
+    if (isEditForm && haveUnsavedChanges) {
       openConfirmModal();
       return;
     }

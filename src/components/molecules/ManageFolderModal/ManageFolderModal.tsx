@@ -44,7 +44,7 @@ export const ManageFolderModal = ({
     body={
       <>
         <Stack className='min-h-[170px] gap-3 px-3 py-8'>
-          <Text className='font-bold'>Folder name</Text>
+          <Text className='text-base font-semibold'>Folder name</Text>
           <TextInput
             value={folderName}
             placeholder='Type folder name here'

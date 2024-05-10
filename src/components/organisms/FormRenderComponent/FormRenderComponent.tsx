@@ -5,11 +5,12 @@ import { BIG_Z_INDEX } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { FactoryElement } from '@/molecules/FactoryElement';
 import { ElementItem, FormDetailsResponse, FormRequest } from '@/types';
+import { addTextToFieldOfElement } from '@/utils';
 
 import { ResponsiveReactGridLayout } from '../ResponsiveGridLayout';
 
 interface FormRenderComponentProps {
-  form?: FormDetailsResponse | FormRequest;
+  form: FormDetailsResponse | FormRequest;
   isLoading?: boolean;
 }
 
@@ -47,20 +48,7 @@ export const FormRenderComponent = ({
   };
 
   useEffect(() => {
-    if (form) {
-      const elementsForm = form.elements as ElementItem[];
-      setElements(
-        elementsForm.map((element) => {
-          const updatedFields = element.fields.map((field) => {
-            if (!field.text) {
-              return { ...field, text: '' };
-            }
-            return field;
-          });
-          return { ...element, fields: updatedFields };
-        }),
-      );
-    }
+    setElements([...addTextToFieldOfElement(form).elements]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);
 

@@ -33,13 +33,13 @@ export const InviteMemberModal = ({
   const handleInviteMember = (value: { email: string }) => {
     createInvitation({ teamId: teamId, email: value.email }).then((res) => {
       if ('data' in res) {
-        toastify.displaySuccess(res.data.message as string);
+        toastify.displaySuccess(res.data.message);
         handleResetForm();
         onClickCancel();
         return;
       }
       if (res.error as ErrorResponse)
-        toastify.displayError((res.error as ErrorResponse).message as string);
+        toastify.displayError((res.error as ErrorResponse).message);
     });
   };
 

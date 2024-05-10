@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { defaultHeadingConfig, defaultSubmitConfig } from '@/constants';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { ElementItem, ElementType } from '@/types';
+import { addTextToFieldOfElement } from '@/utils';
 
 import { useBuildFormContext } from '.';
 
@@ -84,7 +85,7 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     if (!formData) return;
-    setElements(formData.elements as ElementItem[]);
+    setElements(addTextToFieldOfElement(formData).elements as ElementItem[]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 

@@ -1,4 +1,4 @@
-import { ElementItem } from '.';
+import { ElementItem, ElementType } from '.';
 
 export interface GetFormsParams {
   page?: number;
@@ -82,4 +82,23 @@ export interface FormRequest {
   elements: ElementItem[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ImportFormResponse {
+  title: string;
+  settings: object;
+  elements: {
+    type: ElementType;
+    gridSize: {
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+    };
+    config: {
+      fieldLabel: string;
+      required: boolean;
+      [key: string]: unknown;
+    };
+  }[];
 }

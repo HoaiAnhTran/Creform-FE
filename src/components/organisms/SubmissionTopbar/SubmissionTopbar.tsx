@@ -92,7 +92,7 @@ export const SubmissionTopbar = (props: SubmissionTopbar) => {
   };
 
   return (
-    <div className='flex w-full items-center justify-between p-4'>
+    <div className='flex w-full items-center justify-between bg-quarter-pearl-lusta-50 p-4'>
       {selectedResponseIds.length === 0 ? (
         <Group className='w-full justify-end'>
           <Button
