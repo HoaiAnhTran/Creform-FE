@@ -24,7 +24,7 @@ export const PendingInvitationsTable = ({
   const [deleteInvitation, { isLoading: isInvitationDeleting }] =
     useDeleteInvitationMutation();
 
-  const handleDeleteInvitation = (invitationId: number) => {
+  const handleDeleteInvitation = (invitationId: string) => {
     deleteInvitation({ id: invitationId }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);

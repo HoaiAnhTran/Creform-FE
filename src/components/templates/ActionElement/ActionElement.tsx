@@ -7,7 +7,7 @@ import { ElementActionKeys, ElementActions } from '@/types';
 import { cn } from '@/utils';
 
 interface ActionElementProps {
-  elementId: number;
+  elementId: string;
   content: React.ReactNode;
 }
 

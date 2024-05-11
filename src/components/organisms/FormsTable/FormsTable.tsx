@@ -203,7 +203,7 @@ export const FormsTable = () => {
         handleClick: () => {
           openModal(ModalTypes.MOVE_TO_TEAM);
         },
-        isHidden: activeTeam !== -1,
+        isHidden: activeTeam !== '',
       },
       {
         text: 'Move to My Forms',
@@ -212,8 +212,8 @@ export const FormsTable = () => {
           openModal(ModalTypes.REMOVE_FROM_TEAM);
         },
         isHidden:
-          activeTeam === -1 ||
-          (activeTeam !== -1 && record.creator.email !== myProfile?.email),
+          activeTeam === '' ||
+          (activeTeam !== '' && record.creator.email !== myProfile?.email),
       },
       {
         text: 'Disable',
@@ -462,8 +462,8 @@ export const FormsTable = () => {
   useEffect(() => {
     setParams({
       ...defaultFormsParams,
-      folderId: activeFolder !== -1 ? activeFolder : undefined,
-      teamId: activeTeam !== -1 ? activeTeam : undefined,
+      folderId: activeFolder !== '' ? activeFolder : undefined,
+      teamId: activeTeam !== '' ? activeTeam : undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFolder, activeTeam]);

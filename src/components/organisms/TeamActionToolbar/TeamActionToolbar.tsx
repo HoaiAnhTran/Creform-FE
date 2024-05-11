@@ -18,7 +18,7 @@ import { cn } from '@/utils';
 import { ActionList } from '../ActionList';
 
 interface TeamActionToolbarProps {
-  teamId: number;
+  teamId: string;
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
 }
@@ -28,7 +28,7 @@ export const TeamActionToolbar = ({
   selectedRecords,
   setSelectedRecords,
 }: TeamActionToolbarProps) => {
-  const selectedFormIds: number[] = selectedRecords.map(({ id }) => id);
+  const selectedFormIds: string[] = selectedRecords.map(({ id }) => id);
 
   const { setParams, setCurrentPage } = useFormParams();
 

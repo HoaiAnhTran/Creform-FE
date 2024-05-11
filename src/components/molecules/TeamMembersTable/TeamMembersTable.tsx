@@ -25,7 +25,7 @@ export const TeamMembersTable = ({ team }: TeamMembersTableProps) => {
   const [removeMember, { isLoading: isRemovingMember }] =
     useRemoveMemberMutation();
 
-  const handleRemoveMember = (id: number) => {
+  const handleRemoveMember = (id: string) => {
     removeMember({ id: team.id, memberIds: [id] }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message as string);

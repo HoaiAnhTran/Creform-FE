@@ -17,7 +17,7 @@ import { countSuccessAndErrors, toastify } from '@/utils';
 import { Modal } from '../Modal';
 
 interface AddToFolderModalProps extends MantineModalProps {
-  teamId: number;
+  teamId: string;
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
   onClickCancel: () => void;
@@ -32,7 +32,7 @@ export const AddToFolderModal = ({
 }: AddToFolderModalProps) => {
   const [selectedFolderId, setSelectedFolderId] = useState<string>('');
 
-  const selectedFormIds: number[] = selectedRecords.map(({ id }) => id);
+  const selectedFormIds: string[] = selectedRecords.map(({ id }) => id);
 
   const disabledFolderOptions = selectedRecords.map((form) =>
     form.folderId?.toString(),
@@ -42,7 +42,7 @@ export const AddToFolderModal = ({
 
   const { data: team } = useGetTeamDetailsQuery(
     { id: teamId },
-    { skip: teamId === -1 },
+    { skip: teamId === '' },
   );
 
   const [folderList, setFolderList] = useState<
@@ -50,7 +50,7 @@ export const AddToFolderModal = ({
   >();
 
   useEffect(() => {
-    if (teamId === -1) {
+    if (teamId === '') {
       setFolderList(folders);
       return;
     }
@@ -65,7 +65,7 @@ export const AddToFolderModal = ({
   const handleAddToFolder = async () => {
     await Promise.allSettled(
       selectedFormIds.map((id) =>
-        addToFolder({ formId: id, folderId: Number(selectedFolderId) }),
+        addToFolder({ formId: id, folderId: selectedFolderId }),
       ),
     ).then((response) => {
       const { successCount, errorCount } = countSuccessAndErrors(response);

@@ -54,7 +54,7 @@ interface FormsTableInTeam {
   team: TeamResponse;
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
-  folderId: number;
+  folderId: string;
 }
 export const FormsTableInTeam = ({
   team,
@@ -465,8 +465,8 @@ export const FormsTableInTeam = ({
   useEffect(() => {
     setParams({
       ...defaultFormsParams,
-      teamId: team.id !== -1 ? team.id : undefined,
-      folderId: folderId !== -1 ? folderId : undefined,
+      teamId: team.id !== '' ? team.id : undefined,
+      folderId: folderId !== '' ? folderId : undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [team, folderId]);

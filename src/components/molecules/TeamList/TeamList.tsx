@@ -33,11 +33,11 @@ interface TeamListProps {
   teamList?: TeamResponse[];
   isLoading: boolean;
   setTeamName: (teamName: string) => void;
-  setTeamId: (teamId: number) => void;
+  setTeamId: (teamId: string) => void;
   setFolderName: (folderName: string) => void;
-  setFolderId: (folderId: number) => void;
+  setFolderId: (folderId: string) => void;
   folderName: string;
-  folderId: number;
+  folderId: string;
   modalType: ModalType | '';
   setModalType: (modalType: ModalType | '') => void;
 }
@@ -68,11 +68,11 @@ export const TeamList = ({
 
   const { setParams } = useFormParams();
 
-  const [activeCollapse, setActiveCollapse] = useState<number[]>([]);
+  const [activeCollapse, setActiveCollapse] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
-  const handleActiveCollapse = (teamId: number) => {
+  const handleActiveCollapse = (teamId: string) => {
     setActiveCollapse((prev) => {
       if (prev.includes(teamId)) return prev.filter((prev) => prev !== teamId);
       return [...prev, teamId];
@@ -85,7 +85,7 @@ export const TeamList = ({
         <Loader />
       ) : (
         teamList.map((team) => {
-          const isActiveTeam = team.id === activeTeam && activeFolder === -1;
+          const isActiveTeam = team.id === activeTeam && activeFolder === '';
 
           return (
             <Stack className='gap-2' key={team.id}>
@@ -111,7 +111,7 @@ export const TeamList = ({
                   onClick={() => {
                     setActiveTeam(team.id);
                     setActiveAllForms(false);
-                    setActiveFolder(-1);
+                    setActiveFolder('');
                     setSelectedRecords([]);
                     setParams({ ...defaultFormsParams, teamId: team.id });
                   }}

@@ -7,9 +7,9 @@ interface ButtonIconProps {
   isHovered: boolean;
   icon: React.ReactNode;
   title: string;
-  elementId: number;
+  elementId: string;
   className?: string;
-  onClick: (elementId: number) => void;
+  onClick: (elementId: string) => void;
   handleHovered: React.Dispatch<React.SetStateAction<ElementActionKeys | null>>;
 }
 

@@ -15,8 +15,8 @@ import { GetResponsesParams } from '@/types';
 import { formatDate, toastify } from '@/utils';
 
 interface SubmissionTopbar {
-  formId: number;
-  selectedResponseIds: number[];
+  formId: string;
+  selectedResponseIds: string[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<ResponseRow[]>>;
   showingResponseRows: ResponseRow[];
   params: GetResponsesParams | undefined;

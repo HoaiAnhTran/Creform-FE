@@ -14,7 +14,7 @@ const teamApi = rootApi.injectEndpoints({
         response.data,
       providesTags: ['Teams'],
     }),
-    getTeamDetails: build.query<TeamResponse, { id: number }>({
+    getTeamDetails: build.query<TeamResponse, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.TEAMS}/${id}`,
         method: 'GET',
@@ -33,7 +33,7 @@ const teamApi = rootApi.injectEndpoints({
     }),
     updateTeam: build.mutation<
       SuccessResponse<TeamResponse>,
-      { id: number; data: TeamPayload }
+      { id: string; data: TeamPayload }
     >({
       query: ({ id, data }) => ({
         url: `${API_URL.TEAMS}/${id}`,
@@ -42,7 +42,7 @@ const teamApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ['Teams'],
     }),
-    deleteTeam: build.mutation<SuccessResponse<unknown>, { id: number }>({
+    deleteTeam: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.TEAMS}/${id}`,
         method: 'DELETE',
@@ -51,7 +51,7 @@ const teamApi = rootApi.injectEndpoints({
     }),
     removeMember: build.mutation<
       SuccessResponse<TeamResponse>,
-      { id: number; memberIds: number[] }
+      { id: string; memberIds: string[] }
     >({
       query: ({ id, memberIds }) => ({
         url: `${API_URL.TEAMS}/${id}/remove-member`,

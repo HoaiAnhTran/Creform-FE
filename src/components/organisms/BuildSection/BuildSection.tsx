@@ -38,8 +38,8 @@ export const BuildSection = () => {
   const { id: formId } = useParams();
 
   const location = useLocation();
-  let teamId: number;
-  let folderId: number;
+  let teamId: string;
+  let folderId: string;
 
   if (!formId && location.state) {
     teamId = location.state.teamId;
@@ -95,7 +95,7 @@ export const BuildSection = () => {
     });
   };
 
-  const handleCreateFormInFolder = (folderId: number) => {
+  const handleCreateFormInFolder = (folderId: string) => {
     const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
@@ -129,7 +129,7 @@ export const BuildSection = () => {
     });
   };
 
-  const handleCreateFormInTeam = (teamId: number) => {
+  const handleCreateFormInTeam = (teamId: string) => {
     const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
@@ -163,7 +163,7 @@ export const BuildSection = () => {
     });
   };
 
-  const handleCreateFormInFolderOfTeam = (folderId: number, teamId: number) => {
+  const handleCreateFormInFolderOfTeam = (folderId: string, teamId: string) => {
     const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
@@ -215,7 +215,7 @@ export const BuildSection = () => {
     return handleCreateFormInFolderOfTeam(folderId, teamId);
   };
 
-  const handleUpdateForm = (formId: number) => {
+  const handleUpdateForm = (formId: string) => {
     const filteredForm = removeTextFromFieldOfElement(form);
     if (currentLogoFile) {
       return uploadImage(currentLogoFile).then((imgRes) => {
@@ -259,7 +259,7 @@ export const BuildSection = () => {
       validateOnBlur={true}
       validateOnChange={false}
       onSubmit={() => {
-        isEditForm ? handleUpdateForm(+formId!) : handleCreateFormBasedOnIds();
+        isEditForm ? handleUpdateForm(formId!) : handleCreateFormBasedOnIds();
       }}
     >
       <Form className='h-full w-full'>

@@ -18,7 +18,7 @@ export const ResponsesPage = () => {
   const [params, setParams] = useState<GetResponsesParams>();
 
   const { data: response } = useGetResponsesByFormIdQuery({
-    formId: Number(formId),
+    formId: formId!,
     ...params,
   });
 
@@ -69,7 +69,7 @@ export const ResponsesPage = () => {
   );
 
   const selectedResponseIds = useMemo(
-    () => selectedRecords.map((selectedRecord) => selectedRecord.id as number),
+    () => selectedRecords.map((selectedRecord) => selectedRecord.id),
     [selectedRecords],
   );
 
@@ -79,7 +79,7 @@ export const ResponsesPage = () => {
     <div className='h-screen'>
       <Header />
       <SubmissionTopbar
-        formId={Number(formId)}
+        formId={formId!}
         selectedResponseIds={selectedResponseIds}
         setSelectedRecords={setSelectedRecords}
         showingResponseRows={responseRows || []}
