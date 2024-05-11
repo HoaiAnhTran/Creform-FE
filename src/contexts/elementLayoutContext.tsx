@@ -63,7 +63,7 @@ export const DEFAULT_ELEMENTS: ElementItem[] = [
 export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   const { id: formId } = useParams();
 
@@ -75,13 +75,12 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
   const { isEditForm } = useBuildFormContext();
 
   const [elements, setElements] = useState<ElementItem[]>(
-    isEditForm ? [] : DEFAULT_ELEMENTS,
+    pathname.includes('build') && !isEditForm ? DEFAULT_ELEMENTS : [],
   );
   const [edittingItem, setEdittingItem] = useState<ElementItem>();
 
   const isReadOnly =
-    location.pathname.includes('build') &&
-    !location.pathname.includes('preview');
+    pathname.includes('build') && !pathname.includes('preview');
 
   useEffect(() => {
     if (!formData) return;

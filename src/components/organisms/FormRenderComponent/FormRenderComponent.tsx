@@ -54,7 +54,7 @@ export const FormRenderComponent = ({
 
   return (
     <div className='flex w-full flex-col items-center'>
-      {form?.logoUrl && (
+      {form.logoUrl && (
         <Image
           src={form.logoUrl}
           className='mb-8 max-h-36 max-w-72 cursor-pointer object-contain'
@@ -70,7 +70,7 @@ export const FormRenderComponent = ({
           />
           <div className='w-full rounded-md border border-solid border-slate-200 bg-white p-7 shadow-lg'>
             <Text className='mt-6 px-4 text-2xl font-bold text-ocean-green-600'>
-              {form?.title}
+              {form.title}
             </Text>
             <ResponsiveReactGridLayout
               rowHeight={30}

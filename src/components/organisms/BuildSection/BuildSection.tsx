@@ -313,7 +313,7 @@ export const BuildSection = () => {
                 }
               />
             )}
-            <ScrollToTopButton className='fixed bottom-14 right-10'></ScrollToTopButton>
+            <ScrollToTopButton className='fixed bottom-14 right-10' />
           </Box>
         </Box>
       </Form>
