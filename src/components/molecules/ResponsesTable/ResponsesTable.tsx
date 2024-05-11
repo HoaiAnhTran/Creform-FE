@@ -31,7 +31,7 @@ export interface StringProperties {
 
 export type ResponseRow =
   | {
-      id: number;
+      id: string;
       createdAt: string;
     }
   | StringProperties;
@@ -52,7 +52,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
 
   const { data, isFetching, refetch } = useGetResponsesByFormIdQuery(
     {
-      formId: Number(formId),
+      formId: formId!,
       ...params,
     },
     { refetchOnFocus: true },

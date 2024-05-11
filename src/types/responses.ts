@@ -12,11 +12,11 @@ export interface FormAnswerRequest {
 }
 
 export interface FormAnswerResponse {
-  id: number;
+  id: string;
   formAnswers: FormAnswer[];
   createdAt: string;
   deletedAt: string;
-  formId: number;
+  formId: string;
 }
 
 export interface GetResponsesParams {
@@ -30,7 +30,7 @@ export interface GetResponsesParams {
 
 export interface RawResponseRow {
   formAnswers: RawFormAnswerCell[];
-  id: number;
+  id: string;
   createdAt: Date;
 }
 

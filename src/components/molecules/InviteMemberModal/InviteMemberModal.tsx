@@ -18,7 +18,7 @@ enum INVITE_MEMBER_FORM_FIELD {
 }
 
 interface InviteMemberModalProps extends MantineModalProps {
-  teamId: number;
+  teamId: string;
   onClickCancel: () => void;
 }
 

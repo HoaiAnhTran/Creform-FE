@@ -49,7 +49,7 @@ const invitationApi = rootApi.injectEndpoints({
         'Responses',
       ],
     }),
-    deleteInvitation: build.mutation<SuccessResponse<unknown>, { id: number }>({
+    deleteInvitation: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({
         url: `${API_URL.INVITATION}/${id}`,
         method: 'DELETE',

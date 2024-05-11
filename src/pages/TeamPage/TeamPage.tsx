@@ -26,7 +26,7 @@ export interface SelectedOptionType {
 
 export const initialState: SelectedOptionType = {
   folder: {
-    id: -1,
+    id: '',
     name: '',
   },
   isAllForms: true,
@@ -48,7 +48,7 @@ export const TeamPage = () => {
     pathname === PATH.TEAMS_SETTINGS_PAGE.replace(':teamId', teamId!);
 
   const { data: team, isLoading } = useGetTeamDetailsQuery(
-    { id: Number(teamId) },
+    { id: teamId! },
     { skip: !teamId },
   );
 

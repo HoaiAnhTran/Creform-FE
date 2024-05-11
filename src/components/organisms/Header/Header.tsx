@@ -94,7 +94,7 @@ export const Header = () => {
                       )
                     }
                     rightSection={
-                      team.id === Number(teamId) ? (
+                      team.id === teamId ? (
                         <TiTick className='text-ocean-green-500' />
                       ) : null
                     }
@@ -102,7 +102,7 @@ export const Header = () => {
                       'mb-1 gap-1 p-[10px] text-sm font-medium text-gray-600 delay-100 ease-linear last-of-type:mb-0 hover:bg-ocean-green-50 hover:text-ocean-green-500',
                       {
                         'bg-ocean-green-50 text-ocean-green-500':
-                          team.id === Number(teamId),
+                          team.id === teamId,
                       },
                     )}
                     onClick={() => {

@@ -20,7 +20,7 @@ import { FormResponse, ModalType, ModalTypes } from '@/types';
 import { countSuccessAndErrors, toastify } from '@/utils';
 
 interface ActionListFormProps {
-  teamId: number;
+  teamId: string;
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
 }
@@ -30,7 +30,7 @@ export const ActionList = ({
   selectedRecords,
   setSelectedRecords,
 }: ActionListFormProps) => {
-  const selectedFormIds: number[] = selectedRecords.map(({ id }) => id);
+  const selectedFormIds: string[] = selectedRecords.map(({ id }) => id);
 
   const navigate = useNavigate();
 
@@ -102,7 +102,7 @@ export const ActionList = ({
       onClick: () => {
         openModal(ModalTypes.MOVE_TO_TEAM);
       },
-      isHidden: teamId !== -1,
+      isHidden: teamId !== '',
     },
     {
       icon: <IoTrash size={24} />,
@@ -127,7 +127,7 @@ export const ActionList = ({
       onClick: () => {
         openModal(ModalTypes.MOVE_TO_TEAM);
       },
-      isHidden: teamId !== -1,
+      isHidden: teamId !== '',
     },
     {
       icon: <IoTrash size={24} />,

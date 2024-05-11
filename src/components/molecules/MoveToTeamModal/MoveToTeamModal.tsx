@@ -27,9 +27,9 @@ export const MoveToTeamModal = ({
   onClickCancel,
   ...props
 }: MoveToTeamModalProps) => {
-  const [selectedTeamId, setSelectedTeamId] = useState<string>();
+  const [selectedTeamId, setSelectedTeamId] = useState<string>('');
 
-  const selectedFormIds: number[] = selectedRecords.map(({ id }) => id);
+  const selectedFormIds: string[] = selectedRecords.map(({ id }) => id);
 
   const disabledTeamOptions = selectedRecords.map((form) =>
     form.teamId?.toString(),
@@ -42,7 +42,7 @@ export const MoveToTeamModal = ({
   const handleMoveToTeam = async () => {
     await Promise.allSettled(
       selectedFormIds.map((id) =>
-        moveToTeam({ formId: id, teamId: Number(selectedTeamId) }),
+        moveToTeam({ formId: id, teamId: selectedTeamId }),
       ),
     ).then((response) => {
       const { successCount, errorCount } = countSuccessAndErrors(response);

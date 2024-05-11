@@ -17,7 +17,7 @@ import { cn } from '@/utils';
 import { ActionList } from '../ActionList';
 
 interface ActionToolbarProps {
-  selectedFormIds: number[];
+  selectedFormIds: string[];
 }
 
 export const ActionToolbar = ({ selectedFormIds }: ActionToolbarProps) => {

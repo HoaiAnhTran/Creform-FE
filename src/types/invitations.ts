@@ -1,5 +1,5 @@
 export interface InvitationResponse {
-  id: number;
+  id: string;
   email: string;
   token: string;
   accepted: boolean;
@@ -8,17 +8,17 @@ export interface InvitationResponse {
   updatedAt: string;
   deletedAt: string;
   team: {
-    id: number;
+    id: string;
     name: string;
   };
   creator: {
-    id: number;
+    id: string;
     username: string;
     email: string;
   };
 }
 
 export interface CreateInvitationPayload {
-  teamId: number;
+  teamId: string;
   email: string;
 }

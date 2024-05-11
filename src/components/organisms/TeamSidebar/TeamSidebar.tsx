@@ -130,7 +130,7 @@ export const TeamSidebar = ({
             navigate(PATH.BUILD_FORM_PAGE, {
               state: {
                 folderId:
-                  selectedOption.folder.id === -1
+                  selectedOption.folder.id === ''
                     ? undefined
                     : selectedOption.folder.id,
                 teamId: team.id,
