@@ -8,6 +8,7 @@ import DisabledFormIcon from '@/assets/images/disable-form.png';
 import { PATH } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { Loader } from '@/molecules/Loader';
+import { ScrollToTopButton } from '@/molecules/ScrollToTopButton';
 import { FormRenderComponent } from '@/organisms/FormRenderComponent';
 import { SubmissionConfirmation } from '@/organisms/SubmissionConfirmation';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
@@ -131,6 +132,7 @@ export const PublicPage = () => {
               form={formData}
               isLoading={isLoadingCreateFormResponse}
             />
+            <ScrollToTopButton className='fixed bottom-14 right-10' />
           </Form>
         </Formik>
       ) : (

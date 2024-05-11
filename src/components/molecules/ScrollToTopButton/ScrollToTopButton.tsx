@@ -25,6 +25,7 @@ export const ScrollToTopButton = ({ className }: ScrollButtonProps) => {
       className={cn('flex flex-col items-center gap-2 ', className, {
         hidden: !isVisible,
       })}
+      type='button'
       onClick={handleClick}
     >
       <PiArrowLineUp
