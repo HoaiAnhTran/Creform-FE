@@ -103,7 +103,7 @@ export const defaultMultipleChoiceConfig: MultipleChoiceConfig = {
   },
 };
 
-export const defaultNumberPhoneConfig: NumberPhoneConfig = {
+export const defaultPhoneConfig: NumberPhoneConfig = {
   fieldLabel: 'Type your phone number',
   required: false,
   sublabel: 'Please enter your phone number',

@@ -51,12 +51,28 @@ export const TeamTopBar = memo(
                       color='burnt-sienna.1'
                       className='text-xs text-burnt-sienna-600'
                     >
-                      <Avatar src={member.avatarUrl} size={33}>
+                      <Avatar
+                        src={member.avatarUrl}
+                        size={33}
+                        bg={generateAvatarBgColor()}
+                        classNames={{
+                          placeholder:
+                            'text-quarter-pearl-lusta-50 font-normal',
+                        }}
+                      >
                         {getAcronymUsername(member.username)}
                       </Avatar>
                     </Tooltip>
                   ))}
-                  <Avatar>+{team.members.length - 3}</Avatar>
+                  <Avatar
+                    size={33}
+                    bg={generateAvatarBgColor()}
+                    classNames={{
+                      placeholder: 'text-quarter-pearl-lusta-50 font-normal',
+                    }}
+                  >
+                    +{team.members.length - 3}
+                  </Avatar>
                 </>
               ) : (
                 team.members.map((member) => (
@@ -72,7 +88,7 @@ export const TeamTopBar = memo(
                       size={33}
                       bg={generateAvatarBgColor()}
                       classNames={{
-                        placeholder: `text-quarter-pearl-lusta-50 font-normal`,
+                        placeholder: 'text-quarter-pearl-lusta-50 font-normal',
                       }}
                     >
                       {getAcronymUsername(member.username)}

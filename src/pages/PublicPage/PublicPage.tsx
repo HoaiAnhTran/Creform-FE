@@ -66,7 +66,7 @@ export const PublicPage = () => {
       arrowSize={6}
       withArrow
       offset={8}
-      color='ocean-green.5'
+      color='gray.8'
     >
       <UnstyledButton
         className='fixed left-10 top-10'

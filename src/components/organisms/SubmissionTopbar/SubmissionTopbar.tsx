@@ -124,7 +124,7 @@ export const SubmissionTopbar = (props: SubmissionTopbar) => {
               isLoadingDeleteOneResponse || isLoadingDeleteMultipleResponse
             }
             className='h-[36px] text-sm'
-            loaderProps={{ type: 'dots', color: 'red' }}
+            loaderProps={{ color: 'red' }}
             variant='outline'
             color='error'
             onClick={handleDeleteOneOrMultiple}

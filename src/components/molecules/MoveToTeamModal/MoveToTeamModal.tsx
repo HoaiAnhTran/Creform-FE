@@ -56,13 +56,15 @@ export const MoveToTeamModal = ({
     });
   };
 
+  const handleCloseModal = () => {
+    onClickCancel();
+    setSelectedTeamId('');
+  };
+
   return (
     <Modal
       {...props}
-      onClose={() => {
-        props.onClose();
-        setSelectedTeamId('');
-      }}
+      onClose={handleCloseModal}
       headerIcon={<RiTeamFill className='text-white' />}
       headerTitle='Move to team'
       body={
@@ -97,8 +99,9 @@ export const MoveToTeamModal = ({
           </Radio.Group>
         </Box>
       }
-      onClickCancel={onClickCancel}
+      onClickCancel={handleCloseModal}
       onClickSubmit={handleMoveToTeam}
+      canSubmit={selectedTeamId !== ''}
       isLoading={isMovingToTeam}
     />
   );

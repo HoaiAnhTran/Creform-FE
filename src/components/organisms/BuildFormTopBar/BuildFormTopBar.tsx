@@ -223,7 +223,7 @@ export const BuildFormTopBar = () => {
               </Text>
               <Text className='text-center text-[15px]'>
                 Your form hasn't been created yet. <br />
-                Please make sure to save this form before leave the page.
+                Please make sure to save the form before leave this page.
               </Text>
             </Box>
           )
