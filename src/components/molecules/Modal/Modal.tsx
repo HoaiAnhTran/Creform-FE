@@ -71,7 +71,7 @@ export const Modal = ({
       {body}
       {(props.hasFooter === undefined || props.hasFooter) && (
         <>
-          <Divider className='mb-3' />
+          <Divider className='mb-4' />
           <Group className='justify-between'>
             <Button
               onClick={props.onClickCancel}

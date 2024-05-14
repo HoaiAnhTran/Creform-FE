@@ -40,7 +40,7 @@ const teamApi = rootApi.injectEndpoints({
         method: 'PATCH',
         data,
       }),
-      invalidatesTags: ['Teams'],
+      invalidatesTags: ['Teams', 'Forms'],
     }),
     deleteTeam: build.mutation<SuccessResponse<unknown>, { id: string }>({
       query: ({ id }) => ({

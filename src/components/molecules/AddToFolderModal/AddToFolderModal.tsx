@@ -79,19 +79,20 @@ export const AddToFolderModal = ({
     });
   };
 
+  const handleCloseModal = () => {
+    onClickCancel();
+    setSelectedFolderId('');
+  };
+
   return (
     <Modal
       {...props}
-      onClose={() => {
-        props.onClose();
-        setSelectedFolderId('');
-      }}
+      onClose={handleCloseModal}
       headerIcon={<FaFolderPlus className='text-white' />}
       headerTitle='Add to folder'
       body={
         <Box className='px-3 py-8'>
           <Radio.Group
-            defaultValue={''}
             value={selectedFolderId}
             onChange={(value: string) => {
               setSelectedFolderId(value);
@@ -123,8 +124,9 @@ export const AddToFolderModal = ({
           </Radio.Group>
         </Box>
       }
-      onClickCancel={onClickCancel}
-      onClickSubmit={() => handleAddToFolder()}
+      onClickCancel={handleCloseModal}
+      onClickSubmit={handleAddToFolder}
+      canSubmit={selectedFolderId !== ''}
       isLoading={isAddingToFolder}
     />
   );

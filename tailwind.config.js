@@ -61,6 +61,7 @@ export default {
         toggleOn: '#92df2e',
         toggleOff: '#e8edee',
         activeTabBackground: '#8ad56c',
+        scrollbarThumbBgColor: '#9e9e9e70',
       },
       height: {
         headerHeight: '70px',

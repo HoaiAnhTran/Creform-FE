@@ -34,8 +34,7 @@ export const InviteMemberModal = ({
     createInvitation({ teamId: teamId, email: value.email }).then((res) => {
       if ('data' in res) {
         toastify.displaySuccess(res.data.message);
-        handleResetForm();
-        onClickCancel();
+        handleCloseModal();
         return;
       }
       if (res.error as ErrorResponse)
@@ -47,6 +46,11 @@ export const InviteMemberModal = ({
     setFieldValue(INVITE_MEMBER_FORM_FIELD.EMAIL, '');
     setFieldError(INVITE_MEMBER_FORM_FIELD.EMAIL, '');
     setFieldTouched(INVITE_MEMBER_FORM_FIELD.EMAIL, false);
+  };
+
+  const handleCloseModal = () => {
+    handleResetForm();
+    onClickCancel();
   };
 
   const {
@@ -67,10 +71,7 @@ export const InviteMemberModal = ({
   return (
     <Modal
       {...props}
-      onClose={() => {
-        props.onClose();
-        handleResetForm();
-      }}
+      onClose={handleCloseModal}
       headerIcon={<IoPersonAdd className='text-white' />}
       headerTitle='Invite Member'
       body={
@@ -87,7 +88,7 @@ export const InviteMemberModal = ({
           )}
         </Stack>
       }
-      onClickCancel={onClickCancel}
+      onClickCancel={handleCloseModal}
       onClickSubmit={handleSubmit}
       submitButtonProps={{
         title: 'Send Invitation',

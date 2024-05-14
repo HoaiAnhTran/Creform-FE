@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { Stack, Table, Text } from '@mantine/core';
+import { ScrollArea, Stack, Table, Text } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { useDeleteInvitationMutation } from '@/redux/api/invitationApi';
@@ -21,6 +22,8 @@ export const PendingInvitationsTable = ({
 
   const { data: myProfile } = useGetMyProfileQuery({});
 
+  const [deletedInvitationId, setDeletedInvitationId] = useState<string>('');
+
   const [deleteInvitation, { isLoading: isInvitationDeleting }] =
     useDeleteInvitationMutation();
 
@@ -40,58 +43,73 @@ export const PendingInvitationsTable = ({
       <Text className='text-[26px] font-semibold text-ocean-green-600'>
         Pending Invitations
       </Text>
-      <Table className='text-sm'>
-        <Table.Thead>
-          <Table.Tr className='[&>th]:py-4 [&>th]:font-semibold [&>th]:text-slate-800'>
-            <Table.Th>Email</Table.Th>
-            <Table.Th>Invited On</Table.Th>
-            <Table.Th>Invited By</Table.Th>
-            <Table.Th></Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {invitations.length > 0 ? (
-            invitations.map((invitation) => (
-              <Table.Tr key={invitation.id} className='border-0 [&>td]:py-4'>
-                <Table.Td>{invitation.email}</Table.Td>
-                <Table.Td>
-                  {formatDate(invitation.createdAt, 'MMM D, YYYY HH:mm:ss A')}
-                </Table.Td>
-                <Table.Td>
-                  {invitation.creator.email === myProfile?.email
-                    ? 'Me'
-                    : invitation.creator.username}
-                </Table.Td>
-                <Table.Td className='flex justify-center'>
-                  {invitation.creator.email === myProfile?.email ? (
-                    <Button
-                      size='sm'
-                      title='Cancel Invitation'
-                      variant='light'
-                      color='error'
-                      leftSection={<IoClose size={16} />}
-                      onClick={() => handleDeleteInvitation(invitation.id)}
-                      loading={isInvitationDeleting}
-                      classNames={{
-                        section: 'mr-1',
-                      }}
-                    />
-                  ) : null}
+
+      <ScrollArea
+        className='relative h-full w-full'
+        classNames={{
+          scrollbar: 'mt-[52px]',
+          thumb: 'bg-scrollbarThumbBgColor',
+        }}
+      >
+        <Table className='text-sm'>
+          <Table.Thead className='sticky top-0 bg-ocean-green-50'>
+            <Table.Tr className='border-0 [&>th]:py-4 [&>th]:font-semibold [&>th]:text-slate-800'>
+              <Table.Th>Email</Table.Th>
+              <Table.Th>Invited On</Table.Th>
+              <Table.Th>Invited By</Table.Th>
+              <Table.Th></Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {invitations.length > 0 ? (
+              invitations.map((invitation) => (
+                <Table.Tr key={invitation.id} className='border-0 [&>td]:py-4'>
+                  <Table.Td>{invitation.email}</Table.Td>
+                  <Table.Td>
+                    {formatDate(invitation.createdAt, 'MMM D, YYYY HH:mm:ss A')}
+                  </Table.Td>
+                  <Table.Td>
+                    {invitation.creator.email === myProfile?.email
+                      ? 'Me'
+                      : invitation.creator.username}
+                  </Table.Td>
+                  <Table.Td className='flex justify-center'>
+                    {invitation.creator.email === myProfile?.email ? (
+                      <Button
+                        size='sm'
+                        title='Cancel Invitation'
+                        variant='light'
+                        color='error'
+                        leftSection={<IoClose size={16} />}
+                        onClick={() => {
+                          setDeletedInvitationId(invitation.id);
+                          handleDeleteInvitation(invitation.id);
+                        }}
+                        disabled={
+                          isInvitationDeleting &&
+                          deletedInvitationId === invitation.id
+                        }
+                        classNames={{
+                          section: 'mr-1',
+                        }}
+                      />
+                    ) : null}
+                  </Table.Td>
+                </Table.Tr>
+              ))
+            ) : (
+              <Table.Tr className='border-0'>
+                <Table.Td
+                  className='px-[10px] py-4 text-center text-sm text-slate-500'
+                  colSpan={3}
+                >
+                  No pending invitations found.
                 </Table.Td>
               </Table.Tr>
-            ))
-          ) : (
-            <Table.Tr className='border-0'>
-              <Table.Td
-                className='px-[10px] py-4 text-center text-sm text-slate-500'
-                colSpan={3}
-              >
-                No pending invitations found.
-              </Table.Td>
-            </Table.Tr>
-          )}
-        </Table.Tbody>
-      </Table>
+            )}
+          </Table.Tbody>
+        </Table>
+      </ScrollArea>
     </Stack>
   );
 };

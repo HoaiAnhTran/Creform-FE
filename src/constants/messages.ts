@@ -14,6 +14,8 @@ export const MESSAGES = {
   PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
   UPDATE_PROFILE_SUCCESS: 'Update profile successfully',
   CHANGE_PASSWORD_SUCCESS: 'Change password successfully',
+  NO_FILE_CHOSEN: 'No file chosen',
+  ONLY_SUPPORT_WORD_FILES: 'Support only Word files (.doc, .docx)',
   ONLY_SUPPORT_IMAGE_FILE_TYPES:
     'Support only image file types (.png, .jpg, .jpeg)',
   ONLY_SUPPORT_DOCUMENT_FILE_TYPES:
@@ -31,4 +33,7 @@ export const MESSAGES = {
   INVALID_GOOGLE_FORMS_URL: 'Invalid Google Forms URL',
   IMPORT_FROM_GG_FORMS_SUCCESS: 'Import form from Google Forms successfully',
   IMPORT_FROM_GG_FORMS_FAILED: 'Import form from Google Forms failed',
+  AUTO_GENERATE_FORM_SUCCESS: 'Form has been successfully auto-generated',
+  AUTO_GENERATE_FORM_FAILED:
+    'Failed to generate form automatically. Please re-generate.',
 } as const;

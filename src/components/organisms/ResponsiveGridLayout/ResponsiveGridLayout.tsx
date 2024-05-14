@@ -12,7 +12,7 @@ import {
   defaultFullnameConfig,
   defaultHeadingConfig,
   defaultMultipleChoiceConfig,
-  defaultNumberPhoneConfig,
+  defaultPhoneConfig,
   defaultScaleRatingConfig,
   defaultSingleChoiceConfig,
   defaultSubmitConfig,
@@ -248,7 +248,7 @@ export const ResponsiveGridLayout = ({
           id: uid,
           type: ElementType.PHONE,
           gridSize: getGridSize(currentItem),
-          config: defaultNumberPhoneConfig,
+          config: defaultPhoneConfig,
           fields: [
             {
               id: uuidv4(),

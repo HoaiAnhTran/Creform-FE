@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { FaFileCircleCheck } from 'react-icons/fa6';
-import { IoCloseOutline, IoCloudUpload } from 'react-icons/io5';
-import { ActionIcon, Box, Group, Progress, Text } from '@mantine/core';
+import { IoCloudUpload } from 'react-icons/io5';
+import { Box, Progress, Text } from '@mantine/core';
 import {
   ErrorMessage,
   FieldInputProps,
@@ -12,7 +11,9 @@ import {
 import { ALLOWED_DOCUMENT_FILE_TYPES, MESSAGES } from '@/constants';
 import { useUploadDocumentMutation } from '@/redux/api/uploadApi';
 import { ErrorResponse } from '@/types';
-import { cn, toastify } from '@/utils';
+import { cn, getFileSize, toastify } from '@/utils';
+
+import { UploadedFilePreview } from '../UploadedFilePreview';
 
 interface FileUploadProps {
   handleChange?: (
@@ -95,14 +96,7 @@ export const FileUpload = (props: FileUploadProps) => {
 
   const uploadedFileSize: string = useMemo(() => {
     if (!uploadedFile) return '';
-
-    if (uploadedFile.size < 1024) {
-      return `${uploadedFile.size} Bytes`;
-    }
-    if (uploadedFile.size > 1048576) {
-      return `${Math.ceil(uploadedFile.size / 1048576)} MB`;
-    }
-    return `${Math.ceil(uploadedFile.size / 1024)} KB`;
+    return getFileSize(uploadedFile);
   }, [uploadedFile]);
 
   const handleClearUploadedFile = () => {
@@ -121,34 +115,22 @@ export const FileUpload = (props: FileUploadProps) => {
       />
 
       {uploadedFile ? (
-        <Group className='h-16 flex-nowrap items-center justify-between gap-3 rounded-lg bg-ocean-green-50 px-4 py-3'>
-          <FaFileCircleCheck size={26} className='text-ocean-green-500' />
-          <div className='flex flex-col items-start justify-between gap-0.5'>
-            <Text className='w-[100px] truncate text-[15px] font-semibold text-ocean-green-500'>
-              {uploadedFile.name}
-            </Text>
-            <Text className='text-xs text-slate-400'>{uploadedFileSize}</Text>
-          </div>
-          <Progress color='ocean-green.5' value={100} className='w-[300px]' />
-          <ActionIcon
-            variant='transparent'
-            onClick={handleClearUploadedFile}
-            className='text-slate-400 hover:text-slate-500'
-          >
-            <IoCloseOutline size={19} />
-          </ActionIcon>
-        </Group>
+        <UploadedFilePreview
+          fileName={uploadedFile.name}
+          fileSize={uploadedFileSize}
+          handleClearUploadedFile={handleClearUploadedFile}
+        />
       ) : (
         <Box
           className={cn(
-            'flex min-h-16 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-500 bg-slate-100 p-4',
+            'flex min-h-16 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-500 bg-slate-100 p-4',
             {
-              'cursor-pointer': !readOnly,
+              'cursor-default': readOnly || isUploadingDocument,
             },
           )}
           component='button'
           type='button'
-          disabled={readOnly}
+          disabled={readOnly || isUploadingDocument}
           onClick={handleClickUploadFile}
         >
           {isUploadingDocument ? (

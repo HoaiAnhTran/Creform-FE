@@ -7,7 +7,7 @@ interface UserAvatarProps extends AvatarProps {
   defaultIconSize?: string | number;
 }
 
-const AVATAR_SIZE = 38;
+const AVATAR_SIZE = 40;
 
 export const UserAvatar = forwardRef<HTMLDivElement, UserAvatarProps>(
   ({ avatarUrl, defaultIconSize = 20, ...props }: UserAvatarProps, ref) =>

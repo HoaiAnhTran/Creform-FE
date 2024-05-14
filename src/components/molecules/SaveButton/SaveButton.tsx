@@ -27,6 +27,7 @@ export const SaveButton = ({
       arrowSize={6}
       withArrow
       offset={12}
+      color='gray.8'
     >
       <UnstyledButton
         type='submit'
