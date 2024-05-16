@@ -66,8 +66,8 @@ export const BuildFormHeader = () => {
     [form.updatedAt],
   );
 
-  const handleLogout = () => {
-    httpClient.logout();
+  const handleLogout = async () => {
+    await httpClient.logout();
     navigate(PATH.ROOT_PAGE);
   };
 
