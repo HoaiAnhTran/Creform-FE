@@ -33,8 +33,8 @@ export const SignupPage = () => {
     const { username, email, password } = values;
     signUpUser({ username, email, password }).then((res) => {
       if ('data' in res) {
-        httpClient.setToken(res.data.data.token);
-        setAccessTokenToLS(res.data.data.token);
+        httpClient.setToken(res.data.data.accessToken);
+        setAccessTokenToLS(res.data.data.accessToken);
         close();
         if (hasInvitationTokenInLS()) {
           acceptInvitation({ token: getInvitationTokenFromLS() }).then(

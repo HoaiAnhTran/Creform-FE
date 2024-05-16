@@ -23,8 +23,8 @@ export const Header = () => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    httpClient.logout();
+  const handleLogout = async () => {
+    await httpClient.logout();
     navigate(PATH.ROOT_PAGE);
   };
 

@@ -3,6 +3,8 @@ export const API_URL = {
   SIGN_UP: '/auth/signup',
   FORGOT_PASSWORD: '/auth/forgot-password',
   RESET_PASSWORD: '/auth/reset-password',
+  REFRESH_TOKEN: '/auth/refresh-token',
+  LOGOUT: '/auth/logout',
   USERS: '/users',
   FORMS: '/forms',
   FOLDERS: '/folders',

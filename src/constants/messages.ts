@@ -34,6 +34,6 @@ export const MESSAGES = {
   IMPORT_FROM_GG_FORMS_SUCCESS: 'Import form from Google Forms successfully',
   IMPORT_FROM_GG_FORMS_FAILED: 'Import form from Google Forms failed',
   AUTO_GENERATE_FORM_SUCCESS: 'Form has been successfully auto-generated',
-  AUTO_GENERATE_FORM_FAILED:
-    'Failed to generate form automatically. Please re-generate.',
+  AUTO_GENERATE_FORM_FAILED: 'Something went wrong. Please generate again.',
+  SESSION_EXPIRED: 'Your session has expired. Please log in again.',
 } as const;
