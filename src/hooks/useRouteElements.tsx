@@ -22,20 +22,26 @@ import { PublicPage } from '@/pages/PublicPage';
 import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { TeamPage } from '@/pages/TeamPage';
-import { getAccessTokenFromLS } from '@/utils';
+import { checkIsUserRole, getAccessTokenFromLS } from '@/utils';
 
 const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
 
 // route required authentication to navigate
 export function ProtectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
-  return isAuthenticated ? <Outlet /> : <Navigate to={PATH.LOGIN_PAGE} />;
+  const isUser = checkIsUserRole(getAccessTokenFromLS());
+  return isAuthenticated && isUser ? (
+    <Outlet />
+  ) : (
+    <Navigate to={PATH.LOGIN_PAGE} />
+  );
 }
 
 // when not authenticated, it will navigate to this route
 export function RejectedRoute() {
   const isAuthenticated = Boolean(getAccessTokenFromLS());
-  return !isAuthenticated ? (
+  const isUser = checkIsUserRole(getAccessTokenFromLS());
+  return !isAuthenticated || !isUser ? (
     <Outlet />
   ) : (
     <Navigate to={PATH.OVERVIEW_PAGE} replace={true} />
