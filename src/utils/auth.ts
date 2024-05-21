@@ -1,6 +1,10 @@
+import { jwtDecode } from 'jwt-decode';
+
+import { ROLES } from '@/constants';
+import { CustomJwtPayload } from '@/types';
+
 export const clearLS = () => {
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('invitation_token');
+  localStorage.clear();
 };
 
 export const setAccessTokenToLS = (accessToken: string) => {
@@ -29,4 +33,13 @@ export const hasInvitationTokenInLS = () =>
 
 export const removeInvitationTokenFromLS = () => {
   localStorage.removeItem('invitation_token');
+};
+
+export const checkIsUserRole = (accessToken: string): boolean => {
+  if (!accessToken) return false;
+  const decoded = jwtDecode<CustomJwtPayload>(accessToken);
+  if (decoded.role === ROLES.USER) {
+    return true;
+  }
+  return false;
 };

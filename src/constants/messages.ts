@@ -36,4 +36,5 @@ export const MESSAGES = {
   AUTO_GENERATE_FORM_SUCCESS: 'Form has been successfully auto-generated',
   AUTO_GENERATE_FORM_FAILED: 'Something went wrong. Please generate again.',
   SESSION_EXPIRED: 'Your session has expired. Please log in again.',
+  REQUIRED_USER_ACCOUNT: 'Please login with your User account',
 } as const;
