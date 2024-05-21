@@ -61,7 +61,7 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
   const [sortStatus, setSortStatus] = useState<
     DataTableSortStatus<ResponseRow>
   >({
-    columnAccessor: 'id',
+    columnAccessor: 'createdAt',
     direction: 'asc',
   });
 
@@ -92,13 +92,6 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
 
   const columns: DataTableColumn<ResponseRow>[] = useMemo(
     () => [
-      {
-        accessor: 'id',
-        title: 'ID',
-        titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
-        cellsClassName: 'h-10 text-center',
-        ...columnProps,
-      },
       {
         accessor: 'createdAt',
         title: 'Submission Date',
