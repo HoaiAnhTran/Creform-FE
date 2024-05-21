@@ -22,7 +22,7 @@ const formApi = rootApi.injectEndpoints({
       }),
       transformResponse: (response: SuccessResponse<GetFormsResponse>) =>
         response.data,
-      providesTags: ['Forms', 'Responses'],
+      providesTags: ['Forms'],
     }),
     getFormDetails: build.query<FormDetailsResponse, { id: string }>({
       query: ({ id }) => ({

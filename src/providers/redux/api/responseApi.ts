@@ -45,7 +45,7 @@ export const responseApi = rootApi.injectEndpoints({
         method: 'POST',
         data: payload,
       }),
-      invalidatesTags: ['Responses'],
+      invalidatesTags: ['Responses', 'Forms'],
     }),
     deleteOneResponse: build.mutation({
       query: ({

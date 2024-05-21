@@ -79,8 +79,13 @@ export const AutoGenFormModal = ({
           handleCloseModal();
           return;
         }
-        if (res.error as ErrorResponse)
-          toastify.displayError(MESSAGES.AUTO_GENERATE_FORM_FAILED);
+        if (res.error as ErrorResponse) {
+          if ((res.error as ErrorResponse).statusCode === 500) {
+            toastify.displayError(MESSAGES.AUTO_GENERATE_FORM_FAILED);
+            return;
+          }
+          toastify.displayError((res.error as ErrorResponse).message);
+        }
       });
     } else {
       toastify.displayError(MESSAGES.NO_FILE_CHOSEN);

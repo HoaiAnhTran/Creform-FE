@@ -3,6 +3,7 @@ export interface UserProfileResponse {
   username: string;
   email: string;
   avatarUrl: string;
+  role: string;
   organizationLogo: string;
   organizationName: string;
   createdAt: string;
