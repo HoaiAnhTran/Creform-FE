@@ -6,6 +6,7 @@ import { API_URL, MESSAGES, PATH } from '@/constants';
 import { AuthResponse, SuccessResponse } from '@/types';
 
 import { clearLS, getAccessTokenFromLS, setAccessTokenToLS } from './auth';
+import { toastify } from '.';
 
 class Http {
   instance: AxiosInstance;
@@ -40,20 +41,19 @@ class Http {
       async (err) => {
         const originalConfig = err.config;
 
-        // Refresh token was expired
+        // 401 - Refresh token has expired or 403 - Account has been deactivated
         if (
           err.response &&
-          err.response.status === 401 &&
+          (err.response.status === 401 || err.response.status === 403) &&
           originalConfig.url === `${BACK_END_URL}${API_URL.REFRESH_TOKEN}`
         ) {
-          if (confirm(MESSAGES.SESSION_EXPIRED) == true) {
-            await this.logout();
-            window.location.href = PATH.LOGIN_PAGE;
-          }
+          toastify.displayInfo(MESSAGES.SESSION_EXPIRED);
+          await this.logout();
+          window.location.href = PATH.LOGIN_PAGE;
           return;
         }
 
-        // Access token was expired
+        // 401 - Access token has expired or account has been deactivated
         if (
           err.response &&
           err.response.status === 401 &&
