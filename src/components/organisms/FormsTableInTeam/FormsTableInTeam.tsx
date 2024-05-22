@@ -454,7 +454,7 @@ export const FormsTableInTeam = ({
         cellsClassName: 'cursor-pointer hover:bg-ocean-green-100 w-30 h-20 p-0',
       },
     ],
-    [moreOptions],
+    [moreOptions, myProfile],
   );
 
   useEffect(() => {

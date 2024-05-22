@@ -236,7 +236,7 @@ export const FormsTable = () => {
         isHidden: false,
       },
     ],
-    [activeTeam],
+    [activeTeam, myProfile],
   );
 
   const columns: DataTableColumn<FormResponse>[] = useMemo(
@@ -451,7 +451,7 @@ export const FormsTable = () => {
         cellsClassName: 'cursor-pointer hover:bg-ocean-green-100 w-30 h-20 p-0',
       },
     ],
-    [moreOptions],
+    [moreOptions, myProfile],
   );
 
   useEffect(() => {

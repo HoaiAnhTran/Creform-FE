@@ -285,6 +285,7 @@ export const AccountPage = () => {
         ),
       hasEditButton: true,
       isLastItem: false,
+      hidden: false,
     },
     {
       fieldName: UserProfileFields.PASSWORD,
@@ -333,6 +334,7 @@ export const AccountPage = () => {
         ),
       hasEditButton: false,
       isLastItem: false,
+      hidden: false,
     },
     {
       fieldName: UserProfileFields.AVATAR,
@@ -418,6 +420,7 @@ export const AccountPage = () => {
         ),
       hasEditButton: false,
       isLastItem: false,
+      hidden: false,
     },
     {
       fieldName: UserProfileFields.EMAIL,
@@ -441,7 +444,8 @@ export const AccountPage = () => {
           <Text>{myProfile?.email}</Text>
         ),
       hasEditButton: true,
-      isLastItem: false,
+      isLastItem: true,
+      hidden: false,
     },
     {
       fieldName: UserProfileFields.ORGANIZATION_NAME,
@@ -465,6 +469,7 @@ export const AccountPage = () => {
         ),
       hasEditButton: true,
       isLastItem: false,
+      hidden: true,
     },
     {
       fieldName: UserProfileFields.ORGANIZATION_LOGO,
@@ -550,6 +555,7 @@ export const AccountPage = () => {
         ),
       hasEditButton: false,
       isLastItem: true,
+      hidden: true,
     },
   ];
 
@@ -588,18 +594,20 @@ export const AccountPage = () => {
             Update Account and General Information
           </Text>
           <Stack className='w-full gap-5'>
-            {userInfoItems.map((item, index) => (
-              <UserInfoItem
-                key={index}
-                editingFieldName={editingFieldName}
-                handleEdit={handleEdit}
-                handleCancelEdit={handleCancelEdit}
-                fieldName={item.fieldName}
-                content={item.content}
-                hasEditButton={item.hasEditButton}
-                isLastItem={item.isLastItem}
-              />
-            ))}
+            {userInfoItems
+              .filter(({ hidden }) => !hidden)
+              .map((item, index) => (
+                <UserInfoItem
+                  key={index}
+                  editingFieldName={editingFieldName}
+                  handleEdit={handleEdit}
+                  handleCancelEdit={handleCancelEdit}
+                  fieldName={item.fieldName}
+                  content={item.content}
+                  hasEditButton={item.hasEditButton}
+                  isLastItem={item.isLastItem}
+                />
+              ))}
           </Stack>
         </Stack>
       </Stack>
