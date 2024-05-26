@@ -70,6 +70,7 @@ export default {
       },
       boxShadow: {
         whiteShadow: '0 0 1px 2px rgba(225,225,225,0.5)',
+        templateShadow: '0 0 8px 3px rgba(28,28,28,0.1)',
       },
     },
   },

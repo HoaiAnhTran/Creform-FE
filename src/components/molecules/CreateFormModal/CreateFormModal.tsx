@@ -1,17 +1,15 @@
 import { ReactNode } from 'react';
+import { BsFileRichtext } from 'react-icons/bs';
+import { IoAdd } from 'react-icons/io5';
 import { MdPostAdd } from 'react-icons/md';
-import { PiPlusLight } from 'react-icons/pi';
 import {
   ActionIcon,
   Box,
   Group,
-  Image,
   ModalProps as MantineModalProps,
   Stack,
   Text,
 } from '@mantine/core';
-
-import Template from '@/assets/images/template.png';
 
 import { Modal } from '../Modal';
 
@@ -34,12 +32,12 @@ export const CreateFormModal = ({
   const createFormMethods: CreateFormMethodsType[] = [
     {
       title: 'Start from scratch',
-      icon: <PiPlusLight size={60} />,
+      icon: <IoAdd size={60} />,
       handleClick: handleClickStartFromScratch,
     },
     {
       title: 'Use template',
-      icon: <Image src={Template} className='size-16' />,
+      icon: <BsFileRichtext size={60} />,
       handleClick: handleClickUseTemplate,
     },
   ];
@@ -59,7 +57,7 @@ export const CreateFormModal = ({
               <Stack className='items-center gap-5' key={method.title}>
                 <ActionIcon
                   variant='light'
-                  className='flex size-32 items-center justify-center rounded-xl bg-ocean-green-100 p-2 text-ocean-green-500 hover:bg-ocean-green-100 hover:text-ocean-green-500'
+                  className='flex size-32 items-center justify-center rounded-xl bg-ocean-green-100 p-2 text-ocean-green-500 transition-all ease-in hover:-translate-y-[2px] hover:border-ocean-green-400 hover:bg-ocean-green-100 hover:text-ocean-green-500'
                   onClick={method.handleClick}
                 >
                   {method.icon}

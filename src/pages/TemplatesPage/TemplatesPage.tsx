@@ -5,6 +5,7 @@ import { Box, Grid, Image, Stack, Text, UnstyledButton } from '@mantine/core';
 
 import { Button } from '@/atoms/Button';
 import { PATH } from '@/constants';
+import { Loader } from '@/molecules/Loader';
 import { PreviewTemplateModal } from '@/molecules/PreviewTemplateModal';
 import { Header } from '@/organisms/Header';
 import { useGetAllTemplatesQuery } from '@/redux/api/templateApi';
@@ -17,7 +18,8 @@ export const TemplatesPage = () => {
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType('');
 
-  const { data: templates } = useGetAllTemplatesQuery();
+  const { data: templates, isLoading: isLoadingTemplates } =
+    useGetAllTemplatesQuery();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,14 +33,14 @@ export const TemplatesPage = () => {
   }
 
   return (
-    <Box className='h-screen'>
+    <Box className='flex h-screen flex-col justify-start gap-0'>
       <Header />
 
-      <Stack className='w-full items-center justify-start gap-7 px-8 py-7'>
+      <Stack className='w-full flex-1 items-center justify-start gap-14 bg-quarter-pearl-lusta-50 px-8 py-7'>
         <Stack className='w-full items-center justify-center gap-3'>
           <h2 className='font-semibold text-gray-800'>Choose a template</h2>
           <Text className='text-sm text-gray-800'>
-            Use ready-made templates to create a form below or&nbsp;
+            Use ready-made templates below to create a form or&nbsp;
             <span
               className='cursor-pointer text-ocean-green-500 no-underline hover:text-ocean-green-600 hover:no-underline'
               onClick={() =>
@@ -55,15 +57,17 @@ export const TemplatesPage = () => {
           </Text>
         </Stack>
 
-        {templates && templates.length > 0 ? (
+        {isLoadingTemplates ? (
+          <Loader />
+        ) : templates && templates.length > 0 ? (
           <Grid
             gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }}
             className='w-full px-5'
           >
             {templates?.map((template) => (
               <Grid.Col span={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                <Stack className='w-60 cursor-pointer items-center justify-between gap-2.5'>
-                  <Box className='group relative flex size-60 flex-col items-center gap-2 rounded-md bg-slate-100 p-3 transition-all duration-100 ease-linear hover:scale-[105%] hover:shadow-sm'>
+                <Stack className='w-60 cursor-pointer items-center justify-between gap-3'>
+                  <Box className='hover:shadow-templateShadow group relative flex size-60 flex-col items-center gap-2 rounded-md bg-slate-100 p-3 transition-all duration-100 ease-linear hover:scale-[105%]'>
                     <Image
                       src={template.thumbnailUrl}
                       className='flex-1 rounded-md object-cover'
