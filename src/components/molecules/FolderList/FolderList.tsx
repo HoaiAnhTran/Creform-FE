@@ -23,6 +23,7 @@ import {
 import { cn, toastify } from '@/utils';
 
 import { ConfirmationModal } from '../ComfirmationModal';
+import { CreateFormModal } from '../CreateFormModal';
 import { Loader } from '../Loader';
 import { ManageFolderModal } from '../ManageFolderModal';
 
@@ -162,11 +163,10 @@ export const FolderList = ({
                   <Menu.Item
                     className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
                     leftSection={<RiAddBoxFill />}
-                    onClick={() =>
-                      navigate(PATH.BUILD_FORM_PAGE, {
-                        state: { folderId: folder.id, teamId },
-                      })
-                    }
+                    onClick={() => {
+                      openModal(ModalTypes.CREATE_FORM);
+                      setFolderId(folder.id);
+                    }}
                   >
                     Add new form
                   </Menu.Item>
@@ -197,6 +197,27 @@ export const FolderList = ({
           );
         })
       )}
+
+      <CreateFormModal
+        opened={modalType === ModalTypes.CREATE_FORM}
+        onClose={closeModal}
+        handleClickStartFromScratch={() =>
+          navigate(PATH.BUILD_FORM_PAGE, {
+            state: {
+              folderId: folderId === '' ? undefined : folderId,
+              teamId: teamId === '' ? undefined : teamId,
+            },
+          })
+        }
+        handleClickUseTemplate={() =>
+          navigate(PATH.TEMPLATES_PAGE, {
+            state: {
+              folderId: folderId === '' ? undefined : folderId,
+              teamId: teamId === '' ? undefined : teamId,
+            },
+          })
+        }
+      />
       <ManageFolderModal
         opened={modalType === ModalTypes.UPDATE_FOLDER}
         onClose={closeModal}

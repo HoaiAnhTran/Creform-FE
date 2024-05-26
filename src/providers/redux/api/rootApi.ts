@@ -13,5 +13,6 @@ export const rootApi = createApi({
     'Teams',
     'Responses',
     'Invitations',
+    'Templates',
   ],
 });

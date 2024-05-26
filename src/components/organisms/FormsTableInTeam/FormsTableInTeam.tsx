@@ -5,7 +5,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
 import { PiPauseCircleFill } from 'react-icons/pi';
-import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
+import { RiFolderAddFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import {
   ActionIcon,
@@ -211,7 +211,7 @@ export const FormsTableInTeam = ({
       },
       {
         text: 'Move to My Forms',
-        icon: <RiTeamFill size={18} />,
+        icon: <MdDriveFileMoveRtl size={18} />,
         handleClick: () => {
           openModal(ModalTypes.REMOVE_FROM_TEAM);
         },

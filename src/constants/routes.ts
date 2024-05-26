@@ -13,4 +13,5 @@ export const PATH = {
   ACCEPT_INVITATION_PAGE: '/accept-invitation',
   MY_TEAMS_PAGE: '/my-teams/:teamId',
   TEAMS_SETTINGS_PAGE: '/my-teams/:teamId/team-settings',
+  TEMPLATES_PAGE: '/templates',
 };

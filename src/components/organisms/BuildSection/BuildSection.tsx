@@ -41,7 +41,7 @@ export const BuildSection = () => {
   let teamId: string;
   let folderId: string;
 
-  if (!formId && location.state) {
+  if (!isEditForm && location.state) {
     teamId = location.state.teamId;
     folderId = location.state.folderId;
   }

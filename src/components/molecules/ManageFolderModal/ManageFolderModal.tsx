@@ -46,6 +46,7 @@ export const ManageFolderModal = ({
         <Stack className='min-h-[170px] gap-3 px-3 py-8'>
           <Text className='text-base font-semibold'>Folder name</Text>
           <TextInput
+            data-autofocus
             value={folderName}
             placeholder='Type folder name here'
             onChange={(e) => setFolderName(e.target.value)}

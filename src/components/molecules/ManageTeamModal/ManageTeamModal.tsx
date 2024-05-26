@@ -45,6 +45,7 @@ export const ManageTeamModal = ({
         <Stack className='min-h-[170px] gap-3 px-3 py-8'>
           <Text className='text-base font-semibold'>Team name</Text>
           <TextInput
+            data-autofocus
             value={teamName}
             placeholder='Type team name here'
             onChange={(e) => setTeamName(e.target.value)}

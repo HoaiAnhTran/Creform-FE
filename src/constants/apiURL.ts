@@ -17,4 +17,5 @@ export const API_URL = {
   ADD_TO_FOLDER: '/:formId/folder/:folderId/add',
   RESPONSES: '/responses',
   INVITATION: '/invitation',
+  TEMPLATES: '/templates',
 };
