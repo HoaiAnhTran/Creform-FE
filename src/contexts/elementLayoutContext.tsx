@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { defaultHeadingConfig, defaultSubmitConfig } from '@/constants';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
+import { useGetTemplateDetailsQuery } from '@/redux/api/templateApi';
 import { ElementItem, ElementType } from '@/types';
 import { addTextToFieldOfElement } from '@/utils';
 
@@ -63,13 +64,19 @@ export const DEFAULT_ELEMENTS: ElementItem[] = [
 export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { pathname } = useLocation();
-
   const { id: formId } = useParams();
+  const { pathname, state } = useLocation();
+
+  const templateId = state?.templateId || '';
 
   const { data: formData } = useGetFormDetailsQuery(
     { id: formId || '' },
     { skip: !formId },
+  );
+
+  const { data: template } = useGetTemplateDetailsQuery(
+    { id: templateId },
+    { skip: !templateId },
   );
 
   const { isEditForm } = useBuildFormContext();
@@ -87,6 +94,11 @@ export const ElementLayoutProvider: React.FC<{ children: ReactNode }> = ({
     setElements(addTextToFieldOfElement(formData).elements as ElementItem[]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
+
+  useEffect(() => {
+    if (isEditForm || !template) return;
+    setElements([...template.elements]);
+  }, [isEditForm, template]);
 
   return (
     <ElementLayoutContext.Provider

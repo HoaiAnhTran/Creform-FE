@@ -25,6 +25,7 @@ import { TeamPage } from '@/pages/TeamPage';
 import { checkIsUserRole, getAccessTokenFromLS } from '@/utils';
 
 const ResponsesPage = lazy(() => import('@/pages/ResponsesPage'));
+const TemplatesPage = lazy(() => import('@/pages/TemplatesPage'));
 
 // route required authentication to navigate
 export function ProtectedRoute() {
@@ -163,6 +164,14 @@ export function useRouteElements() {
         {
           path: PATH.TEAMS_SETTINGS_PAGE,
           element: <TeamPage />,
+        },
+        {
+          path: PATH.TEMPLATES_PAGE,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <TemplatesPage />
+            </Suspense>
+          ),
         },
       ],
     },

@@ -207,7 +207,7 @@ export const FormsTable = () => {
       },
       {
         text: 'Move to My Forms',
-        icon: <RiTeamFill size={18} />,
+        icon: <MdDriveFileMoveRtl size={18} />,
         handleClick: () => {
           openModal(ModalTypes.REMOVE_FROM_TEAM);
         },

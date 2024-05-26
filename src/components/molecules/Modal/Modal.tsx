@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 
 import { Button, ButtonProps } from '@/atoms/Button';
+import { cn } from '@/utils';
 
 interface ModalProps extends MantineModalProps {
   headerTitle: string;
@@ -22,6 +23,7 @@ interface ModalProps extends MantineModalProps {
   isLoading: boolean;
   cancelButtonProps?: ButtonProps;
   submitButtonProps?: ButtonProps;
+  headerTitleClassName?: string;
 }
 
 interface NoFooterModalProps
@@ -43,6 +45,7 @@ export const Modal = ({
   body,
   canSubmit = true,
   isLoading,
+  headerTitleClassName,
   ...props
 }: ModalProps | NoFooterModalProps) => (
   <MantineModal
@@ -55,7 +58,11 @@ export const Modal = ({
             {headerIcon}
           </Box>
         )}
-        <Text className='text-lg font-bold capitalize'>{headerTitle}</Text>
+        <Text
+          className={cn('text-lg font-bold capitalize', headerTitleClassName)}
+        >
+          {headerTitle}
+        </Text>
       </Group>
     }
     {...props}

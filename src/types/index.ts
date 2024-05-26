@@ -9,5 +9,6 @@ export * from './invitations';
 export * from './modalType';
 export * from './responses';
 export * from './team';
+export * from './templates';
 export * from './uploadFile';
 export * from './users';

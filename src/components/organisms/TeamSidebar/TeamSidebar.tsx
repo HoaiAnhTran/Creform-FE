@@ -13,6 +13,7 @@ import { Button } from '@/atoms/Button';
 import { defaultFormsParams, PATH } from '@/constants';
 import { useFormParams } from '@/contexts';
 import { ConfirmationModal } from '@/molecules/ComfirmationModal';
+import { CreateFormModal } from '@/molecules/CreateFormModal';
 import { ManageFolderModal } from '@/molecules/ManageFolderModal';
 import { initialState, SelectedOptionType } from '@/pages/TeamPage';
 import {
@@ -126,17 +127,7 @@ export const TeamSidebar = ({
           size='md'
           title='Create form'
           className='w-full font-bold uppercase'
-          onClick={() => {
-            navigate(PATH.BUILD_FORM_PAGE, {
-              state: {
-                folderId:
-                  selectedOption.folder.id === ''
-                    ? undefined
-                    : selectedOption.folder.id,
-                teamId: team.id,
-              },
-            });
-          }}
+          onClick={() => openModal(ModalTypes.CREATE_FORM)}
         />
       </Box>
 
@@ -222,11 +213,9 @@ export const TeamSidebar = ({
                   <Menu.Item
                     className='mb-1 mt-0.5 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
                     leftSection={<RiAddBoxFill />}
-                    onClick={() =>
-                      navigate(PATH.BUILD_FORM_PAGE, {
-                        state: { folderId: folder.id, teamId: team.id },
-                      })
-                    }
+                    onClick={() => {
+                      openModal(ModalTypes.CREATE_FORM);
+                    }}
                   >
                     Add new form
                   </Menu.Item>
@@ -317,6 +306,32 @@ export const TeamSidebar = ({
         <Divider />
       </Box>
 
+      <CreateFormModal
+        opened={calledModalType === ModalTypes.CREATE_FORM}
+        onClose={closeModal}
+        handleClickStartFromScratch={() =>
+          navigate(PATH.BUILD_FORM_PAGE, {
+            state: {
+              folderId:
+                selectedOption.folder.id === ''
+                  ? undefined
+                  : selectedOption.folder.id,
+              teamId: team.id === '' ? undefined : team.id,
+            },
+          })
+        }
+        handleClickUseTemplate={() =>
+          navigate(PATH.TEMPLATES_PAGE, {
+            state: {
+              folderId:
+                selectedOption.folder.id === ''
+                  ? undefined
+                  : selectedOption.folder.id,
+              teamId: team.id === '' ? undefined : team.id,
+            },
+          })
+        }
+      />
       <ManageFolderModal
         opened={calledModalType === ModalTypes.CREATE_FOLDER}
         onClose={closeModal}

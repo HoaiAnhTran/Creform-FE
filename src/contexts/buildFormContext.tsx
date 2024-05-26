@@ -8,6 +8,7 @@ import React, {
 import { useLocation, useParams } from 'react-router-dom';
 
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
+import { useGetTemplateDetailsQuery } from '@/redux/api/templateApi';
 import { FormRequest } from '@/types';
 
 interface BuildFormContextType {
@@ -67,7 +68,9 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { id: formId } = useParams();
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
+
+  const templateId = state?.templateId || '';
 
   const isEditForm = Boolean(formId);
   const isPublishSection = pathname.includes('publish');
@@ -82,19 +85,34 @@ export const BuildFormContextProvider: React.FC<{ children: ReactNode }> = ({
     pathname.includes('preview'),
   );
 
-  const { data } = useGetFormDetailsQuery(
+  const { data: formData } = useGetFormDetailsQuery(
     { id: formId || '' },
     { skip: !formId },
   );
 
-  const initLogo = data?.logoUrl || '';
-  const initTitle = data?.title || DEFAULT_FORM_TITLE;
+  const { data: template } = useGetTemplateDetailsQuery(
+    { id: templateId },
+    { skip: !templateId },
+  );
+
+  const initLogo = formData?.logoUrl || '';
+  const initTitle = formData?.title || DEFAULT_FORM_TITLE;
 
   useEffect(() => {
-    if (!data) return;
-    setForm((prev) => ({ ...prev, ...data }));
+    if (!formData) return;
+    setForm((prev) => ({ ...prev, ...formData }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [formData]);
+
+  useEffect(() => {
+    if (isEditForm || !template) return;
+    setCurrentTitle(template.name);
+    setForm((prev) => ({
+      ...prev,
+      title: template.name,
+      elements: template.elements,
+    }));
+  }, [isEditForm, template]);
 
   useEffect(() => {
     setCurrentLogo(initLogo);

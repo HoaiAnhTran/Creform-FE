@@ -13,6 +13,8 @@ export enum ModalTypes {
   INVITE_MEMBER = 'inviteMember',
   IMPORT_FORM = 'importForm',
   AUTO_GEN_FORM = 'autoGenerateForm',
+  CREATE_FORM = 'createForm',
+  PREVIEW_TEMPLATE = 'previewTemplate',
 }
 
 export type ModalType =
@@ -29,4 +31,6 @@ export type ModalType =
   | ModalTypes.REMOVE_FROM_TEAM
   | ModalTypes.INVITE_MEMBER
   | ModalTypes.IMPORT_FORM
-  | ModalTypes.AUTO_GEN_FORM;
+  | ModalTypes.AUTO_GEN_FORM
+  | ModalTypes.CREATE_FORM
+  | ModalTypes.PREVIEW_TEMPLATE;

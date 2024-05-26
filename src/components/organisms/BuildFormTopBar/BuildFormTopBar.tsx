@@ -58,7 +58,7 @@ export const BuildFormTopBar = () => {
 
   const navigate = useNavigate();
 
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
 
   const { id: formId } = useParams();
 
@@ -101,15 +101,17 @@ export const BuildFormTopBar = () => {
       : navigate(pathname.concat('/preview'));
   };
 
+  const isFormInTeam: boolean =
+    formData?.teamId || state?.teamId ? true : false;
+
   const handleClickBackButton = () => {
     if (isEditForm && haveUnsavedChanges) {
       openConfirmModal();
       return;
     }
-    if (formData?.teamId) {
-      navigate(
-        PATH.MY_TEAMS_PAGE.replace(':teamId', formData.teamId.toString()),
-      );
+    if (isFormInTeam) {
+      const teamId: string = formData?.teamId || state.teamId;
+      navigate(PATH.MY_TEAMS_PAGE.replace(':teamId', teamId));
     } else {
       navigate(PATH.OVERVIEW_PAGE);
     }
@@ -171,9 +173,7 @@ export const BuildFormTopBar = () => {
           className='relative'
         >
           <NavLink
-            label={
-              formData?.teamId ? 'Back to Team Workspace' : 'Back to My Forms'
-            }
+            label={isFormInTeam ? 'Back to Team Workspace' : 'Back to My Forms'}
             className='absolute left-10 top-[50%] w-max -translate-y-1/2 bg-transparent text-sm text-quarter-pearl-lusta-50 hover:bg-transparent'
             leftSection={<IoArrowBackOutline size={17} />}
             onClick={handleClickBackButton}

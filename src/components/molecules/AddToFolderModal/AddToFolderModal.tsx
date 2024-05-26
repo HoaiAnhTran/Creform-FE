@@ -76,6 +76,7 @@ export const AddToFolderModal = ({
         toastify.displayError(`${errorCount} form(s) failed to add to folder`);
       }
       setSelectedRecords([]);
+      setSelectedFolderId('');
     });
   };
 

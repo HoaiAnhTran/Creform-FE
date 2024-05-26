@@ -53,6 +53,7 @@ export const MoveToTeamModal = ({
         toastify.displayError(`${errorCount} form(s) failed to move to team`);
       }
       setSelectedRecords([]);
+      setSelectedTeamId('');
     });
   };
 
