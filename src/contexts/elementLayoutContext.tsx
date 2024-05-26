@@ -8,7 +8,12 @@ import React, {
 import { useLocation, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { defaultHeadingConfig, defaultSubmitConfig } from '@/constants';
+import {
+  defaultHeadingConfig,
+  defaultHeadingHeightWidth,
+  defaultSubmitConfig,
+  defaultSubmitHeightWidth,
+} from '@/constants';
 import { useGetFormDetailsQuery } from '@/redux/api/formApi';
 import { useGetTemplateDetailsQuery } from '@/redux/api/templateApi';
 import { ElementItem, ElementType } from '@/types';
@@ -41,8 +46,7 @@ export const DEFAULT_ELEMENTS: ElementItem[] = [
     gridSize: {
       x: 0,
       y: 0,
-      w: 12,
-      h: 4,
+      ...defaultHeadingHeightWidth,
     },
     config: defaultHeadingConfig,
     fields: [],
@@ -53,8 +57,7 @@ export const DEFAULT_ELEMENTS: ElementItem[] = [
     gridSize: {
       x: 0,
       y: 4,
-      w: 12,
-      h: 4,
+      ...defaultSubmitHeightWidth,
     },
     config: defaultSubmitConfig,
     fields: [],
