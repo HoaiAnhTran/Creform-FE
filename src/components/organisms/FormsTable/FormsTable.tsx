@@ -460,11 +460,16 @@ export const FormsTable = () => {
   }, [params]);
 
   useEffect(() => {
-    setParams({
-      ...defaultFormsParams,
+    setParams({ ...defaultFormsParams });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setParams((prevState) => ({
+      ...prevState,
       folderId: activeFolder !== '' ? activeFolder : undefined,
       teamId: activeTeam !== '' ? activeTeam : undefined,
-    });
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFolder, activeTeam]);
 

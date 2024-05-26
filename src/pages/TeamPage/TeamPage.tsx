@@ -110,6 +110,7 @@ export const TeamPage = () => {
                 selectedRecords={selectedRecords}
                 setSelectedRecords={setSelectedRecords}
                 folderId={selectedOption.folder.id}
+                selectedOption={selectedOption}
               />
             </Stack>
           </Box>

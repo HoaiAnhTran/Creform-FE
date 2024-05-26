@@ -31,6 +31,7 @@ import { PATH } from '@/constants/routes';
 import { useFormParams } from '@/contexts';
 import { AddToFolderModal } from '@/molecules/AddToFolderModal';
 import { ConfirmationModal } from '@/molecules/ComfirmationModal';
+import { SelectedOptionType } from '@/pages/TeamPage';
 import {
   useAddToFavouritesMutation,
   useDeleteFormMutation,
@@ -55,12 +56,14 @@ interface FormsTableInTeam {
   selectedRecords: FormResponse[];
   setSelectedRecords: React.Dispatch<React.SetStateAction<FormResponse[]>>;
   folderId: string;
+  selectedOption: SelectedOptionType;
 }
 export const FormsTableInTeam = ({
   team,
   selectedRecords,
   setSelectedRecords,
   folderId,
+  selectedOption,
 }: FormsTableInTeam) => {
   const [modalType, setModalType] = useState<ModalType | ''>('');
   const openModal = (type: ModalType) => setModalType(type);
@@ -463,13 +466,20 @@ export const FormsTableInTeam = ({
   }, [params]);
 
   useEffect(() => {
-    setParams({
-      ...defaultFormsParams,
+    setParams({ ...defaultFormsParams });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setParams((prevState) => ({
+      ...prevState,
+      isDeleted: selectedOption.isTrash ? 1 : 0,
+      isFavourite: selectedOption.isFavorites ? 1 : 0,
       teamId: team.id !== '' ? team.id : undefined,
       folderId: folderId !== '' ? folderId : undefined,
-    });
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [team, folderId]);
+  }, [team, folderId, selectedOption]);
 
   return (
     <>
