@@ -67,7 +67,7 @@ export const TemplatesPage = () => {
             {templates?.map((template) => (
               <Grid.Col span={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                 <Stack className='w-60 cursor-pointer items-center justify-between gap-3'>
-                  <Box className='hover:shadow-templateShadow group relative flex size-60 flex-col items-center gap-2 rounded-md bg-slate-100 p-3 transition-all duration-100 ease-linear hover:scale-[105%]'>
+                  <Box className='group relative flex size-60 flex-col items-center gap-2 rounded-md bg-slate-100 p-3 transition-all duration-100 ease-linear hover:scale-[105%] hover:shadow-templateShadow'>
                     <Image
                       src={template.thumbnailUrl}
                       className='flex-1 rounded-md object-cover'

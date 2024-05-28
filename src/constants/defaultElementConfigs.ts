@@ -1,3 +1,4 @@
+import { INPUT_TABLE_TYPE } from '@/molecules/InputTablePropertiesConfig';
 import {
   AddressConfig,
   DatePickerConfig,
@@ -6,6 +7,7 @@ import {
   FileUploadConfig,
   FullnameConfig,
   HeadingConfig,
+  InputTableConfig,
   MultipleChoiceConfig,
   NumberPhoneConfig,
   ScaleRatingConfig,
@@ -124,6 +126,14 @@ export const defaultFileUploadConfig: FileUploadConfig = {
   sublabel: 'Please upload a file',
 };
 
+export const defaultInputTableConfig: InputTableConfig = {
+  fieldLabel: 'Type a question',
+  required: false,
+  inputType: INPUT_TABLE_TYPE.RADIO,
+  rows: ['Service Quality', 'Cleanliness', 'Responsiveness', 'Friendliness'],
+  columns: ['Not Satisfied', 'Neutral', 'Satisfied'],
+};
+
 export const defaultElementHeightWidth = {
   h: 5,
   w: 12,
@@ -181,5 +191,10 @@ export const defaultMultipleChoiceHeightWidth = {
 
 export const defaultFileUploadHeightWidth = {
   h: 7,
+  w: 12,
+};
+
+export const defaultInputTableHeightWidth = {
+  h: 8,
   w: 12,
 };

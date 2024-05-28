@@ -11,6 +11,7 @@ import {
   defaultFileUploadConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
+  defaultInputTableConfig,
   defaultMultipleChoiceConfig,
   defaultPhoneConfig,
   defaultScaleRatingConfig,
@@ -292,6 +293,19 @@ export const ResponsiveGridLayout = ({
             {
               id: uuidv4(),
               name: 'fileUpload',
+            },
+          ],
+        };
+      case ElementType.INPUT_TABLE:
+        return {
+          id: uid,
+          type: ElementType.INPUT_TABLE,
+          gridSize: getGridSize(currentItem),
+          config: defaultInputTableConfig,
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'inputTable',
             },
           ],
         };

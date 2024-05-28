@@ -135,6 +135,9 @@ export const ElementList = [
   },
   {
     title: 'Survey elements',
-    elements: [{ element: ELEMENTS.SCALE_RATING }],
+    elements: [
+      { element: ELEMENTS.INPUT_TABLE },
+      { element: ELEMENTS.SCALE_RATING },
+    ],
   },
 ];

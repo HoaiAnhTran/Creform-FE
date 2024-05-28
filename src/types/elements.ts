@@ -107,6 +107,14 @@ export interface FileUploadConfig {
   sublabel: string;
 }
 
+export interface InputTableConfig {
+  fieldLabel: string;
+  required: boolean;
+  inputType: string;
+  rows: string[];
+  columns: string[];
+}
+
 export type ElementConfig =
   | HeadingConfig
   | FullnameConfig
@@ -122,7 +130,8 @@ export type ElementConfig =
   | NumberPhoneConfig
   | DatePickerConfig
   | TimeInputConfig
-  | FileUploadConfig;
+  | FileUploadConfig
+  | InputTableConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -212,6 +221,11 @@ export type FileUploadElement = BaseElement<
   FileUploadConfig
 >;
 
+export type InputTableElement = BaseElement<
+  ElementType.INPUT_TABLE,
+  InputTableConfig
+>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -228,4 +242,5 @@ export type ElementItem =
   | NumberPhoneElement
   | DatePickerElement
   | TimeInputElement
-  | FileUploadElement;
+  | FileUploadElement
+  | InputTableElement;

@@ -15,6 +15,7 @@ import {
   isFileUploadElement,
   isFullnameElement,
   isHeadingElement,
+  isInputTableElement,
   isLongTextElement,
   isMultipleChoiceElement,
   isNumberPhoneElement,
@@ -27,6 +28,7 @@ import {
 import { FileUploadPropertiesConfig } from '@/molecules/FileUploadPropertiesConfig';
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
 import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
+import { InputTablePropertiesConfig } from '@/molecules/InputTablePropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
 import { MultipleChoicePropertiesConfig } from '@/molecules/MultipleChoicePropertiesConfig';
 import { PhoneNumberPropertiesConfig } from '@/molecules/PhoneNumberPropertiesConfig';
@@ -175,6 +177,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isFileUploadElement(edittingItem):
                 return (
                   <FileUploadPropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isInputTableElement(edittingItem):
+                return (
+                  <InputTablePropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />
