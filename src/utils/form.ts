@@ -13,6 +13,8 @@ import {
   defaultFullnameConfig,
   defaultHeadingConfig,
   defaultHeadingHeightWidth,
+  defaultInputTableConfig,
+  defaultInputTableHeightWidth,
   defaultLongTextHeightWidth,
   defaultMultipleChoiceConfig,
   defaultMultipleChoiceHeightWidth,
@@ -59,9 +61,11 @@ export const removeTextFromFieldOfElement = (form: FormRequest) => {
   const formWithoutText = JSON.parse(JSON.stringify(form));
 
   formWithoutText.elements.forEach((element: ElementItem) => {
-    element.fields.forEach((field) => {
-      delete field.text;
-    });
+    if (element.fields) {
+      element.fields.forEach((field) => {
+        if ('text' in field) delete field.text;
+      });
+    }
   });
 
   return formWithoutText;
@@ -93,6 +97,17 @@ export const convertImportFormResponse = (form: ImportFormResponse) => {
     const uid = uuidv4();
 
     switch (element.type) {
+      case ElementType.HEADING:
+        return {
+          id: uid,
+          type: element.type,
+          gridSize: {
+            ...element.gridSize,
+            ...defaultHeadingHeightWidth,
+          },
+          config: { ...defaultHeadingConfig, ...element.config },
+          fields: [],
+        };
       case ElementType.SHORT_TEXT:
         return {
           id: uid,
@@ -234,6 +249,22 @@ export const convertImportFormResponse = (form: ImportFormResponse) => {
             {
               id: uuidv4(),
               name: 'scaleRating',
+            },
+          ],
+        };
+      case ElementType.INPUT_TABLE:
+        return {
+          id: uid,
+          type: element.type,
+          gridSize: {
+            ...element.gridSize,
+            ...defaultInputTableHeightWidth,
+          },
+          config: { ...defaultInputTableConfig, ...element.config },
+          fields: [
+            {
+              id: uuidv4(),
+              name: 'inputTable',
             },
           ],
         };

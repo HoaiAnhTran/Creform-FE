@@ -96,8 +96,8 @@ export interface ImportFormResponse {
       h: number;
     };
     config: {
-      fieldLabel: string;
-      required: boolean;
+      fieldLabel?: string;
+      required?: boolean;
       [key: string]: unknown;
     };
   }[];
