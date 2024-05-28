@@ -37,4 +37,5 @@ export const MESSAGES = {
   AUTO_GENERATE_FORM_FAILED: 'Something went wrong. Please generate again.',
   SESSION_EXPIRED: 'You have been logged out. Please log in again.',
   REQUIRED_USER_ACCOUNT: 'Please login with your User account',
+  REQUIRE_AN_ANSWER_IN_EVERY_ROW: 'Require an answer in every row',
 } as const;

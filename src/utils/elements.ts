@@ -4,6 +4,7 @@ import {
   defaultElementHeightWidth,
   defaultFileUploadHeightWidth,
   defaultHeadingHeightWidth,
+  defaultInputTableHeightWidth,
   defaultLongTextHeightWidth,
   defaultMultipleChoiceHeightWidth,
   defaultScaleRatingHeightWidth,
@@ -38,6 +39,8 @@ export const getDefaultWidthHeight = (type: ElementType | undefined) => {
       return defaultSubmitHeightWidth;
     case type === ElementType.FILE_UPLOAD:
       return defaultFileUploadHeightWidth;
+    case type === ElementType.INPUT_TABLE:
+      return defaultInputTableHeightWidth;
     default:
       return defaultElementHeightWidth;
   }

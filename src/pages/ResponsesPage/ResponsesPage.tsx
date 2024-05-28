@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
@@ -39,7 +39,14 @@ export const ResponsesPage = () => {
                     elementAnswers.elementType === ElementType.FULLNAME
                       ? ' '
                       : ', ',
-                  ),
+                  )
+                  .split('\n')
+                  .map((str, index) => (
+                    <Fragment key={index}>
+                      {str}
+                      <br />
+                    </Fragment>
+                  )),
             };
 
             const fieldsAnswers = elementAnswers.answers.reduce(

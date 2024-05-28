@@ -5,8 +5,10 @@ import {
   ElementItem,
   ElementType,
   EmailElement,
+  FileUploadElement,
   FullnameElement,
   HeadingElement,
+  InputTableElement,
   LongTextElement,
   MultipleChoiceElement,
   NumberPhoneElement,
@@ -24,6 +26,7 @@ import { BaseEmailElement } from '../BaseEmailElement';
 import { BaseFileUploadElement } from '../BaseFileUploadElement';
 import { BaseFullnameElement } from '../BaseFullnameElement';
 import { BaseHeadingElement } from '../BaseHeadingElement';
+import { BaseInputTableElement } from '../BaseInputTableElement';
 import { BaseLongTextElement } from '../BaseLongTextElement';
 import { BaseMultipleChoiceElement } from '../BaseMultipleChoiceElement';
 import { BasePhoneNumberElement } from '../BasePhoneNumberElement';
@@ -79,6 +82,8 @@ export const FactoryElement = (props: BaseElementProps) => {
       return <BaseTimeInputElement item={item} {...rest} />;
     case isFileUploadElement(item):
       return <BaseFileUploadElement item={item} {...rest} />;
+    case isInputTableElement(item):
+      return <BaseInputTableElement item={item} {...rest} />;
     default:
       return <></>;
   }
@@ -156,6 +161,12 @@ export function isTimeInputElement(
 
 export function isFileUploadElement(
   item: ElementItem,
-): item is TimeInputElement {
+): item is FileUploadElement {
   return item?.type === ElementType.FILE_UPLOAD;
+}
+
+export function isInputTableElement(
+  item: ElementItem,
+): item is InputTableElement {
+  return item?.type === ElementType.INPUT_TABLE;
 }

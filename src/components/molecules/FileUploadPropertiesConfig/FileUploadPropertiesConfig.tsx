@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Stack, Switch, Text, TextInput } from '@mantine/core';
 
 import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
-import { EmailConfig, EmailElement } from '@/types';
+import { FileUploadConfig, FileUploadElement } from '@/types';
 
 export const FileUploadPropertiesConfig = (
-  props: BasePropertiesProps<EmailElement>,
+  props: BasePropertiesProps<FileUploadElement>,
 ) => {
   const { edittingItem, updateItem, handleConfig } = props;
   const [required, setRequired] = useState<boolean>(
@@ -13,7 +13,7 @@ export const FileUploadPropertiesConfig = (
   );
 
   const handleChange =
-    (key: keyof EmailConfig) =>
+    (key: keyof FileUploadConfig) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       handleConfig({
         ...edittingItem?.config,
@@ -27,7 +27,7 @@ export const FileUploadPropertiesConfig = (
         },
       });
     };
-  const handleChangeSwitch = (key: keyof EmailConfig) => () => {
+  const handleChangeSwitch = (key: keyof FileUploadConfig) => () => {
     const newStatus = !required;
     setRequired(newStatus);
     handleConfig({
@@ -50,7 +50,7 @@ export const FileUploadPropertiesConfig = (
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
-          value={(edittingItem?.config as EmailConfig).fieldLabel}
+          value={(edittingItem?.config as FileUploadConfig).fieldLabel}
           onChange={handleChange('fieldLabel')}
         />
       </Stack>
@@ -69,7 +69,7 @@ export const FileUploadPropertiesConfig = (
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
-          value={(edittingItem?.config as EmailConfig).sublabel}
+          value={(edittingItem?.config as FileUploadConfig).sublabel}
           onChange={handleChange('sublabel')}
         />
       </Stack>
