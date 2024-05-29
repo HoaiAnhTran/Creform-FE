@@ -11,6 +11,7 @@ import {
   defaultFileUploadConfig,
   defaultFullnameConfig,
   defaultHeadingConfig,
+  defaultImageConfig,
   defaultInputTableConfig,
   defaultMultipleChoiceConfig,
   defaultPhoneConfig,
@@ -308,6 +309,14 @@ export const ResponsiveGridLayout = ({
               name: 'inputTable',
             },
           ],
+        };
+      case ElementType.IMAGE:
+        return {
+          id: uid,
+          type: ElementType.IMAGE,
+          gridSize: getGridSize(currentItem),
+          config: defaultImageConfig,
+          fields: [],
         };
       default:
         return undefined;

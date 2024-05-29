@@ -18,7 +18,7 @@ import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
 import { SubmitConfig, SubmitElement } from '@/types';
 import { capitalize, cn } from '@/utils';
 
-export const SubmitProptertiesConfig = (
+export const SubmitPropertiesConfig = (
   props: BasePropertiesProps<SubmitElement>,
 ) => {
   const { edittingItem, updateItem, handleConfig } = props;
@@ -57,7 +57,7 @@ export const SubmitProptertiesConfig = (
   return (
     <>
       <Stack className='p-3'>
-        <Text className='font-bold text-white'>Button text</Text>
+        <Text className='font-semibold text-white'>Button Text</Text>
         <TextInput
           autoComplete='off'
           className='rounded-md border border-solid border-slate-600 bg-slate-100'
@@ -65,8 +65,9 @@ export const SubmitProptertiesConfig = (
           onChange={handleTextChange('buttonText')}
         />
       </Stack>
+
       <Stack className='p-3'>
-        <Text className='font-bold text-white'>Button Alignment</Text>
+        <Text className='font-semibold text-white'>Button Alignment</Text>
         <Radio.Group
           value={edittingItem.config.buttonAlignment}
           onChange={handleChange('buttonAlignment')}
@@ -92,25 +93,25 @@ export const SubmitProptertiesConfig = (
           </Group>
         </Radio.Group>
       </Stack>
+
       <Stack className='p-3'>
-        <Text className='font-bold text-white'>Button Style</Text>
+        <Text className='font-semibold text-white'>Button Style</Text>
         <Button
-          className={cn(
-            'h-[40px] ',
-            {
-              'bg-slate-400 text-slate-800 hover:bg-slate-600 hover:text-white':
-                edittingItem.config.buttonColor === DEFAULT_BUTTON_COLOR,
-            },
-            {
-              'bg-ocean-green-400 text-white hover:bg-ocean-green-500 hover:text-white':
-                edittingItem.config.buttonColor !== DEFAULT_BUTTON_COLOR,
-            },
-          )}
+          className={cn('h-[40px]', {
+            'bg-slate-200 font-semibold uppercase text-gray-800 transition-all duration-75 ease-linear hover:bg-slate-200/85 hover:text-gray-800':
+              edittingItem.config.buttonColor === DEFAULT_BUTTON_COLOR,
+          })}
+          style={{
+            backgroundColor:
+              edittingItem.config.buttonColor !== DEFAULT_BUTTON_COLOR
+                ? edittingItem.config.buttonColor
+                : undefined,
+          }}
           onClick={() => setShowColorPicker(!showColorPicker)}
         >
           {edittingItem.config.buttonColor === DEFAULT_BUTTON_COLOR
-            ? 'CHOOOSE STYLE'
-            : 'Change button style'}
+            ? 'CHOOSE STYLE'
+            : 'Change Button Style'}
         </Button>
         {showColorPicker && (
           <ColorPicker

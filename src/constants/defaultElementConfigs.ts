@@ -7,6 +7,7 @@ import {
   FileUploadConfig,
   FullnameConfig,
   HeadingConfig,
+  ImageConfig,
   InputTableConfig,
   MultipleChoiceConfig,
   NumberPhoneConfig,
@@ -18,6 +19,11 @@ import {
 } from '@/types';
 
 import { DEFAULT_BUTTON_COLOR } from './buttonStyles';
+import {
+  DEFAULT_IMAGE_ALIGNMENT,
+  DEFAULT_IMAGE_HEIGHT,
+  DEFAULT_IMAGE_WIDTH,
+} from './imageElementStyles';
 
 export const defaultHeadingConfig: HeadingConfig = {
   headingText: 'Heading',
@@ -134,6 +140,16 @@ export const defaultInputTableConfig: InputTableConfig = {
   columns: ['Not Satisfied', 'Neutral', 'Satisfied'],
 };
 
+export const defaultImageConfig: ImageConfig = {
+  imageTitle: '',
+  imageUrl: '',
+  size: {
+    width: DEFAULT_IMAGE_WIDTH,
+    height: DEFAULT_IMAGE_HEIGHT,
+  },
+  imageAlignment: DEFAULT_IMAGE_ALIGNMENT,
+};
+
 export const defaultElementHeightWidth = {
   h: 5,
   w: 12,
@@ -195,6 +211,11 @@ export const defaultFileUploadHeightWidth = {
 };
 
 export const defaultInputTableHeightWidth = {
+  h: 8,
+  w: 12,
+};
+
+export const defaultImageHeightWidth = {
   h: 8,
   w: 12,
 };
