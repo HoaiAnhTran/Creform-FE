@@ -137,7 +137,8 @@ export const InputTable = (props: InputTableProps) => {
   return (
     <div className={cn('flex w-full flex-col', classNameWrapper)}>
       <ScrollArea
-        h={190}
+        mih={100}
+        mah={190}
         scrollbarSize={8}
         type='auto'
         className='w-full'

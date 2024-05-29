@@ -65,7 +65,7 @@ export const BaseInputTableElement = (
         elementId={item.id}
         component={InputTable}
         value={item.fields[0].text}
-        classNameWrapper='min-h-[220px]'
+        classNameWrapper='min-h-[175px] max-h-[250px]'
         item={item}
         readOnly={isReadOnly}
       />

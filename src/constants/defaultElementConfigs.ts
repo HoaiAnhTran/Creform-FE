@@ -130,7 +130,7 @@ export const defaultInputTableConfig: InputTableConfig = {
   fieldLabel: 'Type a question',
   required: false,
   inputType: INPUT_TABLE_TYPE.RADIO,
-  rows: ['Service Quality', 'Cleanliness', 'Responsiveness', 'Friendliness'],
+  rows: ['Service Quality', 'Responsiveness', 'Friendliness'],
   columns: ['Not Satisfied', 'Neutral', 'Satisfied'],
 };
 
