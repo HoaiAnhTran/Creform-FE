@@ -15,6 +15,7 @@ import {
   isFileUploadElement,
   isFullnameElement,
   isHeadingElement,
+  isImageElement,
   isInputTableElement,
   isLongTextElement,
   isMultipleChoiceElement,
@@ -27,15 +28,16 @@ import {
 } from '@/molecules/FactoryElement';
 import { FileUploadPropertiesConfig } from '@/molecules/FileUploadPropertiesConfig';
 import { FullnamePropertiesConfig } from '@/molecules/FullnamePropertiesConfig';
-import { HeadingProptertiesConfig } from '@/molecules/HeadingPropertiesConfig';
+import { HeadingPropertiesConfig } from '@/molecules/HeadingPropertiesConfig';
+import { ImagePropertiesConfig } from '@/molecules/ImagePropertiesConfig';
 import { InputTablePropertiesConfig } from '@/molecules/InputTablePropertiesConfig';
 import { LongTextPropertiesConfig } from '@/molecules/LongTextPropertiesConfig';
 import { MultipleChoicePropertiesConfig } from '@/molecules/MultipleChoicePropertiesConfig';
 import { PhoneNumberPropertiesConfig } from '@/molecules/PhoneNumberPropertiesConfig';
-import { ScaleRatingProptertiesConfig } from '@/molecules/ScaleRatingPropertiesConfig';
+import { ScaleRatingPropertiesConfig } from '@/molecules/ScaleRatingPropertiesConfig';
 import { ShortTextPropertiesConfig } from '@/molecules/ShortTextPropertiesConfig';
 import { SingleChoicePropertiesConfig } from '@/molecules/SingleChoicePropertiesConfig';
-import { SubmitProptertiesConfig } from '@/molecules/SubmitPropertiesConfig';
+import { SubmitPropertiesConfig } from '@/molecules/SubmitPropertiesConfig';
 import { TimeInputPropertiesConfig } from '@/molecules/TimeInputPropertiesConfig';
 import { ElementItem } from '@/types';
 import { cn } from '@/utils';
@@ -77,7 +79,7 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
             switch (true) {
               case isHeadingElement(edittingItem):
                 return (
-                  <HeadingProptertiesConfig
+                  <HeadingPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />
@@ -99,7 +101,7 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
                 );
               case isSubmitElement(edittingItem):
                 return (
-                  <SubmitProptertiesConfig
+                  <SubmitPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />
@@ -120,7 +122,7 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
                 );
               case isScaleRatingElement(edittingItem):
                 return (
-                  <ScaleRatingProptertiesConfig
+                  <ScaleRatingPropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />
@@ -184,6 +186,13 @@ export const PropertiesRightbar = (props: BasePropertiesProps) => {
               case isInputTableElement(edittingItem):
                 return (
                   <InputTablePropertiesConfig
+                    edittingItem={edittingItem}
+                    {...rest}
+                  />
+                );
+              case isImageElement(edittingItem):
+                return (
+                  <ImagePropertiesConfig
                     edittingItem={edittingItem}
                     {...rest}
                   />

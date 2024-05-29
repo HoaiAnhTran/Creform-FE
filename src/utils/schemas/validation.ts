@@ -23,3 +23,5 @@ export const isValidPhoneNumber = yup
   .string()
   .trim()
   .matches(RULES.PHONE_NUMBER_REGEX, 'Please enter a valid phone number.');
+
+export const imageUrlSchema = yup.string().min(1, MESSAGES.NO_EMPTY_IMAGE);

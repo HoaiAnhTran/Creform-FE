@@ -3,6 +3,7 @@ export * from './buttonStyles';
 export * from './defaultElementConfigs';
 export * from './defaultFormsParams';
 export * from './elements';
+export * from './imageElementStyles';
 export * from './messages';
 export * from './routes';
 export * from './rules';

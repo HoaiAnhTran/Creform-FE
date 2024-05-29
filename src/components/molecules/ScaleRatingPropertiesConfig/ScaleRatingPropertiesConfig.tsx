@@ -4,7 +4,7 @@ import { NumberInput, Stack, Switch, Text, TextInput } from '@mantine/core';
 import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
 import { ScaleRatingConfig, ScaleRatingElement } from '@/types';
 
-export const ScaleRatingProptertiesConfig = (
+export const ScaleRatingPropertiesConfig = (
   props: BasePropertiesProps<ScaleRatingElement>,
 ) => {
   const { edittingItem, updateItem, handleConfig } = props;

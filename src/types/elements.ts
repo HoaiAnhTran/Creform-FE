@@ -114,6 +114,15 @@ export interface InputTableConfig {
   rows: string[];
   columns: string[];
 }
+export interface ImageConfig {
+  imageTitle: string;
+  imageUrl: string;
+  size: {
+    width: string;
+    height: string;
+  };
+  imageAlignment: string;
+}
 
 export type ElementConfig =
   | HeadingConfig
@@ -131,7 +140,8 @@ export type ElementConfig =
   | DatePickerConfig
   | TimeInputConfig
   | FileUploadConfig
-  | InputTableConfig;
+  | InputTableConfig
+  | ImageConfig;
 
 export enum ElementType {
   HEADING = 'Heading',
@@ -226,6 +236,8 @@ export type InputTableElement = BaseElement<
   InputTableConfig
 >;
 
+export type ImageElement = BaseElement<ElementType.IMAGE, ImageConfig>;
+
 export type ElementItem =
   | HeadingElement
   | FullnameElement
@@ -243,4 +255,5 @@ export type ElementItem =
   | DatePickerElement
   | TimeInputElement
   | FileUploadElement
-  | InputTableElement;
+  | InputTableElement
+  | ImageElement;

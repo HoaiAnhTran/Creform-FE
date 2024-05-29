@@ -3,7 +3,7 @@ import { Stack, Text, TextInput } from '@mantine/core';
 import { BasePropertiesProps } from '@/organisms/PropertiesRightbar';
 import { HeadingConfig, HeadingElement } from '@/types';
 
-export const HeadingProptertiesConfig = (
+export const HeadingPropertiesConfig = (
   props: BasePropertiesProps<HeadingElement>,
 ) => {
   const { edittingItem, updateItem, handleConfig } = props;
