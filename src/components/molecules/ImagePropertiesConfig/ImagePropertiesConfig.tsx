@@ -136,14 +136,14 @@ export const ImagePropertiesConfig = (
               className='h-28 w-max bg-opacity-90 object-contain'
             />
             <UnstyledButton
-              className='absolute left-1/2 top-1/2 z-20 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gray-200 bg-opacity-60 text-gray-800 opacity-0 transition-all delay-100 ease-in-out hover:bg-gray-300 hover:bg-opacity-60 group-hover:opacity-100'
+              className='absolute left-1/2 top-1/2 z-20 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100/80 bg-opacity-60 text-gray-800 opacity-0 transition-all delay-100 ease-in-out hover:bg-gray-100/90 group-hover:opacity-100'
               onClick={handleRemoveImage}
             >
               <IoTrash size={20} />
             </UnstyledButton>
             <Overlay
               color='#000'
-              backgroundOpacity={0.3}
+              backgroundOpacity={0.25}
               className='invisible z-10 transition-all duration-100 ease-linear group-hover:visible'
             />
           </Box>

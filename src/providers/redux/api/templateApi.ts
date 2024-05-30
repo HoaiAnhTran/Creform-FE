@@ -1,14 +1,22 @@
 import { API_URL } from '@/constants/apiURL';
-import { SuccessResponse, TemplateResponse } from '@/types';
+import {
+  GetAllTemplatesQueryParams,
+  SuccessResponse,
+  TemplateResponse,
+} from '@/types';
 
 import { rootApi } from './rootApi';
 
 const templateApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllTemplates: build.query<TemplateResponse[], void>({
-      query: () => ({
+    getAllTemplates: build.query<
+      TemplateResponse[],
+      GetAllTemplatesQueryParams
+    >({
+      query: (params: GetAllTemplatesQueryParams) => ({
         url: `${API_URL.TEMPLATES}/get-all`,
         method: 'GET',
+        params,
       }),
       transformResponse: (response: SuccessResponse<TemplateResponse[]>) =>
         response.data,

@@ -10,3 +10,7 @@ export interface TemplateResponse {
   deletedAt: string;
   creatorId: string;
 }
+
+export interface GetAllTemplatesQueryParams {
+  search?: string;
+}
