@@ -13,6 +13,8 @@ import {
   defaultFullnameConfig,
   defaultHeadingConfig,
   defaultHeadingHeightWidth,
+  defaultImageConfig,
+  defaultImageHeightWidth,
   defaultInputTableConfig,
   defaultInputTableHeightWidth,
   defaultLongTextHeightWidth,
@@ -267,6 +269,17 @@ export const convertImportFormResponse = (form: ImportFormResponse) => {
               name: 'inputTable',
             },
           ],
+        };
+      case ElementType.IMAGE:
+        return {
+          id: uid,
+          type: element.type,
+          gridSize: {
+            ...element.gridSize,
+            ...defaultImageHeightWidth,
+          },
+          config: { ...defaultImageConfig, ...element.config },
+          fields: [],
         };
       default:
         break;
