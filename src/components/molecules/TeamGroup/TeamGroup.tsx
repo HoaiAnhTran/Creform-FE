@@ -176,7 +176,7 @@ export const TeamGroup = ({
         teamName={teamName}
         teamId={modalType === ModalTypes.CREATE_TEAM ? undefined : teamId}
         onClose={closeModal}
-        onClickBack={closeModal}
+        onClickCancel={closeModal}
         onClickSubmit={
           modalType === ModalTypes.CREATE_TEAM
             ? handleCreateTeam

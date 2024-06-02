@@ -134,7 +134,7 @@ export const TeamSidebar = ({
       <Box className='flex flex-col gap-2 bg-inherit p-5'>
         <NavLink
           className={cn(
-            'rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
+            'h-10 rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
             {
               'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                 selectedOption.isAllForms,
@@ -185,14 +185,15 @@ export const TeamSidebar = ({
               <NavLink
                 key={folder.id}
                 className={cn(
-                  'w-[85%] rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
+                  'h-10 w-[85%] rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
                   {
                     'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                       isActiveFolder,
                   },
                 )}
                 classNames={{
-                  label: 'text-sm font-semibold',
+                  body: 'flex flex-col',
+                  label: 'text-sm font-semibold truncate',
                 }}
                 label={folder.name}
                 active={isActiveFolder}
@@ -258,7 +259,7 @@ export const TeamSidebar = ({
         <Box className='flex flex-col gap-2'>
           <NavLink
             className={cn(
-              'rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
+              'h-10 rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
               {
                 'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                   selectedOption.isFavorites,
@@ -281,7 +282,7 @@ export const TeamSidebar = ({
           />
           <NavLink
             className={cn(
-              'rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
+              'h-10 rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
               {
                 'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                   selectedOption.isTrash,

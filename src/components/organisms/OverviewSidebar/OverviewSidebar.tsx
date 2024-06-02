@@ -71,7 +71,7 @@ export const OverviewSidebar = () => {
           <Box className='flex flex-col gap-2'>
             <NavLink
               className={cn(
-                'rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
+                'h-10 rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
                 {
                   'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                     params.isFavourite,
@@ -92,7 +92,7 @@ export const OverviewSidebar = () => {
             />
             <NavLink
               className={cn(
-                'rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
+                'h-10 rounded-md font-semibold text-slate-600 hover:bg-quarter-pearl-lusta-100',
                 {
                   'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                     params.isDeleted,

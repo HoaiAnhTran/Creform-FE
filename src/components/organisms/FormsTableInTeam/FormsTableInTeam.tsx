@@ -479,7 +479,7 @@ export const FormsTableInTeam = ({
       folderId: folderId !== '' ? folderId : undefined,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [team, folderId, selectedOption]);
+  }, [team, folderId, selectedOption.isTrash, selectedOption.isFavorites]);
 
   return (
     <>

@@ -102,7 +102,7 @@ export const TeamList = ({
                 <NavLink
                   key={team.id}
                   className={cn(
-                    'w-[85%] rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
+                    'h-10 w-[85%] rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
                     {
                       'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                         isActiveTeam,
@@ -116,23 +116,27 @@ export const TeamList = ({
                     setParams({ ...defaultFormsParams, teamId: team.id });
                   }}
                   label={
-                    <Group className='items-center'>
-                      <Text className='text-sm font-semibold'>{team.name}</Text>
+                    <Box className='flex w-full items-center justify-between gap-2'>
+                      <Text className='max-w-[80%] truncate text-sm font-semibold'>
+                        {team.name}
+                      </Text>
                       {team.folders.length > 0 &&
                         (activeCollapse.includes(team.id) ? (
                           <IoIosArrowUp
+                            size={14}
                             onClick={() => {
                               handleActiveCollapse(team.id);
                             }}
                           />
                         ) : (
                           <IoIosArrowDown
+                            size={14}
                             onClick={() => {
                               handleActiveCollapse(team.id);
                             }}
                           />
                         ))}
-                    </Group>
+                    </Box>
                   }
                   active={isActiveTeam}
                   leftSection={

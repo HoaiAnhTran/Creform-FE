@@ -124,7 +124,7 @@ export const FolderList = ({
               <NavLink
                 key={folder.id}
                 className={cn(
-                  'w-[85%] rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
+                  'h-10 w-[85%] rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
                   {
                     'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
                       isActiveFolder && !activeAllForms,
@@ -142,7 +142,8 @@ export const FolderList = ({
                   });
                 }}
                 classNames={{
-                  label: 'text-sm font-semibold',
+                  body: 'flex flex-col',
+                  label: 'text-sm font-semibold truncate',
                 }}
                 label={folder.name}
                 active={isActiveFolder && !activeAllForms}

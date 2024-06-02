@@ -68,10 +68,10 @@ export const FolderGroup = ({
 
   return (
     <Box className='flex flex-col gap-2'>
-      <Text className='cursor-default font-bold'>MY FORMS</Text>
+      <Text className='mb-3 cursor-default font-bold'>MY FORMS</Text>
       <NavLink
         className={cn(
-          'mt-3 rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
+          'h-10 rounded-md text-slate-600 hover:bg-quarter-pearl-lusta-100',
           {
             'bg-quarter-pearl-lusta-200 hover:bg-quarter-pearl-lusta-200':
               activeAllForms,
