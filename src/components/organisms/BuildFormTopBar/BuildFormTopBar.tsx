@@ -138,24 +138,24 @@ export const BuildFormTopBar = () => {
     <>
       {previewMode ? (
         <Box className='relative flex h-[50px] items-center justify-start gap-0 bg-gradient-to-r from-burnt-sienna-400 to-burnt-sienna-500 pl-10'>
-          <Group className='max-w-[300px] flex-1 items-center justify-between gap-0'>
-            <input
-              value={formURL}
-              className='h-[28px] flex-1 rounded-l-[4px] border-none px-3 py-[5px] text-xs outline-none'
-              readOnly
-            />
-            <ActionIcon
-              component='button'
-              aria-label='Open in a new tab'
-              onClick={() => {
-                window.open(formURL, '_blank');
-              }}
-              className='rounded-l-none rounded-r-[4px] bg-ocean-green-500 text-quarter-pearl-lusta-50'
-              disabled={!isEditForm}
-            >
-              <LuExternalLink />
-            </ActionIcon>
-          </Group>
+          {isEditForm && (
+            <Group className='max-w-fit flex-1 items-center justify-between gap-0'>
+              <Text className='rounded-l-[4px] bg-quarter-pearl-lusta-50 px-3 py-1.5 text-xs'>
+                {formURL}
+              </Text>
+              <ActionIcon
+                component='button'
+                aria-label='Open in a new tab'
+                onClick={() => {
+                  window.open(formURL, '_blank');
+                }}
+                className='rounded-l-none rounded-r-[4px] bg-ocean-green-500 text-quarter-pearl-lusta-50 hover:bg-ocean-green-500 hover:text-quarter-pearl-lusta-50'
+                disabled={!isEditForm}
+              >
+                <LuExternalLink />
+              </ActionIcon>
+            </Group>
+          )}
           <ToggleButton
             label='Preview form'
             className='absolute right-10 top-[50%] -translate-y-1/2 text-sm text-quarter-pearl-lusta-50'
@@ -219,7 +219,7 @@ export const BuildFormTopBar = () => {
             <Box className='flex flex-col items-center gap-3 px-10'>
               <IoIosWarning className='size-24 text-yellow-500' />
               <Text size='lg' className='font-bold'>
-                Uncreated Form
+                Unsaved Form
               </Text>
               <Text className='text-center text-[15px]'>
                 Your form hasn't been created yet. <br />

@@ -479,7 +479,7 @@ export const FormsTable = () => {
         noHeader
         withRowBorders={false}
         highlightOnHover
-        rowClassName='hover:!bg-quarter-pearl-lusta-50 data-[selected]:bg-quarter-pearl-lusta-50 data-[selected]:hover:!bg-quarter-pearl-lusta-50'
+        rowClassName='hover:!bg-quarter-pearl-lusta-50 data-[selected]:bg-quarter-pearl-lusta-50 data-[selected]:hover:!bg-quarter-pearl-lusta-50 cursor-pointer'
         columns={columns}
         records={data?.forms}
         selectionCheckboxProps={{ size: 'xs', color: 'ocean-green.5' }}
