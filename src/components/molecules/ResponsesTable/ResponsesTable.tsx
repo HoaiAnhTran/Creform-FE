@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ScrollArea } from '@mantine/core';
+import { Text } from '@mantine/core';
 import orderby from 'lodash.orderby';
 import {
   DataTable,
@@ -11,6 +12,7 @@ import {
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { ElementIdAndName, GetResponsesParams } from '@/types';
+import { formatDate } from '@/utils';
 
 interface ResponsesTableProps {
   elementIdAndNameList: ElementIdAndName[];
@@ -97,6 +99,11 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
         title: 'Submission Date',
         titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
         cellsClassName: 'h-10 text-center',
+        render: (record: ResponseRow) => (
+          <Text className='text-sm'>
+            {formatDate(record.createdAt, 'MMM D, YYYY HH:mm:ss A')}
+          </Text>
+        ),
         ...columnProps,
       },
       ...elementIdAndNameList.map((elementIdAndName) => ({
