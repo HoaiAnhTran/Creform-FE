@@ -6,7 +6,6 @@ import { Header } from '@/organisms/Header';
 import { SubmissionTopbar } from '@/organisms/SubmissionTopbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { ElementType, GetResponsesParams } from '@/types';
-import { formatDate } from '@/utils';
 
 export const ResponsesPage = () => {
   const { formId } = useParams();
@@ -64,7 +63,7 @@ export const ResponsesPage = () => {
           },
           {
             id: record.id,
-            createdAt: formatDate(record.createdAt, 'MMM D, YYYY HH:mm:ss A'),
+            createdAt: record.createdAt,
           },
         );
 
