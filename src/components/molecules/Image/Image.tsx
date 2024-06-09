@@ -81,7 +81,7 @@ export const Image = (props: ImageProps) => {
         className={cn(
           'text-base text-gray-800',
           {
-            'text-gray-500/70': !item.config.imageTitle,
+            'text-slate-400': !item.config.imageTitle,
           },
           { invisible: !item.config.imageTitle && !readOnly },
         )}

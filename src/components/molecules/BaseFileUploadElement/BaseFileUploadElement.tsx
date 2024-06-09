@@ -3,7 +3,12 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { FileUploadElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import {
+  cn,
+  validateFieldLabel,
+  validateFieldValue,
+  validateSubLabel,
+} from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { FileUpload } from '../FileUpload';
@@ -23,12 +28,16 @@ export const BaseFileUploadElement = (
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
-          validate={validateLabel}
+          validate={isReadOnly ? validateFieldLabel : null}
           component={Text}
           classNameWrapper='min-h-[40px] mt-4'
-          className={cn('flex min-h-[20px] items-start gap-1', {
-            'text-slate-500': !item.config.fieldLabel,
-          })}
+          className={cn(
+            'flex min-h-[20px] items-start gap-1',
+            {
+              'text-slate-400': !item.config.fieldLabel,
+            },
+            { invisible: !item.config.fieldLabel && !isReadOnly },
+          )}
         />
 
         <Field
@@ -49,14 +58,15 @@ export const BaseFileUploadElement = (
           name={`${item.id}.sublabel`}
           text={item.config.sublabel}
           placeholder='Type a sublabel'
-          validate={validateLabel}
+          validate={isReadOnly ? validateSubLabel : null}
           component={Text}
           classNameWrapper='min-h-[40px] mt-4'
           className={cn(
-            'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+            'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
             {
               'text-slate-400': !item.config.sublabel,
             },
+            { invisible: !item.config.sublabel && !isReadOnly },
           )}
         />
       </Box>

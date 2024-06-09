@@ -1,7 +1,7 @@
 import { Field, FieldArray } from 'formik';
 
 import { TimeInputElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import { cn, validateFieldLabel, validateFieldValue } from '@/utils';
 
 import { Text } from '../Text';
 
@@ -27,16 +27,20 @@ export const TimeInput = (props: TimeInputProps) => {
         <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
-            validate={validateLabel}
+            validate={isReadOnly ? validateFieldLabel : null}
             text={item.config.fieldLabel}
             name={`${item.id}.fieldLabel`}
             placeholder='Type a question'
             nameElementField='fieldLabel'
             classNameWrapper='min-h-[40px] mt-4'
             component={Text}
-            className={cn('flex min-h-[20px] items-start gap-1', {
-              'text-slate-500': !item.config.fieldLabel,
-            })}
+            className={cn(
+              'flex min-h-[20px] items-start gap-1',
+              {
+                'text-slate-400': !item.config.fieldLabel,
+              },
+              { invisible: !item.config.fieldLabel && !isReadOnly },
+            )}
           />
           <Field
             readOnly={isReadOnly}

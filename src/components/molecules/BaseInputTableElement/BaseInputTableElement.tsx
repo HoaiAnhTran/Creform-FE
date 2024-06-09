@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { MESSAGES } from '@/constants';
 import { useElementLayouts } from '@/contexts';
 import { InputTableElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
+import { cn, validateFieldLabel } from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { InputTable } from '../InputTable';
@@ -45,13 +45,17 @@ export const BaseInputTableElement = (
         name={`${item.id}.fieldLabel`}
         placeholder='Type a question'
         required={item.config.required}
-        validate={validateLabel}
+        validate={isReadOnly ? validateFieldLabel : null}
         component={Text}
         text={item.config.fieldLabel}
         classNameWrapper='min-h-[50px] mt-4'
-        className={cn('flex min-h-[20px] items-start gap-1', {
-          'text-slate-500': !item.config.fieldLabel,
-        })}
+        className={cn(
+          'flex min-h-[20px] items-start gap-1',
+          {
+            'text-slate-400': !item.config.fieldLabel,
+          },
+          { invisible: !item.config.fieldLabel && !isReadOnly },
+        )}
       />
       <Field
         name={`${item.fields[0].id}.fieldValue`}

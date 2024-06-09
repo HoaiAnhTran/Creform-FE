@@ -2,7 +2,12 @@ import { Field } from 'formik';
 
 import { Text } from '@/molecules/Text';
 import { AddressElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import {
+  cn,
+  validateFieldLabel,
+  validateFieldValue,
+  validateSubLabel,
+} from '@/utils';
 
 import { TextInput } from '../TextInput';
 
@@ -23,17 +28,22 @@ export const Address = (props: AddressProps) => {
     <div className='flex flex-col gap-2'>
       <Field
         required={item.config.required}
-        validate={validateLabel}
+        validate={isReadOnly ? validateFieldLabel : null}
         placeholder='Type your question'
         text={item.config.fieldLabel}
         name={`${item.id}.fieldLabel`}
         nameElementField='fieldLabel'
         classNameWrapper='min-h-[40px]'
         component={Text}
-        className={cn('flex min-h-[20px] items-start gap-1', {
-          'text-slate-500': !item.config.fieldLabel,
-        })}
+        className={cn(
+          'flex min-h-[20px] items-start gap-1',
+          {
+            'text-slate-400': !item.config.fieldLabel,
+          },
+          { invisible: !item.config.fieldLabel && !isReadOnly },
+        )}
       />
+
       <Field
         readOnly={isReadOnly}
         name={`${item.fields[0].id}.fieldValue`}
@@ -48,7 +58,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validateLabel}
+        validate={isReadOnly ? validateSubLabel : null}
         name={`${item.fields[0].id}.subLabel`}
         size='xs'
         nameElementField={isReadOnly ? 'sublabel' : undefined}
@@ -56,12 +66,14 @@ export const Address = (props: AddressProps) => {
         component={Text}
         placeholder='Type a sublabel'
         className={cn(
-          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
           {
             'text-slate-400': !item.config.sublabels.street,
           },
+          { invisible: !item.config.sublabels.street && !isReadOnly },
         )}
       />
+
       <Field
         readOnly={isReadOnly}
         name={`${item.fields[1].id}.fieldValue`}
@@ -76,7 +88,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validateLabel}
+        validate={isReadOnly ? validateSubLabel : null}
         name={`${item.fields[1].id}.subLabel`}
         placeholder='Type a sublabel'
         size='xs'
@@ -84,12 +96,14 @@ export const Address = (props: AddressProps) => {
         text={item.config.sublabels.ward}
         component={Text}
         className={cn(
-          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
           {
             'text-slate-400': !item.config.sublabels.ward,
           },
+          { invisible: !item.config.sublabels.ward && !isReadOnly },
         )}
       />
+
       <Field
         readOnly={isReadOnly}
         name={`${item.fields[2].id}.fieldValue`}
@@ -104,7 +118,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validateLabel}
+        validate={isReadOnly ? validateSubLabel : null}
         name={`${item.fields[2].id}.subLabel`}
         placeholder='Type a sublabel'
         size='xs'
@@ -112,12 +126,14 @@ export const Address = (props: AddressProps) => {
         text={item.config.sublabels.district}
         component={Text}
         className={cn(
-          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
           {
             'text-slate-400': !item.config.sublabels.district,
           },
+          { invisible: !item.config.sublabels.district && !isReadOnly },
         )}
       />
+
       <Field
         readOnly={isReadOnly}
         name={`${item.fields[3].id}.fieldValue`}
@@ -132,7 +148,7 @@ export const Address = (props: AddressProps) => {
         component={TextInput}
       />
       <Field
-        validate={validateLabel}
+        validate={isReadOnly ? validateSubLabel : null}
         name={`${item.fields[3].id}.subLabel`}
         size='xs'
         nameElementField={isReadOnly ? 'sublabel' : undefined}
@@ -140,10 +156,11 @@ export const Address = (props: AddressProps) => {
         component={Text}
         placeholder='Type a sublabel'
         className={cn(
-          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
           {
             'text-slate-400': !item.config.sublabels.city,
           },
+          { invisible: !item.config.sublabels.city && !isReadOnly },
         )}
       />
     </div>

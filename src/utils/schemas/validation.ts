@@ -2,9 +2,11 @@ import * as yup from 'yup';
 
 import { MESSAGES, RULES } from '@/constants';
 
-export const requiredStringSchema = yup
+export const requiredFieldLabelSchema = yup
   .string()
-  .min(1, MESSAGES.NO_EMPTY_STRING);
+  .required(MESSAGES.NO_EMPTY_STRING);
+
+export const notRequiredSubLabelSchema = yup.string();
 
 export const requiredFieldValueSchema = yup
   .string()

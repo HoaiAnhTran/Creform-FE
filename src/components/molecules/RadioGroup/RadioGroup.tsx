@@ -13,7 +13,7 @@ import {
 } from 'formik';
 
 import { SingleChoiceElement } from '@/types';
-import { validateLabel } from '@/utils';
+import { validateFieldLabel } from '@/utils';
 import { cn } from '@/utils/cn';
 
 import { Radio } from '../Radio';
@@ -39,6 +39,7 @@ interface RadioGroupProps extends Omit<MantineRadioGroupProps, 'form'> {
   meta: FieldMetaProps<string>;
   classNameLabel?: string;
   item: SingleChoiceElement;
+  readOnly: boolean;
 }
 
 export const RadioGroup = (props: RadioGroupProps) => {
@@ -52,6 +53,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
     classNameError,
     classNameLabel,
     item,
+    readOnly,
     ...rest
   } = props;
 
@@ -81,7 +83,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
           {item.config.options.map((option, index) => (
             <Field
               name={`${item.id}.option${index}`}
-              validate={validateLabel}
+              validate={readOnly ? validateFieldLabel : null}
               value={option}
               component={Radio}
               key={index}
@@ -91,7 +93,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
           {item.config.otherOption.isDisplayed && (
             <Field
               name={`${item.id}.otherOption.text`}
-              validate={validateLabel}
+              validate={readOnly ? validateFieldLabel : null}
               value={item.config.otherOption.text}
               component={Radio}
               optionValue={item.config.otherOption.text}

@@ -13,7 +13,7 @@ import {
 } from 'formik';
 
 import { MultipleChoiceElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
+import { cn, validateFieldLabel } from '@/utils';
 
 import { Checkbox } from '../Checkbox';
 
@@ -38,6 +38,7 @@ interface CheckboxGroupProps extends Omit<MantineCheckboxGroupProps, 'form'> {
   meta: FieldMetaProps<string[]>;
   classNameLabel?: string;
   item: MultipleChoiceElement;
+  readOnly: boolean;
 }
 
 export const CheckboxGroup = (props: CheckboxGroupProps) => {
@@ -51,6 +52,7 @@ export const CheckboxGroup = (props: CheckboxGroupProps) => {
     classNameError,
     classNameLabel,
     item,
+    readOnly,
     ...rest
   } = props;
 
@@ -78,7 +80,7 @@ export const CheckboxGroup = (props: CheckboxGroupProps) => {
           {item.config.options.map((option, index) => (
             <Field
               name={`${item.id}.option${index}`}
-              validate={validateLabel}
+              validate={readOnly ? validateFieldLabel : null}
               value={option}
               component={Checkbox}
               key={index}
@@ -88,7 +90,7 @@ export const CheckboxGroup = (props: CheckboxGroupProps) => {
           {item.config.otherOption.isDisplayed && (
             <Field
               name={`${item.id}.otherOption.text`}
-              validate={validateLabel}
+              validate={readOnly ? validateFieldLabel : null}
               value={item.config.otherOption.text}
               component={Checkbox}
               optionValue={item.config.otherOption.text}

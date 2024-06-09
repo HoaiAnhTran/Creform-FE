@@ -18,7 +18,7 @@ import {
   TimeInputConfig,
 } from '@/types';
 
-import { DEFAULT_BUTTON_COLOR } from './buttonStyles';
+import { DEFAULT_BUTTON_ALIGNMENT, DEFAULT_BUTTON_COLOR } from './buttonStyles';
 import {
   DEFAULT_IMAGE_ALIGNMENT,
   DEFAULT_IMAGE_HEIGHT,
@@ -27,7 +27,7 @@ import {
 
 export const defaultHeadingConfig: HeadingConfig = {
   headingText: 'Heading',
-  subheadingText: 'Subheader',
+  subheadingText: 'Subheading',
 };
 
 export const defaultEmailConfig: EmailConfig = {
@@ -48,7 +48,7 @@ export const defaultFullnameConfig: FullnameConfig = {
 export const defaultSubmitConfig: SubmitConfig = {
   buttonText: 'Submit',
   buttonColor: DEFAULT_BUTTON_COLOR,
-  buttonAlignment: 'center',
+  buttonAlignment: DEFAULT_BUTTON_ALIGNMENT,
 };
 
 export const defaultTextConfig: TextConfig = {
@@ -98,7 +98,7 @@ export const defaultSingleChoiceConfig: SingleChoiceConfig = {
 export const defaultDatePickerConfig: DatePickerConfig = {
   fieldLabel: 'Date',
   required: false,
-  sublabel: 'Date',
+  sublabel: 'Please select a date',
 };
 
 export const defaultMultipleChoiceConfig: MultipleChoiceConfig = {

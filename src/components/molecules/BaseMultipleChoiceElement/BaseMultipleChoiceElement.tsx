@@ -3,7 +3,7 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { MultipleChoiceElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import { cn, validateFieldLabel, validateFieldValue } from '@/utils';
 
 import { CheckboxGroup } from '../CheckboxGroup';
 import { BaseElementProps } from '../FactoryElement';
@@ -23,16 +23,19 @@ export const BaseMultipleChoiceElement = (
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
-          validate={validateLabel}
+          validate={isReadOnly ? validateFieldLabel : null}
           component={Text}
           classNameWrapper='min-h-[40px]'
-          className={cn('flex min-h-[20px] items-start gap-1', {
-            'text-slate-500': !item.config.fieldLabel,
-          })}
+          className={cn(
+            'flex min-h-[20px] items-start gap-1',
+            {
+              'text-slate-400': !item.config.fieldLabel,
+            },
+            { invisible: !item.config.fieldLabel && !isReadOnly },
+          )}
         />
         <Field
           name={`${item.fields[0].id}.fieldValue`}
-          readOnly={isReadOnly}
           validate={
             !isReadOnly && item.config.required ? validateFieldValue : null
           }
@@ -42,6 +45,7 @@ export const BaseMultipleChoiceElement = (
           component={CheckboxGroup}
           classNameWrapper='min-h-[60px]'
           item={item}
+          readOnly={isReadOnly}
         />
       </Box>
     </Group>

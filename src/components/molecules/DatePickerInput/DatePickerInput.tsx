@@ -3,7 +3,12 @@ import { Field } from 'formik';
 
 import { Text } from '@/molecules/Text';
 import { DatePickerElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import {
+  cn,
+  validateFieldLabel,
+  validateFieldValue,
+  validateSubLabel,
+} from '@/utils';
 
 import { DatePickerInput as DatePickerInputCustom } from '../DatePickerInputCustom';
 
@@ -24,15 +29,19 @@ export const DatePickerInput = (props: DatePickerInputProps) => {
     <div className={'flex flex-col gap-2'}>
       <Field
         required={item.config.required}
-        validate={validateLabel}
+        validate={isReadOnly ? validateFieldLabel : null}
         text={item.config.fieldLabel}
         placeholder='Type a question'
         name={`${item.id}.fieldLabel`}
         component={Text}
         classNameWrapper='min-h-[40px] mt-4'
-        className={cn('flex min-h-[20px] items-start gap-1', {
-          'text-slate-500': !item.config.fieldLabel,
-        })}
+        className={cn(
+          'flex min-h-[20px] items-start gap-1',
+          {
+            'text-slate-400': !item.config.fieldLabel,
+          },
+          { invisible: !item.config.fieldLabel && !isReadOnly },
+        )}
       />
       <Field
         readOnly={isReadOnly}
@@ -49,7 +58,7 @@ export const DatePickerInput = (props: DatePickerInputProps) => {
         component={DatePickerInputCustom}
       />
       <Field
-        validate={validateLabel}
+        validate={isReadOnly ? validateSubLabel : null}
         name={`${item.id}.subLabel`}
         placeholder='Type a sublabel'
         size='xs'
@@ -57,10 +66,11 @@ export const DatePickerInput = (props: DatePickerInputProps) => {
         component={Text}
         classNameWrapper='min-h-[40px]'
         className={cn(
-          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+          'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
           {
             'text-slate-400': !item.config.sublabel,
           },
+          { invisible: !item.config.sublabel && !isReadOnly },
         )}
       />
     </div>

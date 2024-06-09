@@ -18,3 +18,5 @@ export const BUTTON_COLORS = {
 export const DEFAULT_BUTTON_COLOR = BUTTON_COLORS.TEAL;
 
 export const BUTTON_ALIGNMENT_OPTIONS = ['auto', 'left', 'center', 'right'];
+
+export const DEFAULT_BUTTON_ALIGNMENT = BUTTON_ALIGNMENT_OPTIONS[2];

@@ -1,7 +1,12 @@
 import { Field, FieldArray } from 'formik';
 
 import { ShortTextElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import {
+  cn,
+  validateFieldLabel,
+  validateFieldValue,
+  validateSubLabel,
+} from '@/utils';
 
 import { Text } from '../Text';
 
@@ -27,15 +32,19 @@ export const ShortText = (props: ShortTextProps) => {
         <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
-            validate={validateLabel}
+            validate={isReadOnly ? validateFieldLabel : null}
             text={item.config.fieldLabel}
             placeholder='Type a question'
             name={`${item.id}.fieldLabel`}
             component={Text}
             classNameWrapper='min-h-[45px] mt-4'
-            className={cn('flex min-h-[20px] items-start gap-1', {
-              'text-slate-500': !item.config.fieldLabel,
-            })}
+            className={cn(
+              'flex min-h-[20px] items-start gap-1',
+              {
+                'text-slate-400': !item.config.fieldLabel,
+              },
+              { invisible: !item.config.fieldLabel && !isReadOnly },
+            )}
           />
           <Field
             readOnly={isReadOnly}
@@ -50,7 +59,7 @@ export const ShortText = (props: ShortTextProps) => {
             component={TextInput}
           />
           <Field
-            validate={validateLabel}
+            validate={isReadOnly ? validateSubLabel : null}
             name={`${item.id}.sublabel`}
             size='xs'
             placeholder={item.config.placeholder}
@@ -58,10 +67,11 @@ export const ShortText = (props: ShortTextProps) => {
             component={Text}
             classNameWrapper='min-h-[42px]'
             className={cn(
-              'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+              'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
               {
                 'text-slate-400': !item.config.sublabel,
               },
+              { invisible: !item.config.sublabel && !isReadOnly },
             )}
           />
         </div>

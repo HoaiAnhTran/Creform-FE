@@ -3,7 +3,7 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { SingleChoiceElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import { cn, validateFieldLabel, validateFieldValue } from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { RadioGroup } from '../RadioGroup';
@@ -21,16 +21,19 @@ export const BaseSingleChoiceElement = (
         name={`${item.id}.fieldLabel`}
         placeholder='Type a question'
         required={item.config.required}
-        validate={validateLabel}
+        validate={isReadOnly ? validateFieldLabel : null}
         component={Text}
         text={item.config.fieldLabel}
         classNameWrapper='min-h-[40px]'
-        className={cn('flex min-h-[20px] items-start gap-1', {
-          'text-slate-500': !item.config.fieldLabel,
-        })}
+        className={cn(
+          'flex min-h-[20px] items-start gap-1',
+          {
+            'text-slate-400': !item.config.fieldLabel,
+          },
+          { invisible: !item.config.fieldLabel && !isReadOnly },
+        )}
       />
       <Field
-        readOnly={isReadOnly}
         name={`${item.fields[0].id}.fieldValue`}
         validate={
           !isReadOnly && item.config.required ? validateFieldValue : null
@@ -42,6 +45,7 @@ export const BaseSingleChoiceElement = (
         value={item.fields[0].text}
         classNameWrapper='min-h-[60px]'
         item={item}
+        readOnly={isReadOnly}
       />
     </Stack>
   );

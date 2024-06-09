@@ -59,7 +59,9 @@ export const Radio = (props: RadioProps) => {
         label={optionValue || 'Type an option'}
         variant='outline'
         classNames={{
-          label: cn('mb-2', optionValue ? 'text-black' : 'text-slate-500'),
+          label: cn('mb-2', optionValue ? 'text-black' : 'text-slate-400', {
+            invisible: !optionValue && !isReadOnly,
+          }),
         }}
         disabled={isReadOnly}
       />

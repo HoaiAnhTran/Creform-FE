@@ -3,7 +3,12 @@ import { Field } from 'formik';
 
 import { useElementLayouts } from '@/contexts';
 import { FullnameElement } from '@/types';
-import { cn, validateFieldValue, validateLabel } from '@/utils';
+import {
+  cn,
+  validateFieldLabel,
+  validateFieldValue,
+  validateSubLabel,
+} from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
 import { Text } from '../Text';
@@ -23,12 +28,16 @@ export const BaseFullnameElement = (
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
-          validate={validateLabel}
+          validate={isReadOnly ? validateFieldLabel : null}
           component={Text}
           classNameWrapper='min-h-[40px] mt-4'
-          className={cn('flex min-h-[20px] items-start gap-1', {
-            'text-slate-500': !item.config.fieldLabel,
-          })}
+          className={cn(
+            'flex min-h-[20px] items-start gap-1',
+            {
+              'text-slate-400': !item.config.fieldLabel,
+            },
+            { invisible: !item.config.fieldLabel && !isReadOnly },
+          )}
         />
         <Group className='w-full flex-nowrap items-center justify-between'>
           <Box className='flex w-1/2 flex-col justify-between'>
@@ -49,14 +58,15 @@ export const BaseFullnameElement = (
               name={`${item.id}.sublabels.firstName`}
               text={item.config.sublabels.firstName}
               placeholder='Type a sublabel'
-              validate={validateLabel}
+              validate={isReadOnly ? validateSubLabel : null}
               component={Text}
               classNameWrapper='min-h-[40px]'
               className={cn(
-                'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+                'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
                 {
                   'text-slate-400': !item.config.sublabels.firstName,
                 },
+                { invisible: !item.config.sublabels.firstName && !isReadOnly },
               )}
             />
           </Box>
@@ -78,14 +88,15 @@ export const BaseFullnameElement = (
               name={`${item.id}.sublabels.lastName`}
               text={item.config.sublabels.lastName}
               placeholder='Type a sublabel'
-              validate={validateLabel}
+              validate={isReadOnly ? validateSubLabel : null}
               component={Text}
               classNameWrapper='min-h-[40px]'
               className={cn(
-                'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+                'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
                 {
                   'text-slate-400': !item.config.sublabels.lastName,
                 },
+                { invisible: !item.config.sublabels.lastName && !isReadOnly },
               )}
             />
           </Box>

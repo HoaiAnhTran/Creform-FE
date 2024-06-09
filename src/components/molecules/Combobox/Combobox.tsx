@@ -18,7 +18,7 @@ import {
 
 import { MESSAGES } from '@/constants';
 import { DropdownElement } from '@/types';
-import { cn, validateLabel } from '@/utils';
+import { cn, validateFieldLabel } from '@/utils';
 
 interface ComboboxProps extends Omit<ComboboxMantineProps, 'form'> {
   item: DropdownElement;
@@ -122,7 +122,7 @@ export const Combobox = ({
     <Field
       readOnly={rest.readOnly}
       name={`${item.id}.option${index}`}
-      validate={validateLabel}
+      validate={validateFieldLabel}
       value={option}
       component={Option}
       key={index}

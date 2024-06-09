@@ -2,12 +2,19 @@ import dayjs from 'dayjs';
 
 import {
   imageUrlSchema,
+  notRequiredSubLabelSchema,
+  requiredFieldLabelSchema,
   requiredFieldValueSchema,
-  requiredStringSchema,
 } from './schemas/validation';
 
-export const validateLabel = async (value: string) =>
-  await requiredStringSchema
+export const validateFieldLabel = async (value: string) =>
+  await requiredFieldLabelSchema
+    .validate(value)
+    .then(() => {})
+    .catch((err) => err.errors[0]);
+
+export const validateSubLabel = async (value: string) =>
+  await notRequiredSubLabelSchema
     .validate(value)
     .then(() => {})
     .catch((err) => err.errors[0]);

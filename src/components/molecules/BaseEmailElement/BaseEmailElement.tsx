@@ -7,7 +7,8 @@ import {
   cn,
   notRequiredEmailSchema,
   requiredEmailSchema,
-  validateLabel,
+  validateFieldLabel,
+  validateSubLabel,
 } from '@/utils';
 
 import { BaseElementProps } from '../FactoryElement';
@@ -32,12 +33,16 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           text={item.config.fieldLabel}
           placeholder='Type a question'
           required={item.config.required}
-          validate={validateLabel}
+          validate={isReadOnly ? validateFieldLabel : null}
           component={Text}
           classNameWrapper='min-h-[45px] mt-4'
-          className={cn('flex min-h-[20px] items-start gap-1', {
-            'text-slate-500': !item.config.fieldLabel,
-          })}
+          className={cn(
+            'flex min-h-[20px] items-start gap-1',
+            {
+              'text-slate-400': !item.config.fieldLabel,
+            },
+            { invisible: !item.config.fieldLabel && !isReadOnly },
+          )}
         />
         <Field
           name={`${item.fields[0].id}.fieldValue`}
@@ -54,14 +59,15 @@ export const BaseEmailElement = (props: BaseElementProps<EmailElement>) => {
           name={`${item.id}.sublabel`}
           text={item.config.sublabel}
           placeholder='Type a sublabel'
-          validate={validateLabel}
+          validate={isReadOnly ? validateSubLabel : null}
           component={Text}
           classNameWrapper='min-h-[42px]'
           className={cn(
-            'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+            'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
             {
               'text-slate-400': !item.config.sublabel,
             },
+            { invisible: !item.config.sublabel && !isReadOnly },
           )}
         />
       </Box>

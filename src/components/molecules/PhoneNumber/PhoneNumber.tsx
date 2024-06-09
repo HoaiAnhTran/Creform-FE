@@ -1,7 +1,12 @@
 import { Field, FieldArray, useField } from 'formik';
 
 import { NumberPhoneElement } from '@/types';
-import { cn, isValidPhoneNumber, validateLabel } from '@/utils';
+import {
+  cn,
+  isValidPhoneNumber,
+  validateFieldLabel,
+  validateSubLabel,
+} from '@/utils';
 
 import { PhoneNumberInput } from '../PhoneNumberInput';
 import { Text } from '../Text';
@@ -33,15 +38,19 @@ export const NumberPhone = (props: NumberPhoneProps) => {
         <div className='flex flex-col gap-2'>
           <Field
             required={item.config.required}
-            validate={validateLabel}
+            validate={isReadOnly ? validateFieldLabel : null}
             placeholder='Type a question'
             text={item.config.fieldLabel}
             name={`${item.id}.fieldLabel`}
             classNameWrapper='min-h-[40px] mt-4'
             component={Text}
-            className={cn('flex min-h-[20px] items-start gap-1', {
-              'text-slate-500': !item.config.fieldLabel,
-            })}
+            className={cn(
+              'flex min-h-[20px] items-start gap-1',
+              {
+                'text-slate-400': !item.config.fieldLabel,
+              },
+              { invisible: !item.config.fieldLabel && !isReadOnly },
+            )}
           />
           <Field
             readOnly={isReadOnly}
@@ -62,7 +71,7 @@ export const NumberPhone = (props: NumberPhoneProps) => {
             component={PhoneNumberInput}
           />
           <Field
-            validate={validateLabel}
+            validate={isReadOnly ? validateSubLabel : null}
             name={`${item.id}.subLabel`}
             placeholder='Type a sublabel'
             size='xs'
@@ -70,10 +79,11 @@ export const NumberPhone = (props: NumberPhoneProps) => {
             component={Text}
             classNameWrapper='min-h-[42px]'
             className={cn(
-              'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-500',
+              'flex min-h-[20px] items-start gap-1 text-[13px] text-slate-600',
               {
                 'text-slate-400': !item.config.sublabel,
               },
+              { invisible: !item.config.sublabel && !isReadOnly },
             )}
           />
         </div>
