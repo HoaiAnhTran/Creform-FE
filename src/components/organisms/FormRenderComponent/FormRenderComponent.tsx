@@ -61,7 +61,7 @@ export const FormRenderComponent = ({
         />
       )}
       <Stack className='w-[45%] justify-between gap-7'>
-        <Box pos='relative'>
+        <Box pos='relative' className='w-full'>
           <LoadingOverlay
             visible={isLoading || !form}
             zIndex={BIG_Z_INDEX}
@@ -73,7 +73,10 @@ export const FormRenderComponent = ({
               {form.title}
             </Text>
             <ResponsiveReactGridLayout
+              width={120}
+              cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
               rowHeight={30}
+              measureBeforeMount={true}
               isResizable={false}
               isDroppable={false}
               isDraggable={false}

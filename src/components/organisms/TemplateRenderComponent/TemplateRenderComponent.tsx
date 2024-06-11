@@ -18,7 +18,10 @@ export const TemplateRenderComponent = ({
         {template.name}
       </Text>
       <ResponsiveReactGridLayout
+        width={120}
+        cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
         rowHeight={30}
+        measureBeforeMount={true}
         isResizable={false}
         isDroppable={false}
         isDraggable={false}
