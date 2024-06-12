@@ -1,11 +1,19 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
+import { BACK_END_URL } from '@/configs';
+import { MESSAGES, SOCKET_EVENTS } from '@/constants';
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { Header } from '@/organisms/Header';
 import { SubmissionTopbar } from '@/organisms/SubmissionTopbar';
 import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
 import { ElementType, GetResponsesParams } from '@/types';
+import { isEmpty, toastify } from '@/utils';
+
+const socket = io(BACK_END_URL, {
+  withCredentials: true,
+});
 
 export const ResponsesPage = () => {
   const { formId } = useParams();
@@ -16,7 +24,7 @@ export const ResponsesPage = () => {
 
   const [params, setParams] = useState<GetResponsesParams>();
 
-  const { data: response } = useGetResponsesByFormIdQuery({
+  const { data: response, refetch } = useGetResponsesByFormIdQuery({
     formId: formId!,
     ...params,
   });
@@ -78,6 +86,24 @@ export const ResponsesPage = () => {
     () => selectedRecords.map((selectedRecord) => selectedRecord.id),
     [selectedRecords],
   );
+
+  useEffect(() => {
+    if (isEmpty(formId)) return;
+
+    socket.emit(SOCKET_EVENTS.VIEW_SUBMISSION_PAGE, formId);
+
+    // Listen for new submission
+    socket.on(SOCKET_EVENTS.RECEIVE_NEW_SUBMISSION, () => {
+      toastify.displayInfo(MESSAGES.NEW_SUBMISSION_HAS_BEEN_RECEIVED);
+      refetch();
+    });
+
+    // Clean up on component unmount
+    return () => {
+      socket.emit(SOCKET_EVENTS.LEAVE_SUBMISSION_PAGE, formId);
+      socket.off(SOCKET_EVENTS.RECEIVE_NEW_SUBMISSION);
+    };
+  }, [formId, socket]);
 
   if (response === undefined) return <></>;
 
