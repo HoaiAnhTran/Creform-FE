@@ -39,4 +39,5 @@ export const MESSAGES = {
   SESSION_EXPIRED: 'You have been logged out. Please log in again.',
   REQUIRED_USER_ACCOUNT: 'Please login with your User account',
   REQUIRE_AN_ANSWER_IN_EVERY_ROW: 'Require an answer in every row',
+  NEW_SUBMISSION_HAS_BEEN_RECEIVED: 'A new submission has just been received.',
 } as const;

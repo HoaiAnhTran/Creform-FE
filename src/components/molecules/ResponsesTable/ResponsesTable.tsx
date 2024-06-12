@@ -52,13 +52,10 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
 
   const { formId } = useParams();
 
-  const { data, isFetching, refetch } = useGetResponsesByFormIdQuery(
-    {
-      formId: formId!,
-      ...params,
-    },
-    { refetchOnFocus: true },
-  );
+  const { data, isFetching, refetch } = useGetResponsesByFormIdQuery({
+    formId: formId!,
+    ...params,
+  });
 
   const [sortStatus, setSortStatus] = useState<
     DataTableSortStatus<ResponseRow>

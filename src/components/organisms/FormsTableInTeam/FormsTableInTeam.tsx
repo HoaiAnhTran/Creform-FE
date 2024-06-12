@@ -200,7 +200,8 @@ export const FormsTableInTeam = ({
         text: 'View',
         icon: <IoEye size={18} />,
         handleClick: (record: FormResponse) => {
-          navigate(`/form/${record.id}`);
+          const link = `${window.location.origin}/form/${record.id}`;
+          window.open(link, '_blank');
         },
         isHidden: false,
       },
