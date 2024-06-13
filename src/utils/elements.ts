@@ -14,7 +14,7 @@ import {
   defaultSubmitHeightWidth,
   defaultTimeHeightWidth,
 } from '@/constants';
-import { ElementType } from '@/types';
+import { ElementType, ScaleRatingElement } from '@/types';
 
 export const getDefaultWidthHeight = (type: ElementType | undefined) => {
   switch (true) {
@@ -47,4 +47,16 @@ export const getDefaultWidthHeight = (type: ElementType | undefined) => {
     default:
       return defaultElementHeightWidth;
   }
+};
+
+export const getScaleRatingValues = (element: ScaleRatingElement) => {
+  const values: number[] = [];
+  for (
+    let index = element.config.lowestRatingValue;
+    index <= element.config.highestRatingValue;
+    index++
+  ) {
+    values.push(index);
+  }
+  return values;
 };

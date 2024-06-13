@@ -15,6 +15,7 @@ export enum ModalTypes {
   AUTO_GEN_FORM = 'autoGenerateForm',
   CREATE_FORM = 'createForm',
   PREVIEW_TEMPLATE = 'previewTemplate',
+  DOWNLOAD_FORM_AS_PDF = 'downloadFormAsPDF',
 }
 
 export type ModalType =
@@ -33,4 +34,5 @@ export type ModalType =
   | ModalTypes.IMPORT_FORM
   | ModalTypes.AUTO_GEN_FORM
   | ModalTypes.CREATE_FORM
-  | ModalTypes.PREVIEW_TEMPLATE;
+  | ModalTypes.PREVIEW_TEMPLATE
+  | ModalTypes.DOWNLOAD_FORM_AS_PDF;

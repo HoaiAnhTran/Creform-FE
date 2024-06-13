@@ -67,7 +67,7 @@ export const Modal = ({
     }
     {...props}
   >
-    <Box pos='relative'>
+    <Box pos='relative' className='flex h-full flex-col justify-start'>
       <LoadingOverlay
         visible={isLoading}
         zIndex={1000}
@@ -75,7 +75,7 @@ export const Modal = ({
         loaderProps={{ color: 'ocean-green.5' }}
       />
       <Divider />
-      {body}
+      <Box className='flex-1'>{body}</Box>
       {(props.hasFooter === undefined || props.hasFooter) && (
         <>
           <Divider className='mb-4' />
