@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BsFileText } from 'react-icons/bs';
-import { FaFolder, FaStar } from 'react-icons/fa';
+import { FaFileDownload, FaFolder, FaStar } from 'react-icons/fa';
 import { FaPlayCircle } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoEye, IoTrash } from 'react-icons/io5';
@@ -32,6 +32,7 @@ import { PATH } from '@/constants/routes';
 import { useFormParams, useOverviewContext } from '@/contexts';
 import { AddToFolderModal } from '@/molecules/AddToFolderModal';
 import { ConfirmationModal } from '@/molecules/ComfirmationModal';
+import { DownloadFormAsPDFModal } from '@/molecules/DownloadFormAsPDFModal';
 import { MoveToTeamModal } from '@/molecules/MoveToTeamModal';
 import {
   useAddToFavouritesMutation,
@@ -228,6 +229,14 @@ export const FormsTable = () => {
         icon: <FaPlayCircle size={18} />,
         handleClick: (record: FormResponse) =>
           handleUpdateFormStatus(record, 'enable'),
+        isHidden: false,
+      },
+      {
+        text: 'Download as PDF',
+        icon: <FaFileDownload size={18} />,
+        handleClick: () => {
+          openModal(ModalTypes.DOWNLOAD_FORM_AS_PDF);
+        },
         isHidden: false,
       },
       {
@@ -539,6 +548,11 @@ export const FormsTable = () => {
         onClickCancel={closeModal}
         selectedRecords={selectedRecords}
         setSelectedRecords={setSelectedRecords}
+      />
+      <DownloadFormAsPDFModal
+        opened={modalType === ModalTypes.DOWNLOAD_FORM_AS_PDF}
+        onClose={closeModal}
+        formId={selectedRecords[0]?.id}
       />
       <ConfirmationModal
         size='lg'

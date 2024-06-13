@@ -5,6 +5,7 @@ export * from './defaultFormsParams';
 export * from './elements';
 export * from './imageElementStyles';
 export * from './messages';
+export * from './pdf';
 export * from './routes';
 export * from './rules';
 export * from './socketEvents';
