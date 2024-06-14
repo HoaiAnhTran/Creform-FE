@@ -182,6 +182,17 @@ const formApi = rootApi.injectEndpoints({
       },
       invalidatesTags: ['Forms'],
     }),
+    makeACopyOfForm: build.mutation<
+      SuccessResponse<FormResponse>,
+      { formId: string }
+    >({
+      query: (payload) => ({
+        url: `${API_URL.FORMS}/copy`,
+        method: 'POST',
+        data: payload,
+      }),
+      invalidatesTags: ['Forms'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -204,4 +215,5 @@ export const {
   useUpdateDisabledStatusMutation,
   useImportFormMutation,
   useAutoGenFormMutation,
+  useMakeACopyOfFormMutation,
 } = formApi;

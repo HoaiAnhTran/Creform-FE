@@ -3,7 +3,7 @@ import { BsFileText } from 'react-icons/bs';
 import { FaFileDownload, FaFolder, FaStar } from 'react-icons/fa';
 import { FaPlayCircle } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
-import { IoEye, IoTrash } from 'react-icons/io5';
+import { IoCopy, IoEye, IoTrash } from 'react-icons/io5';
 import { MdDriveFileMoveRtl } from 'react-icons/md';
 import { PiPauseCircleFill } from 'react-icons/pi';
 import { RiFolderAddFill, RiTeamFill } from 'react-icons/ri';
@@ -38,6 +38,7 @@ import {
   useAddToFavouritesMutation,
   useDeleteFormMutation,
   useGetMyFormsQuery,
+  useMakeACopyOfFormMutation,
   useRemoveFromFolderMutation,
   useRemoveFromTeamMutation,
   useRestoreFormMutation,
@@ -83,6 +84,9 @@ export const FormsTable = () => {
 
   const [updateDisabledStatus, { isLoading: isUpdatingFormStatus }] =
     useUpdateDisabledStatusMutation();
+
+  const [makeACopyOfForm, { isLoading: isMakingACopyOfForm }] =
+    useMakeACopyOfFormMutation();
 
   const handleDeleteForm = (record: FormResponse) => {
     deleteForm({ id: record.id }).then((res) => {
@@ -171,6 +175,19 @@ export const FormsTable = () => {
       });
   };
 
+  const handleMakeACopyOfForm = (record: FormResponse) => {
+    makeACopyOfForm({ formId: record.id }).then((res) => {
+      if ('data' in res) {
+        setSelectedRecords([]);
+        return navigate(`${PATH.BUILD_FORM_PAGE}/${res.data.data.id}`);
+      }
+      if (res.error as ErrorResponse) {
+        toastify.displayError((res.error as ErrorResponse).message);
+        setSelectedRecords([]);
+      }
+    });
+  };
+
   const isFetching =
     isFormFetching ||
     isAddingToFavourites ||
@@ -178,7 +195,8 @@ export const FormsTable = () => {
     isRestoringForm ||
     isRemovingFromFolder ||
     isRemovingFromTeam ||
-    isUpdatingFormStatus;
+    isUpdatingFormStatus ||
+    isMakingACopyOfForm;
 
   const moreOptions = useMemo(
     () => (record: FormResponse) => [
@@ -189,6 +207,12 @@ export const FormsTable = () => {
           const link = `${window.location.origin}/form/${record.id}`;
           window.open(link, '_blank');
         },
+        isHidden: false,
+      },
+      {
+        text: 'Make a Copy',
+        icon: <IoCopy size={18} />,
+        handleClick: (record: FormResponse) => handleMakeACopyOfForm(record),
         isHidden: false,
       },
       {
@@ -413,7 +437,7 @@ export const FormsTable = () => {
                         <Menu.Item
                           key={index}
                           leftSection={option.icon}
-                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
+                          className='mb-1 mt-0.5 h-[35px] gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
                           onClick={(event) => {
                             event.stopPropagation();
                             option.handleClick(record);
@@ -431,7 +455,7 @@ export const FormsTable = () => {
                         <Menu.Item
                           key={index}
                           leftSection={option.icon}
-                          className='mb-1 mt-0.5 gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
+                          className='mb-1 mt-0.5 h-[35px] gap-4 px-4 py-2 font-medium text-gray-800 transition-all duration-75 ease-linear last-of-type:mb-0 hover:bg-ocean-green-400 hover:text-white'
                           onClick={(event) => {
                             event.stopPropagation();
                             option.handleClick(record);
