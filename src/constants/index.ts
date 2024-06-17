@@ -1,5 +1,6 @@
 export * from './apiURL';
 export * from './buttonStyles';
+export * from './colorCodes';
 export * from './defaultElementConfigs';
 export * from './defaultFormsParams';
 export * from './elements';
