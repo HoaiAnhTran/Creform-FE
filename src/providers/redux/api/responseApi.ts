@@ -4,6 +4,7 @@ import {
   FormAnswerRequest,
   FormAnswerResponse,
   GetResponsesParams,
+  GetResponsesStatisticsResponse,
   ReturnGetResponses,
 } from '@/types/responses';
 
@@ -32,6 +33,19 @@ export const responseApi = rootApi.injectEndpoints({
         method: 'GET',
         responseType: 'arraybuffer', // must define this
       }),
+    }),
+    getStatisticsOfResponsesByFormId: build.query<
+      GetResponsesStatisticsResponse,
+      { formId: string }
+    >({
+      query: ({ formId }) => ({
+        url: `${API_URL.RESPONSES}/statistics/${formId}`,
+        method: 'GET',
+      }),
+      transformResponse: (
+        response: SuccessResponse<GetResponsesStatisticsResponse>,
+      ) => response.data,
+      providesTags: [{ type: 'Responses', id: 'statistics' }],
     }),
     createResponse: build.mutation<
       SuccessResponse<FormAnswerResponse>,
@@ -81,6 +95,8 @@ export const responseApi = rootApi.injectEndpoints({
 export const {
   useGetResponsesByFormIdQuery,
   useLazyGetResponsesExcelFileQuery,
+  useGetStatisticsOfResponsesByFormIdQuery,
+  useLazyGetStatisticsOfResponsesByFormIdQuery,
   useCreateResponseMutation,
   useDeleteMultipleResponsesMutation,
   useDeleteOneResponseMutation,

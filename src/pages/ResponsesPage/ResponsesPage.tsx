@@ -7,7 +7,10 @@ import { MESSAGES, SOCKET_EVENTS } from '@/constants';
 import { ResponseRow, ResponsesTable } from '@/molecules/ResponsesTable';
 import { Header } from '@/organisms/Header';
 import { SubmissionTopbar } from '@/organisms/SubmissionTopbar';
-import { useGetResponsesByFormIdQuery } from '@/redux/api/responseApi';
+import {
+  useGetResponsesByFormIdQuery,
+  useLazyGetStatisticsOfResponsesByFormIdQuery,
+} from '@/redux/api/responseApi';
 import { ElementType, GetResponsesParams } from '@/types';
 import { isEmpty, toastify } from '@/utils';
 
@@ -24,10 +27,14 @@ export const ResponsesPage = () => {
 
   const [params, setParams] = useState<GetResponsesParams>();
 
-  const { data: response, refetch } = useGetResponsesByFormIdQuery({
-    formId: formId!,
-    ...params,
-  });
+  const { data: response, refetch: refetchResponses } =
+    useGetResponsesByFormIdQuery({
+      formId: formId!,
+      ...params,
+    });
+
+  const [refetchResponsesStatistics] =
+    useLazyGetStatisticsOfResponsesByFormIdQuery();
 
   const rawRecords = response?.responses;
 
@@ -95,7 +102,8 @@ export const ResponsesPage = () => {
     // Listen for new submission
     socket.on(SOCKET_EVENTS.RECEIVE_NEW_SUBMISSION, () => {
       toastify.displayInfo(MESSAGES.NEW_SUBMISSION_HAS_BEEN_RECEIVED);
-      refetch();
+      refetchResponses();
+      refetchResponsesStatistics({ formId: formId! });
     });
 
     // Clean up on component unmount
@@ -103,7 +111,7 @@ export const ResponsesPage = () => {
       socket.emit(SOCKET_EVENTS.LEAVE_SUBMISSION_PAGE, formId);
       socket.off(SOCKET_EVENTS.RECEIVE_NEW_SUBMISSION);
     };
-  }, [formId, socket]);
+  }, [formId]);
 
   if (response === undefined) return <></>;
 

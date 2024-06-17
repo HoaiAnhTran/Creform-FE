@@ -60,3 +60,22 @@ export interface ReturnGetResponses {
   totalResponses: number;
   totalPages: number;
 }
+
+/* Responses Statistics */
+export type OptionStatsDataType = {
+  name: string;
+  count?: number;
+  [key: string]: number | string | undefined;
+};
+
+export type ElementStatsDataType = {
+  [elementQuestion: string]: OptionStatsDataType[];
+};
+
+export interface GetResponsesStatisticsResponse {
+  singleChoiceResult: ElementStatsDataType[];
+  multipleChoiceResult: ElementStatsDataType[];
+  dropdownResult: ElementStatsDataType[];
+  scaleRatingResult: ElementStatsDataType[];
+  inputTableResult: ElementStatsDataType[];
+}

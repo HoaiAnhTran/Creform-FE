@@ -84,11 +84,6 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const columnProps = {
-    sortable: true,
-    resizable: true,
-  };
-
   const columns: DataTableColumn<ResponseRow>[] = useMemo(
     () => [
       {
@@ -101,14 +96,15 @@ export const ResponsesTable = (props: ResponsesTableProps) => {
             {formatDate(record.createdAt, 'MMM D, YYYY HH:mm:ss A')}
           </Text>
         ),
-        ...columnProps,
+        sortable: true,
+        resizable: true,
       },
       ...elementIdAndNameList.map((elementIdAndName) => ({
         accessor: `ValueElement${elementIdAndName.elementId}`,
         title: elementIdAndName.elementName,
         titleClassName: 'text-center hover:!bg-quarter-pearl-lusta-50',
         cellsClassName: 'h-10 text-center max-w-[300px] truncate',
-        ...columnProps,
+        resizable: true,
       })),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
