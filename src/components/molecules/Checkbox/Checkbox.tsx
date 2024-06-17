@@ -58,9 +58,14 @@ export const Checkbox = (props: CheckboxProps) => {
         value={optionValue}
         label={optionValue || 'Type an option'}
         classNames={{
-          label: cn('mb-2', optionValue ? 'text-black' : 'text-slate-400', {
-            invisible: !optionValue && !isReadOnly,
-          }),
+          label: cn(
+            'mb-2 cursor-pointer',
+            optionValue ? 'text-black' : 'text-slate-400',
+            {
+              invisible: !optionValue && !isReadOnly,
+            },
+          ),
+          input: 'cursor-pointer',
         }}
         disabled={isReadOnly}
       />

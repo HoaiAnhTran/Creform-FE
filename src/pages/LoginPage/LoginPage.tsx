@@ -4,14 +4,13 @@ import { useDisclosure } from '@mantine/hooks';
 
 import Person from '@/assets/images/person.png';
 import { UnSignedHeader } from '@/atoms/UnsignedHeader';
-import { BIG_Z_INDEX, MESSAGES } from '@/constants';
+import { BIG_Z_INDEX } from '@/constants';
 import { PATH } from '@/constants/routes';
 import { LoginForm, LoginSchemaType } from '@/organisms/LoginForm';
 import { useLoginUserMutation } from '@/redux/api/authenticationApi';
 import { useAcceptInvitationMutation } from '@/redux/api/invitationApi';
 import { ErrorResponse } from '@/types';
 import {
-  checkIsUserRole,
   getInvitationTokenFromLS,
   hasInvitationTokenInLS,
   httpClient,
@@ -34,15 +33,6 @@ export const LoginPage = () => {
     loginUser(values).then(async (res) => {
       if ('data' in res) {
         const accessToken = res.data.data.accessToken;
-
-        const isUser = checkIsUserRole(accessToken);
-        if (!isUser) {
-          toastify.displayError(MESSAGES.REQUIRED_USER_ACCOUNT);
-          await httpClient.logout();
-          close();
-          return;
-        }
-
         httpClient.setToken(accessToken);
         setAccessTokenToLS(accessToken);
         close();
