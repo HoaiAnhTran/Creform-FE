@@ -295,7 +295,6 @@ export const AccountPage = () => {
             <PasswordInput
               placeholder='Current password'
               {...getFieldProps(UserProfileFields.PASSWORD)}
-              autoFocus
             />
             {errors.password && touched.password && (
               <Text className='text-xs text-red-500'>{errors.password}</Text>

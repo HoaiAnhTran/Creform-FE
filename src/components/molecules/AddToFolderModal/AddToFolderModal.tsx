@@ -5,6 +5,7 @@ import {
   CheckIcon,
   ModalProps as MantineModalProps,
   Radio,
+  Text,
 } from '@mantine/core';
 
 import { MESSAGES } from '@/constants/messages';
@@ -12,7 +13,7 @@ import { useGetMyFoldersQuery } from '@/redux/api/folderApi';
 import { useAddToFolderMutation } from '@/redux/api/formApi';
 import { useGetTeamDetailsQuery } from '@/redux/api/teamApi';
 import { FolderInTeamResponse, FolderResponse, FormResponse } from '@/types';
-import { countSuccessAndErrors, toastify } from '@/utils';
+import { countSuccessAndErrors, isEmpty, toastify } from '@/utils';
 
 import { Modal } from '../Modal';
 
@@ -93,36 +94,44 @@ export const AddToFolderModal = ({
       headerTitle='Add to folder'
       body={
         <Box className='px-3 py-8'>
-          <Radio.Group
-            value={selectedFolderId}
-            onChange={(value: string) => {
-              setSelectedFolderId(value);
-            }}
-            name='folderOption'
-            label='Select a folder below'
-            classNames={{ label: 'text-base font-semibold' }}
-            className='flex flex-col justify-between gap-4'
-          >
-            <Box className='flex flex-col items-start justify-between gap-4'>
-              {folderList?.map((folder) => (
-                <Radio
-                  key={folder.id}
-                  value={folder.id.toString()}
-                  label={folder.name}
-                  icon={CheckIcon}
-                  color='ocean-green.5'
-                  size='sm'
-                  disabled={disabledFolderOptions.includes(
-                    folder.id.toString(),
-                  )}
-                  classNames={{
-                    radio: 'cursor-pointer',
-                    label: 'cursor-pointer',
-                  }}
-                />
-              ))}
-            </Box>
-          </Radio.Group>
+          {folderList && folderList.length > 0 ? (
+            <Radio.Group
+              value={selectedFolderId}
+              onChange={(value: string) => {
+                setSelectedFolderId(value);
+              }}
+              name='folderOption'
+              label='Select a folder below'
+              classNames={{ label: 'text-base font-semibold' }}
+              className='flex flex-col justify-between gap-4'
+            >
+              <Box className='flex flex-col items-start justify-between gap-4'>
+                {folderList.map((folder) => (
+                  <Radio
+                    key={folder.id}
+                    value={folder.id.toString()}
+                    label={folder.name}
+                    icon={CheckIcon}
+                    color='ocean-green.5'
+                    size='sm'
+                    disabled={disabledFolderOptions.includes(
+                      folder.id.toString(),
+                    )}
+                    classNames={{
+                      radio: 'cursor-pointer',
+                      label: 'cursor-pointer',
+                    }}
+                  />
+                ))}
+              </Box>
+            </Radio.Group>
+          ) : (
+            <Text className='text-sm font-medium text-slate-500'>
+              {isEmpty(teamId)
+                ? "You don't have any folders."
+                : 'This team currently has no folders.'}
+            </Text>
+          )}
         </Box>
       }
       onClickCancel={handleCloseModal}

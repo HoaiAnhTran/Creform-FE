@@ -5,6 +5,7 @@ import {
   CheckIcon,
   ModalProps as MantineModalProps,
   Radio,
+  Text,
 } from '@mantine/core';
 
 import { MESSAGES } from '@/constants/messages';
@@ -70,34 +71,40 @@ export const MoveToTeamModal = ({
       headerTitle='Move to team'
       body={
         <Box className='px-3 py-8'>
-          <Radio.Group
-            value={selectedTeamId}
-            onChange={(value: string) => {
-              setSelectedTeamId(value);
-            }}
-            name='teamOption'
-            label='Select a team below'
-            classNames={{ label: 'text-base font-semibold' }}
-            className='flex flex-col justify-between gap-4'
-          >
-            <Box className='flex flex-col items-start justify-between gap-4'>
-              {teams?.map((team: TeamResponse) => (
-                <Radio
-                  key={team.id}
-                  value={team.id.toString()}
-                  label={team.name}
-                  icon={CheckIcon}
-                  color='ocean-green.5'
-                  size='sm'
-                  disabled={disabledTeamOptions.includes(team.id.toString())}
-                  classNames={{
-                    radio: 'cursor-pointer',
-                    label: 'cursor-pointer',
-                  }}
-                />
-              ))}
-            </Box>
-          </Radio.Group>
+          {teams && teams.length > 0 ? (
+            <Radio.Group
+              value={selectedTeamId}
+              onChange={(value: string) => {
+                setSelectedTeamId(value);
+              }}
+              name='teamOption'
+              label='Select a team below'
+              classNames={{ label: 'text-base font-semibold' }}
+              className='flex flex-col justify-between gap-4'
+            >
+              <Box className='flex flex-col items-start justify-between gap-4'>
+                {teams.map((team: TeamResponse) => (
+                  <Radio
+                    key={team.id}
+                    value={team.id.toString()}
+                    label={team.name}
+                    icon={CheckIcon}
+                    color='ocean-green.5'
+                    size='sm'
+                    disabled={disabledTeamOptions.includes(team.id.toString())}
+                    classNames={{
+                      radio: 'cursor-pointer',
+                      label: 'cursor-pointer',
+                    }}
+                  />
+                ))}
+              </Box>
+            </Radio.Group>
+          ) : (
+            <Text className='text-sm font-medium text-slate-500'>
+              You don't have any teams.
+            </Text>
+          )}
         </Box>
       }
       onClickCancel={handleCloseModal}
