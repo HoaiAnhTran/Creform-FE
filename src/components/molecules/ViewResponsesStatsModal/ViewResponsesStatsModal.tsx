@@ -263,7 +263,14 @@ export const ViewResponsesStatsModal = ({
                         }}
                       >
                         <CartesianGrid strokeDasharray='3 3' />
-                        <XAxis dataKey='name' />
+                        <XAxis
+                          dataKey='name'
+                          tickFormatter={(label) => {
+                            const maxLength = 10;
+                            if (label.length <= maxLength) return label;
+                            return `${label.slice(0, maxLength)}...`;
+                          }}
+                        />
                         <YAxis />
                         <Tooltip />
                         <Bar
@@ -380,7 +387,14 @@ export const ViewResponsesStatsModal = ({
                       }}
                     >
                       <CartesianGrid strokeDasharray='3 3' />
-                      <XAxis dataKey='name' />
+                      <XAxis
+                        dataKey='name'
+                        tickFormatter={(label) => {
+                          const maxLength = 10;
+                          if (label.length <= maxLength) return label;
+                          return `${label.slice(0, maxLength)}...`;
+                        }}
+                      />
                       <YAxis />
                       <Tooltip />
                       <Legend />
