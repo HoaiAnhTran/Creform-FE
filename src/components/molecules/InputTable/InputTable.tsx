@@ -101,7 +101,11 @@ export const InputTable = (props: InputTableProps) => {
   const handleChangeRadioValue = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const newValue = event.currentTarget.value.split('-')[1];
+    const newValue =
+      event.currentTarget.value.split('-')[
+        event.currentTarget.value.split('-').length - 1
+      ];
+
     setSelectedValues((prev) => ({
       ...prev,
       [event.currentTarget.name]: newValue,
@@ -111,7 +115,10 @@ export const InputTable = (props: InputTableProps) => {
   const handleChangeCheckboxValue = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const newValue = event.currentTarget.value.split('-')[1];
+    const newValue =
+      event.currentTarget.value.split('-')[
+        event.currentTarget.value.split('-').length - 1
+      ];
 
     if (
       event.currentTarget.checked &&
